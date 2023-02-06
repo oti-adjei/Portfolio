@@ -37,7 +37,7 @@ header{
 	z-index: 1000;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	background: transparent;
 	padding: 30px 10%;
 	transition: .3s;
@@ -61,7 +61,7 @@ header{
 	font-size: var(--p-font);
 	color: var(--text-color);
 	font-weight: 500;
-	padding: 10px 27px;
+	padding: 10px 25px;
 }
 .navlist a::after{
 	content: '';
@@ -77,6 +77,9 @@ header{
 .navlist a:hover::after{
 	width: 100%;
 	
+}
+.navlist img{
+	margin-left: 10px;;
 }
 #menu-icon{
 	font-size: 35px;
@@ -296,8 +299,9 @@ header.sticky{
 	max-width: 100%;
 	width: 550px;
 	height: 500px;
-	object-fit: contain;
+	object-fit: cover;
 	border-radius: 12px;
+	border-color: #000;
 }
 .layer{
 	background: transparent;
@@ -424,10 +428,20 @@ header.sticky{
 	color: var(--secound-color);
 	line-height: 28px;
 }
-.row:hover{
+.row {
+	transition: transform 0.5s ease;
+	transform: scale(1);
 	will-change: transform;
-	transform: perspective(1000px) rotateX(4.80deg) rotateY(10.23deg) scale3d(1.05,1.05,1.05);
+  }
+.row:hover{
+
+	transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+	/* transform: perspective(1000px) rotateX(4.80deg) rotateY(10.23deg) scale3d(1.05,1.05,1.05); */
 }
+
+.row:not(:hover) {
+	transform: scale(0.8);
+  }
 
 .cta-box{
 	display: grid;
