@@ -37,6 +37,7 @@ sr.reveal('.home-img', { delay: 350, origin: 'right' })
 
 sr.reveal('.sub-service,.about,.portfolio,.service,.cta,.contact', { delay: 200, origin: 'bottom' })
 
+
 let moonbutton = document.querySelector('.profile');
 moonbutton.onclick = () => {
 	// e.keyCode === 13
@@ -44,21 +45,6 @@ moonbutton.onclick = () => {
 	// document.querySelectorAll('.inverted').forEach((result) => {
 	// })
 }
-// document.onkeypress = function (e) {
-// 	e = e || window.event;
-
-// 	if (moonbutton.onclick) {
-// 		e.keyCode === 13
-// 		document.documentElement.classList.toggle('dark-mode');
-
-
-// 		document.querySelectorAll('.inverted').forEach((result) => {
-
-// 		})
-
-
-// 	}
-// }
 
 const openModalBtn = document.getElementById("openModalBtn");
 const myModal = document.getElementById("myModal");
