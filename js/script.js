@@ -41,8 +41,8 @@ let moonbutton = document.querySelector('.profile');
 moonbutton.onclick = () => {
 	// e.keyCode === 13
 	document.documentElement.classList.toggle('dark-mode');
-	document.querySelectorAll('.inverted').forEach((result) => {
-	})
+	// document.querySelectorAll('.inverted').forEach((result) => {
+	// })
 }
 // document.onkeypress = function (e) {
 // 	e = e || window.event;
@@ -59,3 +59,26 @@ moonbutton.onclick = () => {
 
 // 	}
 // }
+
+const openModalBtn = document.getElementById("openModalBtn");
+const myModal = document.getElementById("myModal");
+const closeBtn = document.getElementsByClassName("closeBtn")[0];
+
+openModalBtn.onclick = () => {
+	myModal.style.display = "block";
+};
+//if i use event listener the moonbutton will excute since i used used eventlistner but since i used on click rather it will override.
+// openModalBtn.addEventListener("click", function() {
+// 	myModal.style.display = "block";
+// });
+
+closeBtn.addEventListener("click", function() {
+  myModal.style.display = "none";
+});
+
+window.addEventListener("click", function(event) {
+  if (event.target == myModal) {
+    myModal.style.display = "none";
+  }
+});
+
