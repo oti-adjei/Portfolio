@@ -108,7 +108,7 @@ header{
 }
 
 section{
-	padding: 100px 18%;
+	padding: 100px 10%;
 }
 .home{
 	min-height: 100vh;
@@ -297,9 +297,8 @@ header.sticky{
 }
 .col img{
 	max-width: 100%;
-	width: 550px;
-	height: 500px;
-	object-fit: cover;
+	height: 450px;
+	object-fit: fit;
 	border-radius: 12px;
 	border-color: #000;
 }
@@ -350,9 +349,22 @@ header.sticky{
 	opacity: 1;
 }
 
+.portfolio-webcontent{
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(500px, auto));
+	grid-gap: 2rem;
+	align-items: center;
+	margin-top: 5rem;
+	text-align: center;
+	cursor: pointer;
+}
+
+
 .see_text{
-	text-align: right;
-	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	margin-top: 3rem;
 }
 .see_text:hover{
 	text-decoration: underline;
