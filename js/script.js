@@ -16,6 +16,9 @@ window.addEventListener("scroll", function () {
 
 let menu = document.querySelector('#menu-icon');
 let navlist = document.querySelector('.navlist');
+const homeimage = document.querySelector(".home");
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
 
 
 //  This function is to check if the menu icon button on smaller screen is pressed 
@@ -24,6 +27,49 @@ menu.onclick = () => {
 	menu.classList.toggle('bx-x');
 	navlist.classList.toggle('active');
 };
+
+// Function to toggle dark mode and moon image
+function toggleDarkMode() {
+	const body = document.body;
+	const moonImage = document.querySelector('#dark-mode-toggle img');
+  
+	// Check if dark mode is currently active using media query
+	const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+	if (isDarkMode) {
+	  // Apply light mode styles (remove any dark mode overrides)
+	  moonImage.src = './assets/images/moon.png'; // Change to full moon image
+	} else {
+	  // Apply dark mode overrides
+	  moonImage.src = './assets/images/crescent-moon-phase.png'; // Change to crescent moon image
+	}
+  }
+  
+  // Add event listener to the button (no changes here)
+  const toggleButton = document.getElementById('dark-mode-toggle');
+  toggleButton.addEventListener('click', toggleDarkMode);
+  
+  // Initially check for user preference and apply dark mode overrides if needed
+  if (prefersDark) {
+	toggleDarkMode(); // Apply crescent moon image initially if preferred
+  }
+
+  // Light/Dark Mode
+
+const body = document.querySelector("body");
+const toggle = document.querySelector("#toggle");
+const sunIcon = document.querySelector(".toggle .bxs-sun");
+const moonIcon = document.querySelector(".toggle .bx-moon");
+
+toggle.addEventListener("change", () => {
+    body.classList.toggle("dark");
+    sunIcon.className = sunIcon.className == "bx bxs-sun" ? "bx bx-sun" : "bx bxs-sun";
+    moonIcon.className = moonIcon.className == "bx bxs-moon" ? "bx bx-moon" : "bx bxs-moon";
+});
+  
+
+
+
 
 //animation function using scrol reveal framework
 const sr = ScrollReveal({
@@ -34,6 +80,13 @@ const sr = ScrollReveal({
 
 sr.reveal('.home-text', { delay: 350, origin: 'left' })
 sr.reveal('.home-img', { delay: 350, origin: 'right' })
+// Check for initial user preference
+if (prefersDark) {
+	// body.classList.add('dark-mode');
+	sr.reveal('.home-text', { delay: 750, origin: 'left' })
+	sr.reveal('.home-img', { delay: 750, origin: 'right' })
+	sr.reveal('.home', { delay: 100, origin: 'right' })
+}
 
 sr.reveal('.sub-service,.about,.portfolio,.service,.cta,.contact', { delay: 100, origin: 'bottom' })
 
@@ -58,13 +111,13 @@ openModalBtn.onclick = () => {
 // 	myModal.style.display = "block";
 // });
 
-closeBtn.addEventListener("click", function() {
-  myModal.style.display = "none";
+closeBtn.addEventListener("click", function () {
+	myModal.style.display = "none";
 });
 
-window.addEventListener("click", function(event) {
-  if (event.target == myModal) {
-    myModal.style.display = "none";
-  }
+window.addEventListener("click", function (event) {
+	if (event.target == myModal) {
+		myModal.style.display = "none";
+	}
 });
 

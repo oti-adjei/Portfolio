@@ -44,7 +44,7 @@ header{
 }
 .logo img{
 	max-width: 100%;
-	width: 130px;
+	width: 50px;
 	height: auto;
 }
 .navlist{
@@ -88,6 +88,86 @@ header{
 	cursor: pointer;
 	display: none;
 }
+.toggle {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	cursor: pointer;
+	position: relative;
+	display: flex;
+	justify-content:space-between;
+	align-items: center;
+	width: 45px;
+	height: 20px;
+	border-radius: 50px;
+	transition: .2s;
+  }
+  
+  .toggle i {
+	/* width: 40%; */
+	line-height: 60px;
+	text-align:center;
+	font-size: 25px;
+	z-index: 1;
+  }
+  
+  .toggle .ball {
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	margin: 1.5px;
+	border-radius: 50%;
+	transition: .3s ease-out;
+  }
+  
+  input {
+	display: none;
+  }
+  
+  .toggle {
+	background: linear-gradient(145deg, #e1e1e1, #fff);
+	box-shadow: 3px 3px 4px #e6e6e6,
+	  -3px -3px 4px #ffffff;
+  }
+  
+  .toggle .bxs-sun {
+	color: #fafafa;
+  }
+  
+  .toggle .bx-moon {
+	color: #151d2a;
+  }
+  
+  .toggle .ball {
+	background: #151d2a;
+  }
+  
+  /*
+  -- Dark Mode --
+  */
+  
+  .dark {
+	background: #151d2a;
+  }
+  
+  .dark .toggle {
+	background: #151d2a;
+	box-shadow: 3px 3px 3px #0e131b,
+	  -3px -3px 3px #1c2739;
+  }
+  
+  .dark .toggle .bx-sun {
+	color: #fafafa;
+  }
+  
+  .dark .toggle .bxs-moon {
+	color: #151d2a;
+  }
+  
+  .dark .toggle .ball {
+	background: #fafafa;
+	transform: translateX(60px);
+  }
 .top-btn{
 	display: inline-block;
 	padding: 9px 30px;
@@ -114,7 +194,7 @@ section{
 	min-height: 100vh;
 	height: 100%;
 	width: 100%;
-	background: url(../img/white1.jpeg);
+	background: url(../assets/images/white1.jpeg);
 	
 	
 	background-size: cover;
@@ -295,10 +375,15 @@ header.sticky{
 .col{
 	position: relative;
 }
+.col:nth-child(2){
+	background-color: rgb(143, 142, 142);
+	padding: 0px 1px;
+	border-radius: 10px;
+}
 .col img{
 	max-width: 100%;
 	height: 450px;
-	object-fit: fit;
+	object-fit: cover;
 	border-radius: 12px;
 	border-color: #000;
 }
@@ -349,15 +434,7 @@ header.sticky{
 	opacity: 1;
 }
 
-.portfolio-webcontent{
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(500px, auto));
-	grid-gap: 2rem;
-	align-items: center;
-	margin-top: 5rem;
-	text-align: center;
-	cursor: pointer;
-}
+
 
 
 .see_text{
@@ -627,6 +704,7 @@ header.sticky{
 		background: var(--main-color);
 		text-align: right;
 		transition: all .40s;
+		align-items: center;
 	}
 	.navlist a{
 		display: block;
@@ -684,3 +762,35 @@ header.sticky{
 		width: 310px;
 	}
 }
+
+/* Dark mode overrides (automatically applied based on preference) */
+@media (prefers-color-scheme: dark) {
+	body {
+		background: var(--dark-1, #071628);
+	  color: #ffffff;
+	}
+	header.sticky {
+		background: var(--dark-1, #051b35);
+	}
+	.navlist * a{
+		color: #ffffff;
+	}
+	.home{
+		background: url(../assets/images/oooscillate.svg);
+	}
+	.home p{
+		color: #ffffff;	
+	}
+	.home-text h1, .home-text h5 {
+		color: #ffffff;
+	}
+	.top-btn{
+		color: #ffffff;
+	}
+	.about-text p{
+		color: #ffffff;	
+	}
+	.sub-box{border-radius: 16px;
+		background: var(--dark-2, #0E1215);
+	}
+  }
