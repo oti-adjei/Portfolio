@@ -292,12 +292,27 @@ header.sticky{
 	color: var(--secound-color);
 	line-height: 29px;
 }
+.sub-box:hover h3{
+	color: #000;
+}
 .sub-box:hover{
 	background: #ffffff;
 	
 	will-change: transform;
 	transform: perspective(1000px) rotateX(4.80deg) rotateY(10.23deg) scale3d(1.05,1.05,1.05);
 }
+.sub-box:nth-child(2):hover {
+    background: #ffffff;
+    will-change: transform;
+    transform: perspective(1000px) translateY(-10px);
+}
+
+.sub-box:nth-child(3):hover {
+    background: #ffffff;
+    will-change: transform;
+    transform: perspective(1000px) rotateX(4.80deg) rotateY(-10.23deg) scale3d(1.05, 1.05, 1.05);
+}
+
 
 .about{
 	display: grid;
@@ -324,7 +339,7 @@ header.sticky{
 .about-text p{
 	max-width: 550px;
 	font-size: var(--p-font);
-	color: var(--secound-color);
+	color: var(--second-color);
 	line-height: 28px;
 	margin-bottom: 45px;
 }
@@ -350,7 +365,7 @@ header.sticky{
 }
 .portfolio-content{
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+	grid-template-columns: repeat(auto-fit, minmax(340px, auto));
 	grid-gap: 2rem;
 	align-items: center;
 	margin-top: 5rem;
@@ -435,14 +450,14 @@ header.sticky{
 	text-align: center;
 	margin-top: 3rem;
 }
-.see_text:hover{
+/* .see_text:hover{
 	text-decoration: underline;
-}
+} */
 
 
 .service-content{
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(400px, auto));
+	grid-template-columns: repeat(auto-fit, minmax(430px, auto));
 	grid-gap: 2rem;
 	align-items: center;
 	margin-top: 5rem;
@@ -792,10 +807,22 @@ header.sticky{
 	.top-btn{
 		color: #ffffff;
 	}
+	.about-text h2{
+		color: white;
+	}
 	.about-text p{
-		color: #ffffff;	
+		color: var(--secound-color);	
 	}
 	.sub-box{border-radius: 16px;
 		background: var(--dark-2, #0E1215);
+		box-shadow: none;
 	}
+	.sub-box > h3,
+	.portfolio .heading>h2,
+	.service .heading>h2,
+	.cta .heading>h2,
+	.ends>p{
+		color: white;
+	}
+	
   }
