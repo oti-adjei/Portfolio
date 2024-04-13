@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.back {
+    display: inline-flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: #ccc;
+    padding: 10px;
+    border-radius: 50%; /* Make it circular */
+    width: 50px;
+    height: 50px;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+}
+
+heady {
+    text-align: center;
+    padding: 20px 0;
+}
+
+
+
+h1 {
+    margin: 0;
+}
+
+.products {
+    text-align: center;
+}
+
+.product-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product-card {
+    background-color: #f9f9f9;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 16px;
+    flex: 0 0 calc(100% - 20px); /* Full width for mobile */
+}
+
+
+.product-card.big {
+    flex: 0 0 calc(100% - 20px); /* Full width for mobile */
+}
+.product-card .imag,
+.product-card.big .imag{
+    height: 85%;
+    /* background-color: wheat; */
+    
+}
+.product-card .imgdesc,
+.product-card.big .imgdesc{
+    height: 15%;
+    background-color: cadetblue;
+    border-radius: 0px 0px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding-inline: 1rem;
+    color: white;
+    
+}
+.product-card .imag img,
+.product-card.big .imag img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+.product-card .imgdesc h4,
+.product-card.big .imgdesc h4 ,
+.product-card .imgdesc p,
+.product-card.big .imgdesc p{
+    margin: unset;
+}
+
+/* For larger screens */
+@media (min-width: 768px) {
+    body {
+        padding: 90px 7%;
+    }
+
+    .product-row{
+        width: 100%;
+        row-gap: 1rem;
+        column-gap: 1rem;
+    }
+    .product-card {
+        flex: none; /* Remove flex*/
+        width:calc(30% - 1rem);
+        margin: unset;
+        height: 450px;
+       
+    }
+
+    .product-card.big {
+        flex: none; /* Remove flex */
+        width: calc(63% - 1rem);
+    }
+}

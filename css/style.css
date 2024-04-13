@@ -88,39 +88,12 @@ header{
 	cursor: pointer;
 	display: none;
 }
-.toggle {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	cursor: pointer;
-	position: relative;
-	display: flex;
-	justify-content:space-between;
-	align-items: center;
-	width: 45px;
-	height: 20px;
-	border-radius: 50px;
-  }
-  
-  .toggle i {
-	/* width: 40%; */
-	line-height: 60px;
-	text-align:center;
-	font-size: 25px;
-	z-index: 1;
-  }
   
   input {
 	display: none;
   }
   
-  .toggle .bx-moon {
-	color: #151d2a;
-  }
-  
-  .toggle .ball {
-	background: #151d2a;
-  }
+ 
   
   /*
   -- Dark Mode --
@@ -372,13 +345,19 @@ header.sticky{
 	text-align: center;
 	cursor: pointer;
 }
+.portfolio-content a{
+	display: contents;
+}
+
 .col{
 	position: relative;
 }
+
 .col2{
 	grid-column: span 2;
 	position: relative;
 }
+
 
 .col:nth-child(2){
 	background-color: rgb(143, 142, 142);
@@ -402,6 +381,7 @@ header.sticky{
 	left: 0;
 	border-radius: 12px;
 	transition: all .40s;
+	z-index: 2;
 }
 .layer:hover{
 	background: linear-gradient(rgba(0,0,0,0.5) 0%, #191919);
