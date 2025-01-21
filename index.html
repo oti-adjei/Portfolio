@@ -19,6 +19,13 @@
 <body>
 	<!-- Dark theme color: #2b2d33 -->
 
+	<div id="overlay" class="hidden"></div>
+	<div id="popup" class="hidden">
+	  <h2>Site Under Maintenance</h2>
+	  <p>Some sections of this site are currently being updated to enhance your experience. <br> <strong>Please note:</strong> You can still explore and navigate the site, but please note that certain pages or features may be incomplete or unavailable. We appreciate your patience and understanding as we continue to improve.</p>
+	  <button id="closeBtn">Got It</button>
+	</div>
+
 	<header>
 		<a href="#" class="logo"><img src="./assets/images/GHlog.png"></a>
 		<!-- BOxicon class to show menu icon button on smaller screen -->
@@ -68,7 +75,7 @@
 		<div class="items">
 			<div class="sub-box">
 				<div class="sub-img">
-					<img src="./assets/images/target.svg">
+					<img src="./assets/icons/target.svg">
 				</div>
 				<h3>Pixel Perfect</h3>
 				<p>Most common methods for designing websites that work well on desktop is responsive and adaptive
@@ -77,7 +84,7 @@
 
 			<div class="sub-box">
 				<div class="sub-img">
-					<img src="./assets/images/brush.svg">
+					<img src="./assets/icons/brush.svg">
 				</div>
 				<h3>High Quality</h3>
 				<p>Most common methods for designing websites that work well on desktop is responsive and adaptive
@@ -86,7 +93,7 @@
 
 			<div class="sub-box">
 				<div class="sub-img">
-					<img src="./assets/images/energy.svg">
+					<img src="./assets/icons/energy.svg">
 				</div>
 				<h3>Awesome Idea</h3>
 				<p>Most common methods for designing websites that work well on desktop is responsive and adaptive
@@ -147,38 +154,38 @@
 					<h5>College of Engineering student's App</h5>
 				</div>
 			</div> -->
-			<a href="pages/projects/mummysdarl.html" style="display: contents;">
+			<a href="pages/projects/enovyer.html" style="display: contents;">
 				<div class="col2">
 
-					<img src="./assets/images/gulddd.png">
+					<img src="./assets/images/envoyer/envoyer.png">
 
 					<div class="layer">
-						<h3>Mummys Darl</h3>
-						<h5>A School Website</h5>
+						<h3>Envoyer Ghana</h3>
+						<h5>A digital freight network</h5>
 					</div>
 				</div>
 			</a>
 			<a href="pages/projects/gesa.html" style="display: contents;">
 				<div class="col">
-					<img src="./assets/images/Gul.jpg">
+					<img src="./assets/images/gesa/Gesa.jpeg">
 					<div class="layer">
 						<h3>GESA KNUST</h3>
-						<h5>College of Engineering student's Mobile Application</h5>
+						<h5>College of Engineering Mobile Application</h5>
 					</div>
 				</div>
 			</a>
-			<a href="pages/projects/provid.html" style="display: contents;">
+			<a href="pages/projects/flexdown.html" style="display: contents;">
 				<div class="col">
-					<img src="./assets/images/bss.png">
+					<img src="./assets/images/flexdown/flexdown.png">
 					<div class="layer">
-						<h3>Prov-vid</h3>
-						<h5>A Covid Mobile Application</h5>
+						<h3>FlexDown</h3>
+						<h5>A Real Estate Mobile Application</h5>
 					</div>
 				</div>
 			</a>
 			<a href="pages/projects/gulliverstravel.html" style="display: contents;">
 				<div class="col2">
-					<img src="./assets/images/gulddd.png">
+					<img src="./assets/images/gullivers/gulddd.png">
 					<div class="layer">
 						<h3>Gullivers Travel Hotel</h3>
 						<h5>A Hotel Website</h5>
@@ -208,7 +215,7 @@
 		<div class="service-content">
 			<div class="row">
 				<div class="s s-one">
-					<img src="./assets/images/anchor.svg">
+					<img src="./assets/icons/anchor.svg">
 				</div>
 				<h3>UI Design</h3>
 				<!-- <h5>Starts From <span>$99</span></h5> -->
@@ -222,7 +229,7 @@
 
 			<div class="row">
 				<div class="s s-tow">
-					<img src="./assets/images/physics.svg">
+					<img src="./assets/icons/physics.svg">
 				</div>
 				<h3>Mobile Applications</h3>
 				<!-- <h5>Starts From <span>$99</span></h5> -->
@@ -238,7 +245,7 @@
 
 			<div class="row">
 				<div class="s s-three">
-					<img src="./assets/images/contact.svg">
+					<img src="./assets/icons/contact.svg">
 				</div>
 				<h3>Web & Desktop Applications</h3>
 				<!-- <h5>Starts From <span>$99</span></h5> -->
@@ -254,7 +261,7 @@
 
 			<div class="row">
 				<div class="s s-four">
-					<img src="./assets/images/web.svg">
+					<img src="./assets/icons/web.svg">
 				</div>
 				<h3>Mentorship</h3>
 				<!-- <h5><span>Free</span></h5> -->
@@ -324,6 +331,33 @@
 	<div class="ends">
 		<p>Gorge Heavenson Jnr. Oti-Adjei © 2022</p>
 	</div>
+
+	<script>
+		// Display the popup when the page loads
+		window.onload = () => {
+		const popup = document.getElementById('popup');
+		const overlay = document.getElementById('overlay');
+		const closeBtn = document.getElementById('closeBtn');
+
+		// Check if the popup has already been shown
+		const hasSeenPopup = localStorage.getItem('hasSeenPopup');
+
+		if (!hasSeenPopup) {
+			popup.classList.remove('hidden');
+			overlay.classList.remove('hidden');
+
+			// Mark the popup as seen in localStorage
+			localStorage.setItem('hasSeenPopup', 'true');
+		}
+
+		// Close the popup on button click
+		closeBtn.addEventListener('click', () => {
+			popup.classList.add('hidden');
+			overlay.classList.add('hidden');
+		});
+		};
+
+	  </script>
 
 	<!-- Link to scrollreveal js file -->
 	<script src="https://unpkg.com/scrollreveal"></script>

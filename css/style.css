@@ -648,6 +648,61 @@ header.sticky{
 	text-decoration: none;
 	cursor: pointer;
   }
+
+  #popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 90%;
+	max-width: 400px;
+	padding: 20px;
+	background: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	text-align: center;
+	z-index: 1000;
+  }
+
+  #popup h2 {
+	margin: 0;
+	font-size: 1.5rem;
+	color: #333;
+  }
+
+  #popup p {
+	margin: 15px 0;
+	font-size: 1rem;
+	color: #555;
+  }
+
+  #popup button {
+	padding: 10px 20px;
+	background: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 1rem;
+  }
+
+  #popup button:hover {
+	background: #0056b3;
+  }
+
+  #overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 999;
+  }
+
+  .hidden {
+	display: none;
+  }
   
 
 @media (max-width: 1425px){
