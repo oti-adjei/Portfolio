@@ -37,6 +37,7 @@ const sr = ScrollReveal({
 sr.reveal('.home-text', { delay: 350, origin: 'left' })
 sr.reveal('.home-img', { delay: 350, origin: 'right' })
 sr.reveal('.sub-service,.about,.portfolio,.service,.cta,.contact', { delay: 100, origin: 'bottom' })
+sr.reveal('skills-section',{delay: 100,origin: 'left'})
 // Check for initial user preference
 if (prefersDark) {
 	// body.classList.add('dark-mode');

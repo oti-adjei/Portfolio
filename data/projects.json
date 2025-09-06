@@ -1,0 +1,345 @@
+[
+  {
+    "id": "gullivers-travel",
+    "title": "Gulliver's Travel Hotel Website",
+    "category": "Web Development & Design",
+    "timeframe": "4 Months",
+    "tools": ["HTML", "CSS", "JavaScript", "PHP"],
+    "project_url": "https://www.example.com",
+    "overview": "A comprehensive booking website developed for a luxury hotel chain. The platform includes real-time room availability, a secure payment gateway, and a user-friendly interface for managing reservations. The goal was to increase direct bookings and enhance the user experience.",
+    "key_features": ["Real-time Booking", "Responsive Design", "Admin Management Panel", "Secure Payments"],
+    "original_images": {
+      "main": "../assets/images/gullivers/gulddd.png",
+      "side1": "../assets/images/gullivers/gullivers_rooms.png",
+      "side2": "../assets/images/gullivers/gullivers_restaurant.png"
+    },
+    "type": "web",
+    "tags": ["Web", "Frontend", "Backend"],
+    "images": [
+      "../assets/images/gullivers/gulddd.png",
+      "../assets/images/gullivers/gullivers_rooms.png",
+      "../assets/images/gullivers/gullivers_restaurant.png"
+    ],
+    "introParagraph": "A comprehensive booking website developed for a luxury hotel chain. The platform includes real-time room availability, a secure payment gateway, and a user-friendly interface for managing reservations. The goal was to increase direct bookings and enhance the user experience.",
+    "clientOverview": "A luxury hotel chain seeking to enhance its online presence and streamline its reservation process.",
+    "challenge": "To increase direct bookings and improve the online user experience for hotel guests.",
+    "solutions": ["Real-time Booking", "Responsive Design", "Admin Management Panel", "Secure Payments"],
+    "stats": [],
+    "takeaways": "A user-centric design coupled with a robust backend can significantly boost direct sales and customer satisfaction."
+  },
+  {
+    "id": "gesa-platform",
+    "title": "GesA Engineering Platform",
+    "category": "Mobile Application",
+    "timeframe": "6 Months",
+    "tools": ["React", "Node.js", "MongoDB"],
+    "project_url": "https://www.example.com",
+    "overview": "GesA is a web platform for engineering students to access course materials, collaborate on projects, and view upcoming university events. It features a robust user authentication system and state management for a seamless experience.",
+    "key_features": ["User Authentication", "State Management", "Event Calendar", "File Sharing"],
+    "original_images": {
+      "main": "../assets/images/gesa/gesa.png",
+      "side1": "../assets/images/gesa/Gesa.jpeg",
+      "side2": "../assets/images/gesa/gesa_events.png"
+    },
+    "type": "mobile",
+    "tags": ["Mobile", "Mobile(Cross)"],
+    "images": [
+      "../assets/images/gesa/gesa.png",
+      "../assets/images/gesa/Gesa.jpeg",
+      "../assets/images/gesa/gesa_events.png"
+    ],
+    "introParagraph": "GesA is a web platform for engineering students to access course materials, collaborate on projects, and view upcoming university events. It features a robust user authentication system and state management for a seamless experience.",
+    "clientOverview": "An educational institution aiming to provide a centralized digital hub for its engineering students.",
+    "challenge": "To create a unified platform for students to access academic resources and collaborate effectively.",
+    "solutions": ["User Authentication", "State Management", "Event Calendar", "File Sharing"],
+    "stats": [],
+    "takeaways": "Centralizing resources into a single platform greatly improves student engagement and accessibility."
+  },
+  {
+    "id": "bloodspot-app",
+    "title": "Bloodspot Donation App",
+    "category": "Mobile & Web App",
+    "timeframe": "3 Months",
+    "tools": ["Flutter", "Firebase"],
+    "project_url": null,
+    "overview": "A mobile and web application designed to connect blood donors with patients in need. The app features geolocation to find nearby donation centers and real-time requests for specific blood types.",
+    "key_features": ["Geolocation", "Real-time Notifications", "Donor History"],
+    "original_images": {
+      "main": "../assets/images/bloodshot/Bloodspot.png",
+      "side1": "../assets/images/bloodshot/bs.png",
+      "side2": "../assets/images/bloodshot/bss.png"
+    },
+    "type": "mobile",
+    "tags": ["Mobile", "Mobile(Cross)"],
+    "images": [
+      "../assets/images/bloodshot/bs.png",
+      "../assets/images/bloodshot/Bloodspot.png",
+      "../assets/images/bloodshot/bss.png"
+    ],
+    "introParagraph": "A mobile and web application designed to connect blood donors with patients in need. The app features geolocation to find nearby donation centers and real-time requests for specific blood types.",
+    "clientOverview": "A healthcare organization focused on improving the efficiency of blood donation coordination.",
+    "challenge": "To bridge the gap between blood donors and recipients in emergency situations using technology.",
+    "solutions": ["Geolocation", "Real-time Notifications", "Donor History"],
+    "stats": [],
+    "takeaways": "Leveraging mobile technology can have a significant real-world impact in critical sectors like healthcare."
+  },
+  {
+    "id": "envoyer-ghana",
+    "title": "envoyer/envoyer Ghana",
+    "category": "Web Development",
+    "timeframe": "June 2024 - Sept 2024",
+    "tools": ["HTML", "CSS(Tailwind)", "JavaScript(Express)", "PostgreSQL"],
+    "project_url": "http://envoyergh.com",
+    "overview": "envoyer is a digital freight network that provides a platform via our Website and the Mobile App for Shippers, business owners and even individuals to connect with carriers to meet their road transport needs. The platform also offers all-purpose Bus Hiring and Towing services to its users. I was a team lead working on Frontend and Backend development, handling user roles, OTP verification, image uploads, KYC verification, a notification system using Server-Sent Events, and the admin setup.",
+    "key_features": ["Responsive Web View", "User-Friendly Interface", "Login and Registration Portal", "Booking Portal", "Notification System"],
+    "original_images": {
+      "main": "../assets/images/envoyer/envoyerGH.png",
+      "side1": "../assets/images/envoyer/envoyer_contact.png",
+      "side2": "../assets/images/envoyer/envoyer_login.png"
+    },
+    "type": "web",
+    "tags": ["Web", "Frontend", "Backend"],
+    "images": [
+      "../assets/images/envoyer/envoyerGH.png",
+      "../assets/images/envoyer/envoyer_contact.png",
+      "../assets/images/envoyer/envoyer_login.png"
+    ],
+    "introParagraph": "envoyer is a digital freight network that provides a platform via our Website and the Mobile App for Shippers, business owners and even individuals to connect with carriers to meet their road transport needs. The platform also offers all-purpose Bus Hiring and Towing services to its users. I was a team lead working on Frontend and Backend development, handling user roles, OTP verification, image uploads, KYC verification, a notification system using Server-Sent Events, and the admin setup.",
+    "clientOverview": "A logistics startup aiming to digitize freight, bus hiring, and towing services in Ghana.",
+    "challenge": "To build a comprehensive platform connecting shippers with carriers, including features like OTP, KYC, and real-time notifications.",
+    "solutions": ["Responsive Web View", "User-Friendly Interface", "Login and Registration Portal", "Booking Portal", "Notification System"],
+    "stats": [],
+    "takeaways": "A multi-faceted platform requires robust backend systems to handle diverse user roles and verifications securely."
+  },
+  {
+    "id": "flexdown",
+    "title": "FlexDown",
+    "category": "Mobile Application Development",
+    "timeframe": "Dec 2024",
+    "tools": ["Dart", "Flutter", "Paystack API"],
+    "project_url": null,
+    "overview": "Designed and developed a user-centric real estate platform for buying, selling, and renting properties. I created a streamlined and scalable API offering optimized user management for registration and authentication, seamless payment processing via Paystack integration, and scalable property listings, ensuring a smooth and responsive user experience.",
+    "key_features": ["Real-time Updates", "Data Accuracy", "Interactive Platform", "Secure Payments"],
+    "original_images": {
+      "main": "../assets/images/flexdown/flexdown_landing.png",
+      "side1": "../assets/images/flexdown/flexdown.png",
+      "side2": "../assets/images/flexdown/flexdown_listing.png"
+    },
+    "type": "mobile",
+    "tags": ["Mobile", "Mobile(Cross)"],
+    "images": [
+      "../assets/images/flexdown/flexdown_landing.png",
+      "../assets/images/flexdown/flexdown.png",
+      "../assets/images/flexdown/flexdown_listing.png"
+    ],
+    "introParagraph": "Designed and developed a user-centric real estate platform for buying, selling, and renting properties. I created a streamlined and scalable API offering optimized user management for registration and authentication, seamless payment processing via Paystack integration, and scalable property listings, ensuring a smooth and responsive user experience.",
+    "clientOverview": "A real estate company looking to create a modern, user-friendly mobile platform for property transactions.",
+    "challenge": "To build a scalable API with secure user management and integrated payment processing for a real estate app.",
+    "solutions": ["Real-time Updates", "Data Accuracy", "Interactive Platform", "Secure Payments"],
+    "stats": [],
+    "takeaways": "Integrating a reliable payment API like Paystack is crucial for building trust and functionality in transactional apps."
+  },
+  {
+    "id": "mummys-darl",
+    "title": "Mummy's Darl School Website",
+    "category": "Web Development",
+    "timeframe": "Jan 2024 - Present",
+    "tools": ["HTML", "CSS"],
+    "project_url": null,
+    "overview": "Developed a school website with a responsive web view using HTML and CSS, featuring a clean UI. The website allows users to pay fees and access the admission portal. It includes sections for staff profiles, events, blogs, and more. Maintained a user-friendly and responsive experience across platforms.",
+    "key_features": ["Responsive Web View", "User-Friendly Interface", "Admission Portal", "Staff Profiles", "Events and Blogs Sections"],
+    "original_images": {
+      "main": "../assets/images/web2.jpg",
+      "side1": "../assets/images/Gesa.jpeg",
+      "side2": "../assets/images/bss.png"
+    },
+    "type": "web",
+    "tags": ["Web", "Frontend"],
+    "images": [
+      "../assets/images/web2.jpg",
+      "../assets/images/Gesa.jpeg",
+      "../assets/images/bss.png"
+    ],
+    "introParagraph": "Developed a school website with a responsive web view using HTML and CSS, featuring a clean UI. The website allows users to pay fees and access the admission portal. It includes sections for staff profiles, events, blogs, and more. Maintained a user-friendly and responsive experience across platforms.",
+    "clientOverview": "An educational institution needing a professional and functional website for students, parents, and staff.",
+    "challenge": "To create a clean, responsive school website that includes portals for fee payment and admissions.",
+    "solutions": ["Responsive Web View", "User-Friendly Interface", "Admission Portal", "Staff Profiles", "Events and Blogs Sections"],
+    "stats": [],
+    "takeaways": "A well-structured website serves as a vital communication tool for educational institutions."
+  },
+  {
+    "id": "pokebook",
+    "title": "Pokebook",
+    "category": "Mobile Application Development",
+    "timeframe": "Ongoing",
+    "tools": ["Flutter", "Provider", "Pokemon API"],
+    "project_url": null,
+    "overview": "Built a Mobile Application using Flutter and the external Pokemon API. Utilized Provider for efficient state management, ensuring seamless updates across the app. Integrated dynamic search, enabling users to find Pokémon quickly by name, and implemented features to view detailed stats and discover similar Pokémon based on shared characteristics.",
+    "key_features": ["State Management", "Dynamic Search", "View Detailed Stats", "Discover Similar Pokémon"],
+    "original_images": {
+      "main": "../assets/images/mob.jpg",
+      "side1": "../assets/images/bss.png",
+      "side2": "../assets/images/bss.png"
+    },
+    "type": "mobile",
+    "tags": ["Mobile", "Mobile(Cross)"],
+    "images": [
+      "../assets/images/mob.jpg",
+      "../assets/images/bss.png",
+      "../assets/images/bss.png"
+    ],
+    "introParagraph": "Built a Mobile Application using Flutter and the external Pokemon API. Utilized Provider for efficient state management, ensuring seamless updates across the app. Integrated dynamic search, enabling users to find Pokémon quickly by name, and implemented features to view detailed stats and discover similar Pokémon based on shared characteristics.",
+    "clientOverview": "A personal project to demonstrate skills in mobile app development, API integration, and state management.",
+    "challenge": "To efficiently manage and display data from a complex external API within a Flutter application.",
+    "solutions": ["State Management", "Dynamic Search", "View Detailed Stats", "Discover Similar Pokémon"],
+    "stats": [],
+    "takeaways": "Effective state management with Provider is key to building responsive and performant Flutter apps."
+  },
+  {
+    "id": "pro-vid",
+    "title": "Pro-Vid",
+    "category": "Mobile Application Development",
+    "timeframe": "Aug 2021",
+    "tools": ["Dart", "Flutter"],
+    "project_url": null,
+    "overview": "Developed a Covid-19 tracking app using Dart and Flutter to provide users with reliable global/local case updates and curated news sources, combating misinformation. It empowers proactive health management through self-assessment quizzes and fosters community awareness by disseminating real-time data.",
+    "key_features": ["Real-time Updates", "Data Accuracy", "Interactive Platform", "Self-Assessment Quizzes"],
+    "original_images": {
+      "main": "../assets/images/mob2.jpg",
+      "side1": "../assets/images/Covid.png",
+      "side2": "../assets/images/Covid.png"
+    },
+    "type": "mobile",
+    "tags": ["Mobile", "Mobile(Cross)"],
+    "images": [
+      "../assets/images/mob2.jpg",
+      "../assets/images/Covid.png",
+      "../assets/images/Covid.png"
+    ],
+    "introParagraph": "Developed a Covid-19 tracking app using Dart and Flutter to provide users with reliable global/local case updates and curated news sources, combating misinformation. It empowers proactive health management through self-assessment quizzes and fosters community awareness by disseminating real-time data.",
+    "clientOverview": "A public health initiative aimed at providing accurate information and tools during the Covid-19 pandemic.",
+    "challenge": "To combat misinformation by creating an app with reliable data, news, and self-assessment tools for Covid-19.",
+    "solutions": ["Real-time Updates", "Data Accuracy", "Interactive Platform", "Self-Assessment Quizzes"],
+    "stats": [],
+    "takeaways": "Technology can play a vital role in public health by providing accessible, accurate information and empowering users."
+  },
+  {
+    "id": "scribble-notes",
+    "title": "Scribble Notes",
+    "category": "Mobile Application Development",
+    "timeframe": "Dec 2024 - Present",
+    "tools": ["Flutter", "Provider", "SharedPreferences"],
+    "project_url": null,
+    "overview": "Building a Mobile Notes Application using Flutter. Utilizing Provider for efficient state management and SharedPreferences for storing data locally. Integrating dynamic search using Provider, enabling users to find notes quickly by title.",
+    "key_features": ["State Management", "Local Data Storage", "Dynamic Search"],
+    "original_images": {
+      "main": "../assets/images/gulddd.png",
+      "side1": "../assets/images/Gesa.jpeg",
+      "side2": "../assets/images/bss.png"
+    },
+    "type": "mobile",
+    "tags": ["Mobile", "Mobile(Cross)"],
+    "images": [
+      "../assets/images/gulddd.png",
+      "../assets/images/Gesa.jpeg",
+      "../assets/images/bss.png"
+    ],
+    "introParagraph": "Building a Mobile Notes Application using Flutter. Utilizing Provider for efficient state management and SharedPreferences for storing data locally. Integrating dynamic search using Provider, enabling users to find notes quickly by title.",
+    "clientOverview": "A personal project focused on creating a simple and efficient note-taking app with local storage.",
+    "challenge": "To implement efficient state management and local data persistence for a seamless user experience in a notes app.",
+    "solutions": ["State Management", "Local Data Storage", "Dynamic Search"],
+    "stats": [],
+    "takeaways": "Using SharedPreferences is an effective method for lightweight local data storage in Flutter applications."
+  },
+  {
+    "id": "empowering-serenity",
+    "title": "Empowering Serenity E-Commerce Platform",
+    "category": "Web Application / E-Commerce",
+    "timeframe": "2024",
+    "tools": ["Node.js", "Express", "React", "MongoDB", "Railway"],
+    "project_url": "https://empowering-serenity-development.up.railway.app/",
+    "overview": "A full-stack e-commerce platform designed to provide a seamless shopping experience. The application features a complete product catalog, user authentication for personalized accounts, a shopping cart, and an order management system. Deployed on Railway for robust and scalable performance.",
+    "key_features": ["Full User Authentication", "Product Catalog & Search", "Shopping Cart & Checkout", "Order History", "Admin Product Management"],
+    "original_images": {
+      "main": "../assets/images/empowering-serenity/main.png",
+      "side1": "../assets/images/empowering-serenity/cart.png",
+      "side2": "../assets/images/empowering-serenity/product-page.png"
+    },
+    "type": "web",
+    "tags": ["Web", "Frontend", "Backend"],
+    "images": [
+      "../assets/images/empowering-serenity/main.png",
+      "../assets/images/empowering-serenity/cart.png",
+      "../assets/images/empowering-serenity/product-page.png"
+    ],
+    "introParagraph": "A full-stack e-commerce platform designed to provide a seamless shopping experience. The application features a complete product catalog, user authentication for personalized accounts, a shopping cart, and an order management system. Deployed on Railway for robust and scalable performance.",
+    "clientOverview": "An online retailer requiring a scalable, full-stack platform for selling products.",
+    "challenge": "To build a complete e-commerce solution with user accounts, cart functionality, and order management.",
+    "solutions": ["Full User Authentication", "Product Catalog & Search", "Shopping Cart & Checkout", "Order History", "Admin Product Management"],
+    "stats": [],
+    "takeaways": "A full-stack MERN application deployed on a platform like Railway provides a powerful and scalable solution for e-commerce."
+  },
+  {
+    "id": "dear-akua",
+    "title": "Dear Akua - Anonymous Confession Site",
+    "category": "Web Application / Social Platform",
+    "timeframe": "2023",
+    "tools": ["Node.js", "Express", "EJS", "MongoDB", "Railway"],
+    "project_url": "https://dear-akua-production.up.railway.app/",
+    "overview": "An anonymous web-based platform where users can write and share confessions. The site is designed to foster a safe and non-judgmental community space. It features a simple, intuitive interface for submitting and reading entries, ensuring user privacy and ease of use.",
+    "key_features": ["Anonymous Submissions", "Public Confession Feed", "Responsive Design", "Content Moderation Features"],
+    "original_images": {
+      "main": "../assets/images/dear-akua/landing-page.png",
+      "side1": "../assets/images/dear-akua/submit-form.png",
+      "side2": "../assets/images/dear-akua/confessions-feed.png"
+    },
+    "type": "web",
+    "tags": ["Web", "Frontend", "Backend"],
+    "images": [
+      "../assets/images/dear-akua/landing-page.png",
+      "../assets/images/dear-akua/submit-form.png",
+      "../assets/images/dear-akua/confessions-feed.png"
+    ],
+    "introParagraph": "An anonymous web-based platform where users can write and share confessions. The site is designed to foster a safe and non-judgmental community space. It features a simple, intuitive interface for submitting and reading entries, ensuring user privacy and ease of use.",
+    "clientOverview": "A community-focused project to create a safe, anonymous space for sharing personal stories.",
+    "challenge": "To ensure user anonymity and create a simple, non-judgmental interface for a public confession platform.",
+    "solutions": ["Anonymous Submissions", "Public Confession Feed", "Responsive Design", "Content Moderation Features"],
+    "stats": [],
+    "takeaways": "Prioritizing user privacy and creating a simple submission process are key to the success of anonymous social platforms."
+  },
+ {
+    "id": "mindfulness-meditation-app",
+    "title": "Mindfulness & Meditation Mobile Application",
+    "category": "Mobile Application",
+    "timeframe": "2023",  
+    "type": "mobile",
+    "tags": ["Mobile", "Mobile(Cross)"],
+    "tools": ["React Native", "Expo", "Firebase"],
+    "project_url": null,
+    "overview": "A leading wellness brand sought to enter the digital space with a calming, user-friendly mobile app to guide users through meditation and reduce stress.",
+    "key_features": ["Native iOS and Android applications", "Soothing color palette and minimalist design", "Library of guided meditations with progress tracking features", "Gamification elements like streaks and achievements to encourage daily use"],
+    "original_images": {
+      "main": "https://cdn.dribbble.com/userupload/4252538/file/original-3d9617fa7980b1e457317783796d7443.png?resize=800x600",
+     "side1": "https://cdn.dribbble.com/userupload/3909772/file/original-e382d6318e8117282a57864f9f302061.png?resize=800x600",
+      "side2":"https://cdn.dribbble.com/users/1615584/screenshots/14023240/media/f4d7f763263073c68388d7524c741490.jpg?resize=800x600"
+    },
+    "images": [
+      "../assets/images/dear-akua/landing-page.png",
+      "../assets/images/dear-akua/submit-form.png",
+      "../assets/images/dear-akua/confessions-feed.png"
+    ],
+    "introParagraph": "A leading wellness brand sought to enter the digital space with a calming, user-friendly mobile app to guide users through meditation and reduce stress.",
+    "clientOverview": "A wellness company looking to expand its market reach and provide digital tools for its customers to practice mindfulness anytime, anywhere.",
+    "challenge": "Design an intuitive, engaging, and calming user interface that stands out in a crowded market of wellness apps.",
+    "solutions": [
+      "Developed native iOS and Android applications with a soothing color palette and minimalist design.",
+      "Integrated a library of guided meditations with progress tracking features.",
+      "Included gamification elements like streaks and achievements to encourage daily use."
+    ],
+    "stats": [
+      { "value": "45%", "label": "Increase in user engagement" },
+      { "value": "50k+", "label": "Downloads in the first 3 months" }
+    ],
+    "takeaways": "A focus on user experience and a calming aesthetic led to high user adoption and positive App Store reviews."
+  }
+]
