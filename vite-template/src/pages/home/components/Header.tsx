@@ -44,8 +44,12 @@ export default function Header() {
       >
         <nav className="px-4 sm:px-6 lg:px-12 py-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <Link to={navigation.logo.url} className="text-xl sm:text-2xl font-bold text-gray-900 cursor-pointer">
-              {navigation.logo.text}
+            <Link to={navigation.logo.url} className="cursor-pointer">
+              {navigation.logo.imageUrl ? (
+                <img src={navigation.logo.imageUrl} alt={navigation.logo.text} className="h-8 w-auto" />
+              ) : (
+                <span className="text-xl sm:text-2xl font-bold text-gray-900">{navigation.logo.text}</span>
+              )}
             </Link>
 
             <div className="hidden md:flex items-center gap-6 lg:gap-8">

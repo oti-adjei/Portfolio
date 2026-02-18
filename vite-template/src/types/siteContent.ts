@@ -15,6 +15,7 @@ export interface Navigation {
   logo: {
     text: string;
     url: string;
+    imageUrl?: string;
   };
   menuItems: MenuItem[];
   ctaButton: {
@@ -34,6 +35,7 @@ export interface Footer {
   logo: {
     text: string;
     url: string;
+    imageUrl?: string;
   };
   copyright: string;
   links: FooterLink[];

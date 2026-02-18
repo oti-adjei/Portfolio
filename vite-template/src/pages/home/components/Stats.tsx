@@ -5,15 +5,9 @@ export default function Stats() {
   const stats = content.homePage.stats;
 
   const colorMap: Record<string, string> = {
-    'stat-projects': 'from-teal-400 to-teal-500',
-    'stat-clients': 'from-purple-400 to-purple-500',
-    'stat-experience': 'from-orange-400 to-orange-500',
-  };
-
-  const iconMap: Record<string, string> = {
-    'stat-projects': 'ri-folder-chart-line',
-    'stat-clients': 'ri-team-line',
-    'stat-experience': 'ri-time-line',
+    'stat-projects': 'bg-[#baebcd]',
+    'stat-clients': 'bg-[#D9D1FA]',
+    'stat-experience': 'bg-[#faedce]',
   };
 
   return (
@@ -28,23 +22,16 @@ export default function Stats() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stats.items.map((stat) => {
-            const color = colorMap[stat.id] ?? 'from-gray-400 to-gray-500';
-            const icon = iconMap[stat.id] ?? 'ri-bar-chart-line';
+            const color = colorMap[stat.id] ?? 'bg-gray-100';
             return (
               <div
                 key={stat.id}
-                className={`bg-gradient-to-br ${color} rounded-3xl p-12 text-center text-white hover:scale-105 transition-transform duration-300 cursor-pointer shadow-lg hover:shadow-2xl`}
+                className={`${color} rounded-xl p-12 text-center hover:scale-105 transition-transform duration-300 cursor-pointer shadow-[18px_0px_87px_0px_rgb(10_15_70/7%)]`}
               >
-                <div className="space-y-4">
-                  <div className="flex justify-center">
-                    <div className="w-20 h-20 flex items-center justify-center bg-white/20 rounded-full backdrop-blur-sm">
-                      <i className={`${icon} text-4xl`}></i>
-                    </div>
-                  </div>
-
-                  <div className="text-6xl font-bold">{stat.value}</div>
-                  <div className="text-xl font-medium">{stat.label}</div>
-                  <p className="text-sm opacity-80">{stat.description}</p>
+                <div className="space-y-3">
+                  <div className="text-5xl font-bold text-gray-900">{stat.value}</div>
+                  <div className="text-lg font-medium text-gray-800">{stat.label}</div>
+                  <p className="text-sm text-gray-600">{stat.description}</p>
                 </div>
               </div>
             );
