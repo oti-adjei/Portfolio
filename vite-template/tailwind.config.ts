@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['"Playfair Display"', 'serif'],
+        sans: ['Jost', 'sans-serif'],
       },
       animation: {
         'float-slow': 'float 20s ease-in-out infinite',

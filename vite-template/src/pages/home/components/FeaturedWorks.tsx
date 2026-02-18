@@ -56,20 +56,14 @@ function buildRows(
     if (pattern === 'dm') {
       const d = dPool.shift();
       const m = mPool.shift();
-      if (d && m) {
-        projects.push(d, m);
-      }
+      if (d && m) projects.push(d, m);
     } else {
       const m = mPool.shift();
       const d = dPool.shift();
-      if (m && d) {
-        projects.push(m, d);
-      }
+      if (m && d) projects.push(m, d);
     }
 
-    if (projects.length === 2) {
-      rows.push({ projects, pattern });
-    }
+    if (projects.length === 2) rows.push({ projects, pattern });
   }
 
   return rows;
@@ -77,25 +71,33 @@ function buildRows(
 
 function ProjectCard({ project }: { project: DisplayProject }) {
   const isMobile = project.type === 'mobile';
-  
+
   return (
-    <div
-      className={`bg-gradient-to-br ${project.bgClass} rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-10 flex items-center justify-center min-h-[280px] sm:min-h-[350px] lg:min-h-[480px] group cursor-pointer hover:shadow-xl transition-all duration-300 relative overflow-hidden`}
+    <Link
+      to={`/project/${project.id}`}
+      className={`bg-gradient-to-br ${project.bgClass} rounded-2xl sm:rounded-3xl flex items-center justify-center h-full group cursor-pointer relative overflow-hidden`}
     >
-      <Link to={`/project/${project.id}`} className="w-full h-full flex items-center justify-center">
-        <div className="relative w-full h-full flex items-center justify-center">
-          <img
-            src={project.image}
-            alt={project.title}
-            className={`${isMobile ? 'h-[200px] sm:h-[280px] lg:h-[380px] w-auto' : 'w-full h-auto max-h-[200px] sm:max-h-[280px] lg:max-h-full'} object-contain transform group-hover:scale-105 transition-transform duration-500`}
-          />
-          <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 bg-gray-900 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium flex items-center gap-2 whitespace-nowrap">
-            <i className={`${isMobile ? 'ri-smartphone-line' : 'ri-window-line'} w-4 h-4 flex items-center justify-center`}></i>
-            <span className="hidden sm:inline">{project.category}</span>
-          </div>
-        </div>
-      </Link>
-    </div>
+      {/* Project image */}
+      <img
+        src={project.image}
+        alt={project.title}
+        className={`${
+          isMobile
+            ? 'h-full w-auto max-w-[90%] object-contain'
+            : 'w-full h-full object-cover'
+        } transform group-hover:scale-105 transition-transform duration-500`}
+      />
+
+      {/* Hover overlay — dark gradient + title, matching legacy .layer:hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-[400ms] bg-gradient-to-b from-black/50 to-[#191919] flex flex-col items-center justify-center gap-2 px-6 text-center">
+        <h3 className="text-white text-xl font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-[400ms]">
+          {project.title}
+        </h3>
+        <p className="text-white/70 text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-[400ms] delay-75">
+          {project.category}
+        </p>
+      </div>
+    </Link>
   );
 }
 
@@ -144,45 +146,49 @@ export default function FeaturedWorks() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             {featuredWorks.title}
           </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">{featuredWorks.subtitle}</p>
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">
+            {featuredWorks.subtitle}
+          </p>
         </div>
 
-        {/* Mobile: Simple grid */}
+        {/* Mobile: simple grid, fixed card height so all cards are equal */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:hidden mb-8 sm:mb-12">
           {displayProjects.slice(0, 4).map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <div key={project.id} className="h-[280px] sm:h-[350px]">
+              <ProjectCard project={project} />
+            </div>
           ))}
         </div>
 
-        {/* Desktop: Row-based layout */}
+        {/* Desktop: row-based 3-col layout, fixed row height so mobile col == desktop col */}
         <div className="hidden lg:grid grid-cols-3 gap-8 mb-12">
-          {rows.map((row, index) => (
+          {rows.map((row, index) =>
             row.pattern === 'dm' ? (
               <>
-                <div key={`${index}-d`} className="col-span-2">
+                <div key={`${index}-d`} className="col-span-2 h-[480px]">
                   <ProjectCard project={row.projects[0]} />
                 </div>
-                <div key={`${index}-m`} className="col-span-1">
+                <div key={`${index}-m`} className="col-span-1 h-[480px]">
                   <ProjectCard project={row.projects[1]} />
                 </div>
               </>
             ) : (
               <>
-                <div key={`${index}-m`} className="col-span-1">
+                <div key={`${index}-m`} className="col-span-1 h-[480px]">
                   <ProjectCard project={row.projects[0]} />
                 </div>
-                <div key={`${index}-d`} className="col-span-2">
+                <div key={`${index}-d`} className="col-span-2 h-[480px]">
                   <ProjectCard project={row.projects[1]} />
                 </div>
               </>
             )
-          ))}
+          )}
         </div>
 
         <div className="text-center">
           <Link
             to="/works"
-            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer text-sm sm:text-base"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-[#f75023] hover:bg-[#e0431a] text-white rounded-full font-medium transition-colors whitespace-nowrap cursor-pointer text-sm sm:text-base"
           >
             See More
             <i className="ri-arrow-right-line w-5 h-5 flex items-center justify-center"></i>

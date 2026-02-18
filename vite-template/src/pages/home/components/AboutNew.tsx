@@ -30,7 +30,7 @@ export default function AboutNew() {
               {/* Circular artistic frame */}
               <div className="absolute inset-0 rounded-full overflow-hidden border-4 sm:border-8 border-gray-100">
                 <img
-                  src="https://readdy.ai/api/search-image?query=creative%20african%20american%20male%20designer%20portrait%20with%20artistic%20circular%20frame%2C%20professional%20headshot%20with%20creative%20lighting%2C%20modern%20artistic%20photography%2C%20confident%20expression%2C%20studio%20portrait%20with%20artistic%20elements%20and%20textures&width=500&height=500&seq=about-portrait-1&orientation=squarish"
+                  src="/car4-min.webp"
                   alt={about.name}
                   className="w-full h-full object-cover"
                 />

@@ -4,8 +4,9 @@ export const siteContent: SiteContent = {
   navigation: {
     id: 'nav-main',
     logo: {
-      text: 'Ava Chen',
-      url: '/'
+      text: 'GH',
+      url: '/',
+      imageUrl: '/GHlog.png'
     },
     menuItems: [
       { id: 'nav-home', label: 'Home', url: '/' },
@@ -21,8 +22,9 @@ export const siteContent: SiteContent = {
   footer: {
     id: 'footer-main',
     logo: {
-      text: 'Ava Chen',
-      url: '/'
+      text: 'GH',
+      url: '/',
+      imageUrl: '/GHlog.png'
     },
     copyright: '© 2024 Ava Chen. All rights reserved.',
     links: [
@@ -47,8 +49,8 @@ export const siteContent: SiteContent = {
         url: '/contact'
       },
       image: {
-        url: 'https://readdy.ai/api/search-image?query=professional%20female%20designer%20working%20on%20modern%20laptop%20in%20minimalist%20bright%20workspace%20with%20plants%20and%20natural%20light%2C%20clean%20aesthetic%2C%20creative%20professional%20environment%2C%20contemporary%20office%20setup%2C%20focused%20and%20productive%20atmosphere&width=800&height=1000&seq=hero-main&orientation=portrait',
-        alt: 'Ava Chen - Product Designer & Developer'
+        url: '/Gpic.webp',
+        alt: 'Georgie Heavenson Jnr. Oti-Adjei'
       },
       socialIcons: [
         { id: 'social-twitter', platform: 'twitter', url: 'https://twitter.com', icon: 'ri-twitter-x-line' },
