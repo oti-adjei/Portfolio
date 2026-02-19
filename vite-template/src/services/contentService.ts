@@ -3,7 +3,7 @@ import type { SiteContent } from '../types/siteContent';
 
 const STORAGE_KEY = 'portfolio_site_content';
 const VERSION_KEY = 'portfolio_content_version';
-const CURRENT_VERSION = '1.0';
+const CURRENT_VERSION = '1.1';
 
 /**
  * Content Service
