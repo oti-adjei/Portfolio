@@ -260,11 +260,14 @@ export default function SkillsOrbit() {
   const toolsCluster = transformedClusters.find((c) => c.label === 'Tools');
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-gray-50 to-white overflow-hidden">
+    <section className="pt-12 sm:pt-16 lg:pt-20 pb-4 sm:pb-6 lg:pb-8 px-4 sm:px-6 lg:px-12 bg-gradient-to-br from-gray-50 to-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8 lg:mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">{skills.title}</h2>
-          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">{skills.subtitle}</p>
+        <div className='text-right mb-8 lg:mb-12'>
+            <p className="text-sm font-medium text-[#f75124] mb-2">Portfolio</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">{skills.title}</h2>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl ml-auto">
+            {skills.subtitle}
+          </p>
         </div>
 
         {/* Mobile Layout - Grid of skill cards */}
@@ -279,7 +282,7 @@ export default function SkillsOrbit() {
         </div>
 
         {/* Desktop Layout - Orbit visualization */}
-        <div className="hidden lg:block relative w-full" style={{ minHeight: '800px' }}>
+        <div className="hidden lg:block relative w-full" style={{ minHeight: '600px' }}>
           <div className="relative flex items-center justify-center w-full h-full">
             {/* Backend Cluster - Upper Left */}
             {backendCluster && (
@@ -291,7 +294,7 @@ export default function SkillsOrbit() {
                   label={backendCluster.label}
                   labelIcon={backendCluster.labelIcon}
                   skills={backendCluster.skills}
-                  scale={0.65}
+                  scale={0.49}
                   activeSkill={activeSkill}
                   setActiveSkill={setActiveSkill}
                   idPrefix={backendCluster.idPrefix}
@@ -306,7 +309,7 @@ export default function SkillsOrbit() {
                   label={mobileCluster.label}
                   labelIcon={mobileCluster.labelIcon}
                   skills={mobileCluster.skills}
-                  scale={0.55}
+                  scale={0.41}
                   activeSkill={activeSkill}
                   setActiveSkill={setActiveSkill}
                   idPrefix={mobileCluster.idPrefix}
@@ -321,7 +324,7 @@ export default function SkillsOrbit() {
                   label={toolsCluster.label}
                   labelIcon={toolsCluster.labelIcon}
                   skills={toolsCluster.skills}
-                  scale={0.55}
+                  scale={0.41}
                   activeSkill={activeSkill}
                   setActiveSkill={setActiveSkill}
                   idPrefix={toolsCluster.idPrefix}
@@ -336,7 +339,7 @@ export default function SkillsOrbit() {
                   label={frontendCluster.label}
                   labelIcon={frontendCluster.labelIcon}
                   skills={frontendCluster.skills}
-                  scale={0.55}
+                  scale={0.41}
                   activeSkill={activeSkill}
                   setActiveSkill={setActiveSkill}
                   idPrefix={frontendCluster.idPrefix}
@@ -351,7 +354,7 @@ export default function SkillsOrbit() {
                   label="Core Skills"
                   labelIcon="ri-star-fill"
                   skills={coreCluster.skills}
-                  scale={0.9}
+                  scale={0.68}
                   activeSkill={activeSkill}
                   setActiveSkill={setActiveSkill}
                   idPrefix="core"

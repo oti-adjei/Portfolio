@@ -8,7 +8,7 @@ export default function Hero() {
   const hero = content.homePage.hero;
 
   return (
-    <section className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-12 overflow-hidden bg-white pt-20 lg:pt-0">
+    <section className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-12 overflow-hidden bg-white pt-20 lg:pt-">
       {/* Background Pattern */}
       <div className="absolute inset-0 z-0">
         <img
@@ -29,7 +29,19 @@ export default function Hero() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
                 {hero.heading}
               </h1>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-lg mx-auto lg:mx-0">{hero.subtitle}</p>
+              <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-lg mx-auto lg:mx-0">
+                {hero.subtitle.split('I also stream')[0]}
+                <br />
+                {(() => {
+                  const second = 'I also stream' + (hero.subtitle.split('I also stream')[1] ?? '');
+                  const parts = second.split('stream schedule');
+                  return parts.map((part, i, arr) =>
+                    i < arr.length - 1 ? (
+                      <span key={i}>{part}<a href="#stream" className="font-semibold text-gray-900 underline underline-offset-2 hover:text-[#f75124] transition-colors">stream schedule</a></span>
+                    ) : part
+                  );
+                })()}
+              </p>
             </div>
 
             {/* CTA Buttons */}
