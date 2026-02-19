@@ -26,20 +26,19 @@ export const siteContent: SiteContent = {
       url: '/',
       imageUrl: '/GHlog.png'
     },
-    copyright: '© 2024 Ava Chen. All rights reserved.',
+    copyright: '© 2026 George Oti-Adjei. All rights reserved.',
     links: [
-      { id: 'footer-link-1', label: 'Privacy Policy', url: '/privacy' },
-      { id: 'footer-link-2', label: 'Terms of Service', url: '/terms' },
-      { id: 'footer-link-3', label: 'Powered by Readdy', url: 'https://readdy.ai/?ref=logo' }
+      { id: 'footer-link-1', label: 'GitHub', url: 'https://github.com/oti-adjei' },
+      { id: 'footer-link-2', label: 'LinkedIn', url: 'https://linkedin.com/in/george-jrr' }
     ]
   },
 
   homePage: {
     hero: {
       id: 'home-hero',
-      badge: 'Product Designer & Developer',
-      heading: 'Crafting Digital Experiences That Matter',
-      subtitle: 'I transform complex problems into elegant, user-centered solutions through thoughtful design and clean code.',
+      badge: 'Mobile & Software Engineer',
+      heading: 'Building Apps People Actually Use',
+      subtitle: 'Full-stack and mobile engineer with 3+ years shipping cross-platform applications for web, mobile, and desktop.',
       ctaButton: {
         label: 'View My Work',
         url: '/works'
@@ -53,30 +52,28 @@ export const siteContent: SiteContent = {
         alt: 'Georgie Heavenson Jnr. Oti-Adjei'
       },
       socialIcons: [
-        { id: 'social-twitter', platform: 'twitter', url: 'https://twitter.com', icon: 'ri-twitter-x-line' },
-        { id: 'social-linkedin', platform: 'linkedin', url: 'https://linkedin.com', icon: 'ri-linkedin-line' },
-        { id: 'social-github', platform: 'github', url: 'https://github.com', icon: 'ri-github-line' },
-        { id: 'social-dribbble', platform: 'dribbble', url: 'https://dribbble.com', icon: 'ri-dribbble-line' }
+        { id: 'social-linkedin', platform: 'linkedin', url: 'https://linkedin.com/in/george-jrr', icon: 'ri-linkedin-line' },
+        { id: 'social-github', platform: 'github', url: 'https://github.com/oti-adjei', icon: 'ri-github-line' }
       ]
     },
 
     about: {
       id: 'home-about',
       sectionTitle: 'About Me',
-      name: 'Ava Chen',
-      role: 'Product Designer & Full-Stack Developer',
+      name: 'George Oti-Adjei',
+      role: 'Mobile & Software Engineer',
       bio: [
-        'With over 8 years of experience in digital product design and development, I specialize in creating seamless user experiences that bridge the gap between aesthetics and functionality.',
-        'My approach combines user research, interaction design, and modern development practices to deliver products that users love and businesses value.',
-        'I believe great design is invisible—it just works. My mission is to create digital experiences that feel natural, intuitive, and delightful.'
+        'Results-driven Mobile and Software Engineer with 3+ years of experience building cross-platform applications and full-stack systems that serve real users.',
+        'From fintech apps and property management SaaS to esports platforms and e-commerce storefronts — I build end-to-end products that are fast, scalable, and actually enjoyable to use.',
+        'I\'m most at home at the intersection of mobile and web, where clean architecture meets an experience people don\'t need a manual to understand.'
       ],
       tools: [
-        { id: 'tool-figma', name: 'Figma', category: 'design' },
-        { id: 'tool-sketch', name: 'Sketch', category: 'design' },
-        { id: 'tool-react', name: 'React', category: 'development' },
-        { id: 'tool-typescript', name: 'TypeScript', category: 'development' },
-        { id: 'tool-nodejs', name: 'Node.js', category: 'development' },
-        { id: 'tool-tailwind', name: 'Tailwind CSS', category: 'development' }
+        { id: 'tool-flutter', name: 'Flutter', category: 'mobile' },
+        { id: 'tool-react', name: 'React', category: 'frontend' },
+        { id: 'tool-go', name: 'Go', category: 'backend' },
+        { id: 'tool-typescript', name: 'TypeScript', category: 'frontend' },
+        { id: 'tool-nodejs', name: 'Node.js', category: 'backend' },
+        { id: 'tool-figma', name: 'Figma', category: 'design' }
       ]
     },
 
@@ -147,7 +144,7 @@ export const siteContent: SiteContent = {
       id: 'home-featured-works',
       title: 'My Amazing Work',
       subtitle: 'A selection of projects that showcase my design and development capabilities',
-      projectIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+      projectIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       displaySettings: {
         maxRows: 2,
         randomize: true
@@ -205,19 +202,19 @@ export const siteContent: SiteContent = {
       items: [
         {
           id: 'stat-projects',
-          value: '50+',
-          label: 'Projects Completed',
+          value: '20+',
+          label: 'Projects Shipped',
           description: 'Successful launches across web, mobile, and desktop'
         },
         {
           id: 'stat-clients',
-          value: '30+',
+          value: '10+',
           label: 'Happy Clients',
-          description: 'From startups to Fortune 500 companies'
+          description: 'From startups to established businesses'
         },
         {
           id: 'stat-experience',
-          value: '8+',
+          value: '3+',
           label: 'Years Experience',
           description: 'Continuous learning and growth in the field'
         }
@@ -239,21 +236,21 @@ export const siteContent: SiteContent = {
     hero: {
       id: 'about-hero',
       avatar: {
-        url: 'https://readdy.ai/api/search-image?query=professional%20portrait%20of%20confident%20female%20designer%20in%20modern%20minimalist%20setting%2C%20natural%20lighting%2C%20clean%20aesthetic%2C%20creative%20professional%20headshot%2C%20warm%20and%20approachable%20expression&width=400&height=400&seq=about-avatar&orientation=squarish',
-        alt: 'Ava Chen'
+        url: '/aboutme.JPG',
+        alt: 'George Oti-Adjei'
       },
-      name: 'Ava Chen',
-      role: 'Product Designer & Developer',
-      tagline: 'Bridging design and code to create meaningful digital experiences'
+      name: 'George Oti-Adjei',
+      role: 'Mobile & Software Engineer',
+      tagline: 'Building performant, cross-platform applications from Accra, Ghana'
     },
 
     bio: {
       id: 'about-bio',
       paragraphs: [
-        'I\'m a product designer and full-stack developer based in San Francisco, passionate about creating digital experiences that make a difference in people\'s lives.',
-        'My journey began with a fascination for how things work and a desire to make them better. Over the past 8 years, I\'ve had the privilege of working with startups, agencies, and established companies to bring their visions to life.',
-        'I believe the best products come from a deep understanding of user needs combined with technical excellence. That\'s why I wear both hats—designer and developer—allowing me to bridge the gap between vision and execution.',
-        'When I\'m not designing or coding, you\'ll find me exploring new coffee shops, practicing yoga, or contributing to open-source projects. I\'m always learning, always growing, and always excited about the next challenge.'
+        'I\'m a Mobile and Software Engineer based in Accra, Ghana, with 3+ years of experience building cross-platform applications and full-stack systems that serve real users.',
+        'My journey started with a curiosity about how software works — and quickly became a career shipping production apps across mobile, web, and desktop. I\'ve worked across fintech, logistics, education, and real estate, building everything from Flutter apps and Node.js APIs to Go-powered SaaS platforms.',
+        'I believe the best software is fast, reliable, and gets out of the user\'s way. That philosophy drives every architectural decision I make — whether I\'m building a multi-tenant SaaS or a lightweight mobile app.',
+        'When I\'m not building, I\'m learning — exploring new tooling, contributing to open source, or mentoring others through problems I\'ve already solved.'
       ]
     },
 
@@ -262,28 +259,28 @@ export const siteContent: SiteContent = {
       sectionTitle: 'Areas of Expertise',
       items: [
         {
-          id: 'expertise-product',
-          icon: 'ri-product-hunt-line',
-          title: 'Product Design',
-          description: 'End-to-end product design from research and ideation to high-fidelity prototypes and design systems.'
+          id: 'expertise-mobile',
+          icon: 'ri-smartphone-line',
+          title: 'Mobile Development',
+          description: 'Building cross-platform iOS and Android apps with Flutter and React Native, from zero to production.'
         },
         {
           id: 'expertise-frontend',
           icon: 'ri-code-box-line',
-          title: 'Frontend Development',
-          description: 'Building responsive, accessible web applications with React, TypeScript, and modern CSS frameworks.'
+          title: 'Web & Frontend',
+          description: 'Responsive, performant web applications with React, Next.js, TypeScript, and Astro.'
         },
         {
-          id: 'expertise-mobile',
-          icon: 'ri-smartphone-line',
-          title: 'Mobile Development',
-          description: 'Creating native and cross-platform mobile experiences with React Native and Flutter.'
+          id: 'expertise-backend',
+          icon: 'ri-server-line',
+          title: 'Backend Engineering',
+          description: 'Scalable REST APIs and services built with Node.js/Express and Go, backed by PostgreSQL and MongoDB.'
         },
         {
-          id: 'expertise-ux',
-          icon: 'ri-user-heart-line',
-          title: 'UX Research',
-          description: 'Conducting user research, usability testing, and data analysis to inform design decisions.'
+          id: 'expertise-devops',
+          icon: 'ri-settings-3-line',
+          title: 'DevOps & Tooling',
+          description: 'CI/CD pipelines via GitHub Actions and Azure DevOps, Docker containerisation, and cloud deployments on AWS and Cloudflare.'
         }
       ]
     },
@@ -293,47 +290,54 @@ export const siteContent: SiteContent = {
       sectionTitle: 'My Journey',
       timeline: [
         {
-          id: 'journey-2024',
+          id: 'journey-2024-masharder',
           year: '2024',
-          title: 'Senior Product Designer',
-          company: 'TechCorp',
-          description: 'Leading design initiatives for enterprise SaaS products, managing a team of 4 designers.'
+          title: 'Lead Frontend Software Engineer',
+          company: 'MashHarder',
+          description: 'Leading frontend architecture for a Ghanaian esports platform. Built MashHarder UI — an open-source Web Component library (Lit) used across the platform, with full TypeScript definitions and Starlight-powered docs.'
         },
         {
-          id: 'journey-2021',
+          id: 'journey-2024-senvon',
+          year: '2024',
+          title: 'Founder & Software Engineer',
+          company: 'Senvon Studio',
+          description: 'Founded a boutique digital studio delivering SaaS platforms, component libraries, and client web applications. Studio output includes Home Sweet Home (property management SaaS) and Mummy\'s Darl.'
+        },
+        {
+          id: 'journey-2024-enyata',
+          year: '2024',
+          title: 'Mobile Developer',
+          company: 'Enyata Ghana',
+          description: 'Developed and maintained production mobile applications using Flutter and React Native. Integrated GraphQL and REST APIs, implemented Riverpod state management and offline-first local storage.'
+        },
+        {
+          id: 'journey-2022-alpha',
+          year: '2022',
+          title: 'Mobile Engineer',
+          company: 'teamAlpha',
+          description: 'Built cross-platform mobile apps for iOS and Android serving 8,000+ active users. Implemented CI/CD pipelines and CLI deployment automation tools.'
+        },
+        {
+          id: 'journey-2021-adb',
           year: '2021',
-          title: 'Product Designer & Developer',
-          company: 'Freelance',
-          description: 'Worked with various clients on web and mobile projects, from concept to launch.'
+          title: 'Junior Application Developer',
+          company: 'Agricultural Development Bank Ghana',
+          description: 'Built internal web applications, trained staff on KYC verification systems, and optimised server-side performance — reducing query execution time by 40%.'
         },
         {
-          id: 'journey-2019',
-          year: '2019',
-          title: 'UI/UX Designer',
-          company: 'StartupXYZ',
-          description: 'Designed and developed the company\'s flagship mobile app, growing to 100K+ users.'
-        },
-        {
-          id: 'journey-2017',
-          year: '2017',
-          title: 'Junior Designer',
-          company: 'Design Agency',
-          description: 'Learned the fundamentals of user-centered design and agile development practices.'
-        },
-        {
-          id: 'journey-2016',
-          year: '2016',
+          id: 'journey-2020-npontu',
+          year: '2020',
           title: 'Started My Journey',
-          company: 'Self-taught',
-          description: 'Began learning design and development through online courses and personal projects.'
+          company: 'Npontu Technologies',
+          description: 'First professional role as a DevOps & Data Analyst Intern. Processed large-scale datasets and streamlined data workflows, increasing team productivity by 25%.'
         }
       ]
     },
 
     philosophy: {
       id: 'about-philosophy',
-      quote: 'Great design is invisible. It just works.',
-      label: 'Design Philosophy'
+      quote: 'Build things that work, then make them work beautifully.',
+      label: 'Engineering Philosophy'
     },
 
     connectCTA: {
@@ -413,29 +417,27 @@ export const siteContent: SiteContent = {
           id: 'info-email',
           icon: 'ri-mail-line',
           label: 'Email',
-          value: 'hello@avachen.com',
-          link: 'mailto:hello@avachen.com'
+          value: 'jrgeorge991@gmail.com',
+          link: 'mailto:jrgeorge991@gmail.com'
         },
         {
           id: 'info-phone',
           icon: 'ri-phone-line',
           label: 'Phone',
-          value: '+1 (555) 123-4567',
-          link: 'tel:+15551234567'
+          value: '+233 50-005-2067',
+          link: 'tel:+233500052067'
         },
         {
           id: 'info-location',
           icon: 'ri-map-pin-line',
           label: 'Location',
-          value: 'San Francisco, CA',
+          value: 'Accra, Ghana',
           link: null
         }
       ],
       socialLinks: [
-        { id: 'contact-social-twitter', platform: 'Twitter', url: 'https://twitter.com', icon: 'ri-twitter-x-line' },
-        { id: 'contact-social-linkedin', platform: 'LinkedIn', url: 'https://linkedin.com', icon: 'ri-linkedin-line' },
-        { id: 'contact-social-github', platform: 'GitHub', url: 'https://github.com', icon: 'ri-github-line' },
-        { id: 'contact-social-dribbble', platform: 'Dribbble', url: 'https://dribbble.com', icon: 'ri-dribbble-line' }
+        { id: 'contact-social-linkedin', platform: 'LinkedIn', url: 'https://linkedin.com/in/george-jrr', icon: 'ri-linkedin-line' },
+        { id: 'contact-social-github', platform: 'GitHub', url: 'https://github.com/oti-adjei', icon: 'ri-github-line' }
       ],
       availability: {
         status: 'available',
@@ -445,8 +447,8 @@ export const siteContent: SiteContent = {
 
     map: {
       id: 'contact-map',
-      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100939.98555098464!2d-122.507640345!3d37.757815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1234567890',
-      title: 'San Francisco, CA'
+      embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127595.75486082!2d-0.2696416!3d5.6036999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9084b2b7a773%3A0xbed14ed8650e2dd3!2sAccra%2C%20Ghana!5e0!3m2!1sen!2sgh!4v1234567890',
+      title: 'Accra, Ghana'
     }
   },
 
@@ -458,607 +460,377 @@ export const siteContent: SiteContent = {
   },
 
   projects: [
-    {
-      id: 1,
-      title: 'Oyak Engineering Platform',
-      category: 'WEB',
-      year: '2024',
-      tags: ['React', 'Node.js', 'PostgreSQL'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=modern%20engineering%20dashboard%20interface%20with%20clean%20white%20background%2C%20professional%20software%20application%20showing%20project%20management%20tools%2C%20data%20visualization%20charts%2C%20minimalist%20design%2C%20teal%20and%20dark%20accents%2C%20high%20quality%20UI%20screenshot&width=800&height=600&seq=work1&orientation=landscape',
-        alt: 'Oyak Engineering Platform'
-      },
-      overview: {
-        description: 'A comprehensive engineering management platform featuring advanced project tracking, resource allocation, and real-time collaboration tools for engineering teams.',
-        client: 'Oyak Engineering',
-        duration: '6 months',
-        role: 'Lead UI/UX Designer & Frontend Developer'
-      },
-      details: {
-        challenge: 'Oyak Engineering needed a comprehensive platform to manage complex engineering projects across multiple teams. The existing system was fragmented, leading to communication gaps and project delays. We needed to create a unified solution that could handle project tracking, resource allocation, and real-time collaboration while maintaining enterprise-level security.',
-        solution: 'We developed a modular dashboard system with customizable widgets, real-time data synchronization, and role-based access controls. The platform features an intuitive drag-and-drop interface for project management, integrated communication tools, and advanced analytics for performance tracking. We implemented a microservices architecture to ensure scalability and reliability.',
-        results: [
-          '50% reduction in project delays',
-          '35% improvement in team collaboration',
-          '99.9% system uptime achieved',
-          'Adopted by 500+ engineers'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=engineering%20project%20management%20dashboard%20with%20data%20visualization%20charts%2C%20clean%20modern%20interface%2C%20professional%20software%20application%2C%20white%20background%2C%20teal%20accents%2C%20showing%20project%20timeline%20and%20team%20allocation&width=1200&height=800&seq=oyak1&orientation=landscape',
-            caption: 'Main Dashboard with Project Overview'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=team%20collaboration%20interface%20showing%20user%20avatars%20and%20chat%2C%20modern%20software%20design%2C%20clean%20white%20background%2C%20professional%20engineering%20platform%2C%20real-time%20communication%20features&width=800&height=600&seq=oyak2&orientation=landscape',
-            caption: 'Team Collaboration Hub'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=analytics%20dashboard%20with%20performance%20metrics%20and%20graphs%2C%20engineering%20KPIs%2C%20clean%20modern%20design%2C%20professional%20data%20visualization%2C%20white%20background%20with%20teal%20accents&width=800&height=600&seq=oyak3&orientation=landscape',
-            caption: 'Analytics & Reporting Module'
-          }
-        ]
-      }
+  {
+    id: 1,
+    title: 'Home Sweet Home',
+    category: 'WEB',
+    year: '2025',
+    tags: ['Golang', 'Hono', 'React', 'PostgreSQL'],
+    thumbnail: { url: '/assets/images/projects/home-sweet-home.png', alt: 'Home Sweet Home' },
+    overview: {
+      description: 'A property management SaaS for landlords and property managers to track tenants, leases, payments, and maintenance requests — all in one place.',
+      client: 'Senvon Studio (personal venture)',
+      duration: 'Dec 2025 – Present',
+      role: 'Founder & Engineer',
     },
-    {
-      id: 2,
-      title: 'Orderio Travel Web Mobile',
-      category: 'MOBILE',
-      year: '2024',
-      tags: ['React Native', 'Firebase', 'Stripe'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=mobile%20travel%20app%20interface%20mockup%20on%20smartphone%20screen%20with%20clean%20white%20background%2C%20showing%20booking%20features%20and%20destination%20cards%2C%20modern%20UI%20design%2C%20vibrant%20colors%2C%20professional%20product%20photography&width=600&height=800&seq=work2&orientation=portrait',
-        alt: 'Orderio Travel Web Mobile'
-      },
-      overview: {
-        description: 'Mobile-first travel booking application with seamless user experience, featuring destination discovery, itinerary planning, and integrated payment solutions.',
-        client: 'Orderio Travel',
-        duration: '4 months',
-        role: 'Mobile App Designer & Developer'
-      },
-      details: {
-        challenge: 'The travel industry demanded a mobile-first solution that could compete with established players. Users needed a seamless booking experience with personalized recommendations, real-time availability, and secure payment processing. The app had to work flawlessly across different network conditions and device types.',
-        solution: 'We created a native mobile application with offline capabilities, smart caching, and progressive loading. The app features AI-powered destination recommendations, interactive itinerary planning, and a streamlined checkout process. We integrated multiple payment gateways and implemented biometric authentication for enhanced security.',
-        results: [
-          '4.8 star rating on app stores',
-          '200K+ downloads in first quarter',
-          '65% booking conversion rate',
-          '30% repeat user engagement'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=travel%20booking%20mobile%20app%20interface%20showing%20destination%20cards%20and%20search%2C%20beautiful%20UI%20design%2C%20smartphone%20mockup%2C%20clean%20white%20background%2C%20vibrant%20travel%20photography&width=1200&height=800&seq=orderio1&orientation=landscape',
-            caption: 'Destination Discovery Screen'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=mobile%20app%20itinerary%20planner%20interface%20with%20timeline%20and%20activities%2C%20travel%20app%20design%2C%20clean%20modern%20UI%2C%20smartphone%20screen%20mockup&width=800&height=600&seq=orderio2&orientation=landscape',
-            caption: 'Itinerary Planning Feature'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=mobile%20payment%20checkout%20screen%20for%20travel%20booking%2C%20secure%20payment%20interface%2C%20clean%20app%20design%2C%20credit%20card%20input%20form%2C%20professional%20UI&width=800&height=600&seq=orderio3&orientation=landscape',
-            caption: 'Seamless Checkout Experience'
-          }
-        ]
-      }
+    details: {
+      challenge: 'Landlords in Ghana manage properties through WhatsApp, Excel sheets, and paper records — leading to missed payments, unresolved maintenance issues, and no audit trail.',
+      solution: 'Building a multi-tenant SaaS with a Golang/Hono backend, React frontend, and PostgreSQL. Features include tenant onboarding, automated rent reminders, maintenance ticket tracking, and financial reporting dashboards.',
+      results: [
+        'MVP in private beta',
+        'Sub-50ms API response times with Golang backend',
+        'Multi-tenant architecture with isolated landlord accounts',
+        'Automated rent reminder system via email/SMS',
+      ],
     },
-    {
-      id: 3,
-      title: 'Bloomgari Disaster App',
-      category: 'MOBILE',
-      year: '2023',
-      tags: ['Flutter', 'Google Maps API', 'Push Notifications'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=disaster%20alert%20mobile%20app%20interface%20on%20phone%20with%20clean%20background%2C%20emergency%20notification%20system%2C%20map%20integration%2C%20safety%20features%2C%20professional%20app%20design%2C%20red%20and%20blue%20accent%20colors&width=600&height=800&seq=work3&orientation=portrait',
-        alt: 'Bloomgari Disaster App'
-      },
-      overview: {
-        description: 'Emergency response mobile application providing real-time disaster alerts, evacuation routes, and community safety features with offline capabilities.',
-        client: 'Bloomgari Foundation',
-        duration: '5 months',
-        role: 'Full Stack Developer & UX Designer'
-      },
-      details: {
-        challenge: 'During natural disasters, communication infrastructure often fails when it is needed most. The foundation required an app that could function offline, provide accurate evacuation routes, and connect community members even without internet connectivity. Battery efficiency and accessibility were critical concerns.',
-        solution: 'We built a Flutter-based application with offline-first architecture, utilizing local databases and peer-to-peer communication protocols. The app includes pre-downloaded maps, emergency contact systems, and community check-in features. We optimized for minimal battery consumption and ensured WCAG 2.1 accessibility compliance.',
-        results: [
-          'Used in 3 major disaster responses',
-          '15,000+ lives potentially saved',
-          'Works 72+ hours offline',
-          'Government partnership secured'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=emergency%20alert%20mobile%20app%20with%20map%20showing%20evacuation%20routes%2C%20disaster%20response%20interface%2C%20red%20and%20blue%20colors%2C%20professional%20safety%20app%20design%2C%20smartphone%20mockup&width=1200&height=800&seq=bloom1&orientation=landscape',
-            caption: 'Emergency Alert Dashboard'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=community%20safety%20check-in%20mobile%20interface%2C%20family%20status%20tracking%20app%2C%20clean%20modern%20design%2C%20emergency%20contacts%20list%2C%20smartphone%20screen&width=800&height=600&seq=bloom2&orientation=landscape',
-            caption: 'Community Check-in System'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=offline%20map%20navigation%20interface%20for%20emergency%20evacuation%2C%20mobile%20app%20showing%20routes%20and%20shelters%2C%20disaster%20preparedness%20app%20design&width=800&height=600&seq=bloom3&orientation=landscape',
-            caption: 'Offline Navigation Maps'
-          }
-        ]
-      }
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/home-sweet-home.png', caption: 'Dashboard' },
+        { url: '/assets/images/projects/home-sweet-home.png', caption: 'Tenant Management' },
+        { url: '/assets/images/projects/home-sweet-home.png', caption: 'Financials Overview' },
+      ],
     },
-    {
-      id: 4,
-      title: 'Strongerkeeper Glass',
-      category: 'WEB',
-      year: '2023',
-      tags: ['Next.js', 'Three.js', 'Shopify'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=elegant%20e-commerce%20website%20for%20glass%20products%20with%20white%20background%2C%20premium%20product%20photography%2C%20modern%20minimalist%20design%2C%20sophisticated%20layout%2C%20professional%20web%20interface&width=800&height=600&seq=work4&orientation=landscape',
-        alt: 'Strongerkeeper Glass'
-      },
-      overview: {
-        description: 'E-commerce platform for premium glass products featuring 3D product visualization, custom configuration tools, and streamlined checkout experience.',
-        client: 'Strongerkeeper Glass Co.',
-        duration: '4 months',
-        role: 'E-commerce Specialist & 3D Developer'
-      },
-      details: {
-        challenge: 'Selling premium glass products online presented unique challenges. Customers needed to visualize products in their spaces before purchasing, and the checkout process had to accommodate custom configurations. The existing website had high cart abandonment rates and poor mobile performance.',
-        solution: 'We implemented WebGL-based 3D product visualization allowing customers to rotate, zoom, and customize products in real-time. The configurator supports custom dimensions, glass types, and finishes. We rebuilt the checkout flow with progress indicators, saved carts, and multiple payment options including financing.',
-        results: [
-          '70% reduction in cart abandonment',
-          '45% increase in average order value',
-          '3x improvement in mobile conversions',
-          'Featured in Shopify showcase'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=3D%20product%20configurator%20for%20glass%20products%2C%20interactive%20web%20interface%2C%20premium%20e-commerce%20design%2C%20white%20background%2C%20elegant%20product%20visualization&width=1200&height=800&seq=strong1&orientation=landscape',
-            caption: '3D Product Configurator'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=e-commerce%20product%20gallery%20for%20premium%20glass%20items%2C%20elegant%20grid%20layout%2C%20professional%20photography%2C%20clean%20white%20background%2C%20luxury%20shopping%20experience&width=800&height=600&seq=strong2&orientation=landscape',
-            caption: 'Product Gallery View'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=shopping%20cart%20and%20checkout%20interface%20for%20premium%20products%2C%20elegant%20e-commerce%20design%2C%20order%20summary%2C%20clean%20modern%20UI&width=800&height=600&seq=strong3&orientation=landscape',
-            caption: 'Streamlined Checkout Flow'
-          }
-        ]
-      }
+  },
+  {
+    id: 2,
+    title: 'PriPri',
+    category: 'DESKTOP',
+    year: '2025',
+    tags: ['Wails', 'Go', 'React', 'TailwindCSS'],
+    thumbnail: { url: '/assets/images/projects/pripri.png', alt: 'PriPri App Locker' },
+    overview: {
+      description: 'A cross-platform desktop app locker built with Wails (Go + React). PriPri monitors running applications and displays a password prompt before allowing locked apps to open — ensuring privacy and focus.',
+      client: 'Senvon Studio (personal venture)',
+      duration: 'Aug 2025 – Present',
+      role: 'Founder & Engineer',
     },
-    {
-      id: 5,
-      title: 'CreativeFlow Studio',
-      category: 'DESKTOP',
-      year: '2024',
-      tags: ['Electron', 'Canvas API', 'WebGL'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=professional%20desktop%20application%20interface%20for%20graphic%20design%20software%2C%20dark%20theme%20with%20colorful%20tools%20panel%2C%20canvas%20workspace%2C%20layer%20management%20sidebar%2C%20modern%20creative%20software%20UI%2C%20clean%20professional%20design&width=800&height=600&seq=work-desktop1&orientation=landscape',
-        alt: 'CreativeFlow Studio'
-      },
-      overview: {
-        description: 'Professional desktop application for graphic designers featuring advanced vector editing, layer management, and real-time collaboration with cloud sync.',
-        client: 'CreativeFlow Inc.',
-        duration: '8 months',
-        role: 'Lead Desktop Developer & UI Designer'
-      },
-      details: {
-        challenge: 'Graphic designers needed a powerful desktop tool that could compete with industry standards while offering modern collaboration features. The application had to handle complex vector operations, support large files, and provide seamless cloud synchronization.',
-        solution: 'We built an Electron-based desktop application with custom Canvas and WebGL rendering for optimal performance. Features include non-destructive editing, smart guides, plugin architecture, and real-time collaboration. We implemented efficient file handling and incremental cloud sync.',
-        results: [
-          '10K+ active designers',
-          'Processing 500K+ designs monthly',
-          '4.9 star rating',
-          'Featured in design tool roundups'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=graphic%20design%20desktop%20software%20main%20workspace%20with%20vector%20tools%2C%20dark%20theme%20interface%2C%20professional%20creative%20application%2C%20layer%20panel%20and%20properties&width=1200&height=800&seq=creative1&orientation=landscape',
-            caption: 'Main Workspace Interface'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=desktop%20app%20collaboration%20features%20showing%20real-time%20cursors%20and%20comments%2C%20design%20software%20interface%2C%20modern%20UI&width=800&height=600&seq=creative2&orientation=landscape',
-            caption: 'Real-time Collaboration'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=plugin%20marketplace%20interface%20for%20design%20software%2C%20desktop%20application%2C%20modern%20UI%20with%20plugin%20cards%20and%20ratings&width=800&height=600&seq=creative3&orientation=landscape',
-            caption: 'Plugin Ecosystem'
-          }
-        ]
-      }
+    details: {
+      challenge: 'macOS and Windows lack a native, lightweight way to password-protect specific applications — useful for shared computers or enforcing focus by locking distracting apps.',
+      solution: 'Built with Wails, combining a Go backend for OS-level process monitoring with a React + TailwindCSS frontend that feels native on both macOS and Windows. Users manage a lock list from a dashboard and can toggle PriPri globally.',
+      results: [
+        'Cross-platform: macOS and Windows support',
+        'Native-feeling UI with retro-theme roadmap',
+        'Process monitoring with sub-second response to app launch',
+        'Temporary unlock and global on/off toggle',
+      ],
     },
-    {
-      id: 6,
-      title: 'DataVault Manager',
-      category: 'DESKTOP',
-      year: '2024',
-      tags: ['Electron', 'SQLite', 'Node.js'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=enterprise%20desktop%20software%20interface%20showing%20data%20management%20dashboard%2C%20file%20explorer%20with%20encryption%20icons%2C%20backup%20status%20panel%2C%20modern%20dark%20theme%20with%20teal%20accents%2C%20professional%20business%20application%20UI&width=800&height=600&seq=work-desktop2&orientation=landscape',
-        alt: 'DataVault Manager'
-      },
-      overview: {
-        description: 'Enterprise desktop application for secure data management with encryption, backup automation, and cross-platform synchronization capabilities.',
-        client: 'DataVault Corp.',
-        duration: '6 months',
-        role: 'Security Engineer & Desktop Developer'
-      },
-      details: {
-        challenge: 'Enterprises needed a secure, reliable solution for managing sensitive data across multiple platforms. The application required military-grade encryption, automated backups, and compliance with various data protection regulations.',
-        solution: 'We developed a cross-platform desktop application with AES-256 encryption, automated backup scheduling, and secure cloud sync. Features include file versioning, audit logs, role-based access control, and compliance reporting. We implemented zero-knowledge architecture for maximum security.',
-        results: [
-          '50+ enterprise clients',
-          'Managing 10PB+ of data',
-          'Zero security breaches',
-          'SOC 2 Type II certified'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=secure%20file%20management%20desktop%20interface%20with%20encryption%20status%2C%20enterprise%20software%2C%20dark%20theme%20with%20security%20indicators&width=1200&height=800&seq=vault1&orientation=landscape',
-            caption: 'Secure File Management'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=backup%20automation%20dashboard%20showing%20schedule%20and%20status%2C%20enterprise%20desktop%20application%2C%20professional%20UI&width=800&height=600&seq=vault2&orientation=landscape',
-            caption: 'Automated Backup System'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=compliance%20reporting%20interface%20with%20audit%20logs%2C%20enterprise%20security%20software%2C%20professional%20dashboard%20design&width=800&height=600&seq=vault3&orientation=landscape',
-            caption: 'Compliance & Audit Logs'
-          }
-        ]
-      }
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/pripri.png', caption: 'Dashboard & Lock List' },
+        { url: '/assets/images/projects/pripri.png', caption: 'Password Prompt Overlay' },
+        { url: '/assets/images/projects/pripri.png', caption: 'Settings & App Management' },
+      ],
     },
-    {
-      id: 7,
-      title: 'Soothe Creek',
-      category: 'WEB',
-      year: '2023',
-      tags: ['Vue.js', 'WebRTC', 'MongoDB'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=meditation%20wellness%20website%20interface%20with%20serene%20design%2C%20calming%20colors%2C%20nature-inspired%20elements%2C%20clean%20white%20background%2C%20peaceful%20user%20interface%2C%20modern%20web%20design&width=800&height=600&seq=work5&orientation=landscape',
-        alt: 'Soothe Creek'
-      },
-      overview: {
-        description: 'Wellness and meditation web platform offering guided sessions, progress tracking, and personalized mindfulness programs with calming user interface.',
-        client: 'Soothe Creek Wellness',
-        duration: '3 months',
-        role: 'Product Designer & Frontend Developer'
-      },
-      details: {
-        challenge: 'The wellness market is saturated with meditation apps, but most lack personalization and feel clinical. Soothe Creek wanted to create an immersive, calming experience that adapts to individual user needs while building a supportive community around mindfulness practices.',
-        solution: 'We designed a serene interface with nature-inspired animations and ambient soundscapes. The platform features AI-driven session recommendations based on mood tracking, progress visualization, and social features for group meditation. We implemented WebRTC for live guided sessions and built a content management system for instructors.',
-        results: [
-          '85% user retention after 30 days',
-          'Average session length of 18 minutes',
-          'Community grew to 50K members',
-          'Partnership with 20+ wellness instructors'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=meditation%20app%20interface%20with%20calming%20nature%20background%2C%20wellness%20platform%20design%2C%20serene%20colors%2C%20guided%20session%20player%2C%20peaceful%20UI&width=1200&height=800&seq=soothe1&orientation=landscape',
-            caption: 'Guided Meditation Player'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=wellness%20progress%20tracking%20dashboard%2C%20meditation%20streak%20calendar%2C%20mindfulness%20statistics%2C%20clean%20modern%20design%2C%20soft%20calming%20colors&width=800&height=600&seq=soothe2&orientation=landscape',
-            caption: 'Progress & Insights Dashboard'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=community%20meditation%20group%20interface%2C%20wellness%20social%20features%2C%20user%20profiles%20and%20sessions%2C%20peaceful%20app%20design&width=800&height=600&seq=soothe3&orientation=landscape',
-            caption: 'Community Features'
-          }
-        ]
-      }
+  },
+  {
+    id: 3,
+    title: 'Scribble Notes',
+    category: 'MOBILE',
+    year: '2025',
+    tags: ['Flutter', 'Provider', 'SharedPreferences'],
+    thumbnail: { url: '/assets/images/projects/scribble-notes.png', alt: 'Scribble Notes' },
+    overview: {
+      description: 'A lightweight mobile notes app with local data persistence and dynamic search — built to be fast and distraction-free.',
+      client: 'Personal Project',
+      duration: '2025 – Present',
+      role: 'Mobile Developer',
     },
-    {
-      id: 8,
-      title: 'Intensive Deli School Website',
-      category: 'WEB',
-      year: '2023',
-      tags: ['React', 'Video Streaming', 'LMS'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=culinary%20school%20website%20interface%20with%20clean%20design%2C%20educational%20platform%20showing%20courses%20and%20cooking%20content%2C%20professional%20web%20layout%2C%20warm%20colors%2C%20white%20background&width=800&height=600&seq=work6&orientation=landscape',
-        alt: 'Intensive Deli School Website'
-      },
-      overview: {
-        description: 'Educational platform for culinary arts featuring course management, video tutorials, student portfolios, and interactive learning modules.',
-        client: 'Intensive Deli Culinary School',
-        duration: '5 months',
-        role: 'LMS Developer & UI Designer'
-      },
-      details: {
-        challenge: 'Traditional culinary education requires hands-on experience, making online learning challenging. The school needed a platform that could effectively teach cooking techniques through video, provide interactive assessments, and allow students to showcase their culinary creations.',
-        solution: 'We built a custom learning management system with multi-angle video playback, step-by-step recipe guides, and timed cooking challenges. Students can upload photos and videos of their dishes for peer and instructor feedback. The platform includes live streaming capabilities for real-time cooking classes.',
-        results: [
-          '500+ students enrolled in first year',
-          '92% course completion rate',
-          'Expanded to 12 cuisine categories',
-          'Alumni opened 30+ restaurants'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=culinary%20education%20platform%20with%20video%20player%20and%20recipe%20steps%2C%20cooking%20course%20interface%2C%20clean%20modern%20design&width=1200&height=800&seq=deli1&orientation=landscape',
-            caption: 'Interactive Video Lessons'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=student%20portfolio%20showcase%20for%20culinary%20school%2C%20dish%20photos%20gallery%2C%20professional%20web%20design&width=800&height=600&seq=deli2&orientation=landscape',
-            caption: 'Student Portfolio Gallery'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=live%20cooking%20class%20interface%20with%20chat%20and%20video%20stream%2C%20online%20culinary%20education%20platform&width=800&height=600&seq=deli3&orientation=landscape',
-            caption: 'Live Streaming Classes'
-          }
-        ]
-      }
+    details: {
+      challenge: 'Most notes apps are bloated with features users never need. The goal was a minimal, snappy note-taking experience with offline-first storage and instant search.',
+      solution: 'Built with Flutter and Provider for state management. Uses SharedPreferences for local data persistence — no backend required. Notes are searchable by title in real time.',
+      results: [
+        'Fully offline — no account or internet required',
+        'Instant note search by title',
+        'Lightweight build with minimal dependencies',
+        'Ongoing: additional features in development',
+      ],
     },
-    {
-      id: 9,
-      title: 'CodeForge IDE',
-      category: 'DESKTOP',
-      year: '2023',
-      tags: ['Electron', 'Monaco Editor', 'TypeScript'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=modern%20code%20editor%20desktop%20application%20interface%20with%20syntax%20highlighting%2C%20dark%20theme%2C%20file%20tree%20sidebar%2C%20integrated%20terminal%20panel%2C%20professional%20IDE%20software%20design%2C%20clean%20developer%20tools%20UI&width=800&height=600&seq=work-desktop3&orientation=landscape',
-        alt: 'CodeForge IDE'
-      },
-      overview: {
-        description: 'Lightweight desktop code editor with intelligent autocomplete, integrated terminal, Git support, and customizable themes for developers.',
-        client: 'CodeForge Labs',
-        duration: '7 months',
-        role: 'Desktop Developer & UX Designer'
-      },
-      details: {
-        challenge: 'Developers wanted a lightweight alternative to heavy IDEs that still provided essential features. The editor needed to be fast, extensible, and support multiple programming languages while maintaining a clean, distraction-free interface.',
-        solution: 'We built a performant code editor using Monaco Editor with custom language servers for intelligent autocomplete. Features include split panes, integrated terminal, Git integration, and a plugin system. We optimized startup time and memory usage while supporting 50+ programming languages.',
-        results: [
-          '100K+ developers using daily',
-          'Startup time under 1 second',
-          '500+ community plugins',
-          'Featured on GitHub trending'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=code%20editor%20main%20interface%20with%20syntax%20highlighting%20and%20file%20explorer%2C%20dark%20theme%20IDE%2C%20professional%20developer%20tool&width=1200&height=800&seq=forge1&orientation=landscape',
-            caption: 'Main Editor Interface'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=integrated%20terminal%20and%20git%20interface%20in%20code%20editor%2C%20desktop%20IDE%20with%20version%20control%2C%20dark%20theme&width=800&height=600&seq=forge2&orientation=landscape',
-            caption: 'Integrated Terminal & Git'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=plugin%20marketplace%20for%20code%20editor%2C%20extension%20gallery%20interface%2C%20modern%20desktop%20application%20UI&width=800&height=600&seq=forge3&orientation=landscape',
-            caption: 'Extension Marketplace'
-          }
-        ]
-      }
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/scribble-notes.png', caption: 'Notes List' },
+        { url: '/assets/images/projects/scribble-notes.png', caption: 'Note Editor' },
+        { url: '/assets/images/projects/scribble-notes.png', caption: 'Search Results' },
+      ],
     },
-    {
-      id: 10,
-      title: 'FlexDeals',
-      category: 'WEB',
-      year: '2022',
-      tags: ['React', 'GraphQL', 'Redis'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=deals%20and%20shopping%20website%20interface%20with%20modern%20design%2C%20product%20cards%2C%20price%20tags%2C%20clean%20white%20background%2C%20vibrant%20accent%20colors%2C%20professional%20e-commerce%20layout&width=800&height=600&seq=work7&orientation=landscape',
-        alt: 'FlexDeals'
-      },
-      overview: {
-        description: 'Dynamic deals aggregator platform with smart filtering, price tracking, personalized recommendations, and real-time deal notifications.',
-        client: 'FlexDeals Inc.',
-        duration: '4 months',
-        role: 'Full Stack Developer'
-      },
-      details: {
-        challenge: 'Deal aggregation requires processing millions of offers in real-time while providing personalized recommendations. The platform needed to handle traffic spikes during major sales events and maintain sub-second response times for search queries.',
-        solution: 'We architected a high-performance system using GraphQL for efficient data fetching and Redis for caching. The recommendation engine uses collaborative filtering to surface relevant deals. We implemented price tracking with historical charts and alert systems for price drops.',
-        results: [
-          '2M+ monthly active users',
-          'Processing 10M+ deals daily',
-          'Average response time under 200ms',
-          '$50M+ in user savings tracked'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=deals%20aggregator%20homepage%20with%20featured%20offers%20and%20categories%2C%20modern%20e-commerce%20design%2C%20clean%20layout&width=1200&height=800&seq=flex1&orientation=landscape',
-            caption: 'Featured Deals Homepage'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=price%20tracking%20chart%20interface%20showing%20historical%20prices%2C%20deal%20comparison%20tool%2C%20modern%20web%20design&width=800&height=600&seq=flex2&orientation=landscape',
-            caption: 'Price Tracking & History'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=personalized%20deal%20recommendations%20interface%2C%20smart%20filtering%20system%2C%20clean%20modern%20UI&width=800&height=600&seq=flex3&orientation=landscape',
-            caption: 'Personalized Recommendations'
-          }
-        ]
-      }
+  },
+  {
+    id: 4,
+    title: "Mummy's Darl",
+    category: 'WEB',
+    year: '2025',
+    tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
+    thumbnail: { url: '/assets/images/projects/mummysdarl.jpg', alt: "Mummy's Darl" },
+    overview: {
+      description: "An educational platform for Mummy's Darl, a childcare and early learning centre — providing curriculum info, gallery, and online enrolment for parents.",
+      client: "Mummy's Darl",
+      duration: '2024 – 2025',
+      role: 'Frontend Developer',
     },
-    {
-      id: 11,
-      title: 'Pakshook',
-      category: 'MOBILE',
-      year: '2022',
-      tags: ['React Native', 'AWS', 'Social Features'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=food%20social%20media%20mobile%20app%20interface%20on%20smartphone%20with%20clean%20background%2C%20recipe%20cards%2C%20restaurant%20reviews%2C%20modern%20app%20design%2C%20appetizing%20colors&width=600&height=800&seq=work8&orientation=portrait',
-        alt: 'Pakshook'
-      },
-      overview: {
-        description: 'Social networking mobile app for food enthusiasts featuring recipe sharing, restaurant reviews, and community-driven culinary experiences.',
-        client: 'Pakshook Social',
-        duration: '6 months',
-        role: 'Mobile Developer & Backend Architect'
-      },
-      details: {
-        challenge: 'Food social networks need to balance visual appeal with functionality. Users wanted to share recipes, discover restaurants, and connect with fellow food enthusiasts. The app needed robust content moderation and location-based features.',
-        solution: 'We created a visually-rich mobile app with advanced photo editing tools optimized for food photography. The platform includes recipe parsing from photos, restaurant check-ins with reviews, and social features like following, commenting, and recipe collections. We built a scalable backend on AWS with content moderation AI.',
-        results: [
-          '1M+ recipes shared',
-          'Active in 50+ countries',
-          'Featured by Apple App Store',
-          'Partnership with 500+ restaurants'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=food%20social%20media%20app%20feed%20with%20recipe%20photos%2C%20mobile%20interface%2C%20beautiful%20food%20photography%2C%20modern%20app%20design&width=1200&height=800&seq=pak1&orientation=landscape',
-            caption: 'Recipe Feed & Discovery'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=restaurant%20review%20and%20check-in%20mobile%20interface%2C%20location-based%20features%2C%20food%20app%20design&width=800&height=600&seq=pak2&orientation=landscape',
-            caption: 'Restaurant Check-ins'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=recipe%20detail%20page%20with%20ingredients%20and%20steps%2C%20mobile%20cooking%20app%20interface%2C%20clean%20modern%20design&width=800&height=600&seq=pak3&orientation=landscape',
-            caption: 'Recipe Details & Instructions'
-          }
-        ]
-      }
+    details: {
+      challenge: 'The childcare centre relied entirely on word-of-mouth referrals with no web presence. Parents had no easy way to learn about the curriculum, pricing, or how to enrol.',
+      solution: 'Started in 2024 and fully revamped and launched in 2025 — a React website with TailwindCSS deployed on Cloudflare Pages. Includes curriculum overview, photo gallery, testimonials, and an enquiry form.',
+      results: [
+        'Revamped and launched 2025',
+        'Enrolment enquiries increased immediately post-launch',
+        'Zero hosting cost via Cloudflare Pages',
+        'Fully accessible and mobile-optimised',
+      ],
     },
-    {
-      id: 12,
-      title: 'ProVid',
-      category: 'WEB',
-      year: '2022',
-      tags: ['React', 'WebAssembly', 'Cloud Storage'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=video%20editing%20software%20interface%20with%20timeline%2C%20professional%20tools%2C%20modern%20dark%20theme%20with%20white%20accents%2C%20clean%20UI%20design%2C%20media%20management%20dashboard&width=800&height=600&seq=work9&orientation=landscape',
-        alt: 'ProVid'
-      },
-      overview: {
-        description: 'Professional video editing and collaboration platform with cloud storage, real-time editing, and team workflow management capabilities.',
-        client: 'ProVid Studios',
-        duration: '8 months',
-        role: 'Technical Lead & UI Designer'
-      },
-      details: {
-        challenge: 'Professional video editing traditionally requires powerful desktop software. ProVid wanted to bring these capabilities to the browser while enabling real-time collaboration between team members working remotely.',
-        solution: 'We leveraged WebAssembly to run video processing in the browser with near-native performance. The platform features a familiar timeline interface, real-time collaboration with cursor presence, cloud storage integration, and export to multiple formats. We implemented efficient video streaming for preview playback.',
-        results: [
-          'Used by 10K+ content creators',
-          'Processes 1PB+ of video monthly',
-          '50% faster than desktop alternatives',
-          'Enterprise clients include Fortune 500'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=video%20editing%20timeline%20interface%20with%20clips%20and%20transitions%2C%20professional%20web-based%20editor%2C%20dark%20theme&width=1200&height=800&seq=vid1&orientation=landscape',
-            caption: 'Timeline Editor Interface'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=real-time%20collaboration%20in%20video%20editor%20showing%20multiple%20cursors%2C%20team%20editing%20interface%2C%20modern%20design&width=800&height=600&seq=vid2&orientation=landscape',
-            caption: 'Real-time Collaboration'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=video%20export%20settings%20interface%20with%20format%20options%2C%20professional%20editing%20software%2C%20clean%20UI&width=800&height=600&seq=vid3&orientation=landscape',
-            caption: 'Export & Rendering Options'
-          }
-        ]
-      }
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Platform Overview' },
+        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Curriculum Section' },
+        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Contact & Enrolment' },
+      ],
     },
-    {
-      id: 13,
-      title: 'MusicMaster Pro',
-      category: 'DESKTOP',
-      year: '2022',
-      tags: ['Electron', 'Web Audio API', 'MIDI'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=professional%20music%20production%20desktop%20software%20interface%20with%20audio%20waveforms%2C%20mixer%20panel%2C%20virtual%20instruments%2C%20dark%20theme%20with%20colorful%20meters%2C%20modern%20DAW%20application%20design&width=800&height=600&seq=work-desktop4&orientation=landscape',
-        alt: 'MusicMaster Pro'
-      },
-      overview: {
-        description: 'Professional digital audio workstation for music production with multi-track recording, virtual instruments, and advanced mixing capabilities.',
-        client: 'MusicMaster Inc.',
-        duration: '10 months',
-        role: 'Audio Engineer & Desktop Developer'
-      },
-      details: {
-        challenge: 'Music producers needed a professional DAW that could handle complex projects with low latency while remaining accessible to beginners. The application required support for VST plugins, MIDI controllers, and high-quality audio processing.',
-        solution: 'We developed a full-featured DAW using Web Audio API with custom audio processing nodes. Features include unlimited tracks, built-in virtual instruments, effects chain, automation, and VST plugin support. We optimized for sub-10ms latency and implemented efficient audio buffer management.',
-        results: [
-          '50K+ music producers',
-          'Processing 100K+ tracks daily',
-          'Latency under 10ms achieved',
-          'Grammy-nominated albums produced'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=digital%20audio%20workstation%20main%20interface%20with%20tracks%20and%20mixer%2C%20professional%20music%20production%20software%2C%20dark%20theme&width=1200&height=800&seq=music1&orientation=landscape',
-            caption: 'Main DAW Interface'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=virtual%20instrument%20interface%20with%20piano%20roll%20and%20synthesizer%20controls%2C%20music%20production%20software&width=800&height=600&seq=music2&orientation=landscape',
-            caption: 'Virtual Instruments'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=audio%20mixing%20console%20with%20faders%20and%20effects%2C%20professional%20DAW%20mixer%20interface%2C%20colorful%20meters&width=800&height=600&seq=music3&orientation=landscape',
-            caption: 'Mixing Console'
-          }
-        ]
-      }
+  },
+  {
+    id: 5,
+    title: 'FlexDown',
+    category: 'MOBILE',
+    year: '2023',
+    tags: ['React Native', 'Node.js', 'PostgreSQL'],
+    thumbnail: { url: '/assets/images/flexdown/flexdown.png', alt: 'FlexDown' },
+    overview: {
+      description: "A real estate mobile app for browsing, filtering, and enquiring about property listings across Ghana — started in 2023, actively revamped in 2025 as a friend's startup.",
+      client: 'FlexDown',
+      duration: '2023 – Present',
+      role: 'Mobile Developer',
     },
-    {
-      id: 14,
-      title: 'Mindfulness & Meditation Mobile Application',
-      category: 'MOBILE',
-      year: '2021',
-      tags: ['Flutter', 'Audio Streaming', 'Analytics'],
-      thumbnail: {
-        url: 'https://readdy.ai/api/search-image?query=meditation%20mobile%20app%20on%20smartphone%20with%20peaceful%20interface%2C%20calming%20gradients%2C%20nature%20elements%2C%20clean%20design%2C%20wellness%20app%20mockup&width=600&height=800&seq=work13&orientation=portrait',
-        alt: 'Mindfulness & Meditation Mobile Application'
-      },
-      overview: {
-        description: 'Comprehensive meditation app offering guided sessions, breathing exercises, sleep stories, and mindfulness tracking with beautiful animations.',
-        client: 'Mindfulness App Co.',
-        duration: '5 months',
-        role: 'Mobile Developer & Animation Designer'
-      },
-      details: {
-        challenge: 'Meditation apps need to create a sense of calm from the first interaction. The app required beautiful animations that wouldn\'t drain battery, offline access to content, and personalized session recommendations based on user goals and history.',
-        solution: 'We crafted a Flutter app with custom animations using Rive for smooth, battery-efficient visuals. The app features downloadable content packs, sleep stories with background audio, breathing exercises with haptic feedback, and streak tracking for habit formation. We integrated with health platforms for holistic wellness tracking.',
-        results: [
-          '2M+ meditation minutes logged',
-          'Average user meditates 4x per week',
-          'Sleep quality improved for 78% of users',
-          'Apple Health and Google Fit integration'
-        ]
-      },
-      gallery: {
-        images: [
-          {
-            url: 'https://readdy.ai/api/search-image?query=meditation%20app%20home%20screen%20with%20session%20categories%2C%20peaceful%20mobile%20interface%2C%20calming%20colors%20and%20animations&width=1200&height=800&seq=mind1&orientation=landscape',
-            caption: 'Home Screen & Sessions'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=breathing%20exercise%20interface%20with%20animated%20circle%2C%20mindfulness%20app%2C%20calming%20visual%20design&width=800&height=600&seq=mind2&orientation=landscape',
-            caption: 'Breathing Exercises'
-          },
-          {
-            url: 'https://readdy.ai/api/search-image?query=meditation%20progress%20tracking%20with%20streak%20calendar%2C%20wellness%20app%20statistics%2C%20peaceful%20design&width=800&height=600&seq=mind3&orientation=landscape',
-            caption: 'Progress Tracking'
-          }
-        ]
-      }
-    }
-  ]
+    details: {
+      challenge: 'Finding reliable rental and property listings in Ghana was fragmented across unverified social media posts and outdated classifieds, with no standardised filtering or contact flow.',
+      solution: 'Built a React Native Expo app backed by a Node.js REST API and PostgreSQL. Features include location-based search, advanced filters, image galleries per listing, and in-app enquiry forms.',
+      results: [
+        'Launched with 200+ verified property listings',
+        'Integrated Google Maps for neighbourhood exploration',
+        'Advanced filter system for price, bedrooms, and area',
+        'Actively revamped and extended in 2025',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/flexdown/flexdown_landing.png', caption: 'Landing & Search' },
+        { url: '/assets/images/flexdown/flexdown.png', caption: 'Property Feed' },
+        { url: '/assets/images/flexdown/flexdown_listing.png', caption: 'Listing Detail' },
+      ],
+    },
+  },
+  {
+    id: 6,
+    title: 'Envoyer GH',
+    category: 'WEB',
+    year: '2024',
+    tags: ['Node.js', 'Express', 'PostgreSQL', 'TailwindCSS'],
+    thumbnail: { url: '/assets/images/envoyer/envoyerGH.png', alt: 'Envoyer GH' },
+    overview: {
+      description: 'A digital freight network connecting shippers, business owners, and individuals with carriers for road transport across Ghana — including bus hiring and towing services.',
+      client: 'Envoyer GH',
+      duration: 'June – Sept 2024',
+      role: 'Lead Frontend & Backend Engineer',
+    },
+    details: {
+      challenge: "Ghana's logistics sector lacked a reliable digital platform for connecting freight clients with available drivers. Manual coordination led to delays, poor visibility, and high operational costs.",
+      solution: 'Built a full-stack platform with Express/PostgreSQL backend and TailwindCSS frontend. Implemented user roles, OTP verification, KYC verification, image upload, booking portal, and real-time notifications via Server-Sent Events.',
+      results: [
+        'Live at envoyergh.com',
+        'Supports shipper, driver, and admin user roles',
+        'Real-time notification system via SSE',
+        'OTP + KYC verification for secure onboarding',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/envoyer/envoyerGH.png', caption: 'Platform Overview' },
+        { url: '/assets/images/envoyer/envoyer_contact.png', caption: 'Contact & Booking Flow' },
+        { url: '/assets/images/envoyer/envoyer_login.png', caption: 'Login & Registration' },
+      ],
+    },
+  },
+  {
+    id: 7,
+    title: 'Purple Pay',
+    category: 'MOBILE',
+    year: '2024',
+    tags: ['Flutter', 'Express', 'PostgreSQL', 'Stripe'],
+    thumbnail: { url: '/assets/images/projects/purple-pay.jpg', alt: 'Purple Pay' },
+    overview: {
+      description: 'A fintech mobile application enabling peer-to-peer payments, wallet management, and card top-ups — built during tenure at Enyata Ghana.',
+      client: 'Enyata Ghana',
+      duration: 'Feb – Aug 2024',
+      role: 'Mobile Engineer',
+    },
+    details: {
+      challenge: 'Mobile money solutions in Ghana are fragmented across multiple providers with poor UX. Users needed a unified wallet with a clean interface for P2P transfers and card payments.',
+      solution: 'Built a Flutter app with Riverpod state management and an Express/PostgreSQL backend. Integrated Stripe for card processing and biometric authentication for enhanced security.',
+      results: [
+        'Beta launched with 500+ early adopters',
+        'Average transaction time under 3 seconds',
+        'PCI-DSS compliant payment flow via Stripe',
+        'Biometric auth adopted by 80% of users',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Wallet Dashboard' },
+        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Transfer Flow' },
+        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Transaction History' },
+      ],
+    },
+  },
+  {
+    id: 8,
+    title: 'Nagyique Boutique',
+    category: 'WEB',
+    year: '2024',
+    tags: ['Astro', 'React', 'Stripe', 'Sanity', 'Cloudflare'],
+    thumbnail: { url: '/assets/images/projects/nagyique.jpg', alt: 'Nagyique Boutique' },
+    overview: {
+      description: 'A fashion e-commerce storefront with a Sanity CMS product catalogue, Stripe checkout, and edge-deployed Astro frontend. Started March 2024, still in active development.',
+      client: 'Nagyique Boutique',
+      duration: 'Mar 2024 – Present',
+      role: 'Full Stack Developer',
+    },
+    details: {
+      challenge: 'The boutique was managing orders via Instagram DMs with no product catalogue or checkout flow. They needed a store their team could manage without technical knowledge.',
+      solution: 'Built an Astro + React storefront on Cloudflare Pages with Sanity as the headless CMS for product management. Stripe handles checkout. The Astro architecture delivers near-instant page loads.',
+      results: [
+        'Owner manages inventory via Sanity Studio — no coding needed',
+        'Lighthouse performance score: 98',
+        'Stripe integration handling live transactions',
+        'Ongoing: final features being completed',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/nagyique.jpg', caption: 'Storefront' },
+        { url: '/assets/images/projects/nagyique.jpg', caption: 'Product Detail' },
+        { url: '/assets/images/projects/nagyique.jpg', caption: 'Checkout Flow' },
+      ],
+    },
+  },
+  {
+    id: 9,
+    title: 'Pokebook',
+    category: 'MOBILE',
+    year: '2023',
+    tags: ['Flutter', 'Provider', 'PokéAPI'],
+    thumbnail: { url: '/assets/images/projects/pokebook.jpg', alt: 'Pokebook' },
+    overview: {
+      description: 'A Flutter mobile app consuming the PokéAPI to browse Pokémon, view detailed stats, and discover similar species — built as a deep-dive into state management and API integration.',
+      client: 'Personal Project',
+      duration: 'Late 2023',
+      role: 'Mobile Developer',
+    },
+    details: {
+      challenge: 'A focused learning project to master Flutter state management with Provider, REST API consumption, and building a polished search-driven UI.',
+      solution: 'Consumes the PokéAPI for all Pokémon data. Features a live search bar, detailed stat pages with type badges and base stat visualisers, and a similar Pokémon recommendation section.',
+      results: [
+        'Fully functional PokéAPI integration',
+        'Dynamic search with instant filter results',
+        'Detailed stat view with type badges',
+        'Solid foundation for Flutter/Provider patterns',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/pokebook.jpg', caption: 'Pokémon Browser' },
+        { url: '/assets/images/projects/pokebook.jpg', caption: 'Search & Filter' },
+        { url: '/assets/images/projects/pokebook.jpg', caption: 'Detail & Stats View' },
+      ],
+    },
+  },
+  {
+    id: 10,
+    title: 'Gullivers Travel Hotel',
+    category: 'WEB',
+    year: '2022',
+    tags: ['React', 'Node.js', 'TailwindCSS'],
+    thumbnail: { url: '/assets/images/gullivers/gullivers_rooms.png', alt: 'Gullivers Travel Hotel' },
+    overview: {
+      description: 'A professional hotel website for Gullivers Travel Hotel featuring room showcase, restaurant gallery, lounge section, and booking enquiries.',
+      client: 'Gullivers Travel Hotel',
+      duration: '2 months',
+      role: 'Frontend Developer',
+    },
+    details: {
+      challenge: 'The hotel had no digital presence and was losing potential guests to competitors with modern booking websites. They needed a fast, attractive site to showcase rooms and take enquiries.',
+      solution: 'Designed and built a React website with smooth animations, image galleries for rooms, restaurant, and lounge, and a contact/booking enquiry form backed by a Node.js mailer service.',
+      results: [
+        '60% increase in direct booking enquiries post-launch',
+        'Fully responsive across mobile and desktop',
+        'Image-rich showcase for rooms, restaurant, and lounge',
+        'Positive client feedback on delivery speed',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/gullivers/gullivers_rooms.png', caption: 'Rooms & Suites' },
+        { url: '/assets/images/gullivers/gullivers_restaurant.png', caption: 'Restaurant' },
+        { url: '/assets/images/gullivers/gullivers_lounge.png', caption: 'Lounge' },
+      ],
+    },
+  },
+  {
+    id: 11,
+    title: 'GESA KNUST',
+    category: 'MOBILE',
+    year: '2022',
+    tags: ['Flutter', 'Firebase', 'Node.js'],
+    thumbnail: { url: '/assets/images/gesa/gesa.png', alt: 'GESA KNUST' },
+    overview: {
+      description: 'Mobile app for the Ghana Engineering Students Association at KNUST, centralising events, course materials, and member communications.',
+      client: 'GESA KNUST',
+      duration: '4 months',
+      role: 'Mobile Developer',
+    },
+    details: {
+      challenge: 'The association managed events and resources through scattered WhatsApp groups and emails, making it hard for students to stay informed or access materials quickly.',
+      solution: 'Developed a Flutter app with Firebase for real-time notifications and content delivery. Features an events calendar, course material repository, announcements, and member directory.',
+      results: [
+        'Adopted by 500+ engineering students',
+        'Centralised 3 years of course materials',
+        'Real-time event and announcement notifications',
+        'Published on Google Play Store',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/gesa/gesa.png', caption: 'Home Dashboard' },
+        { url: '/assets/images/gesa/gesa_course_material.png', caption: 'Course Materials' },
+        { url: '/assets/images/gesa/gesa_events.png', caption: 'Events Calendar' },
+      ],
+    },
+  },
+  {
+    id: 12,
+    title: 'Pro-Vid',
+    category: 'MOBILE',
+    year: '2021',
+    tags: ['Flutter', 'Dart', 'REST API'],
+    thumbnail: { url: '/assets/images/projects/provid.png', alt: 'Pro-Vid COVID Tracker' },
+    overview: {
+      description: 'A COVID-19 tracking app providing real-time global and local case updates, curated news, and self-assessment health quizzes — designed to combat pandemic misinformation.',
+      client: 'Personal Project',
+      duration: 'Aug 2021',
+      role: 'Mobile Developer',
+    },
+    details: {
+      challenge: 'During the pandemic, misinformation spread rapidly. People needed a single trustworthy source for case data, verified news, and simple self-assessment tools accessible on mobile.',
+      solution: 'Built in Flutter/Dart, consuming a COVID-19 REST API for live case statistics. Features curated news sources, an interactive self-assessment quiz, and community awareness content.',
+      results: [
+        'Real-time global and local case data',
+        'Curated, verified news sources only',
+        'Interactive self-assessment health quiz',
+        'Shareable awareness content for community use',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/provid.png', caption: 'Case Statistics Dashboard' },
+        { url: '/assets/images/projects/provid-2.jpg', caption: 'News & Updates Feed' },
+        { url: '/assets/images/projects/provid.png', caption: 'Self-Assessment Quiz' },
+      ],
+    },
+  },
+]
 };

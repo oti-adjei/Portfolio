@@ -48,7 +48,7 @@ export default function Hero() {
             </div>
 
             {/* Social Icons */}
-            <div className="flex items-center justify-center lg:justify-start gap-4">
+            <div className="flex items-center justify-center lg:justify-start gap-4 px-4 py-2 rounded-full">
               <div className="flex -space-x-3">
                 {hero.socialIcons?.map((social) => (
                   <a
@@ -56,7 +56,7 @@ export default function Hero() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white overflow-hidden bg-gray-900 flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white overflow-hidden bg-purple-800 flex items-center justify-center hover:scale-110 hover:bg-[#f75124] transition-transform cursor-pointer"
                   >
                     <i className={`${social.icon} text-white text-lg sm:text-xl`}></i>
                   </a>

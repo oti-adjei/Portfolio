@@ -50,7 +50,7 @@ function buildRows(
   for (let i = 0; i < count; i++) {
     if (dPool.length === 0 || mPool.length === 0) break;
 
-    const pattern: RowLayout['pattern'] = Math.random() > 0.5 ? 'dm' : 'md';
+    const pattern: RowLayout['pattern'] = i % 2 === 0 ? 'dm' : 'md';
     const projects: DisplayProject[] = [];
 
     if (pattern === 'dm') {
@@ -142,11 +142,11 @@ export default function FeaturedWorks() {
   return (
     <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+        <div className="text-right mb-10 sm:mb-12 lg:mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             {featuredWorks.title}
           </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl ml-auto">
             {featuredWorks.subtitle}
           </p>
         </div>

@@ -19,7 +19,7 @@ export default function AboutHero() {
             <img
               src={hero.avatar.url}
               alt={hero.avatar.alt ?? 'Avatar'}
-              className="w-full h-full object-cover object-top"
+              className="w-full h-full object-cover object-bottom"
             />
           </div>
           <div className="absolute inset-0 rounded-full border-2 border-teal-400/20 animate-ping-slow" />

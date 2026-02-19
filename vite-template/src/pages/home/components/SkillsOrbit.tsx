@@ -35,8 +35,8 @@ function SkillCluster({
   // Guard against empty skill arrays – render nothing instead of breaking layout.
   if (!Array.isArray(skills) || skills.length === 0) return null;
 
-  const coreSize = 48 * scale;
-  const orbSize = 32 * scale;
+  const coreSize = 40 * scale;
+  const orbSize = 29 * scale;
   const iconSize = Math.round(scale >= 1 ? 48 : 28);
   const orbIconSize = Math.round(scale >= 1 ? 36 : 22);
   const ring1 = 400 * scale;
