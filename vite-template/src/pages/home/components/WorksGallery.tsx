@@ -41,6 +41,7 @@ export default function WorksGallery() {
     <section id="works" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+          <p className="text-sm font-medium text-[#f75124] mb-2">Portfolio</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             {worksPage.title}
           </h2>

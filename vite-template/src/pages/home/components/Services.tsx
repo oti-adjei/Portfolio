@@ -45,6 +45,7 @@ export default function Services() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto">
         <div className="text-left mb-10 sm:mb-12 lg:mb-16">
+          <p className="text-sm font-medium text-[#f75124] mb-2">Services</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             {services.title}
           </h2>
