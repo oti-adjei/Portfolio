@@ -1,0 +1,28 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "my-hono-app",
+	"account_id": "1e603316f6eb73eb448d61c42b889b8a",
+	"main": "./src/worker/index.ts",
+	"compatibility_date": "2025-10-08",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true,
+	"assets": {
+		"directory": "./dist/client",
+		"not_found_handling": "single-page-application"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "portfolio-db",
+			"database_id": "aa05a4e3-6f3f-465d-99f3-bf52e27576fa"
+		}
+	],
+	"vars": {
+		"ADMIN_EMAIL": "",
+		"ADMIN_PASSWORD": "",
+		"JWT_SECRET": ""
+	}
+}
