@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import Header from '../home/components/Header';
 import Footer from '../home/components/Footer';
-import FloatingShapes from './components/FloatingShapes';
+import FloatingShapes from '../../components/FloatingShapes';
 import AboutHero from './components/AboutHero';
 import BioSection from './components/BioSection';
 import ExpertiseCards from './components/ExpertiseCards';

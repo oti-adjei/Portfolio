@@ -7,19 +7,20 @@ import Services from './components/Services';
 import Stats from './components/Stats';
 import ContactCTA from './components/ContactCTA';
 import Footer from './components/Footer';
+import Reveal from '../../components/Reveal';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <Hero />
-      <AboutNew />
-      <SkillsOrbit />
-      <FeaturedWorks />
-      <Services />
-      <Stats />
-      <ContactCTA />
-      <Footer />
+      <Reveal origin="bottom"><AboutNew /></Reveal>
+      <Reveal origin="bottom"><SkillsOrbit /></Reveal>
+      <Reveal origin="bottom"><FeaturedWorks /></Reveal>
+      <Reveal origin="bottom"><Services /></Reveal>
+      <Reveal origin="bottom"><Stats /></Reveal>
+      <Reveal origin="bottom"><ContactCTA /></Reveal>
+      <Reveal origin="bottom"><Footer /></Reveal>
     </div>
   );
 }
