@@ -5,6 +5,42 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-02-19 (7)
+
+### vite-template — Project re-categorisation, Dear Akua, and Works pagination
+
+**`src/mocks/siteContent.ts`**
+- Re-categorised Home Sweet Home (id: 1) from `WEB` → `SAAS`
+- Re-categorised FlexDown (id: 5) from `MOBILE` → `SAAS`
+- Added Dear Akua (id: 13) as a `WEB` project — anonymous confession platform built with Node.js, Express, MongoDB; data ported from legacy `data/projects.json`
+
+**`src/pages/home/components/WorksGallery.tsx`**
+- Added `currentPage` state with `ITEMS_PER_PAGE = 9` constant
+- `filteredWorks` is now sliced to the current page before rendering
+- Category button click resets page to 1
+- Pagination bar renders below the grid when `totalPages > 1`: prev/next arrow buttons + numbered page buttons; smooth-scrolls to `#works` section on page change
+
+---
+
+## 2026-02-19 (6)
+
+### vite-template — Category-aware project gallery + new filter types
+
+**`src/types/siteContent.ts`**
+- Added optional `type?: 'web' | 'mobile'` field to `GalleryImage` — used to tag individual screenshots in SaaS project galleries
+
+**`src/mocks/siteContent.ts`**
+- Extended `worksPage.categories` to include `'SAAS'`, `'CLI'`, `'BACKEND'` alongside existing `WEB`, `MOBILE`, `DESKTOP`
+
+**`src/pages/project/components/ProjectGallery.tsx`**
+- Replaced single fixed landscape layout with three category-aware modes:
+  - `landscape` (WEB / DESKTOP / CLI / BACKEND) — unchanged hero + 2-col grid behaviour
+  - `portrait` (MOBILE) — centred flex grid of `160–180px` wide portrait frames with `9/19.5` aspect ratio; no stretched landscape hero
+  - `mixed` (SAAS) — splits gallery images by `image.type`: web screenshots rendered in landscape layout under a "Web" heading, mobile screenshots in portrait layout under a "Mobile" heading; each sub-section is skipped if empty
+- Extracted `LandscapeGallery` and `PortraitGallery` as local sub-components for reuse in mixed mode
+
+---
+
 ## 2026-02-19 (5)
 
 ### vite-template — Floating shapes on About, Works, and Project pages

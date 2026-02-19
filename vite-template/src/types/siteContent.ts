@@ -343,4 +343,5 @@ export interface Project {
 export interface GalleryImage {
   url: string;
   caption: string;
+  type?: 'web' | 'mobile';
 }
