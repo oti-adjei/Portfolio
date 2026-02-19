@@ -1,5 +1,4 @@
 import { useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
 import { useContent } from '../../../contexts/ContentContext';
 
 export default function ContactCTA() {
@@ -34,18 +33,18 @@ export default function ContactCTA() {
       <div className="max-w-4xl mx-auto">
         <div className="rounded-3xl overflow-hidden bg-[#8067f0]">
           <div className="px-12 py-16 text-center text-white">
-            <h2 className="text-5xl font-bold mb-6">{contactCTA.heading}</h2>
+            <h3 className="text-3xl font-medium mb-6">{contactCTA.heading}</h3>
             <p className="text-xl mb-8 opacity-90">{contactCTA.description}</p>
 
             {/* Email Form */}
-            <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-6">
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto mb-6">
               <div className="flex gap-3">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="flex-1 px-6 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="flex-1 px-6 py-2 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
                   disabled={status === 'loading'}
                 />
                 <button
@@ -73,14 +72,7 @@ export default function ContactCTA() {
               )}
             </form>
 
-            {/* CTA Button */}
-            <Link
-              to={contactCTA.ctaButton.url}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-colors cursor-pointer whitespace-nowrap"
-            >
-              {contactCTA.ctaButton.label}
-              <i className="ri-arrow-right-line"></i>
-            </Link>
+            
           </div>
         </div>
       </div>

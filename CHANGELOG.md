@@ -5,6 +5,111 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-02-19 (2)
+
+### vite-template — Replace Ava Chen persona with George's real content
+
+**`src/mocks/siteContent.ts`**
+- Replaced all 4 `'Ava Chen'` references with `'George Oti-Adjei'`
+- `footer.copyright`: updated year to 2026, name to George Oti-Adjei; replaced Readdy/Privacy/Terms links with real GitHub and LinkedIn links
+- `homePage.hero`: badge → `'Mobile & Software Engineer'`; heading and subtitle updated to match George's actual profile
+- `homePage.hero.socialIcons`: removed Twitter/Dribbble; updated GitHub → `github.com/oti-adjei`, LinkedIn → `linkedin.com/in/george-jrr`
+- `homePage.about`: name, role, bio (3 paragraphs from CV), tools array → Flutter, React, Go, TypeScript, Node.js, Figma
+- `homePage.stats`: years experience `8+` → `3+`; projects `50+` → `20+`; clients `30+` → `10+`
+- `aboutPage.hero`: avatar switched from readdy.ai URL to `/Gpic.webp`; name, role, tagline updated
+- `aboutPage.bio.paragraphs`: full rewrite from CV — Accra-based, 3+ years, real career context
+- `aboutPage.expertise.items`: replaced Product Design/UX Research with Mobile Development, Web & Frontend, Backend Engineering, DevOps & Tooling
+- `aboutPage.journey.timeline`: 5 fictional entries replaced with 6 real roles — MashHarder, Senvon Studio, Enyata Ghana, teamAlpha, ADB Ghana, Npontu Technologies
+- `aboutPage.philosophy`: quote and label updated to engineering philosophy
+- `contactPage.contactInfo.cards`: email → `jrgeorge991@gmail.com`, phone → `+233 50-005-2067`, location → `Accra, Ghana`
+- `contactPage.contactInfo.socialLinks`: removed Twitter/Dribbble; real GitHub and LinkedIn URLs
+- `contactPage.map`: embed and title updated to Accra, Ghana
+
+**`src/pages/home/components/AboutNew.tsx`**
+- `toolIcons` map updated: removed Sketch/Tailwind CSS; added Flutter and Go
+- Removed stale linter-injected `className="bg-[a09dab]"` from bio paragraph
+
+**Result**: `npm run build` passes clean — 0 errors.
+
+---
+
+## 2026-02-19
+
+### vite-template — Replace all placeholder projects with George's real CV projects
+
+**`src/mocks/siteContent.ts`**
+- Replaced all 14 fictitious "Ava Chen" placeholder projects with 12 real projects from George's CV and legacy portfolio
+- Projects ordered newest-first by ID (1–12) so `featuredWorks.projectIds` naturally displays them in reverse-chronological order
+- Updated `featuredWorks.projectIds` from `[1..14]` to `[1..12]`
+
+**Projects added:**
+
+| ID | Title | Category | Year |
+|---|---|---|---|
+| 1 | Home Sweet Home | WEB | 2025 |
+| 2 | PriPri | DESKTOP | 2025 |
+| 3 | Scribble Notes | MOBILE | 2025 |
+| 4 | Mummy's Darl | WEB | 2025 |
+| 5 | FlexDown | MOBILE | 2023 (active 2025) |
+| 6 | Envoyer GH | WEB | 2024 |
+| 7 | Purple Pay | MOBILE | 2024 |
+| 8 | Nagyique Boutique | WEB | 2024 |
+| 9 | Pokebook | MOBILE | 2023 |
+| 10 | Gullivers Travel Hotel | WEB | 2022 |
+| 11 | GESA KNUST | MOBILE | 2022 |
+| 12 | Pro-Vid | MOBILE | 2021 |
+
+**`vite-template/public/assets/images/`**
+- Copied legacy project images into vite-template/public for Vite serving
+- Real screenshots: envoyer/, gesa/, flexdown/, gullivers/
+- Generic placeholders (to be replaced with real screenshots): projects/ folder with per-project named files
+
+**`src/pages/home/components/ContactCTA.tsx`**
+- Removed unused `Link` import (pre-existing TS6133 error blocking build)
+
+---
+
+## 2026-02-18 (9)
+
+### vite-template — Section heading alignment matches legacy pattern
+
+**`src/pages/home/components/FeaturedWorks.tsx`**
+- Heading block changed from `text-center` to `text-right`, matching legacy `portfolio .heading { text-align: right }`
+- Subtitle `<p>` switched from `mx-auto` to `ml-auto` to keep it right-anchored
+
+**`src/pages/home/components/Services.tsx`**
+- Heading block changed from `text-center` to `text-left`, matching legacy `service .heading { text-align: left }`
+- Removed `mx-auto` from subtitle `<p>`
+
+Stats (`text-center`) and ContactCTA remain unchanged — they already match the legacy pattern.
+
+---
+
+## 2026-02-18 (8)
+
+### vite-template — Services section redesigned to match legacy style
+
+**`src/pages/home/components/Services.tsx`**
+- Removed gradient card backgrounds and per-icon `colorMap`
+- Cards are now white with the legacy box-shadow (`18px 0px 87px 0px rgb(10 15 70 / 7%)`) and `border-radius` 12px
+- Circle icon container (65×65, `border-radius: 50%`) cycles through the 4 legacy colours: `#f75124` → `#baebcd` → `#d9d1fa` → `#faedce`
+- Hover effect: hovered card scales to `1.05`, all others shrink to `0.9` via `group-hover:scale-90 hover:!scale-105` on a `group` grid wrapper — matching legacy `.row:hover / .row:not(:hover)` behaviour
+- Layout switched to 2-column grid (`sm:grid-cols-2`) matching legacy `minmax(430px, auto)` proportions
+
+---
+
+## 2026-02-18 (7)
+
+### vite-template — About section tool icons: legacy circle backgrounds
+
+**`src/pages/home/components/AboutNew.tsx`**
+- Replaced flat `bg-gray-50 rounded-lg` icon containers with `rounded-full` circles
+- Cycles through the 4 legacy background colours (`#f75124`, `#baebcd`, `#d9d1fa`, `#faedce`) by index
+- Removed per-icon text colours; icons now render as `text-gray-800` for contrast on all backgrounds
+- Added `hover:-translate-y-1.5` lift transition to match legacy `.skill-item:hover` behaviour
+
+---
+
 ## 2026-02-18 (6)
 
 ### vite-template — Fix header and footer logo not rendering

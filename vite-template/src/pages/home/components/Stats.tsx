@@ -14,9 +14,9 @@ export default function Stats() {
     <section className="py-24 px-6 lg:px-12 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gray-900 mb-4">
+          <h3 className="text-4xl font-medium text-gray-900 mb-4">
             {stats.title}
-          </h2>
+          </h3>
           <p className="text-xl text-gray-600">{stats.subtitle}</p>
         </div>
 
@@ -29,7 +29,7 @@ export default function Stats() {
                 className={`${color} rounded-xl p-12 text-center hover:scale-105 transition-transform duration-300 cursor-pointer shadow-[18px_0px_87px_0px_rgb(10_15_70/7%)]`}
               >
                 <div className="space-y-3">
-                  <div className="text-5xl font-bold text-gray-900">{stat.value}</div>
+                  <div className="text-3xl font-medium text-gray-900">{stat.value}</div>
                   <div className="text-lg font-medium text-gray-800">{stat.label}</div>
                   <p className="text-sm text-gray-600">{stat.description}</p>
                 </div>

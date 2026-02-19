@@ -5,20 +5,16 @@ export default function AboutNew() {
   const { content } = useContent();
   const about = content.homePage.about;
 
-  const toolIcons: Record<
-    string,
-    { icon: string; color: string }
-  > = {
-    Figma: { icon: 'ri-figma-fill', color: 'text-purple-600' },
-    Sketch: { icon: 'ri-sketch-fill', color: 'text-orange-500' },
-    React: { icon: 'ri-reactjs-line', color: 'text-cyan-500' },
-    TypeScript: { icon: 'ri-code-box-line', color: 'text-blue-600' },
-    'Node.js': { icon: 'ri-nodejs-line', color: 'text-green-600' },
-    'Tailwind CSS': {
-      icon: 'ri-palette-line',
-      color: 'text-teal-500',
-    },
+  const toolIcons: Record<string, { icon: string }> = {
+    Flutter: { icon: 'ri-smartphone-line' },
+    React: { icon: 'ri-reactjs-line' },
+    Go: { icon: 'ri-code-s-slash-line' },
+    TypeScript: { icon: 'ri-code-box-line' },
+    'Node.js': { icon: 'ri-nodejs-line' },
+    Figma: { icon: 'ri-figma-fill' },
   };
+
+  const circleColors = ['#f75124', '#baebcd', '#d9d1fa', '#faedce'];
 
   return (
     <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 bg-white">
@@ -72,21 +68,19 @@ export default function AboutNew() {
                 Tools I Use
               </p>
               <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 flex-wrap">
-                {about.tools?.map((tool) => {
-                  const iconData =
-                    toolIcons[tool.name] ?? {
-                      icon: 'ri-tools-line',
-                      color: 'text-gray-600',
-                    };
+                {about.tools?.map((tool, index) => {
+                  const iconData = toolIcons[tool.name] ?? { icon: 'ri-tools-line' };
+                  const bg = circleColors[index % circleColors.length];
                   return (
                     <div
                       key={tool.id ?? tool.name}
-                      className="flex flex-col items-center gap-2 group cursor-pointer"
+                      className="flex flex-col items-center gap-2 group cursor-pointer transition-transform duration-300 hover:-translate-y-1.5"
                     >
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gray-50 rounded-lg group-hover:bg-gray-100 transition-colors">
-                        <i
-                          className={`${iconData.icon} text-xl sm:text-2xl ${iconData.color}`}
-                        ></i>
+                      <div
+                        className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full"
+                        style={{ backgroundColor: bg }}
+                      >
+                        <i className={`${iconData.icon} text-2xl sm:text-3xl text-gray-800`}></i>
                       </div>
                       <span className="text-xs text-gray-600">{tool.name}</span>
                     </div>
