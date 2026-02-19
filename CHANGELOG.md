@@ -5,6 +5,25 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-02-19 (8)
+
+### vite-template — ContactCTA sizing fix + orange section labels
+
+**`src/pages/home/components/ContactCTA.tsx`**
+- `rounded-3xl` → `rounded-xl` (12px, matching legacy)
+- h3 bottom margin `mb-6` → `mb-1` (legacy has 3px gap between heading and description)
+- Description `text-xl mb-8` → `text-base sm:text-lg mb-6` (legacy uses ~1.1rem; `text-lg` = 18px is close)
+- Email input `py-2 px-6` → `py-[12px] px-4` (matches legacy `padding: 12px 15px`)
+- Submit button `py-4 px-8` → `py-[12px] px-10` (matches legacy `padding: 12px 40px`)
+
+**`src/pages/home/components/WorksGallery.tsx`**
+- Added orange "Portfolio" eyebrow label (`text-sm font-medium text-[#f75124]`) above the section h2, matching the legacy `.heading h3` pattern
+
+**`src/pages/home/components/Services.tsx`**
+- Added orange "Services" eyebrow label (`text-sm font-medium text-[#f75124]`) above the section h2, matching the legacy `.heading h3` pattern
+
+---
+
 ## 2026-02-19 (7)
 
 ### vite-template — Project re-categorisation, Dear Akua, and Works pagination
