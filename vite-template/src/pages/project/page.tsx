@@ -6,6 +6,7 @@ import ProjectOverview from './components/ProjectOverview';
 import ProjectGallery from './components/ProjectGallery';
 import ProjectNavigation from './components/ProjectNavigation';
 import Footer from '../home/components/Footer';
+import FloatingShapes from '../../components/FloatingShapes';
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
@@ -35,9 +36,10 @@ export default function ProjectDetail() {
   const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative overflow-hidden">
+      <FloatingShapes />
       <ProjectHeader />
-      <main>
+      <main className="relative z-10">
         <ProjectHero project={project} />
         <ProjectOverview project={project} />
         <ProjectGallery project={project} />

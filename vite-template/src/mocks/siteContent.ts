@@ -154,43 +154,43 @@ export const siteContent: SiteContent = {
     services: {
       id: 'home-services',
       title: 'What I Do',
-      subtitle: 'Comprehensive design and development services',
+      subtitle: 'End-to-end software engineering across mobile, web, backend, and desktop',
       items: [
-        {
-          id: 'service-ui-ux',
-          icon: 'ri-pencil-ruler-2-line',
-          title: 'UI/UX Design',
-          description: 'Creating intuitive and beautiful user interfaces backed by thorough user research and testing.'
-        },
-        {
-          id: 'service-web-dev',
-          icon: 'ri-code-s-slash-line',
-          title: 'Web Development',
-          description: 'Building responsive, performant web applications using modern frameworks and best practices.'
-        },
         {
           id: 'service-mobile',
           icon: 'ri-smartphone-line',
-          title: 'Mobile Apps',
-          description: 'Developing native and cross-platform mobile applications for iOS and Android.'
+          title: 'Mobile Development',
+          description: 'Cross-platform iOS and Android apps built with Flutter and React Native, from zero to production.'
         },
         {
-          id: 'service-design-systems',
-          icon: 'ri-layout-grid-line',
-          title: 'Design Systems',
-          description: 'Establishing scalable design systems that ensure consistency across all touchpoints.'
+          id: 'service-web',
+          icon: 'ri-code-s-slash-line',
+          title: 'Web Development',
+          description: 'Fast, responsive web applications built with React, Next.js, and Astro — optimised for performance and SEO.'
         },
         {
-          id: 'service-prototyping',
-          icon: 'ri-magic-line',
-          title: 'Prototyping',
-          description: 'Creating interactive prototypes to validate ideas and gather feedback early in the process.'
+          id: 'service-backend',
+          icon: 'ri-server-line',
+          title: 'Backend Engineering',
+          description: 'Scalable REST APIs built with Node.js/Express and Go, backed by PostgreSQL and MongoDB.'
+        },
+        {
+          id: 'service-desktop',
+          icon: 'ri-window-line',
+          title: 'Desktop Applications',
+          description: 'Cross-platform desktop apps built with Wails (Go + React) — native feel on macOS and Windows.'
+        },
+        {
+          id: 'service-devops',
+          icon: 'ri-git-branch-line',
+          title: 'DevOps & CI/CD',
+          description: 'Automated pipelines via GitHub Actions and Azure DevOps, Docker containerisation, and cloud hosting on AWS and Cloudflare.'
         },
         {
           id: 'service-consulting',
           icon: 'ri-lightbulb-line',
-          title: 'Consulting',
-          description: 'Providing strategic guidance on product design, development, and user experience optimization.'
+          title: 'Technical Consulting',
+          description: 'Architecture reviews, tech-stack guidance, and hands-on support for teams building software products.'
         }
       ]
     },

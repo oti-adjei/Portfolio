@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { useContent } from '../../../contexts/ContentContext';
+import Reveal from '../../../components/Reveal';
 
 export default function Hero() {
   const { content } = useContent();
@@ -20,7 +21,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1">
+          <Reveal origin="left" delay={200} className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1">
             <div className="space-y-4">
               <span className="inline-block px-4 py-2 bg-gray-100 text-gray-700 text-xs sm:text-sm font-medium rounded-full">
                 {hero.badge}
@@ -63,10 +64,10 @@ export default function Hero() {
                 ))}
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right Image */}
-          <div className="relative order-1 lg:order-2">
+          <Reveal origin="right" delay={350} className="relative order-1 lg:order-2">
             <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] flex items-end justify-center">
               <img
                 src={hero.image?.url}
@@ -74,7 +75,7 @@ export default function Hero() {
                 className="w-full h-full object-contain object-bottom"
               />
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

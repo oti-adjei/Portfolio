@@ -5,6 +5,74 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-02-19 (5)
+
+### vite-template — Floating shapes on About, Works, and Project pages
+
+**`src/components/FloatingShapes.tsx`** *(new — shared)*
+- Replaced the old About-only `about/components/FloatingShapes.tsx` (generic teal/pink/emerald blobs) with a shared component using brand colours: `#d9d1fa` (lavender), `#f75124` (orange), `#baebcd` (mint), `#faedce` (peach)
+- 8 shapes: 4 circles, 2 diamonds (`rotate-45`), 2 rings (border-only) — crisp edges matching the Services section style
+- `fixed inset-0 z-1 pointer-events-none` so shapes persist across the full page scroll
+- Uses existing `animate-float-slow/medium/fast` Tailwind animations with staggered delays
+
+**`src/pages/about/page.tsx`**
+- Import updated from `./components/FloatingShapes` → `../../components/FloatingShapes`
+
+**`src/pages/works/page.tsx`**
+- Added `relative overflow-hidden` to wrapper div, `FloatingShapes` component, and `relative z-10` on `<main>`
+
+**`src/pages/project/page.tsx`**
+- Added `relative overflow-hidden` to wrapper div, `FloatingShapes` component, and `relative z-10` on `<main>`
+
+**Result**: `npm run build` passes clean — 0 errors.
+
+---
+
+## 2026-02-19 (4)
+
+### vite-template — Services section redesigned: 3-col minimal grid + floating shapes
+
+**`src/mocks/siteContent.ts`**
+- Updated `homePage.services.subtitle` to reflect engineering focus
+- Replaced 6 placeholder service items (UI/UX Design, Design Systems, Prototyping…) with George's real services: Mobile Development, Web Development, Backend Engineering, Desktop Applications, DevOps & CI/CD, Technical Consulting
+
+**`src/pages/home/components/Services.tsx`**
+- Removed `circleColors` array, `group`/`group-hover:scale-90`/`hover:!scale-105` and card shadows
+- Redesigned to 3-column grid (`sm:grid-cols-2 lg:grid-cols-3`) matching screenshot layout
+- Icon container: `w-11 h-11 bg-gray-100 rounded-xl` (small gray square vs previous 65px circle)
+- Added 6 floating geometric shapes in `z-0` layer using existing `animate-float-slow/medium/fast` Tailwind keyframes (already in `tailwind.config.ts`):
+  - Large lavender circle (280px) — top-left, `animate-float-slow`
+  - Orange diamond (100px, rotate-45) — top-right, `animate-float-medium` delay 2s
+  - Mint ring (180px, border-only) — bottom-left, `animate-float-fast` delay 1s
+  - Peach circle (140px) — bottom-right, `animate-float-slow` delay 3s
+  - Small orange circle (70px) — mid-left, `animate-float-medium` delay 0.5s
+  - Lavender diamond (90px, rotate-45) — mid-right, `animate-float-slow` delay 4s
+
+**Result**: `npm run build` passes clean — 0 errors.
+
+---
+
+## 2026-02-19 (3)
+
+### vite-template — Scroll reveal animations (matching legacy ScrollReveal)
+
+**`src/components/Reveal.tsx`** *(new)*
+- Lightweight scroll-reveal component using native `IntersectionObserver` — zero new dependencies
+- Props: `origin` (`bottom` | `left` | `right` | `top`), `delay` (ms), `className` (forwarded to wrapper div)
+- Fades in + translates when element enters viewport; fires once then unobserves
+
+**`src/pages/home/components/Hero.tsx`**
+- Left content: `<Reveal origin="left" delay={200}>` — matches legacy `.home-text { origin: left }`
+- Right image: `<Reveal origin="right" delay={350}>` — matches legacy `.home-img { origin: right }`
+
+**`src/pages/home/page.tsx`**
+- All sections below Hero wrapped in `<Reveal origin="bottom">` — matches legacy `.about,.portfolio,.service,.cta` reveal
+- Sections: AboutNew, SkillsOrbit, FeaturedWorks, Services, Stats, ContactCTA, Footer
+
+**Result**: `npm run build` passes clean — 0 errors.
+
+---
+
 ## 2026-02-19 (2)
 
 ### vite-template — Replace Ava Chen persona with George's real content
