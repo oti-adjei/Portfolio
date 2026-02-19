@@ -456,14 +456,14 @@ export const siteContent: SiteContent = {
     id: 'works-page',
     title: 'My Work',
     subtitle: 'A collection of projects I\'ve designed and developed',
-    categories: ['ALL', 'WEB', 'MOBILE', 'DESKTOP']
+    categories: ['ALL', 'WEB', 'MOBILE', 'DESKTOP', 'SAAS', 'CLI', 'BACKEND']
   },
 
   projects: [
   {
     id: 1,
     title: 'Home Sweet Home',
-    category: 'WEB',
+    category: 'SAAS',
     year: '2025',
     tags: ['Golang', 'Hono', 'React', 'PostgreSQL'],
     thumbnail: { url: '/assets/images/projects/home-sweet-home.png', alt: 'Home Sweet Home' },
@@ -587,7 +587,7 @@ export const siteContent: SiteContent = {
   {
     id: 5,
     title: 'FlexDown',
-    category: 'MOBILE',
+    category: 'SAAS',
     year: '2023',
     tags: ['React Native', 'Node.js', 'PostgreSQL'],
     thumbnail: { url: '/assets/images/flexdown/flexdown.png', alt: 'FlexDown' },
@@ -829,6 +829,37 @@ export const siteContent: SiteContent = {
         { url: '/assets/images/projects/provid.png', caption: 'Case Statistics Dashboard' },
         { url: '/assets/images/projects/provid-2.jpg', caption: 'News & Updates Feed' },
         { url: '/assets/images/projects/provid.png', caption: 'Self-Assessment Quiz' },
+      ],
+    },
+  },
+  {
+    id: 13,
+    title: 'Dear Akua',
+    category: 'WEB',
+    year: '2023',
+    tags: ['Node.js', 'Express', 'MongoDB'],
+    thumbnail: { url: '/assets/images/dear-akua/landing-page.png', alt: 'Dear Akua' },
+    overview: {
+      description: 'An anonymous web-based platform where users can write and share confessions, designed to foster a safe and non-judgmental community space.',
+      client: 'Personal Project',
+      duration: '2023',
+      role: 'Full-stack Developer',
+    },
+    details: {
+      challenge: 'Ensuring complete user anonymity while preventing abuse, and creating an interface simple enough that anyone could submit without friction.',
+      solution: 'Built with Node.js, Express, and EJS for server-side rendering, backed by MongoDB. Anonymous submissions require no account. Deployed on Railway with content moderation hooks to flag problematic entries.',
+      results: [
+        'Fully anonymous — no account or email required',
+        'Public confession feed with responsive design',
+        'Content moderation features to maintain a safe space',
+        'Live at dear-akua-production.up.railway.app',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/dear-akua/landing-page.png', caption: 'Landing Page' },
+        { url: '/assets/images/dear-akua/submit-form.png', caption: 'Submission Form' },
+        { url: '/assets/images/dear-akua/confessions-feed.png', caption: 'Confessions Feed' },
       ],
     },
   },

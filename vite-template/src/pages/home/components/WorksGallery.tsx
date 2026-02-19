@@ -3,20 +3,39 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useContent } from '../../../contexts/ContentContext';
 
+const ITEMS_PER_PAGE = 9;
+
 export default function WorksGallery() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [currentPage, setCurrentPage] = useState(1);
   const { content } = useContent();
   const { worksPage, projects } = content;
 
-  // Guard against missing data
   if (!worksPage || !Array.isArray(projects)) {
-    return null; // or render a fallback UI
+    return null;
   }
 
   const filteredWorks =
     selectedCategory === 'ALL'
       ? projects
       : projects.filter((work) => work.category === selectedCategory);
+
+  const totalPages = Math.ceil(filteredWorks.length / ITEMS_PER_PAGE);
+  const pagedWorks = filteredWorks.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
+
+  function handleCategoryChange(category: string) {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  }
+
+  function handlePageChange(page: number) {
+    setCurrentPage(page);
+    // Scroll back to the top of the grid
+    document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' });
+  }
 
   return (
     <section id="works" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-white">
@@ -30,11 +49,12 @@ export default function WorksGallery() {
           </p>
         </div>
 
+        {/* Category filters */}
         <div className="flex justify-start sm:justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           {worksPage.categories.map((category) => (
             <button
               key={category}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => handleCategoryChange(category)}
               className={`px-4 sm:px-6 py-2 text-xs sm:text-sm font-medium rounded-full transition-all whitespace-nowrap cursor-pointer flex-shrink-0 ${
                 selectedCategory === category
                   ? 'bg-gray-900 text-white'
@@ -46,8 +66,9 @@ export default function WorksGallery() {
           ))}
         </div>
 
+        {/* Project grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {filteredWorks.map((work, index) => (
+          {pagedWorks.map((work, index) => (
             <Link
               to={`/project/${work.id}`}
               key={work.id}
@@ -99,6 +120,43 @@ export default function WorksGallery() {
             </Link>
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-12">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="p-2 rounded-full text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              aria-label="Previous page"
+            >
+              <i className="ri-arrow-left-line text-lg"></i>
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`w-9 h-9 rounded-full text-sm font-medium transition-all cursor-pointer ${
+                  page === currentPage
+                    ? 'bg-gray-900 text-white'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="p-2 rounded-full text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              aria-label="Next page"
+            >
+              <i className="ri-arrow-right-line text-lg"></i>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
