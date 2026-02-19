@@ -38,7 +38,7 @@ export const siteContent: SiteContent = {
       id: 'home-hero',
       badge: 'Mobile & Software Engineer',
       heading: 'Building Apps People Actually Use',
-      subtitle: 'Full-stack and mobile engineer with 3+ years shipping cross-platform applications for web, mobile, and desktop.',
+      subtitle: 'Full-stack and mobile engineer with 3+ years shipping cross-platform applications for web, mobile, and desktop.I also stream for fun. Check my stream schedule below.',
       ctaButton: {
         label: 'View My Work',
         url: '/works'
@@ -53,7 +53,10 @@ export const siteContent: SiteContent = {
       },
       socialIcons: [
         { id: 'social-linkedin', platform: 'linkedin', url: 'https://linkedin.com/in/george-jrr', icon: 'ri-linkedin-line' },
-        { id: 'social-github', platform: 'github', url: 'https://github.com/oti-adjei', icon: 'ri-github-line' }
+        { id: 'social-github', platform: 'github', url: 'https://github.com/oti-adjei', icon: 'ri-github-line' },
+        { id: 'social-twitch', platform: 'twitch', url: '#', icon: 'ri-twitch-line' },
+        { id: 'social-tiktok', platform: 'tiktok', url: '#', icon: 'ri-tiktok-line' },
+        { id: 'social-youtube', platform: 'youtube', url: '#', icon: 'ri-youtube-line' }
       ]
     },
 
