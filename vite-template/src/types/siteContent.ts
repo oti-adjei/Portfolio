@@ -8,6 +8,10 @@ export interface SiteContent {
   contactPage: ContactPage;
   worksPage: WorksPage;
   projects: Project[];
+  streamsPage: StreamsPage;
+  streamEvents: StreamEvent[];
+  blogPosts: BlogPost[];
+  notes: Note[];
 }
 
 export interface Navigation {
@@ -344,4 +348,47 @@ export interface GalleryImage {
   url: string;
   caption: string;
   type?: 'web' | 'mobile';
+}
+
+export interface StreamsPage {
+  id: string;
+  title: string;
+  subtitle: string;
+  twitchUsername: string;
+  tiktokUsername: string;
+  youtubeChannel?: string;
+}
+
+export interface StreamEvent {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  platform: 'twitch' | 'tiktok' | 'youtube';
+  streamUrl?: string;
+  description?: string;
+  isRecurring: boolean;
+  recurringDay?: number;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  date: string;
+  excerpt: string;
+  content?: string;
+  externalUrl?: string;
+  tags: string[];
+  published: boolean;
+}
+
+export interface Note {
+  id: string;
+  title: string;
+  slug: string;
+  date: string;
+  content: string;
+  category?: string;
+  published: boolean;
 }

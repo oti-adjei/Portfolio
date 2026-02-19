@@ -5,6 +5,40 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-02-19 (9)
+
+### vite-template — Streaming schedule, blog, and lesson notes
+
+**New types** (`src/types/siteContent.ts`)
+- Added `StreamsPage`, `StreamEvent`, `BlogPost`, `Note` interfaces
+- Extended `SiteContent` with `streamsPage`, `streamEvents`, `blogPosts`, `notes`
+
+**New mock data** (`src/mocks/siteContent.ts`)
+- `streamsPage`: Twitch + TikTok usernames, title, subtitle
+- `streamEvents`: 4 seed events (2 recurring: Tue Twitch 20:00, Thu TikTok 21:00; 2 one-offs)
+- `blogPosts`: 5 posts — 2 external links, 3 on-site with full content (Flutter vs RN, Envoyer lessons, Golang 2025)
+- `notes`: 4 lesson notes grouped by category (Database, Flutter, Backend, Tools)
+
+**New homepage sections** (`src/pages/home/page.tsx`)
+- `StreamSchedule` — compact 7-day week strip showing which days have streams, with platform icon + time; links to `/streams`
+- `WritingSection` — degreat.co.uk-inspired editorial post list (5 recent posts, title + date row, no cards); "See all posts" link + pill links to `/notes` and `/streams`
+- Both wrapped in existing `<Reveal>` animation, inserted between Stats and ContactCTA
+
+**New pages**
+- `src/pages/streams/page.tsx` — full schedule: month calendar + list toggle, platform filter, upcoming streams sidebar, stream platform links, event detail modal; adapted from lobab events page using portfolio brand colours
+- `src/pages/blog/page.tsx` — all published posts with tags; external posts open in new tab
+- `src/pages/blog/post/page.tsx` — individual on-site post renderer; redirects external-only posts to their URL
+- `src/pages/notes/page.tsx` — notes grouped by category
+- `src/pages/notes/note/page.tsx` — individual note with minimal `##` heading + inline code rendering
+
+**Router** (`src/router/config.tsx`)
+- Added lazy-loaded routes: `/streams`, `/blog`, `/blog/:slug`, `/notes`, `/notes/:slug`
+
+**Content service** (`src/services/contentService.ts`)
+- Bumped `CURRENT_VERSION` `1.0` → `1.1` to invalidate stale localStorage caches missing the new fields
+
+---
+
 ## 2026-02-19 (8)
 
 ### vite-template — ContactCTA sizing fix + orange section labels
