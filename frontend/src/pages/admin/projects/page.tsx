@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AdminLayout from '../../../components/admin/AdminLayout';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../admin/contexts/AdminContentContext';
 import type { Project } from '../../../types/siteContent';
 
 export default function AdminProjects() {
@@ -16,7 +16,7 @@ export default function AdminProjects() {
 
     // Filter by category
     if (filterCategory !== 'all') {
-      filtered = filtered.filter(p => p.category === filterCategory);
+      filtered = filtered.filter(p => p.category.toLowerCase() === filterCategory);
     }
 
     // Filter by search query
@@ -36,7 +36,8 @@ export default function AdminProjects() {
     { id: 'all', label: 'All Projects' },
     { id: 'web', label: 'Web' },
     { id: 'mobile', label: 'Mobile' },
-    { id: 'desktop', label: 'Desktop' }
+    { id: 'desktop', label: 'Desktop' },
+    { id: 'saas', label: 'SaaS' },
   ];
 
   const handleProjectClick = (projectId: string) => {
@@ -120,8 +121,8 @@ export default function AdminProjects() {
                     <p className="text-sm text-gray-500">{project.year}</p>
                   </div>
                   <span className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
-                    project.category === 'web' ? 'bg-blue-100 text-blue-700' :
-                    project.category === 'mobile' ? 'bg-purple-100 text-purple-700' :
+                    project.category.toLowerCase() === 'web' ? 'bg-blue-100 text-blue-700' :
+                    project.category.toLowerCase() === 'mobile' ? 'bg-purple-100 text-purple-700' :
                     'bg-green-100 text-green-700'
                   }`}>
                     {project.category.toUpperCase()}
@@ -195,19 +196,19 @@ export default function AdminProjects() {
           </div>
           <div className="bg-white rounded-lg border border-gray-200 p-4">
             <div className="text-2xl font-bold text-blue-600">
-              {content.projects.filter(p => p.category === 'web').length}
+              {content.projects.filter(p => p.category.toLowerCase() === 'web').length}
             </div>
             <div className="text-sm text-gray-600">Web Projects</div>
           </div>
           <div className="bg-white rounded-lg border border-gray-200 p-4">
             <div className="text-2xl font-bold text-purple-600">
-              {content.projects.filter(p => p.category === 'mobile').length}
+              {content.projects.filter(p => p.category.toLowerCase() === 'mobile').length}
             </div>
             <div className="text-sm text-gray-600">Mobile Projects</div>
           </div>
           <div className="bg-white rounded-lg border border-gray-200 p-4">
             <div className="text-2xl font-bold text-green-600">
-              {content.projects.filter(p => p.category === 'desktop').length}
+              {content.projects.filter(p => p.category.toLowerCase() === 'desktop').length}
             </div>
             <div className="text-sm text-gray-600">Desktop Projects</div>
           </div>

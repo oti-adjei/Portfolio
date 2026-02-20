@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 
 export default function ContactCTA() {
   const { content } = useContent();

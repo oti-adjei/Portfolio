@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../admin/contexts/AdminContentContext';
 import ImageUploader from '../../../components/admin/ImageUploader';
 
 type Section = 'hero' | 'about' | 'skills' | 'featured' | 'services' | 'stats' | 'cta';
 
 export default function AdminHome() {
-  const { content, updateContent } = useContent();
+  const { content, updateContent, saveSection } = useContent();
   const [activeSection, setActiveSection] = useState<Section>('hero');
   const [hasChanges, setHasChanges] = useState(false);
 
   const homePage = content.homePage;
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    await saveSection('homePage');
     setHasChanges(false);
-    // Content is already saved via updateContent
   };
 
   const sections = [

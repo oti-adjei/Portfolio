@@ -1,21 +1,20 @@
-import { Suspense } from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import { AppRoutes } from './router'
-import { AuthProvider } from './contexts/AuthContext'
-import { ContentProvider } from './contexts/ContentContext'
+import { BrowserRouter, useLocation } from "react-router-dom";
+import AdminApp from "./admin/app/AdminApp";
+import PublicApp from "./public/app/PublicApp";
+
+function AppShell() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  return isAdminRoute ? <AdminApp /> : <PublicApp />;
+}
 
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <ContentProvider>
-          <Suspense fallback={null}>
-            <AppRoutes />
-          </Suspense>
-        </ContentProvider>
-      </AuthProvider>
+      <AppShell />
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

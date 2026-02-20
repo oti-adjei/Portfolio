@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 import type { StreamEvent } from '../../../types/siteContent';
 
 const PLATFORM_META: Record<StreamEvent['platform'], { icon: string; color: string; label: string }> = {

@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 
 const ITEMS_PER_PAGE = 9;
 

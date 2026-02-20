@@ -1,7 +1,7 @@
 
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 import Header from '../../home/components/Header';
 import Footer from '../../home/components/Footer';
 import FloatingShapes from '../../../components/FloatingShapes';

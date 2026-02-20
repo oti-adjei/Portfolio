@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 import Reveal from '../../../components/Reveal';
 
 export default function Hero() {

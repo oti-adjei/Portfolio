@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);

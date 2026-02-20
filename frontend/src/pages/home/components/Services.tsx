@@ -1,5 +1,5 @@
 
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 
 export default function Services() {
   const { content } = useContent();

@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../admin/contexts/AdminContentContext';
 
 type Section = 'hero' | 'form' | 'info' | 'map';
 
 export default function AdminContact() {
-  const { content, updateContent } = useContent();
+  const { content, updateContent, saveSection } = useContent();
   const [activeSection, setActiveSection] = useState<Section>('hero');
   const [hasChanges, setHasChanges] = useState(false);
 
   const contactPage = content.contactPage;
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    await saveSection('contactPage');
     setHasChanges(false);
   };
 
