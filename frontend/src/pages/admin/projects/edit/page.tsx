@@ -4,13 +4,13 @@ import AdminLayout from '../../../../components/admin/AdminLayout';
 import FormInput from '../../../../components/admin/FormInput';
 import FormTextarea from '../../../../components/admin/FormTextarea';
 import ImageUpload from '../../../../components/admin/ImageUpload';
-import { useContent } from '../../../../contexts/ContentContext';
+import { useContent } from '../../../../admin/contexts/AdminContentContext';
 import type { Project } from '../../../../types/siteContent';
 
 export default function EditProject() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { content, updateContent } = useContent();
+  const { content, isLoading, createProject, updateProject, deleteProject } = useContent();
 
   const [activeTab, setActiveTab] = useState<'basic' | 'overview' | 'details' | 'gallery'>('basic');
   const [project, setProject] = useState<Project | null>(null);
@@ -27,7 +27,7 @@ export default function EditProject() {
     if (isNewProject) {
       // Template for a new project
       setProject({
-        id: `project-${Date.now()}`,
+        id: crypto.randomUUID(),
         title: '',
         category: 'web',
         year: new Date().getFullYear().toString(),
@@ -50,14 +50,14 @@ export default function EditProject() {
         gallery: { images: [] },
       });
     } else {
-      const existingProject = content.projects.find((p) => p.id === id);
+      const existingProject = content.projects.find((p) => String(p.id) === String(id));
       if (existingProject) {
         setProject(existingProject);
-      } else {
+      } else if (!isLoading) {
         navigate('/admin/projects');
       }
     }
-  }, [id, isNewProject, content.projects, navigate]);
+  }, [id, isNewProject, content.projects, isLoading, navigate]);
 
   // ------------------------------------------------------------
   // Save handler with basic validation & error handling
@@ -75,20 +75,16 @@ export default function EditProject() {
     }
 
     try {
-      const updatedProjects = isNewProject
-        ? [...content.projects, project]
-        : content.projects.map((p) => (p.id === project.id ? project : p));
-
-      await updateContent({ projects: updatedProjects });
-
-      // Small delay for UI feedback
-      setTimeout(() => {
-        setIsSaving(false);
-        navigate('/admin/projects');
-      }, 500);
+      if (isNewProject) {
+        await createProject(project);
+      } else {
+        await updateProject(project);
+      }
+      navigate('/admin/projects');
     } catch (error) {
       console.error('Error saving project:', error);
       alert('Failed to save the project. Please try again.');
+    } finally {
       setIsSaving(false);
     }
   };
@@ -100,8 +96,7 @@ export default function EditProject() {
     if (!project || isNewProject) return;
 
     try {
-      const updatedProjects = content.projects.filter((p) => p.id !== project.id);
-      await updateContent({ projects: updatedProjects });
+      await deleteProject(String(project.id));
       navigate('/admin/projects');
     } catch (error) {
       console.error('Error deleting project:', error);

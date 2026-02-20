@@ -1,6 +1,6 @@
 
 import { useState, useMemo } from 'react';
-import { useContent } from '../../contexts/ContentContext';
+import { useContent } from '../../public/contexts/PublicContentContext';
 import type { StreamEvent } from '../../types/siteContent';
 import Header from '../home/components/Header';
 import Footer from '../home/components/Footer';

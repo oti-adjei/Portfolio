@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 
 interface DisplayProject {
   id: string | number;

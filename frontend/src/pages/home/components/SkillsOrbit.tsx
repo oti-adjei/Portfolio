@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../public/contexts/PublicContentContext';
 
 interface SkillItem {
   name: string;

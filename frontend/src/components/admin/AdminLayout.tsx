@@ -1,18 +1,21 @@
 import { type ReactNode, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../admin/contexts/AdminAuthContext';
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
 const navItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: 'ri-dashboard-line', path: '/admin/dashboard' },
+  { id: 'dashboard', label: 'Dashboard', icon: 'ri-dashboard-line', path: '/admin' },
   { id: 'home', label: 'Home Page', icon: 'ri-home-line', path: '/admin/home' },
   { id: 'about', label: 'About Page', icon: 'ri-user-line', path: '/admin/about' },
   { id: 'contact', label: 'Contact Page', icon: 'ri-mail-line', path: '/admin/contact' },
   { id: 'works', label: 'Works Page', icon: 'ri-briefcase-line', path: '/admin/works' },
   { id: 'projects', label: 'Projects', icon: 'ri-folder-line', path: '/admin/projects' },
+  { id: 'blog', label: 'Blog', icon: 'ri-article-line', path: '/admin/blog' },
+  { id: 'notes', label: 'Notes', icon: 'ri-sticky-note-line', path: '/admin/notes' },
+  { id: 'streams', label: 'Streams', icon: 'ri-live-line', path: '/admin/streams' },
   { id: 'navigation', label: 'Navigation', icon: 'ri-navigation-line', path: '/admin/navigation' },
   { id: 'footer', label: 'Footer', icon: 'ri-layout-bottom-line', path: '/admin/footer' }
 ];
@@ -41,7 +44,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           {/* Logo */}
           <div className="h-16 flex items-center justify-between px-4 border-b border-gray-800">
             {isSidebarOpen ? (
-              <Link to="/admin/dashboard" className="flex items-center gap-2">
+              <Link to="/admin" className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
                   <i className="ri-admin-line text-lg"></i>
                 </div>

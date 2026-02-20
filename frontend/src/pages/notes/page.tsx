@@ -1,5 +1,5 @@
 
-import { useContent } from '../../contexts/ContentContext';
+import { useContent } from '../../public/contexts/PublicContentContext';
 import { Link } from 'react-router-dom';
 import Header from '../home/components/Header';
 import Footer from '../home/components/Footer';

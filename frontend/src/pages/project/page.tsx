@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { useContent } from '../../contexts/ContentContext';
+import { useContent } from '../../public/contexts/PublicContentContext';
 import ProjectHeader from './components/ProjectHeader';
 import ProjectHero from './components/ProjectHero';
 import ProjectOverview from './components/ProjectOverview';
@@ -12,7 +12,7 @@ export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const { content } = useContent();
   const { projects } = content;
-  const project = projects.find(work => work.id === Number(id));
+  const project = projects.find((work) => String(work.id) === String(id));
 
   if (!project) {
     return (

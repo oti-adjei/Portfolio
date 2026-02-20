@@ -2,11 +2,11 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import FormInput from '../../../components/admin/FormInput';
-import { useContent } from '../../../contexts/ContentContext';
+import { useContent } from '../../../admin/contexts/AdminContentContext';
 import type { SiteContent } from '../../../types/siteContent';
 
 export default function AdminWorks() {
-  const { content: globalContent, updateContent } = useContent();
+  const { content: globalContent, updateContent, saveSection } = useContent();
   const [content, setContent] = useState<SiteContent['worksPage']>(globalContent.worksPage);
   const [saved, setSaved] = useState(false);
 
@@ -15,7 +15,8 @@ export default function AdminWorks() {
   }, [globalContent]);
 
   const handleSave = async () => {
-    await updateContent({ worksPage: content });
+    updateContent({ worksPage: content });
+    await saveSection('worksPage');
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   };

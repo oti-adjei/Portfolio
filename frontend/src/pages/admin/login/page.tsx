@@ -1,6 +1,6 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth } from '../../../admin/contexts/AdminAuthContext';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -10,25 +10,25 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
 
-  if (isAuthenticated) {
-    navigate('/admin/dashboard', { replace: true });
-    return null;
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/admin', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
 
-    setTimeout(() => {
-      const success = login(email, password);
-      if (success) {
-        navigate('/admin/dashboard', { replace: true });
-      } else {
-        setError('Invalid email or password');
-        setIsLoading(false);
-      }
-    }, 500);
+    try {
+      await login(email, password);
+      navigate('/admin', { replace: true });
+    } catch {
+      setError('Invalid email or password');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,7 +60,7 @@ export default function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
-                  placeholder="admin@avachen.com"
+                  placeholder="you@example.com"
                   required
                 />
               </div>
@@ -112,13 +112,6 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <div className="bg-blue-50 rounded-lg p-4">
-              <p className="text-xs text-blue-800 font-medium mb-2">Demo Credentials:</p>
-              <p className="text-xs text-blue-700">Email: admin@avachen.com</p>
-              <p className="text-xs text-blue-700">Password: admin123</p>
-            </div>
-          </div>
         </div>
 
         <div className="text-center mt-6">

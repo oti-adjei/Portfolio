@@ -1,6 +1,5 @@
 import Header from './components/Header';
 import Hero from './components/Hero';
-import AboutNew from './components/AboutNew';
 import SkillsOrbit from './components/SkillsOrbit';
 import FeaturedWorks from './components/FeaturedWorks';
 import Services from './components/Services';
