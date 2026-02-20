@@ -2,10 +2,13 @@ import type {
   AboutPage,
   BlogPost,
   ContactPage,
+  ContactSubmission,
   Footer,
   HomePage,
   Navigation,
+  NewsletterSubscriber,
   Note,
+  PaginationResponse,
   Project,
   StreamEvent,
   StreamsPage,
@@ -194,5 +197,61 @@ export async function deleteAdminStream(token: string, streamId: string): Promis
   await fetchJson<{ success: boolean }>(`/api/admin/streams/${streamId}`, {
     method: "DELETE",
     headers: authHeaders(token),
+  });
+}
+
+export async function fetchNewsletterSubscribers(
+  token: string,
+  params?: { status?: string; q?: string; page?: number; limit?: number }
+): Promise<PaginationResponse<NewsletterSubscriber>> {
+  const query = new URLSearchParams();
+  if (params?.status) query.set("status", params.status);
+  if (params?.q) query.set("q", params.q);
+  if (params?.page) query.set("page", String(params.page));
+  if (params?.limit) query.set("limit", String(params.limit));
+  const queryString = query.toString();
+  return fetchJson<PaginationResponse<NewsletterSubscriber>>(
+    `/api/admin/newsletter${queryString ? `?${queryString}` : ""}`,
+    { headers: authHeaders(token) }
+  );
+}
+
+export async function updateNewsletterSubscriberStatus(
+  token: string,
+  id: string,
+  status: "subscribed" | "unsubscribed" | "bounced"
+): Promise<NewsletterSubscriber> {
+  return fetchJson<NewsletterSubscriber>(`/api/admin/newsletter/${id}/status`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...authHeaders(token) },
+    body: JSON.stringify({ status }),
+  });
+}
+
+export async function fetchContactSubmissions(
+  token: string,
+  params?: { status?: string; q?: string; page?: number; limit?: number }
+): Promise<PaginationResponse<ContactSubmission>> {
+  const query = new URLSearchParams();
+  if (params?.status) query.set("status", params.status);
+  if (params?.q) query.set("q", params.q);
+  if (params?.page) query.set("page", String(params.page));
+  if (params?.limit) query.set("limit", String(params.limit));
+  const queryString = query.toString();
+  return fetchJson<PaginationResponse<ContactSubmission>>(
+    `/api/admin/contact-submissions${queryString ? `?${queryString}` : ""}`,
+    { headers: authHeaders(token) }
+  );
+}
+
+export async function updateContactSubmissionStatus(
+  token: string,
+  id: string,
+  status: "new" | "read" | "replied" | "archived"
+): Promise<ContactSubmission> {
+  return fetchJson<ContactSubmission>(`/api/admin/contact-submissions/${id}/status`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...authHeaders(token) },
+    body: JSON.stringify({ status }),
   });
 }

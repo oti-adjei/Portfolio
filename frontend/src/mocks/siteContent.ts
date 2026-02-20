@@ -33,6 +33,9 @@ export const siteContent: SiteContent = {
     ]
   },
 
+  newsletterSubscribers: [],
+  contactSubmissions: [],
+
   homePage: {
     hero: {
       id: 'home-hero',

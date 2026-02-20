@@ -8,6 +8,8 @@ import blog from "./routes/blog.js";
 import notes from "./routes/notes.js";
 import streams from "./routes/streams.js";
 import content from "./routes/content.js";
+import newsletter from "./routes/newsletter.js";
+import contact from "./routes/contact.js";
 
 // Admin routes
 import adminAuth from "./routes/admin/auth.js";
@@ -16,6 +18,8 @@ import adminBlog from "./routes/admin/blog.js";
 import adminNotes from "./routes/admin/notes.js";
 import adminStreams from "./routes/admin/streams.js";
 import adminContent from "./routes/admin/content.js";
+import adminNewsletter from "./routes/admin/newsletter.js";
+import adminContactSubmissions from "./routes/admin/contact-submissions.js";
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -28,6 +32,8 @@ app.route("/api/blog", blog);
 app.route("/api/notes", notes);
 app.route("/api/streams", streams);
 app.route("/api/content", content);
+app.route("/api/newsletter", newsletter);
+app.route("/api/contact", contact);
 
 // ── Admin auth (no requireAuth guard — it IS the login) ──
 app.route("/api/admin/auth", adminAuth);
@@ -39,5 +45,7 @@ app.route("/api/admin/blog", adminBlog);
 app.route("/api/admin/notes", adminNotes);
 app.route("/api/admin/streams", adminStreams);
 app.route("/api/admin/content", adminContent);
+app.route("/api/admin/newsletter", adminNewsletter);
+app.route("/api/admin/contact-submissions", adminContactSubmissions);
 
 export default app;

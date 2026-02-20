@@ -16,6 +16,8 @@ const navItems = [
   { id: 'blog', label: 'Blog', icon: 'ri-article-line', path: '/admin/blog' },
   { id: 'notes', label: 'Notes', icon: 'ri-sticky-note-line', path: '/admin/notes' },
   { id: 'streams', label: 'Streams', icon: 'ri-live-line', path: '/admin/streams' },
+  { id: 'newsletter', label: 'Newsletter', icon: 'ri-mail-send-line', path: '/admin/newsletter' },
+  { id: 'contact-submissions', label: 'Messages', icon: 'ri-message-3-line', path: '/admin/contact-submissions' },
   { id: 'navigation', label: 'Navigation', icon: 'ri-navigation-line', path: '/admin/navigation' },
   { id: 'footer', label: 'Footer', icon: 'ri-layout-bottom-line', path: '/admin/footer' }
 ];

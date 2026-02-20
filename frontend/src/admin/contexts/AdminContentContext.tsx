@@ -21,6 +21,10 @@ import {
   updateAdminNote,
   updateAdminProject,
   updateAdminStream,
+  fetchNewsletterSubscribers,
+  fetchContactSubmissions,
+  updateNewsletterSubscriberStatus,
+  updateContactSubmissionStatus,
   type AdminSections,
 } from "../services/adminApi";
 
@@ -43,6 +47,10 @@ interface AdminContentContextType {
   createStream: (stream: StreamEvent) => Promise<StreamEvent>;
   updateStream: (stream: StreamEvent) => Promise<StreamEvent>;
   deleteStream: (streamId: string) => Promise<void>;
+  fetchNewsletterSubscribers: (params?: { status?: string; q?: string; page?: number; limit?: number }) => Promise<void>;
+  updateNewsletterStatus: (id: string, status: 'subscribed' | 'unsubscribed' | 'bounced') => Promise<void>;
+  fetchContactSubmissions: (params?: { status?: string; q?: string; page?: number; limit?: number }) => Promise<void>;
+  updateContactStatus: (id: string, status: 'new' | 'read' | 'replied' | 'archived') => Promise<void>;
 }
 
 const AdminContentContext = createContext<AdminContentContextType | undefined>(undefined);
@@ -106,6 +114,8 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
         blogPosts,
         notes,
         streamEvents,
+        newsletterSubscribers: [],
+        contactSubmissions: [],
       });
     } catch (err) {
       setError(toErrorMessage(err));
@@ -227,6 +237,42 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const fetchNewsletterSubscribersHandler = async (params?: { status?: string; q?: string; page?: number; limit?: number }) => {
+    if (!token) throw new Error("Not authenticated");
+    const response = await fetchNewsletterSubscribers(token, params);
+    setContent((prev) => ({
+      ...prev,
+      newsletterSubscribers: response.items,
+    }));
+  };
+
+  const updateNewsletterStatusHandler = async (id: string, status: 'subscribed' | 'unsubscribed' | 'bounced') => {
+    if (!token) throw new Error("Not authenticated");
+    const updated = await updateNewsletterSubscriberStatus(token, id, status);
+    setContent((prev) => ({
+      ...prev,
+      newsletterSubscribers: prev.newsletterSubscribers.map((item) => (item.id === id ? updated : item)),
+    }));
+  };
+
+  const fetchContactSubmissionsHandler = async (params?: { status?: string; q?: string; page?: number; limit?: number }) => {
+    if (!token) throw new Error("Not authenticated");
+    const response = await fetchContactSubmissions(token, params);
+    setContent((prev) => ({
+      ...prev,
+      contactSubmissions: response.items,
+    }));
+  };
+
+  const updateContactStatusHandler = async (id: string, status: 'new' | 'read' | 'replied' | 'archived') => {
+    if (!token) throw new Error("Not authenticated");
+    const updated = await updateContactSubmissionStatus(token, id, status);
+    setContent((prev) => ({
+      ...prev,
+      contactSubmissions: prev.contactSubmissions.map((item) => (item.id === id ? updated : item)),
+    }));
+  };
+
   const value = useMemo<AdminContentContextType>(
     () => ({
       content,
@@ -247,6 +293,10 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
       createStream,
       updateStream,
       deleteStream,
+      fetchNewsletterSubscribers: fetchNewsletterSubscribersHandler,
+      updateNewsletterStatus: updateNewsletterStatusHandler,
+      fetchContactSubmissions: fetchContactSubmissionsHandler,
+      updateContactStatus: updateContactStatusHandler,
     }),
     [content, isLoading, error, token]
   );

@@ -1,4 +1,4 @@
-import type { BlogPost, Note, Project, StreamEvent } from "../../types/siteContent";
+import type { BlogPost, ContactSubmission, NewsletterSubscriber, Note, Project, StreamEvent } from "../../types/siteContent";
 
 export type ProjectDto = {
   id: string;
@@ -211,5 +211,53 @@ export function fromStreamEvent(event: StreamEvent): StreamEventDto {
     description: event.description,
     is_recurring: event.isRecurring,
     recurring_day: numberToDay(event.recurringDay),
+  };
+}
+
+export type NewsletterSubscriberDto = {
+  id: string;
+  email: string;
+  name: string | null;
+  source: string;
+  status: "subscribed" | "unsubscribed" | "bounced";
+  created_at: string;
+  updated_at: string;
+};
+
+export type ContactSubmissionDto = {
+  id: string;
+  name: string;
+  email: string;
+  subject: string | null;
+  message: string;
+  source: string;
+  status: "new" | "read" | "replied" | "archived";
+  created_at: string;
+  updated_at: string;
+};
+
+export function toNewsletterSubscriber(dto: NewsletterSubscriberDto): NewsletterSubscriber {
+  return {
+    id: dto.id,
+    email: dto.email,
+    name: dto.name,
+    source: dto.source,
+    status: dto.status,
+    created_at: dto.created_at,
+    updated_at: dto.updated_at,
+  };
+}
+
+export function toContactSubmission(dto: ContactSubmissionDto): ContactSubmission {
+  return {
+    id: dto.id,
+    name: dto.name,
+    email: dto.email,
+    subject: dto.subject,
+    message: dto.message,
+    source: dto.source,
+    status: dto.status,
+    created_at: dto.created_at,
+    updated_at: dto.updated_at,
   };
 }

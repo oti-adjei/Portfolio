@@ -38,6 +38,20 @@ export default function AdminDashboard() {
       color: 'bg-purple-500',
       link: '/admin/streams',
     },
+    {
+      label: 'Newsletter',
+      value: content.newsletterSubscribers.length,
+      icon: 'ri-mail-send-line',
+      color: 'bg-pink-500',
+      link: '/admin/newsletter',
+    },
+    {
+      label: 'Messages',
+      value: content.contactSubmissions.length,
+      icon: 'ri-message-3-line',
+      color: 'bg-indigo-500',
+      link: '/admin/contact-submissions',
+    },
   ];
 
   const quickLinks = [
@@ -48,6 +62,8 @@ export default function AdminDashboard() {
     { path: '/admin/blog', icon: 'ri-article-line', label: 'Blog', description: 'Manage posts and publish state' },
     { path: '/admin/notes', icon: 'ri-sticky-note-line', label: 'Notes', description: 'Manage learning notes' },
     { path: '/admin/streams', icon: 'ri-live-line', label: 'Streams', description: 'Manage stream events' },
+    { path: '/admin/newsletter', icon: 'ri-mail-send-line', label: 'Newsletter', description: 'Manage subscribers' },
+    { path: '/admin/contact-submissions', icon: 'ri-message-3-line', label: 'Messages', description: 'Manage contact submissions' },
     { path: '/admin/navigation', icon: 'ri-navigation-line', label: 'Navigation', description: 'Edit menu and logo' },
     { path: '/admin/footer', icon: 'ri-layout-bottom-line', label: 'Footer', description: 'Edit footer content' },
   ];
@@ -74,7 +90,7 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {stats.map((stat, index) => (
             <Link key={index} to={stat.link} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
               <div className="flex items-center justify-between mb-4">
@@ -88,18 +104,68 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white border border-gray-200 rounded-xl p-4">
-            <div className="text-sm text-gray-500">WEB</div>
-            <div className="text-2xl font-bold text-gray-900">{categoryCount('web', content.projects)}</div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+            <div className="space-y-3">
+              {content.contactSubmissions.slice(0, 5).map((submission) => (
+                <Link
+                  key={submission.id}
+                  to="/admin/contact-submissions"
+                  className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0 hover:bg-gray-50"
+                >
+                  <div>
+                    <p className="font-medium text-gray-900">{submission.name}</p>
+                    <p className="text-sm text-gray-600">{submission.email}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-gray-500">{new Date(submission.created_at).toLocaleDateString()}</p>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      submission.status === 'new'
+                        ? 'bg-yellow-100 text-yellow-700'
+                        : submission.status === 'read'
+                        ? 'bg-blue-100 text-blue-700'
+                        : submission.status === 'replied'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-gray-100 text-gray-600'
+                    }`}>
+                      {submission.status}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+              {content.contactSubmissions.length === 0 && (
+                <p className="text-sm text-gray-500 text-center py-4">No recent messages</p>
+              )}
+            </div>
           </div>
-          <div className="bg-white border border-gray-200 rounded-xl p-4">
-            <div className="text-sm text-gray-500">MOBILE</div>
-            <div className="text-2xl font-bold text-gray-900">{categoryCount('mobile', content.projects)}</div>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-xl p-4">
-            <div className="text-sm text-gray-500">DESKTOP</div>
-            <div className="text-2xl font-bold text-gray-900">{categoryCount('desktop', content.projects)}</div>
+
+          <div className="space-y-4">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="bg-white border border-gray-200 rounded-xl p-4">
+                <div className="text-sm text-gray-500">WEB</div>
+                <div className="text-2xl font-bold text-gray-900">{categoryCount('web', content.projects)}</div>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-xl p-4">
+                <div className="text-sm text-gray-500">MOBILE</div>
+                <div className="text-2xl font-bold text-gray-900">{categoryCount('mobile', content.projects)}</div>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-xl p-4">
+                <div className="text-sm text-gray-500">DESKTOP</div>
+                <div className="text-2xl font-bold text-gray-900">{categoryCount('desktop', content.projects)}</div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-xl p-4">
+              <div className="text-sm text-gray-500">New This Week</div>
+              <div className="text-2xl font-bold text-gray-900">
+                {content.contactSubmissions.filter(s => {
+                  const oneWeekAgo = new Date();
+                  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+                  return new Date(s.created_at) > oneWeekAgo;
+                }).length}
+              </div>
+            </div>
           </div>
         </div>
 
