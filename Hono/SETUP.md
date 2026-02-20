@@ -48,7 +48,7 @@ Add the D1 binding and placeholder vars to `wrangler.json`:
 ```json
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "my-hono-app",
+  "name": "portfolio",
   "account_id": "<your-cloudflare-account-id>",
   "main": "./src/worker/index.ts",
   "compatibility_date": "2025-10-08",
@@ -200,7 +200,7 @@ curl http://localhost:5173/api/admin/projects \
 npm run deploy
 ```
 
-This runs `wrangler deploy`, which bundles the worker and pushes it to Cloudflare's edge network. After deploy, your API is live at `https://my-hono-app.<your-subdomain>.workers.dev`.
+This runs `wrangler deploy`, which bundles the worker and pushes it to Cloudflare's edge network. After deploy, your API is live at `https://portfolio.<your-subdomain>.workers.dev`.
 
 ---
 

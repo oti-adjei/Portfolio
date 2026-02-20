@@ -1,6 +1,6 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "my-hono-app",
+	"name": "portfolio",
 	"account_id": "1e603316f6eb73eb448d61c42b889b8a",
 	"main": "./src/worker/index.ts",
 	"compatibility_date": "2025-10-08",
