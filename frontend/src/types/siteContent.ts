@@ -12,6 +12,8 @@ export interface SiteContent {
   streamEvents: StreamEvent[];
   blogPosts: BlogPost[];
   notes: Note[];
+  newsletterSubscribers: NewsletterSubscriber[];
+  contactSubmissions: ContactSubmission[];
 }
 
 export interface Navigation {
@@ -391,4 +393,51 @@ export interface Note {
   content: string;
   category?: string;
   published: boolean;
+}
+
+export interface NewsletterSubscriber {
+  id: string;
+  email: string;
+  name: string | null;
+  source: string;
+  status: 'subscribed' | 'unsubscribed' | 'bounced';
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  subject: string | null;
+  message: string;
+  source: string;
+  status: 'new' | 'read' | 'replied' | 'archived';
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NewsletterSubscribeInput {
+  email: string;
+  name?: string;
+  source?: string;
+  hp?: string;
+}
+
+export interface ContactSubmitInput {
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+  source?: string;
+  hp?: string;
+}
+
+export interface PaginationResponse<T> {
+  items: T[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+  };
 }

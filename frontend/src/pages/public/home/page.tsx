@@ -9,10 +9,32 @@ import WritingSection from './components/WritingSection';
 import ContactCTA from './components/ContactCTA';
 import Footer from './components/Footer';
 import Reveal from '@/components/Reveal';
+import CookingModal from './components/CookingModal';
+
+//render CookingModal when the page opens, then hide it after 5 seconds
+
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [showCookingModal, setShowCookingModal] = useState(true);
+
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+      setShowCookingModal(false);
+    }, 5000); // Hide after 5 seconds
+
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }
+
+  , []);
   return (
     <div className="min-h-screen bg-white">
+
+       {/* 🔥 Modal */}
+      {showCookingModal && (
+        <CookingModal />
+      )}
       <Header />
       <Hero />
       <Reveal origin="bottom"><Stats /></Reveal>

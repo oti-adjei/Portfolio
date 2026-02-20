@@ -22,11 +22,16 @@ export default function AdminBlog() {
   const [editing, setEditing] = useState<BlogPost | null>(null);
   const [tagInput, setTagInput] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [page, setPage] = useState(1);
+  const limit = 20;
 
   const posts = useMemo(
     () => [...content.blogPosts].sort((a, b) => b.date.localeCompare(a.date)),
     [content.blogPosts]
   );
+
+  const totalPages = Math.ceil(posts.length / limit);
+  const paginatedPosts = posts.slice((page - 1) * limit, page * limit);
 
   const openNew = () => {
     setTagInput("");
@@ -113,7 +118,7 @@ export default function AdminBlog() {
               </tr>
             </thead>
             <tbody>
-              {posts.map((post) => (
+              {paginatedPosts.map((post) => (
                 <tr key={post.id} className="border-t border-gray-100">
                   <td className="px-4 py-3">
                     <p className="font-medium text-gray-900">{post.title}</p>
@@ -134,6 +139,28 @@ export default function AdminBlog() {
             </tbody>
           </table>
         </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span className="text-sm text-gray-600">
+              Page {page} of {totalPages}
+            </span>
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        )}
 
         {editing && (
           <div className="fixed inset-0 bg-black/50 z-50 p-4 flex items-center justify-center">

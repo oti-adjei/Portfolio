@@ -1,9 +1,11 @@
 
 import { useState, type FormEvent } from 'react';
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
+import { submitContact } from '@/public/services/publicApi';
 
 export default function ContactForm() {
-  const { form } = siteContent.contactPage;
+  const { content } = useContent();
+  const { form } = content.contactPage;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,26 +21,15 @@ export default function ContactForm() {
     setSubmitStatus('idle');
 
     try {
-      const formBody = new URLSearchParams();
-      formBody.append('name', formData.name);
-      formBody.append('email', formData.email);
-      formBody.append('subject', formData.subject);
-      formBody.append('message', formData.message);
-
-      const response = await fetch('https://readdy.ai/api/form/d65qoil94rvd6t186ge0', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formBody.toString(),
+      await submitContact({
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        source: 'contact_page_form',
       });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        setSubmitStatus('error');
-      }
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
       console.error('Form submission error:', err);
       setSubmitStatus('error');
@@ -75,10 +66,10 @@ export default function ContactForm() {
 
       <form
         id="contact-form"
-        data-readdy-form
         onSubmit={handleSubmit}
         className="space-y-4 sm:space-y-6"
       >
+        <input type="text" name="hp" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {form.fields
             .filter((f) => f.type !== 'textarea')

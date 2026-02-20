@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useContent } from '@/public/contexts/PublicContentContext';
+import { subscribeNewsletter } from '@/public/services/publicApi';
 
 export default function ContactCTA() {
   const { content } = useContent();
@@ -18,12 +19,12 @@ export default function ContactCTA() {
     setStatus('loading');
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await subscribeNewsletter({ email, source: 'home_contact_cta' });
       setStatus('success');
       setEmail('');
       setTimeout(() => setStatus('idle'), 3000);
     } catch (err) {
-      console.error('Submission failed:', err);
+      console.error('Newsletter subscription failed:', err);
       setStatus('error');
     }
   };
@@ -38,6 +39,7 @@ export default function ContactCTA() {
 
             {/* Email Form */}
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto mb-6">
+              <input type="text" name="hp" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
               <div className="flex gap-3">
                 <input
                   type="email"
@@ -72,7 +74,6 @@ export default function ContactCTA() {
               )}
             </form>
 
-            
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import type { SiteContent } from "../../types/siteContent";
+import type { SiteContent, ContactSubmitInput, NewsletterSubscribeInput } from "../../types/siteContent";
 import { fetchJson } from "../../shared/api/client";
 import {
   toBlogPost,
@@ -66,5 +66,23 @@ export async function fetchPublicContent(): Promise<SiteContent> {
     blogPosts: detailedBlogPosts.map(toBlogPost),
     notes: detailedNotes.map(toNote),
     streamEvents: streamEvents.map(toStreamEvent),
+    newsletterSubscribers: [],
+    contactSubmissions: [],
   };
+}
+
+export async function subscribeNewsletter(payload: NewsletterSubscribeInput): Promise<{ success: boolean }> {
+  return fetchJson<{ success: boolean }>("/api/newsletter/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function submitContact(payload: ContactSubmitInput): Promise<{ success: boolean; referenceId: string }> {
+  return fetchJson<{ success: boolean; referenceId: string }>("/api/contact/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
 }
