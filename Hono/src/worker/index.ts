@@ -26,6 +26,11 @@ const app = new Hono<{ Bindings: Env }>();
 // Apply CORS to all routes
 app.use("*", cors);
 
+
+//healthcheck
+app.get("/api/health", (c) => c.json({ status: "ok" }));
+
+
 // ── Public API ──────────────────────────────────
 app.route("/api/projects", projects);
 app.route("/api/blog", blog);
