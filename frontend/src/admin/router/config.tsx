@@ -15,6 +15,7 @@ const EditProject = lazy(() => import("../../pages/admin/projects/edit/page"));
 const AdminBlog = lazy(() => import("../../pages/admin/blog/page"));
 const AdminNotes = lazy(() => import("../../pages/admin/notes/page"));
 const AdminStreams = lazy(() => import("../../pages/admin/streams/page"));
+const NotFound = lazy(() => import("../../pages/public/NotFound"));
 
 const adminRoutes: RouteObject[] = [
   { path: "/admin/login", element: <AdminLogin /> },
@@ -32,7 +33,7 @@ const adminRoutes: RouteObject[] = [
   { path: "/admin/blog", element: <ProtectedRoute><AdminBlog /></ProtectedRoute> },
   { path: "/admin/notes", element: <ProtectedRoute><AdminNotes /></ProtectedRoute> },
   { path: "/admin/streams", element: <ProtectedRoute><AdminStreams /></ProtectedRoute> },
-  { path: "*", element: <AdminLogin /> },
+  { path: "*", element: <NotFound /> },
 ];
 
 export default adminRoutes;
