@@ -41,7 +41,7 @@ export default function Brands() {
     }
   ];
 
-  const [brands, setBrands] = useState(brand);
+  const [brands] = useState(brand);
   const [isPaused, setIsPaused] = useState(false);
 
   return (
