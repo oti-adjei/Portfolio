@@ -12,6 +12,8 @@ export default {
         'float-medium': 'float 15s ease-in-out infinite',
         'float-fast': 'float 10s ease-in-out infinite',
         'pulse-subtle': 'pulse-subtle 4s ease-in-out infinite',
+        'scroll': 'scroll 20s linear infinite',
+        'scroll-mobile': 'scroll 30s linear infinite',
       },
       keyframes: {
         float: {
@@ -22,6 +24,10 @@ export default {
         'pulse-subtle': {
           '0%, 100%': { boxShadow: '0 0 0 0 rgba(0, 0, 0, 0.02)' },
           '50%': { boxShadow: '0 4px 20px 0 rgba(0, 0, 0, 0.05)' },
+        },
+        scroll: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
     },

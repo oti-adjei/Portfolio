@@ -1,5 +1,6 @@
 import Header from './components/Header';
 import Hero from './components/Hero';
+import Brands from './components/Brands';
 import SkillsOrbit from './components/SkillsOrbit';
 import FeaturedWorks from './components/FeaturedWorks';
 import Services from './components/Services';
@@ -38,7 +39,9 @@ export default function Home() {
       <Header />
       <Hero />
       <Reveal origin="bottom"><Stats /></Reveal>
+      <Reveal origin="bottom"><Brands /></Reveal>
       <Reveal origin="bottom"><Services /></Reveal>
+     
       {/* <div className="relative z-10 -mt-20 sm:-mt-24 lg:-mt-32 px-4 sm:px-6 lg:px-12 mb-16 sm:mb-20 lg:mb-24">
         <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-xl ring-1 ring-gray-100 overflow-hidden">
           <Reveal origin="bottom"><AboutNew /></Reveal>
