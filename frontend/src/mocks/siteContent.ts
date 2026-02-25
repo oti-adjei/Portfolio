@@ -472,7 +472,7 @@ export const siteContent: SiteContent = {
   year: '2026',
   tags: ['React', 'TailwindCSS', 'Cloudflare Pages', 'Portfolio'],
   links: [{ label: 'Live Site', url: 'https://senvon.studio' }],
-  thumbnail: { url: '/assets/images/senvon/portfolio-home.png', alt: "Senvon Studio" },
+  thumbnail: { url: '/assets/images/senvon/senvon-home.png', alt: "Senvon Studio" },
   overview: {
     description: "The official website of Senvon Studio — my own digital agency platform, designed to showcase our design and development services, client projects, and studio ethos.",
     client: "Senvon Studio (self‑initiated)",
@@ -492,9 +492,9 @@ export const siteContent: SiteContent = {
   },
   gallery: {
     images: [
-      { url: '/assets/images/senvon/portfolio-home.png', caption: 'Homepage overview highlighting studio brand and services' },
-      { url: '/assets/images/senvon/portfolio-home.png', caption: 'Portfolio section showing past client projects' },
-      { url: '/assets/images/senvon/portfolio-home.png', caption: 'Contact and enquiry section for new client leads' },
+      { url: '/assets/images/senvon/senvon-home.png', caption: 'Homepage overview highlighting studio brand and services' },
+      { url: '/assets/images/senvon/senvon-section.png', caption: 'Portfolio section showing past client projects' },
+      { url: '/assets/images/senvon/senvon-contact.png', caption: 'Contact and enquiry section for new client leads' },
     ],
   },
 },
