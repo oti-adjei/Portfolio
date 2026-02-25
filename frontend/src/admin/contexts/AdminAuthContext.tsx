@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { loginAdmin } from "../services/adminApi";
+import { isMockMode } from "../../shared/config/runtime";
 
 interface AuthUser {
   email: string;
@@ -16,6 +17,7 @@ interface AdminAuthContextType {
 
 const TOKEN_STORAGE_KEY = "admin_jwt_token";
 const USER_STORAGE_KEY = "admin_jwt_user";
+const MOCK_TOKEN_SIGNATURE = "mocksig";
 
 const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
 
@@ -23,7 +25,9 @@ function parseJwtPayload(token: string): { sub?: string; exp?: number } | null {
   try {
     const [, payload] = token.split(".");
     if (!payload) return null;
-    const json = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
+    const normalized = payload.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
+    const json = atob(padded);
     return JSON.parse(json) as { sub?: string; exp?: number };
   } catch {
     return null;
@@ -34,6 +38,16 @@ function isTokenExpired(token: string): boolean {
   const payload = parseJwtPayload(token);
   if (!payload?.exp) return true;
   return payload.exp <= Math.floor(Date.now() / 1000);
+}
+
+function createMockToken(email: string): string {
+  const now = Math.floor(Date.now() / 1000);
+  const payload = { sub: email, iat: now, exp: now + 60 * 60 * 24 };
+  const encodedPayload = btoa(JSON.stringify(payload))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/g, "");
+  return `mock.${encodedPayload}.${MOCK_TOKEN_SIGNATURE}`;
 }
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
@@ -69,7 +83,14 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const { token: nextToken } = await loginAdmin(email, password);
+    if (!email.trim() || !password.trim()) {
+      throw new Error("Email and password are required");
+    }
+
+    const nextToken = isMockMode()
+      ? createMockToken(email.trim())
+      : (await loginAdmin(email, password)).token;
+
     const payload = parseJwtPayload(nextToken);
 
     if (!payload?.sub) {

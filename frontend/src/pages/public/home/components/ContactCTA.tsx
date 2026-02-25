@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import { subscribeNewsletter } from '@/public/services/publicApi';
+import { isMockMode } from '@/shared/config/runtime';
 
 export default function ContactCTA() {
   const { content } = useContent();
@@ -19,7 +20,9 @@ export default function ContactCTA() {
     setStatus('loading');
 
     try {
-      await subscribeNewsletter({ email, source: 'home_contact_cta' });
+      if (!isMockMode()) {
+        await subscribeNewsletter({ email, source: 'home_contact_cta' });
+      }
       setStatus('success');
       setEmail('');
       setTimeout(() => setStatus('idle'), 3000);

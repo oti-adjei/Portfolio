@@ -1,8 +1,9 @@
 
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
 
 export default function AboutHero() {
-  const { hero } = siteContent.aboutPage;
+  const { content } = useContent();
+  const { hero } = content.aboutPage;
 
   // Defensive guard in case hero data is missing or malformed
   if (!hero?.avatar?.url) {

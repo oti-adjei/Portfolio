@@ -1,8 +1,9 @@
 
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
 
 export default function ContactInfo() {
-  const { contactInfo } = siteContent.contactPage;
+  const { content } = useContent();
+  const { contactInfo } = content.contactPage;
 
   return (
     <div className="space-y-4 sm:space-y-6">

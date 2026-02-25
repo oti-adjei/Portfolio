@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import { siteContent as fallbackContent } from "../../mocks/siteContent";
 import type { BlogPost, Note, Project, SiteContent, StreamEvent } from "../../types/siteContent";
 import { useAdminAuth } from "./AdminAuthContext";
+import { isMockMode } from "../../shared/config/runtime";
 import {
   createAdminBlogPost,
   createAdminNote,
@@ -69,9 +70,13 @@ function toErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : "Unknown error";
 }
 
+function cloneContent(content: SiteContent): SiteContent {
+  return JSON.parse(JSON.stringify(content)) as SiteContent;
+}
+
 export function AdminContentProvider({ children }: { children: ReactNode }) {
   const { token } = useAdminAuth();
-  const [content, setContent] = useState<SiteContent>(fallbackContent);
+  const [content, setContent] = useState<SiteContent>(() => cloneContent(fallbackContent));
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -80,6 +85,13 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
   };
 
   const refresh = async () => {
+    if (isMockMode()) {
+      setContent(cloneContent(fallbackContent));
+      setError(null);
+      setIsLoading(false);
+      return;
+    }
+
     if (!token) {
       setIsLoading(false);
       return;
@@ -130,11 +142,21 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const saveSection = async (key: keyof AdminSections) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) return;
     await saveAdminSection(token, key, content[key]);
   };
 
   const createProject = async (project: Project) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      const created: Project = {
+        ...project,
+        id: project.id || crypto.randomUUID(),
+      };
+      setContent((prev) => ({ ...prev, projects: [created, ...prev.projects] }));
+      return created;
+    }
+
     const created = await createAdminProject(token, project);
     setContent((prev) => ({ ...prev, projects: [created, ...prev.projects] }));
     return created;
@@ -142,6 +164,14 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const updateProject = async (project: Project) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        projects: prev.projects.map((item) => (String(item.id) === String(project.id) ? project : item)),
+      }));
+      return project;
+    }
+
     const updated = await updateAdminProject(token, project);
     setContent((prev) => ({
       ...prev,
@@ -152,6 +182,14 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const deleteProject = async (projectId: string) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        projects: prev.projects.filter((project) => String(project.id) !== String(projectId)),
+      }));
+      return;
+    }
+
     await deleteAdminProject(token, projectId);
     setContent((prev) => ({
       ...prev,
@@ -161,6 +199,15 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const createBlogPost = async (post: BlogPost) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      const created: BlogPost = {
+        ...post,
+        id: post.id || crypto.randomUUID(),
+      };
+      setContent((prev) => ({ ...prev, blogPosts: [created, ...prev.blogPosts] }));
+      return created;
+    }
+
     const created = await createAdminBlogPost(token, post);
     setContent((prev) => ({ ...prev, blogPosts: [created, ...prev.blogPosts] }));
     return created;
@@ -168,6 +215,14 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const updateBlogPost = async (post: BlogPost) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        blogPosts: prev.blogPosts.map((item) => (item.id === post.id ? post : item)),
+      }));
+      return post;
+    }
+
     const updated = await updateAdminBlogPost(token, post);
     setContent((prev) => ({
       ...prev,
@@ -178,6 +233,14 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const deleteBlogPost = async (postId: string) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        blogPosts: prev.blogPosts.filter((post) => post.id !== postId),
+      }));
+      return;
+    }
+
     await deleteAdminBlogPost(token, postId);
     setContent((prev) => ({
       ...prev,
@@ -187,6 +250,15 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const createNote = async (note: Note) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      const created: Note = {
+        ...note,
+        id: note.id || crypto.randomUUID(),
+      };
+      setContent((prev) => ({ ...prev, notes: [created, ...prev.notes] }));
+      return created;
+    }
+
     const created = await createAdminNote(token, note);
     setContent((prev) => ({ ...prev, notes: [created, ...prev.notes] }));
     return created;
@@ -194,6 +266,14 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const updateNote = async (note: Note) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        notes: prev.notes.map((item) => (item.id === note.id ? note : item)),
+      }));
+      return note;
+    }
+
     const updated = await updateAdminNote(token, note);
     setContent((prev) => ({
       ...prev,
@@ -204,6 +284,14 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const deleteNote = async (noteId: string) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        notes: prev.notes.filter((note) => note.id !== noteId),
+      }));
+      return;
+    }
+
     await deleteAdminNote(token, noteId);
     setContent((prev) => ({
       ...prev,
@@ -213,6 +301,15 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const createStream = async (stream: StreamEvent) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      const created: StreamEvent = {
+        ...stream,
+        id: stream.id || crypto.randomUUID(),
+      };
+      setContent((prev) => ({ ...prev, streamEvents: [created, ...prev.streamEvents] }));
+      return created;
+    }
+
     const created = await createAdminStream(token, stream);
     setContent((prev) => ({ ...prev, streamEvents: [created, ...prev.streamEvents] }));
     return created;
@@ -220,6 +317,14 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const updateStream = async (stream: StreamEvent) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        streamEvents: prev.streamEvents.map((item) => (item.id === stream.id ? stream : item)),
+      }));
+      return stream;
+    }
+
     const updated = await updateAdminStream(token, stream);
     setContent((prev) => ({
       ...prev,
@@ -230,6 +335,14 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const deleteStream = async (streamId: string) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        streamEvents: prev.streamEvents.filter((stream) => stream.id !== streamId),
+      }));
+      return;
+    }
+
     await deleteAdminStream(token, streamId);
     setContent((prev) => ({
       ...prev,
@@ -239,6 +352,27 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const fetchNewsletterSubscribersHandler = async (params?: { status?: string; q?: string; page?: number; limit?: number }) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      const status = params?.status?.trim().toLowerCase();
+      const query = params?.q?.trim().toLowerCase() ?? "";
+      const page = Math.max(1, params?.page ?? 1);
+      const limit = Math.max(1, params?.limit ?? 20);
+
+      const filtered = content.newsletterSubscribers.filter((item) => {
+        if (status && item.status.toLowerCase() !== status) return false;
+        if (!query) return true;
+        return (
+          item.email.toLowerCase().includes(query) ||
+          (item.name ?? "").toLowerCase().includes(query)
+        );
+      });
+
+      const start = (page - 1) * limit;
+      const items = filtered.slice(start, start + limit);
+      setContent((prev) => ({ ...prev, newsletterSubscribers: items }));
+      return;
+    }
+
     const response = await fetchNewsletterSubscribers(token, params);
     setContent((prev) => ({
       ...prev,
@@ -248,6 +382,16 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const updateNewsletterStatusHandler = async (id: string, status: 'subscribed' | 'unsubscribed' | 'bounced') => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        newsletterSubscribers: prev.newsletterSubscribers.map((item) =>
+          item.id === id ? { ...item, status, updated_at: new Date().toISOString() } : item
+        ),
+      }));
+      return;
+    }
+
     const updated = await updateNewsletterSubscriberStatus(token, id, status);
     setContent((prev) => ({
       ...prev,
@@ -257,6 +401,29 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const fetchContactSubmissionsHandler = async (params?: { status?: string; q?: string; page?: number; limit?: number }) => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      const status = params?.status?.trim().toLowerCase();
+      const query = params?.q?.trim().toLowerCase() ?? "";
+      const page = Math.max(1, params?.page ?? 1);
+      const limit = Math.max(1, params?.limit ?? 20);
+
+      const filtered = content.contactSubmissions.filter((item) => {
+        if (status && item.status.toLowerCase() !== status) return false;
+        if (!query) return true;
+        return (
+          item.name.toLowerCase().includes(query) ||
+          item.email.toLowerCase().includes(query) ||
+          (item.subject ?? "").toLowerCase().includes(query) ||
+          item.message.toLowerCase().includes(query)
+        );
+      });
+
+      const start = (page - 1) * limit;
+      const items = filtered.slice(start, start + limit);
+      setContent((prev) => ({ ...prev, contactSubmissions: items }));
+      return;
+    }
+
     const response = await fetchContactSubmissions(token, params);
     setContent((prev) => ({
       ...prev,
@@ -266,6 +433,16 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
 
   const updateContactStatusHandler = async (id: string, status: 'new' | 'read' | 'replied' | 'archived') => {
     if (!token) throw new Error("Not authenticated");
+    if (isMockMode()) {
+      setContent((prev) => ({
+        ...prev,
+        contactSubmissions: prev.contactSubmissions.map((item) =>
+          item.id === id ? { ...item, status, updated_at: new Date().toISOString() } : item
+        ),
+      }));
+      return;
+    }
+
     const updated = await updateContactSubmissionStatus(token, id, status);
     setContent((prev) => ({
       ...prev,

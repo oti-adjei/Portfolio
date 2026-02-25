@@ -5,6 +5,68 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-02-25 (10)
+
+### portfolio — Backend API docs/Postman + frontend `api|mock` source switch
+
+**Repo maintenance**
+- Moved changelog from `frontend/CHANGELOG.md` to root `CHANGELOG.md`
+
+**Backend docs and testing assets** (`Hono/`)
+- Added endpoint reference: `Hono/API_ENDPOINTS.md`
+- Added Postman collection: `Hono/postman/portfolio-api.postman_collection.json`
+- Added Postman environments:
+  - `Hono/postman/portfolio-local.postman_environment.json`
+  - `Hono/postman/portfolio-production.postman_environment.json`
+- Added incremental D1 migration for contact/newsletter tables:
+  - `Hono/src/worker/db/migrations/2026-02-25_contact_newsletter.sql`
+- Added local worker env template:
+  - `Hono/.dev.vars.example`
+
+**Frontend data-source switching** (`frontend/`)
+- Added runtime config module:
+  - `frontend/src/shared/config/runtime.ts`
+  - Supports `VITE_CONTENT_SOURCE=api|mock` with validation + dev warning
+- Updated env contract:
+  - `frontend/.env.example` now includes `VITE_CONTENT_SOURCE=api`
+- Added setup guide:
+  - `frontend/SETUP_DATA_SOURCE.md`
+
+**Public app behavior changes**
+- `frontend/src/public/contexts/PublicContentContext.tsx`
+  - `mock` mode: loads from `src/mocks/siteContent.ts` only
+  - `api` mode: strict API fetch with explicit error state
+- Contact/newsletter UI components now respect mode:
+  - `frontend/src/pages/public/contact/components/ContactForm.tsx`
+  - `frontend/src/pages/public/home/components/ContactCTA.tsx`
+  - In `mock` mode they no longer call backend endpoints
+
+**Admin app behavior changes**
+- `frontend/src/admin/contexts/AdminAuthContext.tsx`
+  - `mock` mode login bypass with local mock token (24h expiry)
+  - `api` mode login unchanged
+- `frontend/src/admin/contexts/AdminContentContext.tsx`
+  - `mock` mode uses in-memory CRUD/state updates for sections/projects/blog/notes/streams/newsletter/contact
+  - `api` mode unchanged and strict
+
+**Removed direct public mock imports (now context-driven)**
+- `frontend/src/pages/public/contact/page.tsx`
+- `frontend/src/pages/public/contact/components/ContactHero.tsx`
+- `frontend/src/pages/public/contact/components/ContactInfo.tsx`
+- `frontend/src/pages/public/about/components/AboutHero.tsx`
+- `frontend/src/pages/public/about/components/BioSection.tsx`
+- `frontend/src/pages/public/about/components/ExpertiseCards.tsx`
+- `frontend/src/pages/public/about/components/JourneyTimeline.tsx`
+- `frontend/src/pages/public/about/components/PhilosophySection.tsx`
+- `frontend/src/pages/public/about/components/ConnectCTA.tsx`
+
+**Validation**
+- `frontend` builds successfully in both:
+  - default/API mode (`npm run build`)
+  - mock mode (`VITE_CONTENT_SOURCE=mock npm run build`)
+
+---
+
 ## 2026-02-19 (9)
 
 ### vite-template — Streaming schedule, blog, and lesson notes

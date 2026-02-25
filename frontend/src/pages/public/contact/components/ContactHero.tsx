@@ -1,8 +1,9 @@
 
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
 
 export default function ContactHero() {
-  const { hero } = siteContent.contactPage;
+  const { content } = useContent();
+  const { hero } = content.contactPage;
 
   return (
     <section className="pt-24 sm:pt-28 lg:pt-32 pb-10 sm:pb-12 lg:pb-16 px-4 sm:px-6 lg:px-12">

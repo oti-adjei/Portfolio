@@ -1,9 +1,10 @@
 
 import { Link } from 'react-router-dom';
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
 
 export default function ConnectCTA() {
-  const { connectCTA } = siteContent.aboutPage;
+  const { content } = useContent();
+  const { connectCTA } = content.aboutPage;
 
   return (
     <section className="py-24 px-6">

@@ -1,8 +1,9 @@
 
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
 
 export default function ExpertiseCards() {
-  const { expertise } = siteContent.aboutPage;
+  const { content } = useContent();
+  const { expertise } = content.aboutPage;
 
   return (
     <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6">

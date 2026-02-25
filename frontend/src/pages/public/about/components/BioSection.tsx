@@ -1,9 +1,10 @@
 
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
 
 export default function BioSection() {
+  const { content } = useContent();
   // Guard against missing data to avoid runtime crashes
-  const aboutPage = siteContent?.aboutPage;
+  const aboutPage = content?.aboutPage;
   const bio = aboutPage?.bio;
 
   if (!bio || !Array.isArray(bio.paragraphs)) {

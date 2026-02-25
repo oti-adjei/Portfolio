@@ -6,11 +6,12 @@ import FloatingShapes from './components/FloatingShapes';
 import ContactHero from './components/ContactHero';
 import ContactForm from './components/ContactForm';
 import ContactInfo from './components/ContactInfo';
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
 
 export default function Contact() {
+  const { content } = useContent();
   // Guard against missing map data
-  const { map } = siteContent?.contactPage ?? {};
+  const { map } = content?.contactPage ?? {};
 
   useEffect(() => {
     // Scroll to top when the component mounts

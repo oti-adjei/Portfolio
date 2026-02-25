@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import { siteContent as fallbackContent } from "../../mocks/siteContent";
 import type { SiteContent } from "../../types/siteContent";
 import { fetchPublicContent } from "../services/publicApi";
+import { isApiMode, isMockMode } from "../../shared/config/runtime";
 
 interface PublicContentContextType {
   content: SiteContent;
@@ -14,10 +15,17 @@ const PublicContentContext = createContext<PublicContentContextType | undefined>
 
 export function PublicContentProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<SiteContent>(fallbackContent);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(isApiMode());
   const [error, setError] = useState<string | null>(null);
 
   const refresh = async () => {
+    if (isMockMode()) {
+      setContent(fallbackContent);
+      setError(null);
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
@@ -33,6 +41,12 @@ export function PublicContentProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
+    if (isMockMode()) {
+      setContent(fallbackContent);
+      setError(null);
+      setIsLoading(false);
+      return;
+    }
     void refresh();
   }, []);
 

@@ -2,6 +2,7 @@
 import { useState, type FormEvent } from 'react';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import { submitContact } from '@/public/services/publicApi';
+import { isMockMode } from '@/shared/config/runtime';
 
 export default function ContactForm() {
   const { content } = useContent();
@@ -21,13 +22,15 @@ export default function ContactForm() {
     setSubmitStatus('idle');
 
     try {
-      await submitContact({
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        source: 'contact_page_form',
-      });
+      if (!isMockMode()) {
+        await submitContact({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          source: 'contact_page_form',
+        });
+      }
       setSubmitStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {

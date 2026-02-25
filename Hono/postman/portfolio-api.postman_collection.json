@@ -1,0 +1,1032 @@
+{
+  "info": {
+    "name": "Portfolio Hono API",
+    "_postman_id": "f4c48c2f-3b15-4ec0-9217-9f0be0d4e580",
+    "description": "Public and admin endpoints for the Portfolio Hono worker.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET /api/health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "health"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public",
+      "item": [
+        {
+          "name": "GET /api/projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/projects/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/{{projectId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                "{{projectId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/blog",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/blog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "blog"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/blog/:slug",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/blog/{{blogSlug}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "blog",
+                "{{blogSlug}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/notes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/notes/:slug",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notes/{{noteSlug}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notes",
+                "{{noteSlug}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/streams",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/streams",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "streams"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/content/:section",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/content/{{contentSection}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "content",
+                "{{contentSection}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/newsletter/subscribe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"reader@example.com\",\n  \"name\": \"Reader\",\n  \"source\": \"home_contact_cta\",\n  \"hp\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/newsletter/subscribe",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "newsletter",
+                "subscribe"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/contact/submit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alex\",\n  \"email\": \"alex@example.com\",\n  \"subject\": \"Project inquiry\",\n  \"message\": \"I'd like to collaborate on a project.\",\n  \"source\": \"contact_page_form\",\n  \"hp\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/contact/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "contact",
+                "submit"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Auth",
+      "item": [
+        {
+          "name": "POST /api/admin/auth/login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Login returns 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "if (json && json.token) {",
+                  "  pm.collectionVariables.set(\"adminToken\", json.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Protected",
+      "item": [
+        {
+          "name": "Projects",
+          "item": [
+            {
+              "name": "GET /api/admin/projects",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/projects",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "projects"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "POST /api/admin/projects",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"New Case Study\",\n  \"category\": \"web\",\n  \"year\": \"2026\",\n  \"thumbnail\": {\n    \"url\": \"https://example.com/thumb.jpg\",\n    \"alt\": \"thumbnail\"\n  },\n  \"tags\": [\"react\", \"cloudflare\"],\n  \"overview\": {\n    \"description\": \"Overview text\",\n    \"client\": \"Internal\",\n    \"duration\": \"2 weeks\",\n    \"role\": \"Developer\"\n  },\n  \"details\": {\n    \"challenge\": \"Challenge text\",\n    \"solution\": \"Solution text\",\n    \"results\": [\"Faster page load\"]\n  },\n  \"gallery\": {\n    \"images\": [\n      {\n        \"url\": \"https://example.com/image.jpg\",\n        \"alt\": \"Gallery image\",\n        \"caption\": \"Result\"\n      }\n    ]\n  },\n  \"sort_order\": 0,\n  \"published\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/projects",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "projects"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "PUT /api/admin/projects/:id",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated Case Study\",\n  \"category\": \"web\",\n  \"year\": \"2026\",\n  \"thumbnail\": {\n    \"url\": \"https://example.com/thumb-updated.jpg\",\n    \"alt\": \"updated thumbnail\"\n  },\n  \"tags\": [\"react\"],\n  \"overview\": {\n    \"description\": \"Updated overview\",\n    \"client\": \"Internal\",\n    \"duration\": \"3 weeks\",\n    \"role\": \"Lead Developer\"\n  },\n  \"details\": {\n    \"challenge\": \"Updated challenge\",\n    \"solution\": \"Updated solution\",\n    \"results\": [\"Higher conversion\"]\n  },\n  \"gallery\": {\n    \"images\": []\n  },\n  \"sort_order\": 1,\n  \"published\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/projects/{{projectId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "projects",
+                    "{{projectId}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "DELETE /api/admin/projects/:id",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/projects/{{projectId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "projects",
+                    "{{projectId}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Blog",
+          "item": [
+            {
+              "name": "GET /api/admin/blog",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/blog",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "blog"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "POST /api/admin/blog",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"New blog post\",\n  \"slug\": \"new-blog-post\",\n  \"date\": \"2026-02-25\",\n  \"excerpt\": \"Short summary\",\n  \"content\": \"Post content\",\n  \"external_url\": null,\n  \"tags\": [\"devlog\"],\n  \"published\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/blog",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "blog"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "PUT /api/admin/blog/:id",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated blog post\",\n  \"slug\": \"updated-blog-post\",\n  \"date\": \"2026-02-26\",\n  \"excerpt\": \"Updated summary\",\n  \"content\": \"Updated content\",\n  \"external_url\": \"https://example.com\",\n  \"tags\": [\"update\"],\n  \"published\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/blog/{{blogId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "blog",
+                    "{{blogId}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "DELETE /api/admin/blog/:id",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/blog/{{blogId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "blog",
+                    "{{blogId}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Notes",
+          "item": [
+            {
+              "name": "GET /api/admin/notes",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/notes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "notes"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "POST /api/admin/notes",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"New note\",\n  \"slug\": \"new-note\",\n  \"date\": \"2026-02-25\",\n  \"content\": \"Long-form note content\",\n  \"category\": \"engineering\",\n  \"published\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/notes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "notes"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "PUT /api/admin/notes/:id",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated note\",\n  \"slug\": \"updated-note\",\n  \"date\": \"2026-02-26\",\n  \"content\": \"Updated note content\",\n  \"category\": \"career\",\n  \"published\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/notes/{{noteId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "notes",
+                    "{{noteId}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "DELETE /api/admin/notes/:id",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/notes/{{noteId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "notes",
+                    "{{noteId}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Streams",
+          "item": [
+            {
+              "name": "GET /api/admin/streams",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/streams",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "streams"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "POST /api/admin/streams",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Weekly stream\",\n  \"date\": \"2026-03-01\",\n  \"time\": \"19:00\",\n  \"platform\": \"twitch\",\n  \"stream_url\": \"https://twitch.tv/example\",\n  \"description\": \"Live coding\",\n  \"is_recurring\": true,\n  \"recurring_day\": \"monday\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/streams",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "streams"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "PUT /api/admin/streams/:id",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated stream\",\n  \"date\": \"2026-03-02\",\n  \"time\": \"20:00\",\n  \"platform\": \"youtube\",\n  \"stream_url\": \"https://youtube.com/live/example\",\n  \"description\": \"Updated stream details\",\n  \"is_recurring\": false,\n  \"recurring_day\": null\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/streams/{{streamId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "streams",
+                    "{{streamId}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "DELETE /api/admin/streams/:id",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/streams/{{streamId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "streams",
+                    "{{streamId}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Content",
+          "item": [
+            {
+              "name": "GET /api/admin/content/:section",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/content/{{contentSection}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "content",
+                    "{{contentSection}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "PUT /api/admin/content/:section",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"example\": \"Replace this with the section JSON payload\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/content/{{contentSection}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "content",
+                    "{{contentSection}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Newsletter",
+          "item": [
+            {
+              "name": "GET /api/admin/newsletter",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/newsletter?status={{newsletterStatus}}&q={{searchQuery}}&page=1&limit=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "newsletter"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "{{newsletterStatus}}"
+                    },
+                    {
+                      "key": "q",
+                      "value": "{{searchQuery}}"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "PUT /api/admin/newsletter/:id/status",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"subscribed\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/newsletter/{{newsletterSubscriberId}}/status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "newsletter",
+                    "{{newsletterSubscriberId}}",
+                    "status"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contact Submissions",
+          "item": [
+            {
+              "name": "GET /api/admin/contact-submissions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/contact-submissions?status={{contactStatus}}&q={{searchQuery}}&page=1&limit=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "contact-submissions"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "{{contactStatus}}"
+                    },
+                    {
+                      "key": "q",
+                      "value": "{{searchQuery}}"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "PUT /api/admin/contact-submissions/:id/status",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"read\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/contact-submissions/{{contactSubmissionId}}/status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "contact-submissions",
+                    "{{contactSubmissionId}}",
+                    "status"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5173"
+    },
+    {
+      "key": "adminEmail",
+      "value": "admin@example.com"
+    },
+    {
+      "key": "adminPassword",
+      "value": "change-me"
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "projectId",
+      "value": "replace-with-existing-project-id"
+    },
+    {
+      "key": "blogId",
+      "value": "replace-with-existing-blog-id"
+    },
+    {
+      "key": "blogSlug",
+      "value": "replace-with-existing-blog-slug"
+    },
+    {
+      "key": "noteId",
+      "value": "replace-with-existing-note-id"
+    },
+    {
+      "key": "noteSlug",
+      "value": "replace-with-existing-note-slug"
+    },
+    {
+      "key": "streamId",
+      "value": "replace-with-existing-stream-id"
+    },
+    {
+      "key": "contentSection",
+      "value": "homePage"
+    },
+    {
+      "key": "newsletterSubscriberId",
+      "value": "replace-with-subscriber-id"
+    },
+    {
+      "key": "contactSubmissionId",
+      "value": "replace-with-contact-id"
+    },
+    {
+      "key": "newsletterStatus",
+      "value": "subscribed"
+    },
+    {
+      "key": "contactStatus",
+      "value": "new"
+    },
+    {
+      "key": "searchQuery",
+      "value": ""
+    }
+  ]
+}

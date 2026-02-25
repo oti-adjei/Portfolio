@@ -1,8 +1,9 @@
 
-import { siteContent } from '@/mocks/siteContent';
+import { useContent } from '@/public/contexts/PublicContentContext';
 
 export default function PhilosophySection() {
-  const { philosophy } = siteContent.aboutPage;
+  const { content } = useContent();
+  const { philosophy } = content.aboutPage;
 
   return (
     <section className="py-32 px-6">
