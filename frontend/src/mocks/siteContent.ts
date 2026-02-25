@@ -472,7 +472,7 @@ export const siteContent: SiteContent = {
   year: '2026',
   tags: ['React', 'TailwindCSS', 'Cloudflare Pages', 'Portfolio'],
   links: [{ label: 'Live Site', url: 'https://senvon.studio' }],
-  thumbnail: { url: '/assets/images/projects/senvon.jpg', alt: "Senvon Studio" },
+  thumbnail: { url: '/assets/images/senvon/portfolio-home.png', alt: "Senvon Studio" },
   overview: {
     description: "The official website of Senvon Studio — my own digital agency platform, designed to showcase our design and development services, client projects, and studio ethos.",
     client: "Senvon Studio (self‑initiated)",
@@ -492,9 +492,9 @@ export const siteContent: SiteContent = {
   },
   gallery: {
     images: [
-      { url: '/assets/images/projects/senvon.jpg', caption: 'Homepage overview highlighting studio brand and services' },
-      { url: '/assets/images/projects/senvon.jpg', caption: 'Portfolio section showing past client projects' },
-      { url: '/assets/images/projects/senvon.jpg', caption: 'Contact and enquiry section for new client leads' },
+      { url: '/assets/images/senvon/portfolio-home.png', caption: 'Homepage overview highlighting studio brand and services' },
+      { url: '/assets/images/senvon/portfolio-home.png', caption: 'Portfolio section showing past client projects' },
+      { url: '/assets/images/senvon/portfolio-home.png', caption: 'Contact and enquiry section for new client leads' },
     ],
   },
 },
@@ -505,7 +505,7 @@ export const siteContent: SiteContent = {
   year: '2025',
   tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
   links: [{ label: 'Live Site', url: 'https://royalpark-web.pages.dev' }],
-  thumbnail: { url: '/assets/images/projects/royalpark.jpg', alt: "Royal Park Hotel Kumasi" },
+  thumbnail: { url: '/assets/images/royalpark/rp-about.png', alt: "Royal Park Hotel Kumasi" },
   overview: {
     description: "A modern website for Royal Park Hotel Kumasi, showcasing hotel rooms, dining options, and booking features for guests.",
     client: "Royal Park Hotel",
@@ -524,9 +524,9 @@ export const siteContent: SiteContent = {
   },
   gallery: {
     images: [
-      { url: '/assets/images/projects/royalpark.jpg', caption: 'Homepage Overview' },
-      { url: '/assets/images/projects/royalpark.jpg', caption: 'Rooms & Amenities' },
-      { url: '/assets/images/projects/royalpark.jpg', caption: 'Restaurant & Booking Form' },
+      { url: '/assets/images/royalpark/rp-about.png', caption: 'Homepage Overview' },
+      { url: '/assets/images/royalpark/rp-rooms.png', caption: 'Rooms & Amenities' },
+      { url: '/assets/images/royalpark/rp-dining.png', caption: 'Restaurant & Booking Form' },
     ],
   },
 },
@@ -537,7 +537,7 @@ export const siteContent: SiteContent = {
   year: '2025',
   tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
   links: [{ label: 'Live Site', url: 'https://lobabkids-web.pages.dev' }],
-  thumbnail: { url: '/assets/images/projects/lobabkids.jpg', alt: "Lobab Kids Academy" },
+  thumbnail: { url: '/assets/images/lobab/lobab-home.png', alt: "Lobab Kids Academy" },
   overview: {
     description: "An interactive website for Lobab Kids Academy, highlighting programs, activities, and parent resources for early childhood education.",
     client: "Lobab Kids Academy",
@@ -556,9 +556,9 @@ export const siteContent: SiteContent = {
   },
   gallery: {
     images: [
-      { url: '/assets/images/projects/lobabkids.jpg', caption: 'Homepage Overview' },
-      { url: '/assets/images/projects/lobabkids.jpg', caption: 'Programs Section' },
-      { url: '/assets/images/projects/lobabkids.jpg', caption: 'Contact & Enrolment Form' },
+      { url: '/assets/images/lobab/lobab-home.png', caption: 'Homepage Overview' },
+      { url: '/assets/images/lobab/lobab-programs.png', caption: 'Programs Section' },
+      { url: '/assets/images/lobab/lobab-events.png', caption: 'Contact & Enrolment Form' },
     ],
   },
 },
@@ -665,7 +665,7 @@ export const siteContent: SiteContent = {
     year: '2025',
     tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
     links: [{ label: 'Live Site', url: 'https://mummysdarl-web.pages.dev' }],
-    thumbnail: { url: '/assets/images/projects/mummysdarl.jpg', alt: "Mummy's Darl" },
+    thumbnail: { url: '/assets/images/mummysdarl/md-home.png', alt: "Mummy's Darl" },
     overview: {
       description: "An educational platform for Mummy's Darl, a childcare and early learning centre — providing curriculum info, gallery, and online enrolment for parents.",
       client: "Mummy's Darl",
@@ -684,9 +684,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Platform Overview' },
-        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Curriculum Section' },
-        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Contact & Enrolment' },
+        { url: '/assets/images/mummysdarl/md-home.png', caption: 'Platform Overview' },
+        { url: '/assets/images/mummysdarl/md-programs.png', caption: 'Curriculum Section' },
+        { url: '/assets/images/mummysdarl/md-admissions.png', caption: 'Contact & Enrolment' },
       ],
     },
   },

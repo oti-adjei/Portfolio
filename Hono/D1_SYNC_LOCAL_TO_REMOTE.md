@@ -21,6 +21,25 @@ This guide is written for reuse in template projects.
 
 ## Commands (copy/paste)
 
+### Shortcut (recommended for this repo)
+
+Sync `projects` from `frontend/src/mocks/siteContent.ts` to both local and remote:
+
+```bash
+cd /Volumes/Georgie/Development/Personal/Brand/Portfolio/Hono
+npm run sync:projects-from-mock
+```
+
+Optional:
+
+```bash
+# Local only
+./scripts/sync-projects-from-mock.sh --local-only
+
+# Remote only
+./scripts/sync-projects-from-mock.sh --remote-only
+```
+
 ### 1) Backup current remote DB to Desktop
 
 ```bash

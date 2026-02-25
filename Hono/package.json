@@ -40,7 +40,8 @@
 		"deploy": "wrangler deploy",
 		"dev": "vite",
 		"lint": "eslint .",
-		"preview": "npm run build && vite preview"
+		"preview": "npm run build && vite preview",
+		"sync:projects-from-mock": "./scripts/sync-projects-from-mock.sh"
 	},
 	"type": "module"
 }
