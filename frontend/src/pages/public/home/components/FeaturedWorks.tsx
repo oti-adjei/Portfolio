@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useContent } from '@/public/contexts/PublicContentContext';
+import type { FeaturedWorksSection } from '@/types/siteContent';
 
 interface DisplayProject {
   id: string | number;
@@ -103,12 +104,26 @@ function ProjectCard({ project }: { project: DisplayProject }) {
 
 export default function FeaturedWorks() {
   const { content } = useContent();
-  const featuredWorks = content.homePage.featuredWorks;
+  const featuredWorksRaw = content.homePage?.featuredWorks;
+  const featuredWorks: FeaturedWorksSection = featuredWorksRaw ?? {
+    id: 'home-featured-works-fallback',
+    title: 'Featured Work',
+    subtitle: 'Selected projects.',
+    projectIds: [],
+    displaySettings: {
+      maxRows: 2,
+      randomize: false,
+    },
+  };
+  const safeProjectIds = Array.isArray(featuredWorks.projectIds) ? featuredWorks.projectIds : [];
+  const maxRows = featuredWorks.displaySettings?.maxRows ?? 2;
   const projects = content.projects;
 
   const displayProjects = useMemo(() => {
+    const projectIdSet = new Set(safeProjectIds.map((id) => String(id)));
+
     return projects
-      .filter((p) => featuredWorks.projectIds.includes(p.id))
+      .filter((p) => projectIdSet.has(String(p.id)))
       .map((p, index) => ({
         id: p.id,
         title: p.title,
@@ -122,7 +137,7 @@ export default function FeaturedWorks() {
         type: (p.category === 'MOBILE' ? 'mobile' : 'desktop') as 'mobile' | 'desktop',
         bgClass: bgClasses[index % bgClasses.length],
       }));
-  }, [projects, featuredWorks]);
+  }, [projects, safeProjectIds]);
 
   const rows = useMemo(() => {
     const desktopProjects = shuffleArray(
@@ -135,9 +150,13 @@ export default function FeaturedWorks() {
     return buildRows(
       desktopProjects,
       mobileProjects,
-      featuredWorks.displaySettings.maxRows
+      maxRows
     );
-  }, [displayProjects, featuredWorks]);
+  }, [displayProjects, maxRows]);
+
+  if (!featuredWorksRaw) {
+    return null;
+  }
 
   return (
     <section className="pt-4 sm:pt-6 lg:pt-8 pb-12 sm:pb-16 lg:pb-20 px-4 sm:px-6 lg:px-12 bg-white">
@@ -163,23 +182,23 @@ export default function FeaturedWorks() {
         <div className="hidden lg:grid grid-cols-3 gap-8 mb-12">
           {rows.map((row, index) =>
             row.pattern === 'dm' ? (
-              <>
+              <div key={`row-${index}-dm`} className="contents">
                 <div key={`${index}-d`} className="col-span-2 h-[480px]">
                   <ProjectCard project={row.projects[0]} />
                 </div>
                 <div key={`${index}-m`} className="col-span-1 h-[480px]">
                   <ProjectCard project={row.projects[1]} />
                 </div>
-              </>
+              </div>
             ) : (
-              <>
+              <div key={`row-${index}-md`} className="contents">
                 <div key={`${index}-m`} className="col-span-1 h-[480px]">
                   <ProjectCard project={row.projects[0]} />
                 </div>
                 <div key={`${index}-d`} className="col-span-2 h-[480px]">
                   <ProjectCard project={row.projects[1]} />
                 </div>
-              </>
+              </div>
             )
           )}
         </div>
