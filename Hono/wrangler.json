@@ -34,7 +34,4 @@
 			"database_id": "aa05a4e3-6f3f-465d-99f3-bf52e27576fa"
 		}
 	],
-	"vars": {
-		"CONTACT_AUTO_REPLY_HOURS": "24",
-	}
 }
