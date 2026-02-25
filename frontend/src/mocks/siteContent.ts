@@ -297,14 +297,14 @@ export const siteContent: SiteContent = {
       timeline: [
         {
           id: 'journey-2024-masharder',
-          year: '2024',
+          year: '2026',
           title: 'Lead Frontend Software Engineer',
           company: 'MashHarder',
           description: 'Leading frontend architecture for a Ghanaian esports platform. Built MashHarder UI — an open-source Web Component library (Lit) used across the platform, with full TypeScript definitions and Starlight-powered docs.'
         },
         {
           id: 'journey-2024-senvon',
-          year: '2024',
+          year: '2025 – Present',
           title: 'Founder & Software Engineer',
           company: 'Senvon Studio',
           description: 'Founded a boutique digital studio delivering SaaS platforms, component libraries, and client web applications. Studio output includes Home Sweet Home (property management SaaS) and Mummy\'s Darl.'
@@ -318,14 +318,14 @@ export const siteContent: SiteContent = {
         },
         {
           id: 'journey-2022-alpha',
-          year: '2022',
+          year: '2022 – 2023',
           title: 'Mobile Engineer',
           company: 'teamAlpha',
           description: 'Built cross-platform mobile apps for iOS and Android serving 8,000+ active users. Implemented CI/CD pipelines and CLI deployment automation tools.'
         },
         {
           id: 'journey-2021-adb',
-          year: '2021',
+          year: '2021 – 2022',
           title: 'Junior Application Developer',
           company: 'Agricultural Development Bank Ghana',
           description: 'Built internal web applications, trained staff on KYC verification systems, and optimised server-side performance — reducing query execution time by 40%.'

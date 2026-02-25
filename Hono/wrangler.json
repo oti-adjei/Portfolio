@@ -3,7 +3,7 @@
 	"name": "portfolio",
 	"account_id": "1e603316f6eb73eb448d61c42b889b8a",
 	"main": "./src/worker/index.ts",
-	"compatibility_date": "2025-10-08",
+	"compatibility_date": "2026-02-25",
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
