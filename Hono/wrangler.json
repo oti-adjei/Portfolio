@@ -42,6 +42,6 @@
 		"EMAIL_FROM": "",
 		"EMAIL_OWNER_TO": "",
 		"CONTACT_AUTO_REPLY_HOURS": "24",
-		"CORS_ALLOWED_ORIGINS": ""
+		"CORS_ALLOWED_ORIGINS": "https://hearvie.dev,https://www.hearvie.dev,https://portfolio-67o.pages.dev,https://portfolio.hearvie.dev"
 	}
 }
