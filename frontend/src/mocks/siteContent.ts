@@ -465,13 +465,110 @@ export const siteContent: SiteContent = {
     categories: ['ALL', 'WEB', 'MOBILE', 'DESKTOP', 'SAAS', 'CLI', 'BACKEND']
   },
 
-  projects: [
+  projects: [{
+  id: 1,
+  title: "Senvon Studio",
+  category: 'WEB',
+  year: '2026',
+  tags: ['React', 'TailwindCSS', 'Cloudflare Pages', 'Portfolio'],
+  links: [{ label: 'Live Site', url: 'https://senvon.studio' }],
+  thumbnail: { url: '/assets/images/projects/senvon.jpg', alt: "Senvon Studio" },
+  overview: {
+    description: "The official website of Senvon Studio — my own digital agency platform, designed to showcase our design and development services, client projects, and studio ethos.",
+    client: "Senvon Studio (self‑initiated)",
+    duration: '2025 – 2026',
+    role: 'Founder & Frontend Developer',
+  },
+  details: {
+    challenge: 'I needed a website that not only served as a portfolio but also clearly communicated the studio’s services, values, and past projects. It had to be modern, flexible, and scalable for showcasing client work.',
+    solution: 'Built from scratch using React and TailwindCSS, deployed on Cloudflare Pages for speed and zero hosting costs. The site includes service breakdowns, a portfolio gallery for past client work, team highlights (myself + collaborators), client testimonials, and an enquiry/contact form. Designed to be fully responsive and accessible on all devices.',
+    results: [
+      'Launched in early 2026 as the public face of the studio',
+      'Serves as the primary platform to attract new clients',
+      'Showcases portfolio work in a clear, professional format',
+      'Fully responsive, accessible, and low-cost hosting via Cloudflare Pages',
+      'Flexible structure allows continuous updates for new projects',
+    ],
+  },
+  gallery: {
+    images: [
+      { url: '/assets/images/projects/senvon.jpg', caption: 'Homepage overview highlighting studio brand and services' },
+      { url: '/assets/images/projects/senvon.jpg', caption: 'Portfolio section showing past client projects' },
+      { url: '/assets/images/projects/senvon.jpg', caption: 'Contact and enquiry section for new client leads' },
+    ],
+  },
+},
+    {
+  id: 2,
+  title: "Royal Park Hotel Kumasi",
+  category: 'WEB',
+  year: '2025',
+  tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
+  links: [{ label: 'Live Site', url: 'https://royalpark-web.pages.dev' }],
+  thumbnail: { url: '/assets/images/projects/royalpark.jpg', alt: "Royal Park Hotel Kumasi" },
+  overview: {
+    description: "A modern website for Royal Park Hotel Kumasi, showcasing hotel rooms, dining options, and booking features for guests.",
+    client: "Royal Park Hotel",
+    duration: '2024 – 2025',
+    role: 'Frontend Developer',
+  },
+  details: {
+    challenge: 'The hotel had minimal online presence, limiting bookings and visibility for potential guests.',
+    solution: 'Designed and developed a responsive React website using TailwindCSS, deployed on Cloudflare Pages. Includes room listings, restaurant details, reservation forms, and customer testimonials.',
+    results: [
+      'Website launched in 2025, increasing online bookings',
+      'Improved mobile and desktop user experience',
+      'Cost-effective hosting via Cloudflare Pages',
+      'Professional showcase of rooms, dining, and amenities',
+    ],
+  },
+  gallery: {
+    images: [
+      { url: '/assets/images/projects/royalpark.jpg', caption: 'Homepage Overview' },
+      { url: '/assets/images/projects/royalpark.jpg', caption: 'Rooms & Amenities' },
+      { url: '/assets/images/projects/royalpark.jpg', caption: 'Restaurant & Booking Form' },
+    ],
+  },
+},
+    {
+  id: 3,
+  title: "Lobab Kids Academy",
+  category: 'WEB',
+  year: '2025',
+  tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
+  links: [{ label: 'Live Site', url: 'https://lobabkids-web.pages.dev' }],
+  thumbnail: { url: '/assets/images/projects/lobabkids.jpg', alt: "Lobab Kids Academy" },
+  overview: {
+    description: "An interactive website for Lobab Kids Academy, highlighting programs, activities, and parent resources for early childhood education.",
+    client: "Lobab Kids Academy",
+    duration: '2024 – 2025',
+    role: 'Frontend Developer',
+  },
+  details: {
+    challenge: 'The academy lacked an online presence, making it difficult for parents to access program details or contact the school.',
+    solution: 'Built a responsive React website with TailwindCSS and deployed on Cloudflare Pages. Features include program overviews, photo galleries, enrolment forms, and testimonials.',
+    results: [
+      'Website fully launched in 2025',
+      'Improved parent engagement and enquiries',
+      'Accessible on all devices with zero hosting cost',
+      'Clear presentation of programs and events',
+    ],
+  },
+  gallery: {
+    images: [
+      { url: '/assets/images/projects/lobabkids.jpg', caption: 'Homepage Overview' },
+      { url: '/assets/images/projects/lobabkids.jpg', caption: 'Programs Section' },
+      { url: '/assets/images/projects/lobabkids.jpg', caption: 'Contact & Enrolment Form' },
+    ],
+  },
+},
   {
-    id: 1,
+    id: 4,
     title: 'Home Sweet Home',
     category: 'SAAS',
     year: '2025',
     tags: ['Golang', 'Hono', 'React', 'PostgreSQL'],
+    links: [],
     thumbnail: { url: '/assets/images/projects/home-sweet-home.png', alt: 'Home Sweet Home' },
     overview: {
       description: 'A property management SaaS for landlords and property managers to track tenants, leases, payments, and maintenance requests — all in one place.',
@@ -498,197 +595,12 @@ export const siteContent: SiteContent = {
     },
   },
   {
-    id: 2,
-    title: 'PriPri',
-    category: 'DESKTOP',
-    year: '2025',
-    tags: ['Wails', 'Go', 'React', 'TailwindCSS'],
-    thumbnail: { url: '/assets/images/projects/pripri.png', alt: 'PriPri App Locker' },
-    overview: {
-      description: 'A cross-platform desktop app locker built with Wails (Go + React). PriPri monitors running applications and displays a password prompt before allowing locked apps to open — ensuring privacy and focus.',
-      client: 'Senvon Studio (personal venture)',
-      duration: 'Aug 2025 – Present',
-      role: 'Founder & Engineer',
-    },
-    details: {
-      challenge: 'macOS and Windows lack a native, lightweight way to password-protect specific applications — useful for shared computers or enforcing focus by locking distracting apps.',
-      solution: 'Built with Wails, combining a Go backend for OS-level process monitoring with a React + TailwindCSS frontend that feels native on both macOS and Windows. Users manage a lock list from a dashboard and can toggle PriPri globally.',
-      results: [
-        'Cross-platform: macOS and Windows support',
-        'Native-feeling UI with retro-theme roadmap',
-        'Process monitoring with sub-second response to app launch',
-        'Temporary unlock and global on/off toggle',
-      ],
-    },
-    gallery: {
-      images: [
-        { url: '/assets/images/projects/pripri.png', caption: 'Dashboard & Lock List' },
-        { url: '/assets/images/projects/pripri.png', caption: 'Password Prompt Overlay' },
-        { url: '/assets/images/projects/pripri.png', caption: 'Settings & App Management' },
-      ],
-    },
-  },
-  {
-    id: 3,
-    title: 'Scribble Notes',
-    category: 'MOBILE',
-    year: '2025',
-    tags: ['Flutter', 'Provider', 'SharedPreferences'],
-    thumbnail: { url: '/assets/images/projects/scribble-notes.png', alt: 'Scribble Notes' },
-    overview: {
-      description: 'A lightweight mobile notes app with local data persistence and dynamic search — built to be fast and distraction-free.',
-      client: 'Personal Project',
-      duration: '2025 – Present',
-      role: 'Mobile Developer',
-    },
-    details: {
-      challenge: 'Most notes apps are bloated with features users never need. The goal was a minimal, snappy note-taking experience with offline-first storage and instant search.',
-      solution: 'Built with Flutter and Provider for state management. Uses SharedPreferences for local data persistence — no backend required. Notes are searchable by title in real time.',
-      results: [
-        'Fully offline — no account or internet required',
-        'Instant note search by title',
-        'Lightweight build with minimal dependencies',
-        'Ongoing: additional features in development',
-      ],
-    },
-    gallery: {
-      images: [
-        { url: '/assets/images/projects/scribble-notes.png', caption: 'Notes List' },
-        { url: '/assets/images/projects/scribble-notes.png', caption: 'Note Editor' },
-        { url: '/assets/images/projects/scribble-notes.png', caption: 'Search Results' },
-      ],
-    },
-  },
-  {
-    id: 4,
-    title: "Mummy's Darl",
-    category: 'WEB',
-    year: '2025',
-    tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
-    thumbnail: { url: '/assets/images/projects/mummysdarl.jpg', alt: "Mummy's Darl" },
-    overview: {
-      description: "An educational platform for Mummy's Darl, a childcare and early learning centre — providing curriculum info, gallery, and online enrolment for parents.",
-      client: "Mummy's Darl",
-      duration: '2024 – 2025',
-      role: 'Frontend Developer',
-    },
-    details: {
-      challenge: 'The childcare centre relied entirely on word-of-mouth referrals with no web presence. Parents had no easy way to learn about the curriculum, pricing, or how to enrol.',
-      solution: 'Started in 2024 and fully revamped and launched in 2025 — a React website with TailwindCSS deployed on Cloudflare Pages. Includes curriculum overview, photo gallery, testimonials, and an enquiry form.',
-      results: [
-        'Revamped and launched 2025',
-        'Enrolment enquiries increased immediately post-launch',
-        'Zero hosting cost via Cloudflare Pages',
-        'Fully accessible and mobile-optimised',
-      ],
-    },
-    gallery: {
-      images: [
-        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Platform Overview' },
-        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Curriculum Section' },
-        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Contact & Enrolment' },
-      ],
-    },
-  },
-  {
-    id: 5,
-    title: 'FlexDown',
-    category: 'SAAS',
-    year: '2023',
-    tags: ['React Native', 'Node.js', 'PostgreSQL'],
-    thumbnail: { url: '/assets/images/flexdown/flexdown.png', alt: 'FlexDown' },
-    overview: {
-      description: "A real estate mobile app for browsing, filtering, and enquiring about property listings across Ghana — started in 2023, actively revamped in 2025 as a friend's startup.",
-      client: 'FlexDown',
-      duration: '2023 – Present',
-      role: 'Mobile Developer',
-    },
-    details: {
-      challenge: 'Finding reliable rental and property listings in Ghana was fragmented across unverified social media posts and outdated classifieds, with no standardised filtering or contact flow.',
-      solution: 'Built a React Native Expo app backed by a Node.js REST API and PostgreSQL. Features include location-based search, advanced filters, image galleries per listing, and in-app enquiry forms.',
-      results: [
-        'Launched with 200+ verified property listings',
-        'Integrated Google Maps for neighbourhood exploration',
-        'Advanced filter system for price, bedrooms, and area',
-        'Actively revamped and extended in 2025',
-      ],
-    },
-    gallery: {
-      images: [
-        { url: '/assets/images/flexdown/flexdown_landing.png', caption: 'Landing & Search' },
-        { url: '/assets/images/flexdown/flexdown.png', caption: 'Property Feed' },
-        { url: '/assets/images/flexdown/flexdown_listing.png', caption: 'Listing Detail' },
-      ],
-    },
-  },
-  {
-    id: 6,
-    title: 'Envoyer GH',
-    category: 'WEB',
-    year: '2024',
-    tags: ['Node.js', 'Express', 'PostgreSQL', 'TailwindCSS'],
-    thumbnail: { url: '/assets/images/envoyer/envoyerGH.png', alt: 'Envoyer GH' },
-    overview: {
-      description: 'A digital freight network connecting shippers, business owners, and individuals with carriers for road transport across Ghana — including bus hiring and towing services.',
-      client: 'Envoyer GH',
-      duration: 'June – Sept 2024',
-      role: 'Lead Frontend & Backend Engineer',
-    },
-    details: {
-      challenge: "Ghana's logistics sector lacked a reliable digital platform for connecting freight clients with available drivers. Manual coordination led to delays, poor visibility, and high operational costs.",
-      solution: 'Built a full-stack platform with Express/PostgreSQL backend and TailwindCSS frontend. Implemented user roles, OTP verification, KYC verification, image upload, booking portal, and real-time notifications via Server-Sent Events.',
-      results: [
-        'Live at envoyergh.com',
-        'Supports shipper, driver, and admin user roles',
-        'Real-time notification system via SSE',
-        'OTP + KYC verification for secure onboarding',
-      ],
-    },
-    gallery: {
-      images: [
-        { url: '/assets/images/envoyer/envoyerGH.png', caption: 'Platform Overview' },
-        { url: '/assets/images/envoyer/envoyer_contact.png', caption: 'Contact & Booking Flow' },
-        { url: '/assets/images/envoyer/envoyer_login.png', caption: 'Login & Registration' },
-      ],
-    },
-  },
-  {
-    id: 7,
-    title: 'Purple Pay',
-    category: 'MOBILE',
-    year: '2024',
-    tags: ['Flutter', 'Express', 'PostgreSQL', 'Stripe'],
-    thumbnail: { url: '/assets/images/projects/purple-pay.jpg', alt: 'Purple Pay' },
-    overview: {
-      description: 'A fintech mobile application enabling peer-to-peer payments, wallet management, and card top-ups — built during tenure at Enyata Ghana.',
-      client: 'Enyata Ghana',
-      duration: 'Feb – Aug 2024',
-      role: 'Mobile Engineer',
-    },
-    details: {
-      challenge: 'Mobile money solutions in Ghana are fragmented across multiple providers with poor UX. Users needed a unified wallet with a clean interface for P2P transfers and card payments.',
-      solution: 'Built a Flutter app with Riverpod state management and an Express/PostgreSQL backend. Integrated Stripe for card processing and biometric authentication for enhanced security.',
-      results: [
-        'Beta launched with 500+ early adopters',
-        'Average transaction time under 3 seconds',
-        'PCI-DSS compliant payment flow via Stripe',
-        'Biometric auth adopted by 80% of users',
-      ],
-    },
-    gallery: {
-      images: [
-        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Wallet Dashboard' },
-        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Transfer Flow' },
-        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Transaction History' },
-      ],
-    },
-  },
-  {
-    id: 8,
+    id: 9,
     title: 'Nagyique Boutique',
     category: 'WEB',
     year: '2024',
     tags: ['Astro', 'React', 'Stripe', 'Sanity', 'Cloudflare'],
+    links: [{ label: 'Live Site', url: 'https://nagyeboutique.ca' }],
     thumbnail: { url: '/assets/images/projects/nagyique.jpg', alt: 'Nagyique Boutique' },
     overview: {
       description: 'A fashion e-commerce storefront with a Sanity CMS product catalogue, Stripe checkout, and edge-deployed Astro frontend. Started March 2024, still in active development.',
@@ -715,11 +627,237 @@ export const siteContent: SiteContent = {
     },
   },
   {
-    id: 9,
+    id: 10,
+    title: 'Dear Akua',
+    category: 'WEB',
+    year: '2023',
+    tags: ['Node.js', 'Express', 'MongoDB'],
+    links: [{ label: 'Live Site', url: 'https://dear-akua-web.pages.dev' }],
+    thumbnail: { url: '/assets/images/dear-akua/landing-page.png', alt: 'Dear Akua' },
+    overview: {
+      description: 'An anonymous web-based platform where users can write and share confessions, designed to foster a safe and non-judgmental community space.',
+      client: 'Personal Project',
+      duration: '2023',
+      role: 'Full-stack Developer',
+    },
+    details: {
+      challenge: 'Ensuring complete user anonymity while preventing abuse, and creating an interface simple enough that anyone could submit without friction.',
+      solution: 'Built with Node.js, Express, and EJS for server-side rendering, backed by MongoDB. Anonymous submissions require no account. Deployed on Railway with content moderation hooks to flag problematic entries.',
+      results: [
+        'Fully anonymous — no account or email required',
+        'Public confession feed with responsive design',
+        'Content moderation features to maintain a safe space',
+        'Live at dear-akua-production.up.railway.app',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/dear-akua/landing-page.png', caption: 'Landing Page' },
+        { url: '/assets/images/dear-akua/submit-form.png', caption: 'Submission Form' },
+        { url: '/assets/images/dear-akua/confessions-feed.png', caption: 'Confessions Feed' },
+      ],
+    },
+  },
+  {
+    id: 7,
+    title: "Mummy's Darl",
+    category: 'WEB',
+    year: '2025',
+    tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
+    links: [{ label: 'Live Site', url: 'https://mummysdarl-web.pages.dev' }],
+    thumbnail: { url: '/assets/images/projects/mummysdarl.jpg', alt: "Mummy's Darl" },
+    overview: {
+      description: "An educational platform for Mummy's Darl, a childcare and early learning centre — providing curriculum info, gallery, and online enrolment for parents.",
+      client: "Mummy's Darl",
+      duration: '2024 – 2025',
+      role: 'Frontend Developer',
+    },
+    details: {
+      challenge: 'The childcare centre relied entirely on word-of-mouth referrals with no web presence. Parents had no easy way to learn about the curriculum, pricing, or how to enrol.',
+      solution: 'Started in 2024 and fully revamped and launched in 2025 — a React website with TailwindCSS deployed on Cloudflare Pages. Includes curriculum overview, photo gallery, testimonials, and an enquiry form.',
+      results: [
+        'Revamped and launched 2025',
+        'Enrolment enquiries increased immediately post-launch',
+        'Zero hosting cost via Cloudflare Pages',
+        'Fully accessible and mobile-optimised',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Platform Overview' },
+        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Curriculum Section' },
+        { url: '/assets/images/projects/mummysdarl.jpg', caption: 'Contact & Enrolment' },
+      ],
+    },
+  },
+  {
+    id: 8,
+    title: 'FlexDown',
+    category: 'SAAS',
+    year: '2023',
+    tags: ['React Native', 'Node.js', 'PostgreSQL'],
+    links: [{ label: 'Live Site', url: 'https://flexdown.com' }],
+    thumbnail: { url: '/assets/images/flexdown/flexdown.png', alt: 'FlexDown' },
+    overview: {
+      description: "A real estate mobile app for browsing, filtering, and enquiring about property listings across Ghana — started in 2023, actively revamped in 2025 as a friend's startup.",
+      client: 'FlexDown',
+      duration: '2023 – Present',
+      role: 'Mobile Developer',
+    },
+    details: {
+      challenge: 'Finding reliable rental and property listings in Ghana was fragmented across unverified social media posts and outdated classifieds, with no standardised filtering or contact flow.',
+      solution: 'Built a React Native Expo app backed by a Node.js REST API and PostgreSQL. Features include location-based search, advanced filters, image galleries per listing, and in-app enquiry forms.',
+      results: [
+        'Launched with 200+ verified property listings',
+        'Integrated Google Maps for neighbourhood exploration',
+        'Advanced filter system for price, bedrooms, and area',
+        'Actively revamped and extended in 2025',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/flexdown/flexdown_landing.png', caption: 'Landing & Search' },
+        { url: '/assets/images/flexdown/flexdown.png', caption: 'Property Feed' },
+        { url: '/assets/images/flexdown/flexdown_listing.png', caption: 'Listing Detail' },
+      ],
+    },
+  },
+  {
+    id: 5,
+    title: 'PriPri',
+    category: 'DESKTOP',
+    year: '2025',
+    tags: ['Wails', 'Go', 'React', 'TailwindCSS'],
+    links: [],
+    thumbnail: { url: '/assets/images/projects/pripri.png', alt: 'PriPri App Locker' },
+    overview: {
+      description: 'A cross-platform desktop app locker built with Wails (Go + React). PriPri monitors running applications and displays a password prompt before allowing locked apps to open — ensuring privacy and focus.',
+      client: 'Senvon Studio (personal venture)',
+      duration: 'Aug 2025 – Present',
+      role: 'Founder & Engineer',
+    },
+    details: {
+      challenge: 'macOS and Windows lack a native, lightweight way to password-protect specific applications — useful for shared computers or enforcing focus by locking distracting apps.',
+      solution: 'Built with Wails, combining a Go backend for OS-level process monitoring with a React + TailwindCSS frontend that feels native on both macOS and Windows. Users manage a lock list from a dashboard and can toggle PriPri globally.',
+      results: [
+        'Cross-platform: macOS and Windows support',
+        'Native-feeling UI with retro-theme roadmap',
+        'Process monitoring with sub-second response to app launch',
+        'Temporary unlock and global on/off toggle',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/pripri.png', caption: 'Dashboard & Lock List' },
+        { url: '/assets/images/projects/pripri.png', caption: 'Password Prompt Overlay' },
+        { url: '/assets/images/projects/pripri.png', caption: 'Settings & App Management' },
+      ],
+    },
+  },
+  {
+    id: 6,
+    title: 'Scribble Notes',
+    category: 'MOBILE',
+    year: '2025',
+    tags: ['Flutter', 'Provider', 'SharedPreferences'],
+    links: [],
+    thumbnail: { url: '/assets/images/projects/scribble-notes.png', alt: 'Scribble Notes' },
+    overview: {
+      description: 'A lightweight mobile notes app with local data persistence and dynamic search — built to be fast and distraction-free.',
+      client: 'Personal Project',
+      duration: '2025 – Present',
+      role: 'Mobile Developer',
+    },
+    details: {
+      challenge: 'Most notes apps are bloated with features users never need. The goal was a minimal, snappy note-taking experience with offline-first storage and instant search.',
+      solution: 'Built with Flutter and Provider for state management. Uses SharedPreferences for local data persistence — no backend required. Notes are searchable by title in real time.',
+      results: [
+        'Fully offline — no account or internet required',
+        'Instant note search by title',
+        'Lightweight build with minimal dependencies',
+        'Ongoing: additional features in development',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/scribble-notes.png', caption: 'Notes List' },
+        { url: '/assets/images/projects/scribble-notes.png', caption: 'Note Editor' },
+        { url: '/assets/images/projects/scribble-notes.png', caption: 'Search Results' },
+      ],
+    },
+  },
+  {
+    id: 11,
+    title: 'Envoyer GH',
+    category: 'WEB',
+    year: '2024',
+    tags: ['Node.js', 'Express', 'PostgreSQL', 'TailwindCSS'],
+    links: [{ label: 'Live Site', url: 'https://envoyergh.com' }],
+    thumbnail: { url: '/assets/images/envoyer/envoyerGH.png', alt: 'Envoyer GH' },
+    overview: {
+      description: 'A digital freight network connecting shippers, business owners, and individuals with carriers for road transport across Ghana — including bus hiring and towing services.',
+      client: 'Envoyer GH',
+      duration: 'June – Sept 2024',
+      role: 'Lead Frontend & Backend Engineer',
+    },
+    details: {
+      challenge: "Ghana's logistics sector lacked a reliable digital platform for connecting freight clients with available drivers. Manual coordination led to delays, poor visibility, and high operational costs.",
+      solution: 'Built a full-stack platform with Express/PostgreSQL backend and TailwindCSS frontend. Implemented user roles, OTP verification, KYC verification, image upload, booking portal, and real-time notifications via Server-Sent Events.',
+      results: [
+        'Live at envoyergh.com',
+        'Supports shipper, driver, and admin user roles',
+        'Real-time notification system via SSE',
+        'OTP + KYC verification for secure onboarding',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/envoyer/envoyerGH.png', caption: 'Platform Overview' },
+        { url: '/assets/images/envoyer/envoyer_contact.png', caption: 'Contact & Booking Flow' },
+        { url: '/assets/images/envoyer/envoyer_login.png', caption: 'Login & Registration' },
+      ],
+    },
+  },
+  {
+    id: 12,
+    title: 'Purple Pay',
+    category: 'MOBILE',
+    year: '2024',
+    tags: ['Flutter', 'Express', 'PostgreSQL', 'Stripe'],
+    links: [{ label: 'Live Site', url: 'https://purplepay.app' }],
+    thumbnail: { url: '/assets/images/projects/purple-pay.jpg', alt: 'Purple Pay' },
+    overview: {
+      description: 'A fintech mobile application enabling peer-to-peer payments, wallet management, and card top-ups — built during tenure at Enyata Ghana.',
+      client: 'Enyata Ghana',
+      duration: 'Feb – Aug 2024',
+      role: 'Mobile Engineer',
+    },
+    details: {
+      challenge: 'Mobile money solutions in Ghana are fragmented across multiple providers with poor UX. Users needed a unified wallet with a clean interface for P2P transfers and card payments.',
+      solution: 'Built a Flutter app with Riverpod state management and an Express/PostgreSQL backend. Integrated Stripe for card processing and biometric authentication for enhanced security.',
+      results: [
+        'Beta launched with 500+ early adopters',
+        'Average transaction time under 3 seconds',
+        'PCI-DSS compliant payment flow via Stripe',
+        'Biometric auth adopted by 80% of users',
+      ],
+    },
+    gallery: {
+      images: [
+        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Wallet Dashboard' },
+        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Transfer Flow' },
+        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Transaction History' },
+      ],
+    },
+  },
+  
+  {
+    id: 13,
     title: 'Pokebook',
     category: 'MOBILE',
     year: '2023',
     tags: ['Flutter', 'Provider', 'PokéAPI'],
+    links: [],
     thumbnail: { url: '/assets/images/projects/pokebook.jpg', alt: 'Pokebook' },
     overview: {
       description: 'A Flutter mobile app consuming the PokéAPI to browse Pokémon, view detailed stats, and discover similar species — built as a deep-dive into state management and API integration.',
@@ -746,11 +884,12 @@ export const siteContent: SiteContent = {
     },
   },
   {
-    id: 10,
+    id: 14,
     title: 'Gullivers Travel Hotel',
     category: 'WEB',
     year: '2022',
     tags: ['React', 'Node.js', 'TailwindCSS'],
+    links: [{ label: 'Live Site', url: 'https://gulliverstravelhotelgh.com' }],
     thumbnail: { url: '/assets/images/gullivers/gullivers_rooms.png', alt: 'Gullivers Travel Hotel' },
     overview: {
       description: 'A professional hotel website for Gullivers Travel Hotel featuring room showcase, restaurant gallery, lounge section, and booking enquiries.',
@@ -777,11 +916,12 @@ export const siteContent: SiteContent = {
     },
   },
   {
-    id: 11,
+    id: 15,
     title: 'GESA KNUST',
     category: 'MOBILE',
     year: '2022',
     tags: ['Flutter', 'Firebase', 'Node.js'],
+    links: [],
     thumbnail: { url: '/assets/images/gesa/gesa.png', alt: 'GESA KNUST' },
     overview: {
       description: 'Mobile app for the Ghana Engineering Students Association at KNUST, centralising events, course materials, and member communications.',
@@ -808,11 +948,12 @@ export const siteContent: SiteContent = {
     },
   },
   {
-    id: 12,
+    id: 16,
     title: 'Pro-Vid',
     category: 'MOBILE',
     year: '2021',
     tags: ['Flutter', 'Dart', 'REST API'],
+    links: [],
     thumbnail: { url: '/assets/images/projects/provid.png', alt: 'Pro-Vid COVID Tracker' },
     overview: {
       description: 'A COVID-19 tracking app providing real-time global and local case updates, curated news, and self-assessment health quizzes — designed to combat pandemic misinformation.',
@@ -838,37 +979,7 @@ export const siteContent: SiteContent = {
       ],
     },
   },
-  {
-    id: 13,
-    title: 'Dear Akua',
-    category: 'WEB',
-    year: '2023',
-    tags: ['Node.js', 'Express', 'MongoDB'],
-    thumbnail: { url: '/assets/images/dear-akua/landing-page.png', alt: 'Dear Akua' },
-    overview: {
-      description: 'An anonymous web-based platform where users can write and share confessions, designed to foster a safe and non-judgmental community space.',
-      client: 'Personal Project',
-      duration: '2023',
-      role: 'Full-stack Developer',
-    },
-    details: {
-      challenge: 'Ensuring complete user anonymity while preventing abuse, and creating an interface simple enough that anyone could submit without friction.',
-      solution: 'Built with Node.js, Express, and EJS for server-side rendering, backed by MongoDB. Anonymous submissions require no account. Deployed on Railway with content moderation hooks to flag problematic entries.',
-      results: [
-        'Fully anonymous — no account or email required',
-        'Public confession feed with responsive design',
-        'Content moderation features to maintain a safe space',
-        'Live at dear-akua-production.up.railway.app',
-      ],
-    },
-    gallery: {
-      images: [
-        { url: '/assets/images/dear-akua/landing-page.png', caption: 'Landing Page' },
-        { url: '/assets/images/dear-akua/submit-form.png', caption: 'Submission Form' },
-        { url: '/assets/images/dear-akua/confessions-feed.png', caption: 'Confessions Feed' },
-      ],
-    },
-  },
+  
 ],
 
   streamsPage: {

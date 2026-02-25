@@ -36,6 +36,7 @@ export default function EditProject() {
           alt: 'New Project',
         },
         tags: [],
+        links: [],
         overview: {
           description: '',
           client: '',

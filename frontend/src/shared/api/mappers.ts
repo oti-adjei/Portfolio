@@ -7,6 +7,7 @@ export type ProjectDto = {
   year?: string;
   thumbnail: { url: string; alt: string };
   tags: string[];
+  links?: Array<{ label: string; url: string }>;
   overview: {
     description: string;
     client?: string;
@@ -65,6 +66,10 @@ export function toProject(dto: ProjectDto): Project {
     year: dto.year ?? "",
     thumbnail: dto.thumbnail,
     tags: dto.tags ?? [],
+    links: (dto.links ?? []).map((link) => ({
+      label: link.label,
+      url: link.url,
+    })),
     overview: {
       description: dto.overview?.description ?? "",
       client: dto.overview?.client ?? "",
@@ -93,6 +98,7 @@ export function fromProject(project: Project): ProjectDto {
     year: project.year,
     thumbnail: project.thumbnail,
     tags: project.tags,
+    links: project.links,
     overview: {
       description: project.overview.description,
       client: project.overview.client || undefined,

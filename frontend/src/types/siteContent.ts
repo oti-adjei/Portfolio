@@ -330,6 +330,7 @@ export interface Project {
     alt: string;
   };
   tags: string[];
+  links: ProjectLink[];
   overview: {
     description: string;
     client: string;
@@ -344,6 +345,11 @@ export interface Project {
   gallery: {
     images: GalleryImage[];
   };
+}
+
+export interface ProjectLink {
+  label: string;
+  url: string;
 }
 
 export interface GalleryImage {

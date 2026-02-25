@@ -94,6 +94,26 @@ export default function ProjectOverview({ project }: ProjectOverviewProps) {
                     ))}
                   </div>
                 </div>
+
+                {project.links.length > 0 ? (
+                  <div>
+                    <p className="text-sm text-gray-500 mb-2">Project Links</p>
+                    <div className="flex flex-col gap-2">
+                      {project.links.map((link) => (
+                        <a
+                          key={`${link.label}-${link.url}`}
+                          href={link.url}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                        >
+                          <i className="ri-external-link-line" aria-hidden="true"></i>
+                          <span>{link.label}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
