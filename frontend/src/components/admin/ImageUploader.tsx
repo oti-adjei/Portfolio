@@ -37,7 +37,7 @@ export default function ImageUploader({ value, onChange, label, aspectRatio = '1
       {!showUrlInput ? (
         <button
           onClick={() => setShowUrlInput(true)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          className="w-full min-h-11 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
         >
           <i className="ri-link mr-2"></i>
           {value ? 'Change Image URL' : 'Add Image URL'}
@@ -49,7 +49,7 @@ export default function ImageUploader({ value, onChange, label, aspectRatio = '1
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="https://example.com/image.jpg"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full min-h-11 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           />
           <div className="flex gap-2">
             <button

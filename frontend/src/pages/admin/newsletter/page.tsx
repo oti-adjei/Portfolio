@@ -51,21 +51,21 @@ export default function AdminNewsletter() {
   return (
     <AdminLayout>
       <div className="max-w-6xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Newsletter</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Newsletter</h1>
             <p className="text-gray-600 mt-1">Manage subscribers and their status</p>
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <select
             value={statusFilter}
             onChange={(e) => {
               setStatusFilter(e.target.value);
               setPage(1);
             }}
-            className="border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm min-h-11 w-full sm:w-auto"
           >
             <option value="">All Status</option>
             <option value="subscribed">Subscribed</option>
@@ -80,11 +80,59 @@ export default function AdminNewsletter() {
               setSearchQuery(e.target.value);
               setPage(1);
             }}
-            className="border border-gray-200 rounded-lg px-3 py-2 text-sm flex-1"
+            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm min-h-11 flex-1"
           />
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="md:hidden space-y-3">
+          {paginatedSubscribers.length === 0 ? (
+            <div className="bg-white border border-gray-200 rounded-xl px-4 py-8 text-center text-gray-500">
+              No subscribers found
+            </div>
+          ) : (
+            paginatedSubscribers.map((subscriber) => (
+              <div key={subscriber.id} className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-gray-900 break-all">{subscriber.email}</p>
+                    <p className="text-sm text-gray-600">{subscriber.name || "-"}</p>
+                  </div>
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs ${
+                      subscriber.status === 'subscribed'
+                        ? 'bg-green-100 text-green-700'
+                        : subscriber.status === 'unsubscribed'
+                        ? 'bg-gray-100 text-gray-600'
+                        : 'bg-red-100 text-red-700'
+                    }`}
+                  >
+                    {subscriber.status}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-600">Source: {subscriber.source}</div>
+                <div className="flex items-center justify-between gap-2">
+                  <select
+                    value={subscriber.status}
+                    onChange={(e) => handleStatusChange(subscriber.id, e.target.value as typeof subscriber.status)}
+                    className="flex-1 min-h-10 px-3 py-2 rounded-lg text-sm border border-gray-200"
+                  >
+                    <option value="subscribed">Subscribed</option>
+                    <option value="unsubscribed">Unsubscribed</option>
+                    <option value="bounced">Bounced</option>
+                  </select>
+                  <button
+                    onClick={() => { window.location.href = `mailto:${subscriber.email}`; }}
+                    className="min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50"
+                  >
+                    <i className="ri-mail-send-line"></i>
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="hidden md:block bg-white border border-gray-200 rounded-xl overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-gray-600">
               <tr>
@@ -152,11 +200,11 @@ export default function AdminNewsletter() {
         </div>
 
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 flex-wrap">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="min-h-10 px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Previous
             </button>
@@ -166,7 +214,7 @@ export default function AdminNewsletter() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="min-h-10 px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next
             </button>

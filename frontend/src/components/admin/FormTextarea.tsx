@@ -27,7 +27,7 @@ export default function FormTextarea({
         placeholder={placeholder}
         rows={rows}
         required={required}
-        className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+        className="w-full min-h-11 px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../admin/contexts/AdminAuthContext';
 
@@ -17,29 +17,94 @@ const navItems = [
   { id: 'notes', label: 'Notes', icon: 'ri-sticky-note-line', path: '/admin/notes' },
   { id: 'streams', label: 'Streams', icon: 'ri-live-line', path: '/admin/streams' },
   { id: 'newsletter', label: 'Newsletter', icon: 'ri-mail-send-line', path: '/admin/newsletter' },
-  { id: 'contact-submissions', label: 'Messages', icon: 'ri-message-3-line', path: '/admin/contact-submissions' },
+  { id: 'contact-submissions', label: 'Contact Inbox', icon: 'ri-message-3-line', path: '/admin/contact-submissions' },
   { id: 'navigation', label: 'Navigation', icon: 'ri-navigation-line', path: '/admin/navigation' },
   { id: 'footer', label: 'Footer', icon: 'ri-layout-bottom-line', path: '/admin/footer' }
 ];
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { logout, user } = useAuth();
+  const mobileMenuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const mobileDrawerRef = useRef<HTMLElement | null>(null);
 
   const handleLogout = () => {
     logout();
     navigate('/admin/login');
   };
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen || !mobileDrawerRef.current) {
+      return;
+    }
+
+    const focusable = mobileDrawerRef.current.querySelector<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    focusable?.focus();
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      mobileMenuButtonRef.current?.focus();
+    }
+  }, [isMobileMenuOpen]);
+
+  const handleToggleMenu = () => {
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      setIsMobileMenuOpen((prev) => !prev);
+      return;
+    }
+
+    setIsSidebarOpen((prev) => !prev);
+  };
+
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {isMobileMenuOpen && (
+        <button
+          type="button"
+          aria-label="Close navigation menu"
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full bg-gray-900 text-white transition-all duration-300 z-40 ${
-          isSidebarOpen ? 'w-64' : 'w-20'
+        ref={mobileDrawerRef}
+        id="admin-navigation-drawer"
+        aria-label="Admin navigation"
+        aria-modal={isMobileMenuOpen ? true : undefined}
+        className={`fixed top-0 left-0 h-full bg-gray-900 text-white transition-all duration-300 z-50 ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        } w-72 md:translate-x-0 ${
+          isSidebarOpen ? 'md:w-64' : 'md:w-20'
         }`}
       >
         <div className="flex flex-col h-full">
@@ -68,6 +133,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   <li key={item.id}>
                     <Link
                       to={item.path}
+                      onClick={() => setIsMobileMenuOpen(false)}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                         isActive
                           ? 'bg-teal-500 text-white'
@@ -120,41 +186,46 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
       {/* Main Content */}
       <div
-        className={`transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}
+        className={`transition-all duration-300 ml-0 ${
+          isSidebarOpen ? 'md:ml-64' : 'md:ml-20'
+        }`}
       >
         {/* Header */}
         <header className="h-16 bg-white border-b border-gray-200 sticky top-0 z-30">
-          <div className="h-full px-6 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+          <div className="h-full px-3 sm:px-4 md:px-6 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
               <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-gray-900 transition-colors"
+                ref={mobileMenuButtonRef}
+                onClick={handleToggleMenu}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="admin-navigation-drawer"
+                className="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100"
               >
                 <i className={`ri-${isSidebarOpen ? 'menu-fold' : 'menu-unfold'}-line text-xl`}></i>
               </button>
-              <div>
-                <h1 className="text-lg font-semibold text-gray-900">
+              <div className="min-w-0">
+                <h1 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
                   {navItems.find((item) => item.path === location.pathname)?.label || 'Admin Panel'}
                 </h1>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <a
                 href="/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-teal-500 transition-colors inline-flex items-center gap-2"
+                className="px-2 sm:px-4 py-2 text-sm font-medium text-gray-700 hover:text-teal-500 transition-colors inline-flex items-center gap-2 rounded-lg hover:bg-gray-100"
               >
                 <i className="ri-external-link-line"></i>
-                View Site
+                <span className="hidden sm:inline">View Site</span>
               </a>
             </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="p-6">
+        <main className="p-3 sm:p-4 md:p-6">
           {children}
         </main>
       </div>

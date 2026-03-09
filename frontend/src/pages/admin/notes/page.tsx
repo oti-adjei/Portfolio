@@ -70,17 +70,38 @@ export default function AdminNotes() {
   return (
     <AdminLayout>
       <div className="max-w-6xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Notes Manager</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Notes Manager</h1>
             <p className="text-gray-600 mt-1">Manage learning notes and publication status</p>
           </div>
-          <button onClick={openNew} className="px-5 py-2.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
+          <button onClick={openNew} className="w-full sm:w-auto min-h-11 px-5 py-2.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
             New Note
           </button>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="md:hidden space-y-3">
+          {paginatedNotes.map((note) => (
+            <div key={note.id} className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-medium text-gray-900">{note.title}</p>
+                  <p className="text-xs text-gray-500">/{note.slug}</p>
+                </div>
+                <span className={`px-2 py-1 rounded-full text-xs ${note.published ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"}`}>
+                  {note.published ? "Published" : "Draft"}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600">{note.category || "General"} • {note.date}</p>
+              <div className="flex items-center gap-2">
+                <button onClick={() => openEdit(note)} className="flex-1 min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50">Edit</button>
+                <button onClick={() => handleDelete(note.id)} className="flex-1 min-h-10 px-3 py-2 border border-red-200 rounded-lg text-sm text-red-700 hover:bg-red-50">Delete</button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="hidden md:block bg-white border border-gray-200 rounded-xl overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-gray-600">
               <tr>
@@ -116,11 +137,11 @@ export default function AdminNotes() {
         </div>
 
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 flex-wrap">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="min-h-10 px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Previous
             </button>
@@ -130,7 +151,7 @@ export default function AdminNotes() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="min-h-10 px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next
             </button>
@@ -139,16 +160,16 @@ export default function AdminNotes() {
 
         {editing && (
           <div className="fixed inset-0 bg-black/50 z-50 p-4 flex items-center justify-center">
-            <div className="bg-white w-full max-w-3xl rounded-xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="bg-white w-full max-w-3xl rounded-xl p-4 sm:p-6 space-y-4 h-[calc(100vh-2rem)] sm:h-auto max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold">{content.notes.some((n) => n.id === editing.id) ? "Edit Note" : "New Note"}</h2>
                 <button onClick={() => setEditing(null)} className="text-gray-500">Close</button>
               </div>
 
-              <input className="w-full border rounded-lg px-3 py-2" placeholder="Title" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
-              <input className="w-full border rounded-lg px-3 py-2" placeholder="Slug" value={editing.slug} onChange={(e) => setEditing({ ...editing, slug: e.target.value })} />
-              <input className="w-full border rounded-lg px-3 py-2" type="date" value={editing.date} onChange={(e) => setEditing({ ...editing, date: e.target.value })} />
-              <input className="w-full border rounded-lg px-3 py-2" placeholder="Category" value={editing.category ?? ""} onChange={(e) => setEditing({ ...editing, category: e.target.value })} />
+              <input className="w-full min-h-11 border rounded-lg px-3 py-2" placeholder="Title" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
+              <input className="w-full min-h-11 border rounded-lg px-3 py-2" placeholder="Slug" value={editing.slug} onChange={(e) => setEditing({ ...editing, slug: e.target.value })} />
+              <input className="w-full min-h-11 border rounded-lg px-3 py-2" type="date" value={editing.date} onChange={(e) => setEditing({ ...editing, date: e.target.value })} />
+              <input className="w-full min-h-11 border rounded-lg px-3 py-2" placeholder="Category" value={editing.category ?? ""} onChange={(e) => setEditing({ ...editing, category: e.target.value })} />
               <textarea className="w-full border rounded-lg px-3 py-2" rows={10} placeholder="Markdown content" value={editing.content} onChange={(e) => setEditing({ ...editing, content: e.target.value })} />
 
               <label className="flex items-center gap-2 text-sm">
@@ -156,9 +177,9 @@ export default function AdminNotes() {
                 Published
               </label>
 
-              <div className="flex justify-end gap-3">
-                <button onClick={() => setEditing(null)} className="px-4 py-2 border rounded-lg">Cancel</button>
-                <button onClick={handleSave} disabled={isSaving} className="px-4 py-2 bg-teal-600 text-white rounded-lg">
+              <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
+                <button onClick={() => setEditing(null)} className="min-h-11 px-4 py-2 border rounded-lg">Cancel</button>
+                <button onClick={handleSave} disabled={isSaving} className="min-h-11 px-4 py-2 bg-teal-600 text-white rounded-lg">
                   {isSaving ? "Saving..." : "Save"}
                 </button>
               </div>

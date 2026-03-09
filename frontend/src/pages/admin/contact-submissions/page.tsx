@@ -65,21 +65,21 @@ export default function AdminContactSubmissions() {
   return (
     <AdminLayout>
       <div className="max-w-6xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Messages</h1>
-            <p className="text-gray-600 mt-1">Manage contact submissions and responses</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Contact Inbox</h1>
+            <p className="text-gray-600 mt-1">Manage contact enquiries and responses</p>
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <select
             value={statusFilter}
             onChange={(e) => {
               setStatusFilter(e.target.value);
               setPage(1);
             }}
-            className="border border-gray-200 rounded-lg px-3 py-2 text-sm"
+            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm min-h-11 w-full sm:w-auto"
           >
             <option value="">All Status</option>
             <option value="new">New</option>
@@ -95,11 +95,50 @@ export default function AdminContactSubmissions() {
               setSearchQuery(e.target.value);
               setPage(1);
             }}
-            className="border border-gray-200 rounded-lg px-3 py-2 text-sm flex-1"
+            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm min-h-11 flex-1"
           />
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="md:hidden space-y-3">
+          {paginatedSubmissions.length === 0 ? (
+            <div className="bg-white border border-gray-200 rounded-xl px-4 py-8 text-center text-gray-500">
+              No submissions found
+            </div>
+          ) : (
+            paginatedSubmissions.map((submission) => (
+              <div key={submission.id} className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-gray-900">{submission.name}</p>
+                    <p className="text-sm text-gray-600 break-all">{submission.email}</p>
+                  </div>
+                  <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(submission.status)}`}>
+                    {submission.status}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-700">{submission.subject || "-"}</p>
+                <p className="text-xs text-gray-500">{new Date(submission.created_at).toLocaleDateString()}</p>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setSelectedSubmission(submission)}
+                    className="flex-1 min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50"
+                  >
+                    View
+                  </button>
+                  <button
+                    onClick={() => { window.location.href = `mailto:${submission.email}`; }}
+                    className="min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50"
+                    title="Reply via email"
+                  >
+                    <i className="ri-mail-send-line"></i>
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="hidden md:block bg-white border border-gray-200 rounded-xl overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-gray-600">
               <tr>
@@ -169,11 +208,11 @@ export default function AdminContactSubmissions() {
         </div>
 
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 flex-wrap">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="min-h-10 px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Previous
             </button>
@@ -183,7 +222,7 @@ export default function AdminContactSubmissions() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="min-h-10 px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next
             </button>
@@ -192,15 +231,15 @@ export default function AdminContactSubmissions() {
 
         {selectedSubmission && (
           <div className="fixed inset-0 bg-black/50 z-50 p-4 flex items-center justify-center">
-            <div className="bg-white w-full max-w-3xl rounded-xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="bg-white w-full max-w-3xl rounded-xl p-4 sm:p-6 space-y-4 h-[calc(100vh-2rem)] sm:h-auto max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Message Details</h2>
+                <h2 className="text-xl font-semibold">Enquiry Details</h2>
                 <button onClick={() => setSelectedSubmission(null)} className="text-gray-500">
                   <i className="ri-close-line text-2xl"></i>
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-gray-600">From</p>
                   <p className="text-gray-900 font-medium">{selectedSubmission.name}</p>
@@ -245,16 +284,16 @@ export default function AdminContactSubmissions() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3">
+              <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
                 <button
                   onClick={() => window.location.href = `mailto:${selectedSubmission.email}`}
-                  className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+                  className="min-h-11 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
                 >
                   Reply via Email
                 </button>
                 <button
                   onClick={() => setSelectedSubmission(null)}
-                  className="px-4 py-2 border border-gray-200 rounded-lg"
+                  className="min-h-11 px-4 py-2 border border-gray-200 rounded-lg"
                 >
                   Close
                 </button>

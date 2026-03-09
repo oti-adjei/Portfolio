@@ -67,17 +67,34 @@ export default function AdminStreams() {
   return (
     <AdminLayout>
       <div className="max-w-6xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Streams Manager</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Streams Manager</h1>
             <p className="text-gray-600 mt-1">Manage live stream schedule and recurring events</p>
           </div>
-          <button onClick={openNew} className="px-5 py-2.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
+          <button onClick={openNew} className="w-full sm:w-auto min-h-11 px-5 py-2.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
             New Stream
           </button>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="md:hidden space-y-3">
+          {streams.map((stream) => (
+            <div key={stream.id} className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
+              <div className="flex items-start justify-between gap-3">
+                <p className="font-medium text-gray-900">{stream.title}</p>
+                <span className="px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-700">{stream.platform}</span>
+              </div>
+              <p className="text-sm text-gray-600">{stream.date} • {stream.time}</p>
+              <p className="text-sm text-gray-600">{stream.isRecurring ? "Recurring" : "One-time"}</p>
+              <div className="flex items-center gap-2">
+                <button onClick={() => openEdit(stream)} className="flex-1 min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50">Edit</button>
+                <button onClick={() => handleDelete(stream.id)} className="flex-1 min-h-10 px-3 py-2 border border-red-200 rounded-lg text-sm text-red-700 hover:bg-red-50">Delete</button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="hidden md:block bg-white border border-gray-200 rounded-xl overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-gray-600">
               <tr>
@@ -109,20 +126,20 @@ export default function AdminStreams() {
 
         {editing && (
           <div className="fixed inset-0 bg-black/50 z-50 p-4 flex items-center justify-center">
-            <div className="bg-white w-full max-w-2xl rounded-xl p-6 space-y-4">
+            <div className="bg-white w-full max-w-2xl rounded-xl p-4 sm:p-6 space-y-4 h-[calc(100vh-2rem)] sm:h-auto max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold">{content.streamEvents.some((s) => s.id === editing.id) ? "Edit Stream" : "New Stream"}</h2>
                 <button onClick={() => setEditing(null)} className="text-gray-500">Close</button>
               </div>
 
-              <input className="w-full border rounded-lg px-3 py-2" placeholder="Title" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
-              <div className="grid grid-cols-2 gap-3">
-                <input className="w-full border rounded-lg px-3 py-2" type="date" value={editing.date} onChange={(e) => setEditing({ ...editing, date: e.target.value })} />
-                <input className="w-full border rounded-lg px-3 py-2" type="time" value={editing.time} onChange={(e) => setEditing({ ...editing, time: e.target.value })} />
+              <input className="w-full min-h-11 border rounded-lg px-3 py-2" placeholder="Title" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input className="w-full min-h-11 border rounded-lg px-3 py-2" type="date" value={editing.date} onChange={(e) => setEditing({ ...editing, date: e.target.value })} />
+                <input className="w-full min-h-11 border rounded-lg px-3 py-2" type="time" value={editing.time} onChange={(e) => setEditing({ ...editing, time: e.target.value })} />
               </div>
 
               <select
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full min-h-11 border rounded-lg px-3 py-2"
                 value={editing.platform}
                 onChange={(e) => setEditing({ ...editing, platform: e.target.value as StreamEvent["platform"] })}
               >
@@ -131,7 +148,7 @@ export default function AdminStreams() {
                 <option value="tiktok">TikTok</option>
               </select>
 
-              <input className="w-full border rounded-lg px-3 py-2" placeholder="Stream URL / username" value={editing.streamUrl ?? ""} onChange={(e) => setEditing({ ...editing, streamUrl: e.target.value })} />
+              <input className="w-full min-h-11 border rounded-lg px-3 py-2" placeholder="Stream URL / username" value={editing.streamUrl ?? ""} onChange={(e) => setEditing({ ...editing, streamUrl: e.target.value })} />
               <textarea className="w-full border rounded-lg px-3 py-2" rows={4} placeholder="Description" value={editing.description ?? ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} />
 
               <label className="flex items-center gap-2 text-sm">
@@ -141,7 +158,7 @@ export default function AdminStreams() {
 
               {editing.isRecurring && (
                 <select
-                  className="w-full border rounded-lg px-3 py-2"
+                  className="w-full min-h-11 border rounded-lg px-3 py-2"
                   value={editing.recurringDay ?? 1}
                   onChange={(e) => setEditing({ ...editing, recurringDay: Number(e.target.value) })}
                 >
@@ -155,9 +172,9 @@ export default function AdminStreams() {
                 </select>
               )}
 
-              <div className="flex justify-end gap-3">
-                <button onClick={() => setEditing(null)} className="px-4 py-2 border rounded-lg">Cancel</button>
-                <button onClick={handleSave} disabled={isSaving} className="px-4 py-2 bg-teal-600 text-white rounded-lg">
+              <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
+                <button onClick={() => setEditing(null)} className="min-h-11 px-4 py-2 border rounded-lg">Cancel</button>
+                <button onClick={handleSave} disabled={isSaving} className="min-h-11 px-4 py-2 bg-teal-600 text-white rounded-lg">
                   {isSaving ? "Saving..." : "Save"}
                 </button>
               </div>
