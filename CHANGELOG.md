@@ -5,6 +5,17 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-03-09
+
+### frontend — Redesigned 404 Not Found page
+
+- Replaced minimal placeholder with a polished page matching the portfolio design language
+- Added FloatingShapes background, Reveal scroll animations, and brand color accents
+- Includes giant 404 watermark, orange accent badge, two CTA buttons (Home / Works), and decorative brand dots
+- Fully responsive (mobile-first with sm/lg breakpoints)
+
+---
+
 ## 2026-02-25 (10)
 
 ### portfolio — Backend API docs/Postman + frontend `api|mock` source switch
