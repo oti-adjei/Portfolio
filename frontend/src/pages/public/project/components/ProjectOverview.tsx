@@ -95,7 +95,7 @@ export default function ProjectOverview({ project }: ProjectOverviewProps) {
                   </div>
                 </div>
 
-                {project.links.length > 0 ? (
+                {(project.links ?? []).length > 0 ? (
                   <div>
                     <p className="text-sm text-gray-500 mb-2">Project Links</p>
                     <div className="flex flex-col gap-2">

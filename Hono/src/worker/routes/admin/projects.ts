@@ -20,9 +20,9 @@ adminProjects.post("/", async (c) => {
   await c.env.DB.prepare(
     `INSERT INTO projects (id, title, category, year, thumbnail_url, thumbnail_alt, tags,
       overview_description, overview_client, overview_duration, overview_role,
-      details_challenge, details_solution, details_results, gallery_images,
+      details_challenge, details_solution, details_results, gallery_images, links,
       sort_order, published, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   )
     .bind(
       id,
@@ -40,6 +40,7 @@ adminProjects.post("/", async (c) => {
       (body.details as { solution?: string } | undefined)?.solution ?? null,
       JSON.stringify((body.details as { results?: unknown[] } | undefined)?.results ?? []),
       JSON.stringify((body.gallery as { images?: unknown[] } | undefined)?.images ?? []),
+      JSON.stringify(body.links ?? []),
       body.sort_order ?? 0,
       body.published !== false ? 1 : 0,
       now,
@@ -68,7 +69,7 @@ adminProjects.put("/:id", async (c) => {
     `UPDATE projects SET
       title = ?, category = ?, year = ?, thumbnail_url = ?, thumbnail_alt = ?, tags = ?,
       overview_description = ?, overview_client = ?, overview_duration = ?, overview_role = ?,
-      details_challenge = ?, details_solution = ?, details_results = ?, gallery_images = ?,
+      details_challenge = ?, details_solution = ?, details_results = ?, gallery_images = ?, links = ?,
       sort_order = ?, published = ?, updated_at = ?
      WHERE id = ?`
   )
@@ -87,6 +88,7 @@ adminProjects.put("/:id", async (c) => {
       (body.details as { solution?: string } | undefined)?.solution ?? null,
       JSON.stringify((body.details as { results?: unknown[] } | undefined)?.results ?? []),
       JSON.stringify((body.gallery as { images?: unknown[] } | undefined)?.images ?? []),
+      JSON.stringify(body.links ?? []),
       body.sort_order ?? 0,
       body.published !== false ? 1 : 0,
       now,

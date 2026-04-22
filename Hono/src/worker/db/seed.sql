@@ -4,7 +4,7 @@
 -- ─────────────────────────────────────────────────────
 
 -- PROJECTS
-INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumbnail_alt, tags, overview_description, overview_client, overview_duration, overview_role, details_challenge, details_solution, details_results, gallery_images, sort_order, published) VALUES
+INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumbnail_alt, tags, overview_description, overview_client, overview_duration, overview_role, details_challenge, details_solution, details_results, gallery_images, links, sort_order, published) VALUES
 ('1', 'Home Sweet Home', 'SAAS', '2025', '/assets/images/projects/home-sweet-home.png', 'Home Sweet Home',
   '["Golang","Hono","React","PostgreSQL"]',
   'A property management SaaS for landlords and property managers to track tenants, leases, payments, and maintenance requests — all in one place.',
@@ -13,6 +13,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Building a multi-tenant SaaS with a Golang/Hono backend, React frontend, and PostgreSQL. Features include tenant onboarding, automated rent reminders, maintenance ticket tracking, and financial reporting dashboards.',
   '["MVP in private beta","Sub-50ms API response times with Golang backend","Multi-tenant architecture with isolated landlord accounts","Automated rent reminder system via email/SMS"]',
   '[{"url":"/assets/images/projects/home-sweet-home.png","caption":"Dashboard"},{"url":"/assets/images/projects/home-sweet-home.png","caption":"Tenant Management"},{"url":"/assets/images/projects/home-sweet-home.png","caption":"Financials Overview"}]',
+  '[]',
   1, 1),
 
 ('2', 'PriPri', 'DESKTOP', '2025', '/assets/images/projects/pripri.png', 'PriPri App Locker',
@@ -23,6 +24,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Built with Wails, combining a Go backend for OS-level process monitoring with a React + TailwindCSS frontend that feels native on both macOS and Windows. Users manage a lock list from a dashboard and can toggle PriPri globally.',
   '["Cross-platform: macOS and Windows support","Native-feeling UI with retro-theme roadmap","Process monitoring with sub-second response to app launch","Temporary unlock and global on/off toggle"]',
   '[{"url":"/assets/images/projects/pripri.png","caption":"Dashboard & Lock List"},{"url":"/assets/images/projects/pripri.png","caption":"Password Prompt Overlay"},{"url":"/assets/images/projects/pripri.png","caption":"Settings & App Management"}]',
+  '[]',
   2, 1),
 
 ('3', 'Scribble Notes', 'MOBILE', '2025', '/assets/images/projects/scribble-notes.png', 'Scribble Notes',
@@ -33,6 +35,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Built with Flutter and Provider for state management. Uses SharedPreferences for local data persistence — no backend required. Notes are searchable by title in real time.',
   '["Fully offline — no account or internet required","Instant note search by title","Lightweight build with minimal dependencies","Ongoing: additional features in development"]',
   '[{"url":"/assets/images/projects/scribble-notes.png","caption":"Notes List"},{"url":"/assets/images/projects/scribble-notes.png","caption":"Note Editor"},{"url":"/assets/images/projects/scribble-notes.png","caption":"Search Results"}]',
+  '[]',
   3, 1),
 
 ('4', 'Mummy''s Darl', 'WEB', '2025', '/assets/images/projects/mummysdarl.jpg', 'Mummy''s Darl',
@@ -43,6 +46,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Started in 2024 and fully revamped and launched in 2025 — a React website with TailwindCSS deployed on Cloudflare Pages. Includes curriculum overview, photo gallery, testimonials, and an enquiry form.',
   '["Revamped and launched 2025","Enrolment enquiries increased immediately post-launch","Zero hosting cost via Cloudflare Pages","Fully accessible and mobile-optimised"]',
   '[{"url":"/assets/images/projects/mummysdarl.jpg","caption":"Platform Overview"},{"url":"/assets/images/projects/mummysdarl.jpg","caption":"Curriculum Section"},{"url":"/assets/images/projects/mummysdarl.jpg","caption":"Contact & Enrolment"}]',
+  '[{"label":"Live Site","url":"https://mummysdarl-web.pages.dev"}]',
   4, 1),
 
 ('5', 'FlexDown', 'SAAS', '2023', '/assets/images/flexdown/flexdown.png', 'FlexDown',
@@ -53,6 +57,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Built a React Native Expo app backed by a Node.js REST API and PostgreSQL. Features include location-based search, advanced filters, image galleries per listing, and in-app enquiry forms.',
   '["Launched with 200+ verified property listings","Integrated Google Maps for neighbourhood exploration","Advanced filter system for price, bedrooms, and area","Actively revamped and extended in 2025"]',
   '[{"url":"/assets/images/flexdown/flexdown_landing.png","caption":"Landing & Search"},{"url":"/assets/images/flexdown/flexdown.png","caption":"Property Feed"},{"url":"/assets/images/flexdown/flexdown_listing.png","caption":"Listing Detail"}]',
+  '[{"label":"Live Site","url":"https://flexdown.com"}]',
   5, 1),
 
 ('6', 'Envoyer GH', 'WEB', '2024', '/assets/images/envoyer/envoyerGH.png', 'Envoyer GH',
@@ -63,6 +68,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Built a full-stack platform with Express/PostgreSQL backend and TailwindCSS frontend. Implemented user roles, OTP verification, KYC verification, image upload, booking portal, and real-time notifications via Server-Sent Events.',
   '["Live at envoyergh.com","Supports shipper, driver, and admin user roles","Real-time notification system via SSE","OTP + KYC verification for secure onboarding"]',
   '[{"url":"/assets/images/envoyer/envoyerGH.png","caption":"Platform Overview"},{"url":"/assets/images/envoyer/envoyer_contact.png","caption":"Contact & Booking Flow"},{"url":"/assets/images/envoyer/envoyer_login.png","caption":"Login & Registration"}]',
+  '[{"label":"Live Site","url":"https://envoyergh.com"}]',
   6, 1),
 
 ('7', 'Purple Pay', 'MOBILE', '2024', '/assets/images/projects/purple-pay.jpg', 'Purple Pay',
@@ -73,6 +79,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Built a Flutter app with Riverpod state management and an Express/PostgreSQL backend. Integrated Stripe for card processing and biometric authentication for enhanced security.',
   '["Beta launched with 500+ early adopters","Average transaction time under 3 seconds","PCI-DSS compliant payment flow via Stripe","Biometric auth adopted by 80% of users"]',
   '[{"url":"/assets/images/projects/purple-pay.jpg","caption":"Wallet Dashboard"},{"url":"/assets/images/projects/purple-pay.jpg","caption":"Transfer Flow"},{"url":"/assets/images/projects/purple-pay.jpg","caption":"Transaction History"}]',
+  '[{"label":"Live Site","url":"https://purplepay.app"}]',
   7, 1),
 
 ('8', 'Nagyique Boutique', 'WEB', '2024', '/assets/images/projects/nagyique.jpg', 'Nagyique Boutique',
@@ -83,6 +90,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Built an Astro + React storefront on Cloudflare Pages with Sanity as the headless CMS for product management. Stripe handles checkout. The Astro architecture delivers near-instant page loads.',
   '["Owner manages inventory via Sanity Studio — no coding needed","Lighthouse performance score: 98","Stripe integration handling live transactions","Ongoing: final features being completed"]',
   '[{"url":"/assets/images/projects/nagyique.jpg","caption":"Storefront"},{"url":"/assets/images/projects/nagyique.jpg","caption":"Product Detail"},{"url":"/assets/images/projects/nagyique.jpg","caption":"Checkout Flow"}]',
+  '[{"label":"Live Site","url":"https://nagyiqueboutique.ca"}]',
   8, 1),
 
 ('9', 'Pokebook', 'MOBILE', '2023', '/assets/images/projects/pokebook.jpg', 'Pokebook',
@@ -93,6 +101,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Consumes the PokéAPI for all Pokémon data. Features a live search bar, detailed stat pages with type badges and base stat visualisers, and a similar Pokémon recommendation section.',
   '["Fully functional PokéAPI integration","Dynamic search with instant filter results","Detailed stat view with type badges","Solid foundation for Flutter/Provider patterns"]',
   '[{"url":"/assets/images/projects/pokebook.jpg","caption":"Pokémon Browser"},{"url":"/assets/images/projects/pokebook.jpg","caption":"Search & Filter"},{"url":"/assets/images/projects/pokebook.jpg","caption":"Detail & Stats View"}]',
+  '[]',
   9, 1),
 
 ('10', 'Gullivers Travel Hotel', 'WEB', '2022', '/assets/images/gullivers/gullivers_rooms.png', 'Gullivers Travel Hotel',
@@ -103,6 +112,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Designed and built a React website with smooth animations, image galleries for rooms, restaurant, and lounge, and a contact/booking enquiry form backed by a Node.js mailer service.',
   '["60% increase in direct booking enquiries post-launch","Fully responsive across mobile and desktop","Image-rich showcase for rooms, restaurant, and lounge","Positive client feedback on delivery speed"]',
   '[{"url":"/assets/images/gullivers/gullivers_rooms.png","caption":"Rooms & Suites"},{"url":"/assets/images/gullivers/gullivers_restaurant.png","caption":"Restaurant"},{"url":"/assets/images/gullivers/gullivers_lounge.png","caption":"Lounge"}]',
+  '[{"label":"Live Site","url":"https://gulliverstravelhotelgh.com"}]',
   10, 1),
 
 ('11', 'GESA KNUST', 'MOBILE', '2022', '/assets/images/gesa/gesa.png', 'GESA KNUST',
@@ -113,6 +123,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Developed a Flutter app with Firebase for real-time notifications and content delivery. Features an events calendar, course material repository, announcements, and member directory.',
   '["Adopted by 500+ engineering students","Centralised 3 years of course materials","Real-time event and announcement notifications","Published on Google Play Store"]',
   '[{"url":"/assets/images/gesa/gesa.png","caption":"Home Dashboard"},{"url":"/assets/images/gesa/gesa_course_material.png","caption":"Course Materials"},{"url":"/assets/images/gesa/gesa_events.png","caption":"Events Calendar"}]',
+  '[]',
   11, 1),
 
 ('12', 'Pro-Vid', 'MOBILE', '2021', '/assets/images/projects/provid.png', 'Pro-Vid COVID Tracker',
@@ -123,6 +134,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Built in Flutter/Dart, consuming a COVID-19 REST API for live case statistics. Features curated news sources, an interactive self-assessment quiz, and community awareness content.',
   '["Real-time global and local case data","Curated, verified news sources only","Interactive self-assessment health quiz","Shareable awareness content for community use"]',
   '[{"url":"/assets/images/projects/provid.png","caption":"Case Statistics Dashboard"},{"url":"/assets/images/projects/provid-2.jpg","caption":"News & Updates Feed"},{"url":"/assets/images/projects/provid.png","caption":"Self-Assessment Quiz"}]',
+  '[]',
   12, 1),
 
 ('13', 'Dear Akua', 'WEB', '2023', '/assets/images/dear-akua/landing-page.png', 'Dear Akua',
@@ -133,6 +145,7 @@ INSERT OR REPLACE INTO projects (id, title, category, year, thumbnail_url, thumb
   'Built with Node.js, Express, and EJS for server-side rendering, backed by MongoDB. Anonymous submissions require no account. Deployed on Railway with content moderation hooks to flag problematic entries.',
   '["Fully anonymous — no account or email required","Public confession feed with responsive design","Content moderation features to maintain a safe space","Live at dear-akua-production.up.railway.app"]',
   '[{"url":"/assets/images/dear-akua/landing-page.png","caption":"Landing Page"},{"url":"/assets/images/dear-akua/submit-form.png","caption":"Submission Form"},{"url":"/assets/images/dear-akua/confessions-feed.png","caption":"Confessions Feed"}]',
+  '[{"label":"Live Site","url":"https://dear-akua-web.pages.dev"}]',
   13, 1);
 
 -- BLOG POSTS

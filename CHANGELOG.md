@@ -5,6 +5,19 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-04-22
+
+### backend + frontend — Add project links support
+
+- Added `links` column (JSON array) to `projects` table in D1 schema
+- Created migration `2026-04-22_add_project_links.sql` with ALTER TABLE and data population for existing projects
+- Updated `ProjectRow`, `Project` type, and `rowToProject` mapper in backend types
+- Updated admin POST/PUT routes to read and write `links` field
+- Updated seed data with correct links for all projects that have live sites
+- Frontend: added safe fallback (`project.links ?? []`) in ProjectOverview to handle API responses missing the field
+
+---
+
 ## 2026-03-09
 
 ### frontend — Redesigned 404 Not Found page

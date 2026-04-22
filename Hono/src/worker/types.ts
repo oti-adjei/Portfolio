@@ -4,6 +4,11 @@ export interface GalleryImage {
   caption?: string;
 }
 
+export interface ProjectLink {
+  label: string;
+  url: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -11,6 +16,7 @@ export interface Project {
   year?: string;
   thumbnail: { url: string; alt: string };
   tags: string[];
+  links: ProjectLink[];
   overview: {
     description: string;
     client?: string;
@@ -86,6 +92,7 @@ export interface ProjectRow {
   details_solution: string | null;
   details_results: string | null;
   gallery_images: string | null;
+  links: string | null;
   sort_order: number;
   published: number;
   created_at: string;
@@ -153,6 +160,7 @@ export function rowToProject(row: ProjectRow): Project {
       alt: row.thumbnail_alt ?? "",
     },
     tags: parseJson<string[]>(row.tags, []),
+    links: parseJson<ProjectLink[]>(row.links, []),
     overview: {
       description: row.overview_description ?? "",
       client: row.overview_client ?? undefined,

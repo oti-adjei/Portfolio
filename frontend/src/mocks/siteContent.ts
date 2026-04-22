@@ -600,7 +600,7 @@ export const siteContent: SiteContent = {
     category: 'WEB',
     year: '2024',
     tags: ['Astro', 'React', 'Stripe', 'Sanity', 'Cloudflare'],
-    links: [{ label: 'Live Site', url: 'https://nagyeboutique.ca' }],
+    links: [{ label: 'Live Site', url: 'https://nagyiqueboutique.ca' }],
     thumbnail: { url: '/assets/images/projects/nagyique.jpg', alt: 'Nagyique Boutique' },
     overview: {
       description: 'A fashion e-commerce storefront with a Sanity CMS product catalogue, Stripe checkout, and edge-deployed Astro frontend. Started March 2024, still in active development.',

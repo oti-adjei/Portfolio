@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS projects (
   details_solution TEXT,
   details_results TEXT,
   gallery_images TEXT,
+  links TEXT DEFAULT '[]',
   sort_order INTEGER DEFAULT 0,
   published INTEGER DEFAULT 1,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
