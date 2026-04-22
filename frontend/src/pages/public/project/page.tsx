@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
-import ProjectHeader from './components/ProjectHeader';
+import Header from '../home/components/Header';
 import ProjectHero from './components/ProjectHero';
 import ProjectOverview from './components/ProjectOverview';
 import ProjectGallery from './components/ProjectGallery';
@@ -38,7 +38,7 @@ export default function ProjectDetail() {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       <FloatingShapes />
-      <ProjectHeader />
+      <Header />
       <main className="relative z-10">
         <ProjectHero project={project} />
         <ProjectOverview project={project} />
