@@ -32,3 +32,5 @@ AGENTS.md
 
 .env
 .env.local
+# Local brainstorming + spec docs (not committed)
+docs/superpowers/
