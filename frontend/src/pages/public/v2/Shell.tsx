@@ -4,7 +4,7 @@ import GHLogoMark from '@/components/logo/GHLogoMark';
 
 interface ShellProps {
   children: ReactNode;
-  current?: 'work' | 'about' | 'journey' | 'contact' | 'works' | 'library';
+  current?: 'work' | 'about' | 'contact' | 'library' | 'works' | 'press';
 }
 
 export default function Shell({ children, current = 'work' }: ShellProps) {
@@ -21,10 +21,10 @@ export default function Shell({ children, current = 'work' }: ShellProps) {
   }, []);
 
   const navItems: { label: string; to: string; id: string }[] = [
-    { label: 'Work', to: '/experiment#work', id: 'work' },
-    { label: 'About', to: '/experiment#about', id: 'about' },
-    { label: 'Journey', to: '/experiment#journey', id: 'journey' },
-    { label: 'Contact', to: '/experiment#contact', id: 'contact' },
+    { label: 'Work', to: '/#work', id: 'work' },
+    { label: 'About', to: '/#about', id: 'about' },
+    { label: 'Library', to: '/library', id: 'library' },
+    { label: 'Contact', to: '/#contact', id: 'contact' },
   ];
 
   const pillClasses = scrolled
@@ -39,7 +39,7 @@ export default function Shell({ children, current = 'work' }: ShellProps) {
           <div
             className={`mx-auto flex items-center justify-between gap-6 rounded-full pl-5 pr-2 py-2 pointer-events-auto transition-all duration-300 ${pillClasses}`}
           >
-            <Link to="/experiment" className="flex items-center text-[13px] text-gray-700" aria-label="Georgie">
+            <Link to="/" className="flex items-center text-[13px] text-gray-700" aria-label="Georgie">
               <GHLogoMark variant="dark" className="h-7 w-auto" />
             </Link>
             <div className="flex items-center gap-5">

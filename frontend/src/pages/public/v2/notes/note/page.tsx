@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import Reveal from '@/components/Reveal';
-import Shell from '@/pages/public/experiment/Shell';
+import Shell from '@/pages/public/v2/Shell';
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -93,7 +93,7 @@ export default function NotePage() {
           <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400">404</p>
           <h1 className="mt-3 text-4xl md:text-5xl font-bold tracking-tight text-gray-900">Note not found</h1>
           <Link
-            to="/experiment/library#notes"
+            to="/library#notes"
             className="mt-6 inline-flex items-center gap-1.5 text-[13px] text-gray-700 underline underline-offset-4 hover:text-gray-900"
           >
             <i className="ri-arrow-left-line" /> Back to notes
@@ -109,7 +109,7 @@ export default function NotePage() {
         {/* Header */}
         <section className="px-8 lg:px-12 pt-12 pb-10">
           <Link
-            to="/experiment/library#notes"
+            to="/library#notes"
             className="inline-flex items-center gap-1.5 text-[12px] text-gray-500 hover:text-gray-900 transition"
           >
             <i className="ri-arrow-left-line" /> Lesson notes
@@ -197,13 +197,13 @@ export default function NotePage() {
         <section className="px-8 lg:px-12 py-12 border-t border-black/5">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <Link
-              to="/experiment/library#notes"
+              to="/library#notes"
               className="inline-flex items-center gap-1.5 text-[13px] text-gray-700 hover:text-gray-900 transition"
             >
               <i className="ri-arrow-left-line" /> All notes
             </Link>
             <Link
-              to="/experiment#contact"
+              to="/#contact"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gray-900 text-white text-[13px] hover:bg-gray-800 transition"
             >
               Get in touch <i className="ri-arrow-right-up-line" />

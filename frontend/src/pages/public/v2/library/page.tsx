@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import Reveal from '@/components/Reveal';
 import Shell from '../Shell';
-import StreamCalendar from '@/components/experiment/StreamCalendar';
+import StreamCalendar from '@/pages/public/v2/components/StreamCalendar';
 
 type Tab = 'writing' | 'notes' | 'stream';
 
@@ -44,7 +44,7 @@ export default function ExperimentLibrary() {
 
   const switchTab = (id: Tab) => {
     setTab(id);
-    navigate(`/experiment/library#${id}`, { replace: true });
+    navigate(`/library#${id}`, { replace: true });
   };
 
   const posts = useMemo(
@@ -170,10 +170,10 @@ export default function ExperimentLibrary() {
       </section>
 
       <div className="px-8 lg:px-12 pb-16 flex items-center justify-between border-t border-black/5 pt-8">
-        <Link to="/experiment" className="text-[13px] text-gray-500 hover:text-gray-900">
+        <Link to="/" className="text-[13px] text-gray-500 hover:text-gray-900">
           ← Back to home
         </Link>
-        <Link to="/experiment#contact" className="text-[13px] text-gray-900 underline underline-offset-4">
+        <Link to="/#contact" className="text-[13px] text-gray-900 underline underline-offset-4">
           Have a topic suggestion? →
         </Link>
       </div>

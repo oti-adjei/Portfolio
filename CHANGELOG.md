@@ -7,6 +7,22 @@ Entries are ordered newest first.
 
 ## 2026-06-23
 
+### frontend + backend — V1/V2 versioning + asset restructure
+
+V2 (formerly `/experiment`) promoted to root URLs and old root design archived at `/v1/*`. Asset tree reorganized. DB migration for renamed paths.
+
+- **URL map**
+  - V2 canonical: `/`, `/about`, `/works`, `/project/:id`, `/library`, `/press`, `/blog/:slug`, `/notes/:slug`
+  - V1 archive: `/v1`, `/v1/about`, `/v1/works`, `/v1/project/:id`, `/v1/contact`, `/v1/streams`, `/v1/blog[/:slug]`, `/v1/notes[/:slug]`
+  - V1 detail pages restored from git `e475719` so V1 keeps original Header + Footer + FloatingShapes look
+  - `/experiment/*` URLs redirect to root V2 equivalents (preserve backlinks)
+  - V1-only URLs (`/contact`, `/streams`, `/blog`, `/notes`) 404 by design — V2 has no separate routes for these (Library is the umbrella for blog/notes/streams; Contact is a `#contact` anchor on home)
+- **File reorg** — `pages/public/v1/*`, `pages/public/v2/*`, shared section components in `components/shared/*`. V2-only components moved into `v2/components/`.
+- **Nav** — V2 top pill: Work → `/#work`, About → `/#about`, **Library → `/library` (renamed from Journey)**, Contact → `/#contact`. Logo links to `/`.
+- **Assets** — `public/assets/{brand,me,projects,documents}/` with kebab-case lowercase names. Loose root files (`GHlog.png`, `Gpic.webp`, `aboutme.JPG`, `GH.jpeg`, CV doc, `car4-min.webp`) moved into purpose-based subdirectories.
+- **DB migration** — `Hono/scripts/migrations/2026-06-23_rename_asset_paths.sql` REPLACE()s old paths in `projects.thumbnail_url`, `projects.gallery_images`, `site_content.value`. Idempotent. Applied to local D1.
+- **Docs** — CLAUDE.md rewritten to document the v1/v2/shared layout, version policy, and current `frontend/` + `Hono/` structure.
+
 ### frontend — Blog post + note detail redesign, scroll-aware nav pill
 
 - Blog post (`blog/post/page.tsx`) and note (`notes/note/page.tsx`) detail pages rebuilt to use the `/experiment` Shell — hero with category/tags + big title + date + reading time, long-form article body with markdown-style rendering (## / ### headings, blockquotes, fenced code blocks, lists), bottom nav back to library + contact CTA. Note pages get a sticky TOC rail on wide screens.

@@ -11,6 +11,10 @@ import GHLogoMark from '@/components/logo/GHLogoMark';
 
 type SectionId = 'work' | 'about' | 'journey' | 'contact';
 
+type NavItem =
+  | { kind: 'scroll'; id: SectionId; label: string }
+  | { kind: 'link'; id: string; label: string; to: string };
+
 export default function Experiment() {
   const { content } = useContent();
   const [active, setActive] = useState<SectionId>('work');
@@ -31,11 +35,11 @@ export default function Experiment() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const sections: { id: SectionId; label: string }[] = [
-    { id: 'work', label: 'Work' },
-    { id: 'about', label: 'About' },
-    { id: 'journey', label: 'Journey' },
-    { id: 'contact', label: 'Contact' },
+  const navItems: NavItem[] = [
+    { kind: 'scroll', id: 'work', label: 'Work' },
+    { kind: 'scroll', id: 'about', label: 'About' },
+    { kind: 'link', id: 'library', label: 'Library', to: '/library' },
+    { kind: 'scroll', id: 'contact', label: 'Contact' },
   ];
 
   const scrollTo = (id: SectionId) => {
@@ -52,22 +56,35 @@ export default function Experiment() {
           {/* Top bar — static at top, sticks on scroll */}
           <div className="sticky top-0 z-30 px-4 sm:px-6 lg:px-8 pt-4 pb-3 pointer-events-none">
             <div className={`mx-auto flex items-center justify-between gap-6 rounded-full pl-5 pr-2 py-2 pointer-events-auto transition-all duration-300 ${pillClasses}`}>
-              <Link to="/experiment" className="flex items-center text-[13px] text-gray-700" aria-label="Georgie">
+              <Link to="/" className="flex items-center text-[13px] text-gray-700" aria-label="Georgie">
                 <GHLogoMark variant="dark" className="h-7 w-auto" />
               </Link>
               <div className="flex items-center gap-5">
                 <nav className="flex items-center gap-5 text-[13px] text-gray-500">
-                  {sections.map((s) => (
-                    <button
-                      key={s.id}
-                      onClick={() => scrollTo(s.id)}
-                      className={`hover:text-gray-900 transition ${
-                        active === s.id ? 'text-gray-900 underline underline-offset-[6px] decoration-1' : ''
-                      }`}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
+                  {navItems.map((n) => {
+                    if (n.kind === 'link') {
+                      return (
+                        <Link
+                          key={n.id}
+                          to={n.to}
+                          className="hover:text-gray-900 transition"
+                        >
+                          {n.label}
+                        </Link>
+                      );
+                    }
+                    return (
+                      <button
+                        key={n.id}
+                        onClick={() => scrollTo(n.id)}
+                        className={`hover:text-gray-900 transition ${
+                          active === n.id ? 'text-gray-900 underline underline-offset-[6px] decoration-1' : ''
+                        }`}
+                      >
+                        {n.label}
+                      </button>
+                    );
+                  })}
                 </nav>
                 <a
                   href="#"
@@ -170,7 +187,7 @@ export default function Experiment() {
                   SELECTED WORK ▸
                 </p>
                 <Link
-                  to="/experiment/works"
+                  to="/works"
                   className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full ring-1 ring-gray-300 text-[12px] text-gray-700 hover:bg-white transition"
                 >
                   See all work <i className="ri-arrow-right-up-line" />
@@ -186,7 +203,7 @@ export default function Experiment() {
                   {[...projects, ...projects].map((p: Project, idx) => (
                     <Link
                       key={`${String(p.id)}-${idx}`}
-                      to={`/experiment/project/${String(p.id)}`}
+                      to={`/project/${String(p.id)}`}
                       className="group/card shrink-0 w-[260px] sm:w-[320px]"
                     >
                       <div className="aspect-[4/3] rounded-2xl bg-gray-100 overflow-hidden">
@@ -357,7 +374,7 @@ export default function Experiment() {
               {/* Learn more */}
               <div className="mt-10 text-center">
                 <Link
-                  to="/experiment/about"
+                  to="/about"
                   className="inline-flex items-center gap-1.5 text-[13px] text-gray-900 underline underline-offset-4 hover:text-gray-600"
                 >
                   Learn more about me <i className="ri-arrow-right-line" />
@@ -386,7 +403,7 @@ export default function Experiment() {
             <Reveal origin="bottom"><StreamSchedule /></Reveal>
             <div className="px-8 lg:px-12 pb-8 text-center">
               <Link
-                to="/experiment/library#stream"
+                to="/library#stream"
                 className="inline-flex items-center gap-1.5 text-[12px] text-gray-700 underline underline-offset-4 hover:text-gray-900"
               >
                 See full stream schedule <i className="ri-arrow-right-up-line" />
@@ -402,13 +419,13 @@ export default function Experiment() {
             <Reveal origin="bottom"><WritingSection /></Reveal>
             <div className="px-8 lg:px-12 pb-10 flex flex-wrap items-center justify-center gap-4">
               <Link
-                to="/experiment/library#writing"
+                to="/library#writing"
                 className="inline-flex items-center gap-1.5 text-[12px] text-gray-700 underline underline-offset-4 hover:text-gray-900"
               >
                 See all posts <i className="ri-arrow-right-up-line" />
               </Link>
               <Link
-                to="/experiment/library#notes"
+                to="/library#notes"
                 className="inline-flex items-center gap-1.5 text-[12px] text-gray-700 underline underline-offset-4 hover:text-gray-900"
               >
                 Lesson notes <i className="ri-arrow-right-up-line" />
@@ -460,7 +477,7 @@ export default function Experiment() {
           </section>
 
           <footer className="px-8 lg:px-12 py-10 text-center text-[11px] text-gray-400">
-            Experiment · /experiment
+            V2 · /
           </footer>
         </main>
     </div>

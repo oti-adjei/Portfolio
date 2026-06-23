@@ -340,7 +340,7 @@ export default function ExperimentPress() {
       </section>
 
       <footer className="px-8 lg:px-12 py-10 text-center text-[11px] text-gray-400">
-        Press kit · /experiment/press
+        Press kit · /press
       </footer>
     </Shell>
   );

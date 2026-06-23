@@ -25,7 +25,7 @@ export default function ExperimentProject() {
           <p className="text-sm text-gray-400 uppercase tracking-widest">404</p>
           <h1 className="mt-3 text-4xl font-bold">Project not found</h1>
           <Link
-            to="/experiment/works"
+            to="/works"
             className="mt-6 inline-block text-[13px] text-gray-700 underline underline-offset-4"
           >
             ← Back to all work
@@ -39,9 +39,9 @@ export default function ExperimentProject() {
     <Shell>
       {/* Breadcrumb */}
       <div className="px-8 lg:px-12 pt-10 flex items-center gap-2 text-[12px] text-gray-500">
-        <Link to="/experiment" className="hover:text-gray-900">Home</Link>
+        <Link to="/" className="hover:text-gray-900">Home</Link>
         <span>/</span>
-        <Link to="/experiment/works" className="hover:text-gray-900">Work</Link>
+        <Link to="/works" className="hover:text-gray-900">Work</Link>
         <span>/</span>
         <span className="text-gray-700">{project.title}</span>
       </div>
@@ -185,7 +185,7 @@ export default function ExperimentProject() {
       <section className="px-8 lg:px-12 py-12 border-t border-black/5 grid grid-cols-1 md:grid-cols-2 gap-6">
         {prev ? (
           <Link
-            to={`/experiment/project/${String(prev.id)}`}
+            to={`/project/${String(prev.id)}`}
             className="group/nav block rounded-2xl ring-1 ring-black/5 p-5 hover:bg-white/60 transition"
           >
             <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400">
@@ -199,7 +199,7 @@ export default function ExperimentProject() {
         ) : <div />}
         {next ? (
           <Link
-            to={`/experiment/project/${String(next.id)}`}
+            to={`/project/${String(next.id)}`}
             className="group/nav block rounded-2xl ring-1 ring-black/5 p-5 hover:bg-white/60 transition text-right"
           >
             <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400">
@@ -215,7 +215,7 @@ export default function ExperimentProject() {
 
       <div className="px-8 lg:px-12 pb-16 flex justify-center">
         <Link
-          to="/experiment/works"
+          to="/works"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-900 text-white text-[13px] hover:bg-black transition"
         >
           See all work <i className="ri-arrow-right-up-line" />
