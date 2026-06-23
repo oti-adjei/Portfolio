@@ -5,6 +5,33 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-06-23
+
+### frontend — Blog post + note detail redesign, scroll-aware nav pill
+
+- Blog post (`blog/post/page.tsx`) and note (`notes/note/page.tsx`) detail pages rebuilt to use the `/experiment` Shell — hero with category/tags + big title + date + reading time, long-form article body with markdown-style rendering (## / ### headings, blockquotes, fenced code blocks, lists), bottom nav back to library + contact CTA. Note pages get a sticky TOC rail on wide screens.
+- `Shell.tsx` and `/experiment/page.tsx` top bars: nav pill (rounded ring + bg) now only appears once `window.scrollY > 12`; at top the nav is flush/transparent and morphs in on scroll with a 300ms transition
+- Seeded a long demo blog post (`flutter-vs-react-native`) and a long demo note (`postgres-indexing`) in `mocks/siteContent.ts` to stress-test the new long-form layout
+
+### frontend — Press kit page at /experiment/press
+
+- New page `pages/public/experiment/press/page.tsx` matching the /experiment Shell style (cream/white theme, sticky pill nav)
+- Sections: hero with press contact + CV download, at-a-glance facts, three-length bios (short/medium/long) with copy-to-clipboard, headshot grid (downloadable), brand logos grid (SVG variants on appropriate backgrounds), current role & background timeline, contact card grid
+- Copied brand SVGs from `dist/assets/SVG/` into `public/assets/SVG/` so they're servable
+- Registered `/experiment/press` route in `public/router/config.tsx`
+
+### frontend — Animated GH logo (GSAP intro loader, header mark, footer lockup)
+
+- Added `GHLogoMark` and `GHLogoFull` React components — inlined SVG from `GH_Primary Logo.svg`, animated with GSAP
+- Animation timeline (9Ts-style): G ring scales in with `back.out`, H verticals rise + stagger, H crossbar wipes in, smile drops with `bounce.out`, wordmark letters stagger in
+- Added `PageLoader` — full-screen dark intro overlay that plays the full lockup once per session (gated by `sessionStorage`), then fades out
+- Header (`pages/public/home/components/Header.tsx`) now uses `GHLogoMark` (dark variant, mark-only)
+- Footer (`pages/public/home/components/Footer.tsx`) now uses `GHLogoFull` (light variant, full lockup) and animates on intersection (`threshold: 0.4`)
+- Both components respect `prefers-reduced-motion` and skip the animation when set
+- Wired `PageLoader` into `PublicApp` so it runs on first visit per session
+
+---
+
 ## 2026-04-22
 
 ### backend + frontend — Add project links support

@@ -1042,7 +1042,91 @@ export const siteContent: SiteContent = {
       slug: 'flutter-vs-react-native',
       date: '2026-01-20',
       excerpt: 'After two years of going back and forth, here is what I actually think about both ecosystems.',
-      content: `After two years working professionally in both Flutter and React Native, I have strong opinions.\n\nFlutter wins on UI consistency. Your app looks exactly the same on Android and iOS, every time. The widget tree is verbose but predictable, and once you understand how StatefulWidget and Provider interact, things click fast.\n\nReact Native wins on ecosystem. If you already know React, the mental model transfers well. The JS bridge has improved dramatically since the new architecture landed, and libraries like Expo make shipping surprisingly fast.\n\nFor client work where polish matters most, I reach for Flutter. For solo projects where I want to move fast and leverage web tooling, React Native.\n\nNeither is better. They are different tools.`,
+      content: `After two years going back and forth between Flutter and React Native, on a mix of client work and personal projects, I want to write down what I actually think — not the surface-level "which is better" take, but the honest tradeoffs that only show up after you have shipped a few apps in each, supported them for a year, and watched a team try to maintain code you wrote at 2am during a launch crunch.
+
+This is a long one. Grab coffee.
+
+## The promise of cross-platform (and why nobody fully delivers it)
+
+The pitch is the same for both: write once, ship to iOS and Android. In practice, neither delivers that 100%. You always end up writing some platform-specific code — for permissions, deep linking, background tasks, push notifications, in-app purchases, or the half-dozen native modules that work great on one platform and break in mysterious ways on the other. So the real question is not "which one is truly cross-platform?" but "which one minimizes the friction when I have to drop down into native?"
+
+Flutter handles this with platform channels — a typed message-passing system between Dart and Swift/Kotlin. React Native handles it with native modules — JS calls bridged to native code through either the old async bridge or the new JSI (JavaScript Interface). Both work. Both are painful the first time. Both become routine after you have done them a few times.
+
+What is different is the surface area of pain. With Flutter, native code is the exception — most things you need have a community package that already wraps the native APIs cleanly. With React Native, you are more often gluing together community packages of varying quality, and you sometimes hit issues where two packages need different versions of the same native dependency. This is a known class of problem (pod conflicts on iOS, Gradle conflicts on Android) and it can eat a day.
+
+## Where Flutter wins
+
+The biggest selling point for Flutter is UI consistency. Because Flutter ships its own rendering engine (Skia, soon Impeller on iOS), your app looks exactly the same on Android 8 and iOS 17. The widget tree is verbose but predictable. Once you internalize the difference between StatelessWidget and StatefulWidget and you have made peace with the build-method pattern, you can move fast.
+
+The tooling is also genuinely excellent. Hot reload is the most reliable I have used in any framework — better than React Native's Fast Refresh, better than Vite's HMR. The DartPad-style debugger and the widget inspector make UI debugging almost pleasant. The first time I rearranged a complex form layout in real-time with hot reload preserving state, I stopped to take a screenshot of how good it felt.
+
+> "When you control the renderer, you control the experience. Flutter is the only mainstream cross-platform tool that does this."
+
+Where it really shines is in apps with custom design systems — fintech dashboards, healthcare apps, anything where pixel-perfect consistency matters. I have shipped Flutter apps that look identical on a five-year-old budget Android phone and a brand-new iPhone, and clients noticed. They did not have to.
+
+The animation system is also worth a separate paragraph. Flutter's animation primitives (AnimationController, Tween, AnimatedBuilder) are verbose but extremely powerful, and the implicit animation widgets (AnimatedContainer, AnimatedOpacity) cover 80% of cases with one line of code. In React Native, you reach for Reanimated 3, which is great, but the worklet model requires you to think carefully about what runs on the JS thread vs the UI thread. In Flutter, that distinction does not exist for UI animation — everything is on the UI isolate, and it is just fast.
+
+### Type safety
+
+Dart's type system is sound. If you write strongly-typed Dart, the compiler will catch a real class of bugs. TypeScript in React Native is great, but the React Native ecosystem still has a lot of weakly-typed library boundaries, and the iOS and Android native modules are not type-checked from the JS side. Flutter is more consistently typed end-to-end.
+
+### Performance
+
+For most apps, both are fast enough. But Flutter has a more consistent performance profile because it bypasses the platform UI thread entirely. You do not get jank from the OS doing layout on an old iPad while your animation runs — Flutter just draws into a single surface and the OS composites it.
+
+## Where React Native wins
+
+React Native's superpower is ecosystem. If you already know React, the mental model transfers instantly. JSX, hooks, state management — it is all the same. You can pull in libraries from npm that were built for the web and they will often work with minor adjustments (with caveats — anything that touches the DOM directly will not work). The component model encourages composition in a way that feels more natural for product-style apps where the design changes weekly.
+
+The new architecture (Fabric + TurboModules) has dramatically improved bridge performance, and Expo has made the developer experience genuinely first-class. You can start a project, sign it, and ship to TestFlight in an afternoon — no Xcode rituals required. EAS Build handling the iOS signing chaos in the cloud is, by itself, worth the Expo subscription.
+
+The other underrated win is hiring. React developers are everywhere. Flutter developers are not. If you are at a startup and the dev who wrote the app leaves, the next person you hire can probably read React Native code with zero ramp-up. With Flutter, you are betting on the candidate having Dart experience — which, in 2026, is still a much smaller pool, especially in Africa where I work.
+
+### Web reuse
+
+This one is huge for me personally. If your team also ships a web product, React Native lets you share business logic, validation, even some UI components (with React Native Web). Flutter Web exists, but it is still rough enough that I would not ship a customer-facing web app with it today.
+
+### Over-the-air updates
+
+CodePush and Expo Updates let you push JS bundles to users without going through the App Store review process. This is genuinely transformative for shipping bug fixes — you can patch a critical issue in hours, not days. Flutter does not have an equivalent in the official tooling, and the workarounds (shipping JavaScript runtimes inside Flutter, for instance) are awkward.
+
+## The areas where the choice almost does not matter
+
+For most product features — login flows, lists, forms, settings screens, basic navigation, REST API calls, image uploads — both frameworks are equivalent. Either one will let you ship a clean, fast app. The dev experience differs in style, but not in capability.
+
+This is the part nobody on the framework-flamewar Twitter wants to admit. Most apps are not testing the limits of either framework. Most apps are CRUD on top of an API with some camera or location features sprinkled in. Both Flutter and React Native handle that case beautifully.
+
+So if you are agonizing about the choice for an MVP that is going to be 90% standard product features, stop agonizing. Pick the one your team already knows. Ship it. Iterate.
+
+## My actual decision framework
+
+After enough projects, I have settled on a rough rule:
+
+- **Pixel-perfect design system, long-lived product** → Flutter
+- **MVP, frequent design changes, team already knows React** → React Native
+- **App needs lots of native integrations (BLE, biometrics, custom camera)** → check which has better community packages for *your specific* integration first, then pick
+- **Shared codebase with web** → React Native (with React Native Web) or just two separate codebases — do not pick Flutter for this reason alone
+- **Solo developer, want to ship fast and not maintain native config** → React Native + Expo, every time
+
+The honest answer is that the two ecosystems have converged enough that the decision is mostly about your team's existing skills and the design constraints of the app. There is no longer a clear technical winner.
+
+## The hidden cost: hiring and team longevity
+
+Something I underweighted early in my career: the framework you pick today is the framework someone else will maintain in three years. If you build the whole company's mobile experience on a framework where talent is scarce in your region, you have created a hiring problem that future-you will spend real money to solve.
+
+In Lagos, where I work, React Native devs are everywhere. Flutter devs exist, but the pool is an order of magnitude smaller. That alone tips the scale for client work I will eventually hand off.
+
+## The cost I always underestimate: native debugging
+
+No matter how good the framework, you will at some point have to open Xcode or Android Studio and debug something native. Push notification entitlements, Info.plist permissions, Gradle build failures, ProGuard rules — there is always *something*. The frameworks reduce how often this happens, but they do not eliminate it. Budget at least 10–20% of your dev time for native config work. If you have not done this before, double that estimate.
+
+## What I would tell my past self
+
+Stop tribally defending one over the other. Use whatever ships the thing in front of you. The thirty-minute argument on Twitter about which framework is "better" has shipped exactly zero apps to exactly zero users. Both ecosystems are mature, both are well-funded, both will be around for another decade at least.
+
+That said — if you have never tried Flutter, spend a weekend with it. The widget composition model is genuinely different from React's component model, and even if you do not switch, it will sharpen how you think about UI. The reverse is also true: if you are a Flutter dev who has never written React Native, spend a weekend with Expo. The speed at which you can iterate on JS is its own kind of magic.
+
+The frameworks are different. They are not in opposition. They are in conversation, and the apps you ship are the only thing that matters.`,
       tags: ['Flutter', 'React Native', 'Mobile'],
       published: true,
     },
@@ -1094,7 +1178,169 @@ export const siteContent: SiteContent = {
       title: 'PostgreSQL — indexing fundamentals',
       slug: 'postgres-indexing',
       date: '2026-01-15',
-      content: `## What is an index?\n\nAn index is a separate data structure that lets PostgreSQL find rows without scanning the entire table.\n\n## B-Tree (default)\n\nGood for equality and range queries. Created automatically for PRIMARY KEY and UNIQUE constraints.\n\n\`CREATE INDEX idx_users_email ON users(email);\`\n\n## When NOT to index\n\n- Small tables (full scan is faster)\n- Columns with very low cardinality (e.g. boolean flags)\n- Columns that are written to very frequently (indexes slow writes)\n\n## EXPLAIN ANALYZE\n\nAlways check your query plan before and after adding an index:\n\n\`EXPLAIN ANALYZE SELECT * FROM orders WHERE user_id = 42;\`\n\nLook for "Index Scan" vs "Seq Scan" in the output.`,
+      content: `## What is an index?
+
+An index is a separate data structure that lets PostgreSQL find rows without scanning the entire table. Think of it like the index in the back of a textbook — instead of flipping through every page looking for a topic, you jump to the page number listed in the index.
+
+Without an index, a query like SELECT * FROM users WHERE email = 'x@y.com' performs a sequential scan: PostgreSQL reads every row in the table and checks each one. With an index on email, PostgreSQL walks a small tree structure and lands on the exact rows in microseconds.
+
+The cost is not free. Indexes take disk space — sometimes a lot of it, on big tables — and they slow down every INSERT, UPDATE, and DELETE because PostgreSQL has to keep the index in sync with the underlying table. Every index you add is a tax on writes. The art of indexing is paying that tax only where the read speedup is worth it.
+
+## The query planner
+
+Before you index anything, understand that PostgreSQL does not always use the indexes you create. It has a cost-based query planner that decides, for each query, whether using an index is cheaper than a sequential scan. For small tables, the planner often picks Seq Scan because reading the whole table is faster than walking an index and then jumping back to the heap. This is correct behavior — it is the planner being smart, not your index failing.
+
+If you want to know what the planner is doing, EXPLAIN ANALYZE is your only honest answer. Run it before and after every index change. We will come back to this.
+
+## B-Tree (the default, and the one you should know first)
+
+The B-Tree is the index type you will use 95% of the time. It is the default when you say CREATE INDEX without specifying a type. It is good for:
+
+- Equality queries — WHERE email = '...'
+- Range queries — WHERE created_at > '2025-01-01'
+- ORDER BY clauses on the indexed column
+- The leading columns of a composite index
+
+It is created automatically for PRIMARY KEY and UNIQUE constraints, so you do not need to think about it for those.
+
+\`CREATE INDEX idx_users_email ON users(email);\`
+
+## Composite indexes — column order matters
+
+If you frequently query by multiple columns together, a composite index can be faster than two separate indexes. But the column order is critical.
+
+\`CREATE INDEX idx_orders_user_status ON orders(user_id, status);\`
+
+This index helps with:
+- WHERE user_id = 42
+- WHERE user_id = 42 AND status = 'shipped'
+
+But it will NOT help with:
+- WHERE status = 'shipped' (without user_id)
+
+Rule of thumb: put the column with the most filtering power first.
+
+## Partial indexes — when you only care about a slice
+
+If most of your queries hit a small subset of the table, a partial index is dramatically smaller and faster than a full index.
+
+\`CREATE INDEX idx_orders_pending ON orders(created_at) WHERE status = 'pending';\`
+
+This indexes only pending orders. If 99% of your orders are completed, the index stays tiny and the queries that filter on status = 'pending' fly.
+
+## GIN and GiST — for full-text and JSON
+
+If you store JSON, arrays, or full-text data, the B-Tree will not help you. Reach for GIN (Generalized Inverted Index) instead.
+
+- GIN is great for jsonb columns and tsvector full-text search.
+- GiST is good for geometric data and certain custom types.
+
+\`CREATE INDEX idx_events_data ON events USING GIN(data jsonb_path_ops);\`
+
+## When NOT to index
+
+Indexes are not free. They take disk space, they slow down INSERT/UPDATE/DELETE, and PostgreSQL has to keep them in sync with the underlying table. Avoid indexing:
+
+- Small tables (a full scan of 1000 rows is often faster than an index lookup)
+- Columns with very low cardinality (e.g. boolean flags — the planner will usually ignore the index anyway)
+- Columns that are written to very frequently if you also have many indexes — every write has to update every index
+- Columns you never filter, sort, or join on
+
+## EXPLAIN ANALYZE — the only honest answer
+
+You can read all the indexing advice in the world, but the only way to know if your index is actually helping is EXPLAIN ANALYZE. It tells you exactly what query plan PostgreSQL chose and how long each step took.
+
+\`EXPLAIN ANALYZE SELECT * FROM orders WHERE user_id = 42;\`
+
+Look for "Index Scan" or "Index Only Scan" in the output. If you see "Seq Scan" on a large table, your index either does not exist, is wrong for the query, or is being ignored by the planner because the table is too small.
+
+## A practical workflow
+
+1. Write your query
+2. Run EXPLAIN ANALYZE to see what it does today
+3. Add the index you think will help
+4. Run EXPLAIN ANALYZE again
+5. Compare execution times and confirm the planner is using your index
+6. Only ship the index if step 5 shows a real improvement
+
+This loop will teach you more about PostgreSQL in a week than any tutorial.
+
+## Index-only scans — the secret weapon
+
+If your query only needs columns that are in the index itself, PostgreSQL can answer the query without touching the underlying table at all. This is called an Index-Only Scan and it is dramatically faster than a normal Index Scan because it skips the heap lookup entirely.
+
+The trick: PostgreSQL also has to check the visibility map to make sure the row is visible to your transaction. If the visibility map is up to date (which it is after a VACUUM), the index-only scan is pure magic.
+
+\`CREATE INDEX idx_orders_user_status ON orders(user_id, status);\`
+
+Now this query can use an index-only scan:
+
+\`SELECT user_id, status FROM orders WHERE user_id = 42;\`
+
+Because both columns the query needs are in the index. If you added "amount" to the SELECT, PostgreSQL would have to go to the heap to get it, and the index-only scan would become a regular index scan.
+
+## Covering indexes (INCLUDE clause)
+
+PostgreSQL 11 added the INCLUDE clause, which lets you add columns to an index without making them part of the search key. The included columns are stored in the leaf pages of the index, available for index-only scans, but they do not slow down the B-Tree search.
+
+\`CREATE INDEX idx_orders_user ON orders(user_id) INCLUDE (status, amount);\`
+
+This is great when you have a query like SELECT status, amount FROM orders WHERE user_id = 42 — you can serve it from the index without ever hitting the table.
+
+## Maintenance — REINDEX and VACUUM
+
+Indexes accumulate bloat over time, especially on tables with lots of UPDATEs and DELETEs. A bloated index is bigger than it needs to be, which means more disk reads, which means slower queries.
+
+REINDEX rebuilds the index from scratch. In PostgreSQL 12+, you can do REINDEX CONCURRENTLY, which does not lock the table:
+
+\`REINDEX INDEX CONCURRENTLY idx_users_email;\`
+
+VACUUM is also important. It updates the visibility map (which makes index-only scans work) and recovers space from dead tuples. The autovacuum daemon usually handles this, but on high-write tables you sometimes need to tune it.
+
+## What to monitor in production
+
+Once your app is in production, you want to know:
+
+- Which queries are slow (pg_stat_statements is the answer)
+- Which indexes are not being used (pg_stat_user_indexes shows idx_scan = 0 for unused indexes)
+- Which tables have a lot of sequential scans on large tables (pg_stat_user_tables shows seq_scan vs idx_scan)
+- Index bloat (pgstattuple extension or the bloat queries from the wiki)
+
+An unused index is just write tax with no benefit. Drop them.
+
+## Common mistakes I have made
+
+I have spent enough time debugging slow queries to have collected a list of mistakes worth warning you about.
+
+- Indexing every column "just in case" — this slows down writes and bloats your database. Index for queries you actually run.
+- Forgetting that LIKE 'prefix%' can use a B-Tree index, but LIKE '%suffix' cannot. For the latter, you need a trigram index (pg_trgm extension).
+- Indexing low-cardinality columns like boolean flags or status enums with only 3 values. The planner will usually ignore these and Seq Scan instead.
+- Adding indexes without running EXPLAIN ANALYZE to confirm they help. I have shipped indexes that the planner refused to use because the table was too small. Felt silly.
+- Creating a composite index in the wrong column order. The leading column is the one queries must filter on for the index to be useful.
+
+## A worked example
+
+Say you have an orders table with 10M rows. Your slow query is:
+
+\`SELECT * FROM orders WHERE customer_id = 12345 AND status = 'shipped' ORDER BY created_at DESC LIMIT 50;\`
+
+Without indexes, this is a sequential scan of 10M rows — easily multiple seconds. With the right composite index, it can be under 5ms.
+
+The right index here is:
+
+\`CREATE INDEX idx_orders_customer_status_created ON orders(customer_id, status, created_at DESC);\`
+
+Note the DESC on created_at — this matches the ORDER BY direction so PostgreSQL can read the index in order and stop after 50 rows. Without DESC, the planner would have to read all matching rows and sort them.
+
+Run EXPLAIN ANALYZE on the query and confirm you see "Index Scan" or "Index Only Scan" using your new index. If you see "Bitmap Index Scan" instead, that is also fine for big result sets — but for a LIMIT 50, a plain index scan is faster.
+
+## Closing thoughts
+
+Indexes are the single highest-leverage tool you have for making PostgreSQL fast. But they are not magic, and they are not free. The discipline is to add indexes deliberately, measure before and after, and prune the ones you do not use.
+
+Most slow-query problems are not "we need a faster database" — they are "we are missing an index, or using the wrong one, or fighting the planner". A few hours with EXPLAIN ANALYZE will save you weeks of pain.
+
+If you take one thing from this note: never add an index without measuring. Never.`,
       category: 'Database',
       published: true,
     },

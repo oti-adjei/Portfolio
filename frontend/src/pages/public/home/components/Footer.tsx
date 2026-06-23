@@ -1,10 +1,33 @@
 
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
+import GHLogoFull from '@/components/logo/GHLogoFull';
 
 export default function Footer() {
   const { content } = useContent();
   const footer = content.footer;
+  const logoWrapRef = useRef<HTMLDivElement>(null);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    const el = logoWrapRef.current;
+    if (!el) return;
+    if (shouldAnimate) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldAnimate(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [shouldAnimate]);
 
   if (!footer) {
     console.error('Footer data is missing in siteContent.');
@@ -13,19 +36,26 @@ export default function Footer() {
 
   const { logo, copyright, links = [] } = footer;
 
+  const logoMark = (
+    <div ref={logoWrapRef} className="w-full max-w-[380px] sm:max-w-[460px]">
+      <GHLogoFull
+        variant="light"
+        autoplay={shouldAnimate}
+        ariaLabel={logo?.text || 'George Heavenson'}
+        className="w-full h-auto"
+      />
+    </div>
+  );
+
   return (
-    <footer className="py-10 px-6 bg-gray-900 text-center">
-      <div className="max-w-7xl mx-auto flex flex-col items-center gap-3">
+    <footer className="py-12 px-6 bg-gray-900 text-center">
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-4">
         {logo?.url ? (
-          <Link to={logo.url} className="cursor-pointer">
-            {logo.imageUrl ? (
-              <img src={logo.imageUrl} alt={logo.text} className="h-8 w-auto brightness-0 invert" />
-            ) : (
-              <span className="text-white font-bold">{logo.text || 'Logo'}</span>
-            )}
+          <Link to={logo.url} className="cursor-pointer" aria-label={logo.text}>
+            {logoMark}
           </Link>
         ) : (
-          <span className="text-white font-bold">{logo?.text || 'Logo'}</span>
+          logoMark
         )}
 
         <p className="text-sm text-gray-400 tracking-wide">{copyright || ''}</p>

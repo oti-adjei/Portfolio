@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 665.21 184">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.09em;
+      }
+
+      .cls-2 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-4 {
+        font-family: BaiJamjuree-Bold, 'Bai Jamjuree';
+        font-size: 71.8px;
+        font-weight: 700;
+      }
+
+      .cls-4, .cls-5 {
+        fill: #e6e6e6;
+      }
+
+      .cls-5, .cls-6 {
+        stroke-width: 0px;
+      }
+
+      .cls-6 {
+        fill: #00e281;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-6" d="m169.05,70.95h-16.69c.97,4.57,1.48,9.31,1.48,14.17,0,.75-.01,1.48-.04,2.23-1.18,36.86-31.53,66.49-68.68,66.49S16.4,123.01,16.4,85.12,47.23,16.4,85.11,16.4c26.92,0,50.27,15.55,61.53,38.15h17.91C152.25,22.67,121.28,0,85.11,0,38.18,0,0,38.18,0,85.12s38.18,85.12,85.11,85.12,83.9-36.98,85.09-82.89c.02-.74.03-1.48.03-2.23,0-4.82-.4-9.56-1.19-14.17Z"/>
+      <path class="cls-6" d="m169.05,70.95h-16.69c.97,4.57,1.48,9.31,1.48,14.17,0,.75-.01,1.48-.04,2.23-1.18,36.86-31.53,66.49-68.68,66.49S16.4,123.01,16.4,85.12,47.23,16.4,85.11,16.4c26.92,0,50.27,15.55,61.53,38.15h17.91C152.25,22.67,121.28,0,85.11,0,38.18,0,0,38.18,0,85.12s38.18,85.12,85.11,85.12,83.9-36.98,85.09-82.89c.02-.74.03-1.48.03-2.23,0-4.82-.4-9.56-1.19-14.17Z"/>
+      <rect class="cls-6" x="35.8" y="53.29" width="16.4" height="51.72"/>
+      <rect class="cls-6" x="96.28" y="53.29" width="16.4" height="51.72"/>
+      <rect class="cls-6" x="39.97" y="70.95" width="146.55" height="16.4"/>
+      <path class="cls-5" d="m50.56,123.19h53.23s-26.62,29.96-53.23,0Z"/>
+      <text class="cls-4" transform="translate(230.6 83.51)"><tspan x="0" y="0">G</tspan><tspan class="cls-2" x="51.12" y="0">E</tspan><tspan x="95.78" y="0">O</tspan><tspan class="cls-3" x="147.77" y="0">R</tspan><tspan x="196.16" y="0">GE</tspan></text>
+      <text class="cls-4" transform="translate(230.6 143.72)"><tspan x="0" y="0">HE</tspan><tspan class="cls-1" x="97.22" y="0">A</tspan><tspan x="139.51" y="0">VENSON</tspan></text>
+    </g>
+  </g>
+</svg>

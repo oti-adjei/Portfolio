@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
+import GHLogoMark from '@/components/logo/GHLogoMark';
 
 export default function Header() {
   const { content } = useContent();
@@ -44,12 +45,12 @@ export default function Header() {
       >
         <nav className="px-4 sm:px-6 lg:px-12 py-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <Link to={navigation.logo.url} className="cursor-pointer">
-              {navigation.logo.imageUrl ? (
-                <img src={navigation.logo.imageUrl} alt={navigation.logo.text} className="h-8 w-auto" />
-              ) : (
-                <span className="text-xl sm:text-2xl font-bold text-gray-900">{navigation.logo.text}</span>
-              )}
+            <Link to={navigation.logo.url} className="cursor-pointer" aria-label={navigation.logo.text}>
+              <GHLogoMark
+                variant="dark"
+                ariaLabel={navigation.logo.text}
+                className="h-9 sm:h-10 w-auto"
+              />
             </Link>
 
             <div className="hidden md:flex items-center gap-6 lg:gap-8">
