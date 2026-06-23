@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import Reveal from '@/components/Reveal';
 import type { Project } from '@/types/siteContent';
-import StreamSchedule from '@/pages/public/home/components/StreamSchedule';
-import WritingSection from '@/pages/public/home/components/WritingSection';
-import FadingBrands from '@/components/experiment/FadingBrands';
-import Timeline from '@/components/experiment/Timeline';
+import StreamSchedule from '@/components/shared/StreamSchedule';
+import WritingSection from '@/components/shared/WritingSection';
+import FadingBrands from '@/pages/public/v2/components/FadingBrands';
+import Timeline from '@/pages/public/v2/components/Timeline';
 import GHLogoMark from '@/components/logo/GHLogoMark';
 
 type SectionId = 'work' | 'about' | 'journey' | 'contact';
@@ -110,7 +110,7 @@ export default function Experiment() {
                 }}
               >
                 <img
-                  src="/aboutme.JPG"
+                  src="/assets/me/portrait-close.jpg"
                   alt="Georgie Heavenson Jnr. Oti-Adjei"
                   className="w-full h-full object-cover object-[50%_80%]"
                 />
@@ -233,7 +233,7 @@ export default function Experiment() {
                 {aboutVariant === 'classic' ? (
                   <div className="flex items-center gap-6 md:gap-10">
                     <img
-                      src="/Gpic.webp"
+                      src="/assets/me/portrait-full.webp"
                       alt="Georgie Heavenson Jnr. Oti-Adjei"
                       className="shrink-0 w-24 h-24 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full object-cover object-top ring-1 ring-black/5 shadow-sm"
                     />
@@ -306,7 +306,7 @@ export default function Experiment() {
                   <Reveal origin="left" delay={100} className="lg:col-span-5">
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl ring-1 ring-black/5 shadow-sm bg-gray-100">
                       <img
-                        src="/Gpic.webp"
+                        src="/assets/me/portrait-full.webp"
                         alt="Georgie Heavenson Jnr. Oti-Adjei"
                         className="absolute inset-0 w-full h-full object-cover object-top"
                       />

@@ -26,7 +26,7 @@ export default function AboutNew() {
               {/* Circular artistic frame */}
               <div className="absolute inset-0 rounded-full overflow-hidden border-4 sm:border-8 border-gray-100">
                 <img
-                  src="/car4-min.webp"
+                  src="/assets/me/car4-min.webp"
                   alt={about.name}
                   className="w-full h-full object-cover"
                 />

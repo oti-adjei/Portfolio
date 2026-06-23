@@ -6,7 +6,7 @@ export const siteContent: SiteContent = {
     logo: {
       text: 'GH',
       url: '/',
-      imageUrl: '/GHlog.png'
+      imageUrl: '/assets/brand/gh-lockup.png'
     },
     menuItems: [
       { id: 'nav-home', label: 'Home', url: '/' },
@@ -24,7 +24,7 @@ export const siteContent: SiteContent = {
     logo: {
       text: 'GH',
       url: '/',
-      imageUrl: '/GHlog.png'
+      imageUrl: '/assets/brand/gh-lockup.png'
     },
     copyright: '© 2026 George Oti-Adjei. All rights reserved.',
     links: [
@@ -51,7 +51,7 @@ export const siteContent: SiteContent = {
         url: '/contact'
       },
       image: {
-        url: '/Gpic.webp',
+        url: '/assets/me/portrait-full.webp',
         alt: 'Georgie Heavenson Jnr. Oti-Adjei'
       },
       socialIcons: [
@@ -242,7 +242,7 @@ export const siteContent: SiteContent = {
     hero: {
       id: 'about-hero',
       avatar: {
-        url: '/aboutme.JPG',
+        url: '/assets/me/portrait-close.jpg',
         alt: 'George Oti-Adjei'
       },
       name: 'George Oti-Adjei',
@@ -472,7 +472,7 @@ export const siteContent: SiteContent = {
   year: '2026',
   tags: ['React', 'TailwindCSS', 'Cloudflare Pages', 'Portfolio'],
   links: [{ label: 'Live Site', url: 'https://senvon.studio' }],
-  thumbnail: { url: '/assets/images/senvon/senvon-home.png', alt: "Senvon Studio" },
+  thumbnail: { url: '/assets/projects/senvon/senvon-home.png', alt: "Senvon Studio" },
   overview: {
     description: "The official website of Senvon Studio — my own digital agency platform, designed to showcase our design and development services, client projects, and studio ethos.",
     client: "Senvon Studio (self‑initiated)",
@@ -492,9 +492,9 @@ export const siteContent: SiteContent = {
   },
   gallery: {
     images: [
-      { url: '/assets/images/senvon/senvon-home.png', caption: 'Homepage overview highlighting studio brand and services' },
-      { url: '/assets/images/senvon/senvon-section.png', caption: 'Portfolio section showing past client projects' },
-      { url: '/assets/images/senvon/senvon-contact.png', caption: 'Contact and enquiry section for new client leads' },
+      { url: '/assets/projects/senvon/senvon-home.png', caption: 'Homepage overview highlighting studio brand and services' },
+      { url: '/assets/projects/senvon/senvon-section.png', caption: 'Portfolio section showing past client projects' },
+      { url: '/assets/projects/senvon/senvon-contact.png', caption: 'Contact and enquiry section for new client leads' },
     ],
   },
 },
@@ -505,7 +505,7 @@ export const siteContent: SiteContent = {
   year: '2025',
   tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
   links: [{ label: 'Live Site', url: 'https://royalpark-web.pages.dev' }],
-  thumbnail: { url: '/assets/images/royalpark/rp-about.png', alt: "Royal Park Hotel Kumasi" },
+  thumbnail: { url: '/assets/projects/royalpark/rp-about.png', alt: "Royal Park Hotel Kumasi" },
   overview: {
     description: "A modern website for Royal Park Hotel Kumasi, showcasing hotel rooms, dining options, and booking features for guests.",
     client: "Royal Park Hotel",
@@ -524,9 +524,9 @@ export const siteContent: SiteContent = {
   },
   gallery: {
     images: [
-      { url: '/assets/images/royalpark/rp-about.png', caption: 'Homepage Overview' },
-      { url: '/assets/images/royalpark/rp-rooms.png', caption: 'Rooms & Amenities' },
-      { url: '/assets/images/royalpark/rp-dining.png', caption: 'Restaurant & Booking Form' },
+      { url: '/assets/projects/royalpark/rp-about.png', caption: 'Homepage Overview' },
+      { url: '/assets/projects/royalpark/rp-rooms.png', caption: 'Rooms & Amenities' },
+      { url: '/assets/projects/royalpark/rp-dining.png', caption: 'Restaurant & Booking Form' },
     ],
   },
 },
@@ -537,7 +537,7 @@ export const siteContent: SiteContent = {
   year: '2025',
   tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
   links: [{ label: 'Live Site', url: 'https://lobabkids-web.pages.dev' }],
-  thumbnail: { url: '/assets/images/lobab/lobab-home.png', alt: "Lobab Kids Academy" },
+  thumbnail: { url: '/assets/projects/lobab/lobab-home.png', alt: "Lobab Kids Academy" },
   overview: {
     description: "An interactive website for Lobab Kids Academy, highlighting programs, activities, and parent resources for early childhood education.",
     client: "Lobab Kids Academy",
@@ -556,9 +556,9 @@ export const siteContent: SiteContent = {
   },
   gallery: {
     images: [
-      { url: '/assets/images/lobab/lobab-home.png', caption: 'Homepage Overview' },
-      { url: '/assets/images/lobab/lobab-programs.png', caption: 'Programs Section' },
-      { url: '/assets/images/lobab/lobab-events.png', caption: 'Contact & Enrolment Form' },
+      { url: '/assets/projects/lobab/lobab-home.png', caption: 'Homepage Overview' },
+      { url: '/assets/projects/lobab/lobab-programs.png', caption: 'Programs Section' },
+      { url: '/assets/projects/lobab/lobab-events.png', caption: 'Contact & Enrolment Form' },
     ],
   },
 },
@@ -569,7 +569,7 @@ export const siteContent: SiteContent = {
     year: '2025',
     tags: ['Golang', 'Hono', 'React', 'PostgreSQL'],
     links: [],
-    thumbnail: { url: '/assets/images/projects/home-sweet-home.png', alt: 'Home Sweet Home' },
+    thumbnail: { url: '/assets/projects/projects/home-sweet-home.png', alt: 'Home Sweet Home' },
     overview: {
       description: 'A property management SaaS for landlords and property managers to track tenants, leases, payments, and maintenance requests — all in one place.',
       client: 'Senvon Studio (personal venture)',
@@ -588,9 +588,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/projects/home-sweet-home.png', caption: 'Dashboard' },
-        { url: '/assets/images/projects/home-sweet-home.png', caption: 'Tenant Management' },
-        { url: '/assets/images/projects/home-sweet-home.png', caption: 'Financials Overview' },
+        { url: '/assets/projects/projects/home-sweet-home.png', caption: 'Dashboard' },
+        { url: '/assets/projects/projects/home-sweet-home.png', caption: 'Tenant Management' },
+        { url: '/assets/projects/projects/home-sweet-home.png', caption: 'Financials Overview' },
       ],
     },
   },
@@ -601,7 +601,7 @@ export const siteContent: SiteContent = {
     year: '2024',
     tags: ['Astro', 'React', 'Stripe', 'Sanity', 'Cloudflare'],
     links: [{ label: 'Live Site', url: 'https://nagyiqueboutique.ca' }],
-    thumbnail: { url: '/assets/images/projects/nagyique.jpg', alt: 'Nagyique Boutique' },
+    thumbnail: { url: '/assets/projects/projects/nagyique.jpg', alt: 'Nagyique Boutique' },
     overview: {
       description: 'A fashion e-commerce storefront with a Sanity CMS product catalogue, Stripe checkout, and edge-deployed Astro frontend. Started March 2024, still in active development.',
       client: 'Nagyique Boutique',
@@ -620,9 +620,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/projects/nagyique.jpg', caption: 'Storefront' },
-        { url: '/assets/images/projects/nagyique.jpg', caption: 'Product Detail' },
-        { url: '/assets/images/projects/nagyique.jpg', caption: 'Checkout Flow' },
+        { url: '/assets/projects/projects/nagyique.jpg', caption: 'Storefront' },
+        { url: '/assets/projects/projects/nagyique.jpg', caption: 'Product Detail' },
+        { url: '/assets/projects/projects/nagyique.jpg', caption: 'Checkout Flow' },
       ],
     },
   },
@@ -633,7 +633,7 @@ export const siteContent: SiteContent = {
     year: '2023',
     tags: ['Node.js', 'Express', 'MongoDB'],
     links: [{ label: 'Live Site', url: 'https://dear-akua-web.pages.dev' }],
-    thumbnail: { url: '/assets/images/dear-akua/landing-page.png', alt: 'Dear Akua' },
+    thumbnail: { url: '/assets/projects/dear-akua/landing-page.png', alt: 'Dear Akua' },
     overview: {
       description: 'An anonymous web-based platform where users can write and share confessions, designed to foster a safe and non-judgmental community space.',
       client: 'Personal Project',
@@ -652,9 +652,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/dear-akua/landing-page.png', caption: 'Landing Page' },
-        { url: '/assets/images/dear-akua/submit-form.png', caption: 'Submission Form' },
-        { url: '/assets/images/dear-akua/confessions-feed.png', caption: 'Confessions Feed' },
+        { url: '/assets/projects/dear-akua/landing-page.png', caption: 'Landing Page' },
+        { url: '/assets/projects/dear-akua/submit-form.png', caption: 'Submission Form' },
+        { url: '/assets/projects/dear-akua/confessions-feed.png', caption: 'Confessions Feed' },
       ],
     },
   },
@@ -665,7 +665,7 @@ export const siteContent: SiteContent = {
     year: '2025',
     tags: ['React', 'TailwindCSS', 'Cloudflare Pages'],
     links: [{ label: 'Live Site', url: 'https://mummysdarl-web.pages.dev' }],
-    thumbnail: { url: '/assets/images/mummysdarl/md-home.png', alt: "Mummy's Darl" },
+    thumbnail: { url: '/assets/projects/mummysdarl/md-home.png', alt: "Mummy's Darl" },
     overview: {
       description: "An educational platform for Mummy's Darl, a childcare and early learning centre — providing curriculum info, gallery, and online enrolment for parents.",
       client: "Mummy's Darl",
@@ -684,9 +684,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/mummysdarl/md-home.png', caption: 'Platform Overview' },
-        { url: '/assets/images/mummysdarl/md-programs.png', caption: 'Curriculum Section' },
-        { url: '/assets/images/mummysdarl/md-admissions.png', caption: 'Contact & Enrolment' },
+        { url: '/assets/projects/mummysdarl/md-home.png', caption: 'Platform Overview' },
+        { url: '/assets/projects/mummysdarl/md-programs.png', caption: 'Curriculum Section' },
+        { url: '/assets/projects/mummysdarl/md-admissions.png', caption: 'Contact & Enrolment' },
       ],
     },
   },
@@ -697,7 +697,7 @@ export const siteContent: SiteContent = {
     year: '2023',
     tags: ['React Native', 'Node.js', 'PostgreSQL'],
     links: [{ label: 'Live Site', url: 'https://flexdown.com' }],
-    thumbnail: { url: '/assets/images/flexdown/flexdown.png', alt: 'FlexDown' },
+    thumbnail: { url: '/assets/projects/flexdown/flexdown.png', alt: 'FlexDown' },
     overview: {
       description: "A real estate mobile app for browsing, filtering, and enquiring about property listings across Ghana — started in 2023, actively revamped in 2025 as a friend's startup.",
       client: 'FlexDown',
@@ -716,9 +716,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/flexdown/flexdown_landing.png', caption: 'Landing & Search' },
-        { url: '/assets/images/flexdown/flexdown.png', caption: 'Property Feed' },
-        { url: '/assets/images/flexdown/flexdown_listing.png', caption: 'Listing Detail' },
+        { url: '/assets/projects/flexdown/flexdown_landing.png', caption: 'Landing & Search' },
+        { url: '/assets/projects/flexdown/flexdown.png', caption: 'Property Feed' },
+        { url: '/assets/projects/flexdown/flexdown_listing.png', caption: 'Listing Detail' },
       ],
     },
   },
@@ -729,7 +729,7 @@ export const siteContent: SiteContent = {
     year: '2025',
     tags: ['Wails', 'Go', 'React', 'TailwindCSS'],
     links: [],
-    thumbnail: { url: '/assets/images/projects/pripri.png', alt: 'PriPri App Locker' },
+    thumbnail: { url: '/assets/projects/projects/pripri.png', alt: 'PriPri App Locker' },
     overview: {
       description: 'A cross-platform desktop app locker built with Wails (Go + React). PriPri monitors running applications and displays a password prompt before allowing locked apps to open — ensuring privacy and focus.',
       client: 'Senvon Studio (personal venture)',
@@ -748,9 +748,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/projects/pripri.png', caption: 'Dashboard & Lock List' },
-        { url: '/assets/images/projects/pripri.png', caption: 'Password Prompt Overlay' },
-        { url: '/assets/images/projects/pripri.png', caption: 'Settings & App Management' },
+        { url: '/assets/projects/projects/pripri.png', caption: 'Dashboard & Lock List' },
+        { url: '/assets/projects/projects/pripri.png', caption: 'Password Prompt Overlay' },
+        { url: '/assets/projects/projects/pripri.png', caption: 'Settings & App Management' },
       ],
     },
   },
@@ -761,7 +761,7 @@ export const siteContent: SiteContent = {
     year: '2025',
     tags: ['Flutter', 'Provider', 'SharedPreferences'],
     links: [],
-    thumbnail: { url: '/assets/images/projects/scribble-notes.png', alt: 'Scribble Notes' },
+    thumbnail: { url: '/assets/projects/projects/scribble-notes.png', alt: 'Scribble Notes' },
     overview: {
       description: 'A lightweight mobile notes app with local data persistence and dynamic search — built to be fast and distraction-free.',
       client: 'Personal Project',
@@ -780,9 +780,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/projects/scribble-notes.png', caption: 'Notes List' },
-        { url: '/assets/images/projects/scribble-notes.png', caption: 'Note Editor' },
-        { url: '/assets/images/projects/scribble-notes.png', caption: 'Search Results' },
+        { url: '/assets/projects/projects/scribble-notes.png', caption: 'Notes List' },
+        { url: '/assets/projects/projects/scribble-notes.png', caption: 'Note Editor' },
+        { url: '/assets/projects/projects/scribble-notes.png', caption: 'Search Results' },
       ],
     },
   },
@@ -793,7 +793,7 @@ export const siteContent: SiteContent = {
     year: '2024',
     tags: ['Node.js', 'Express', 'PostgreSQL', 'TailwindCSS'],
     links: [{ label: 'Live Site', url: 'https://envoyergh.com' }],
-    thumbnail: { url: '/assets/images/envoyer/envoyerGH.png', alt: 'Envoyer GH' },
+    thumbnail: { url: '/assets/projects/envoyer/envoyerGH.png', alt: 'Envoyer GH' },
     overview: {
       description: 'A digital freight network connecting shippers, business owners, and individuals with carriers for road transport across Ghana — including bus hiring and towing services.',
       client: 'Envoyer GH',
@@ -812,9 +812,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/envoyer/envoyerGH.png', caption: 'Platform Overview' },
-        { url: '/assets/images/envoyer/envoyer_contact.png', caption: 'Contact & Booking Flow' },
-        { url: '/assets/images/envoyer/envoyer_login.png', caption: 'Login & Registration' },
+        { url: '/assets/projects/envoyer/envoyerGH.png', caption: 'Platform Overview' },
+        { url: '/assets/projects/envoyer/envoyer_contact.png', caption: 'Contact & Booking Flow' },
+        { url: '/assets/projects/envoyer/envoyer_login.png', caption: 'Login & Registration' },
       ],
     },
   },
@@ -825,7 +825,7 @@ export const siteContent: SiteContent = {
     year: '2024',
     tags: ['Flutter', 'Express', 'PostgreSQL', 'Stripe'],
     links: [{ label: 'Live Site', url: 'https://purplepay.app' }],
-    thumbnail: { url: '/assets/images/projects/purple-pay.jpg', alt: 'Purple Pay' },
+    thumbnail: { url: '/assets/projects/projects/purple-pay.jpg', alt: 'Purple Pay' },
     overview: {
       description: 'A fintech mobile application enabling peer-to-peer payments, wallet management, and card top-ups — built during tenure at Enyata Ghana.',
       client: 'Enyata Ghana',
@@ -844,9 +844,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Wallet Dashboard' },
-        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Transfer Flow' },
-        { url: '/assets/images/projects/purple-pay.jpg', caption: 'Transaction History' },
+        { url: '/assets/projects/projects/purple-pay.jpg', caption: 'Wallet Dashboard' },
+        { url: '/assets/projects/projects/purple-pay.jpg', caption: 'Transfer Flow' },
+        { url: '/assets/projects/projects/purple-pay.jpg', caption: 'Transaction History' },
       ],
     },
   },
@@ -858,7 +858,7 @@ export const siteContent: SiteContent = {
     year: '2023',
     tags: ['Flutter', 'Provider', 'PokéAPI'],
     links: [],
-    thumbnail: { url: '/assets/images/projects/pokebook.jpg', alt: 'Pokebook' },
+    thumbnail: { url: '/assets/projects/projects/pokebook.jpg', alt: 'Pokebook' },
     overview: {
       description: 'A Flutter mobile app consuming the PokéAPI to browse Pokémon, view detailed stats, and discover similar species — built as a deep-dive into state management and API integration.',
       client: 'Personal Project',
@@ -877,9 +877,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/projects/pokebook.jpg', caption: 'Pokémon Browser' },
-        { url: '/assets/images/projects/pokebook.jpg', caption: 'Search & Filter' },
-        { url: '/assets/images/projects/pokebook.jpg', caption: 'Detail & Stats View' },
+        { url: '/assets/projects/projects/pokebook.jpg', caption: 'Pokémon Browser' },
+        { url: '/assets/projects/projects/pokebook.jpg', caption: 'Search & Filter' },
+        { url: '/assets/projects/projects/pokebook.jpg', caption: 'Detail & Stats View' },
       ],
     },
   },
@@ -890,7 +890,7 @@ export const siteContent: SiteContent = {
     year: '2022',
     tags: ['React', 'Node.js', 'TailwindCSS'],
     links: [{ label: 'Live Site', url: 'https://gulliverstravelhotelgh.com' }],
-    thumbnail: { url: '/assets/images/gullivers/gullivers_rooms.png', alt: 'Gullivers Travel Hotel' },
+    thumbnail: { url: '/assets/projects/gullivers/gullivers_rooms.png', alt: 'Gullivers Travel Hotel' },
     overview: {
       description: 'A professional hotel website for Gullivers Travel Hotel featuring room showcase, restaurant gallery, lounge section, and booking enquiries.',
       client: 'Gullivers Travel Hotel',
@@ -909,9 +909,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/gullivers/gullivers_rooms.png', caption: 'Rooms & Suites' },
-        { url: '/assets/images/gullivers/gullivers_restaurant.png', caption: 'Restaurant' },
-        { url: '/assets/images/gullivers/gullivers_lounge.png', caption: 'Lounge' },
+        { url: '/assets/projects/gullivers/gullivers_rooms.png', caption: 'Rooms & Suites' },
+        { url: '/assets/projects/gullivers/gullivers_restaurant.png', caption: 'Restaurant' },
+        { url: '/assets/projects/gullivers/gullivers_lounge.png', caption: 'Lounge' },
       ],
     },
   },
@@ -922,7 +922,7 @@ export const siteContent: SiteContent = {
     year: '2022',
     tags: ['Flutter', 'Firebase', 'Node.js'],
     links: [],
-    thumbnail: { url: '/assets/images/gesa/gesa.png', alt: 'GESA KNUST' },
+    thumbnail: { url: '/assets/projects/gesa/gesa.png', alt: 'GESA KNUST' },
     overview: {
       description: 'Mobile app for the Ghana Engineering Students Association at KNUST, centralising events, course materials, and member communications.',
       client: 'GESA KNUST',
@@ -941,9 +941,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/gesa/gesa.png', caption: 'Home Dashboard' },
-        { url: '/assets/images/gesa/gesa_course_material.png', caption: 'Course Materials' },
-        { url: '/assets/images/gesa/gesa_events.png', caption: 'Events Calendar' },
+        { url: '/assets/projects/gesa/gesa.png', caption: 'Home Dashboard' },
+        { url: '/assets/projects/gesa/gesa_course_material.png', caption: 'Course Materials' },
+        { url: '/assets/projects/gesa/gesa_events.png', caption: 'Events Calendar' },
       ],
     },
   },
@@ -954,7 +954,7 @@ export const siteContent: SiteContent = {
     year: '2021',
     tags: ['Flutter', 'Dart', 'REST API'],
     links: [],
-    thumbnail: { url: '/assets/images/projects/provid.png', alt: 'Pro-Vid COVID Tracker' },
+    thumbnail: { url: '/assets/projects/projects/provid.png', alt: 'Pro-Vid COVID Tracker' },
     overview: {
       description: 'A COVID-19 tracking app providing real-time global and local case updates, curated news, and self-assessment health quizzes — designed to combat pandemic misinformation.',
       client: 'Personal Project',
@@ -973,9 +973,9 @@ export const siteContent: SiteContent = {
     },
     gallery: {
       images: [
-        { url: '/assets/images/projects/provid.png', caption: 'Case Statistics Dashboard' },
-        { url: '/assets/images/projects/provid-2.jpg', caption: 'News & Updates Feed' },
-        { url: '/assets/images/projects/provid.png', caption: 'Self-Assessment Quiz' },
+        { url: '/assets/projects/projects/provid.png', caption: 'Case Statistics Dashboard' },
+        { url: '/assets/projects/projects/provid-2.jpg', caption: 'News & Updates Feed' },
+        { url: '/assets/projects/projects/provid.png', caption: 'Self-Assessment Quiz' },
       ],
     },
   },

@@ -58,32 +58,32 @@ const BIOS: Bio[] = [
 
 const HEADSHOTS: Headshot[] = [
   {
-    src: '/Gpic.webp',
+    src: '/assets/me/portrait-full.webp',
     alt: 'George Heavenson — full portrait',
     caption: 'Full portrait',
     filename: 'george-heavenson-portrait.webp',
   },
   {
-    src: '/aboutme.JPG',
+    src: '/assets/me/portrait-close.jpg',
     alt: 'George Heavenson — close-up headshot',
     caption: 'Close-up headshot',
     filename: 'george-heavenson-headshot.jpg',
   },
   {
-    src: '/GH.jpeg',
+    src: '/assets/me/portrait-alt.jpg',
     alt: 'George Heavenson — alternate headshot',
     caption: 'Alternate headshot',
-    filename: 'george-heavenson-alternate.jpeg',
+    filename: 'george-heavenson-alternate.jpg',
   },
 ];
 
 const LOGOS: LogoAsset[] = [
-  { name: 'Primary lockup', src: '/assets/SVG/GH_Primary Logo.svg', bg: 'light', filename: 'GH_Primary_Logo.svg' },
-  { name: 'Primary lockup (inverse)', src: '/assets/SVG/GH_Primary Logo_Inverse.svg', bg: 'dark', filename: 'GH_Primary_Logo_Inverse.svg' },
-  { name: 'Secondary mark', src: '/assets/SVG/GH_Secondary Mark Primary.svg', bg: 'light', filename: 'GH_Secondary_Mark_Primary.svg' },
-  { name: 'Secondary mark (inverse)', src: '/assets/SVG/GH_Secondary Mark Inverse.svg', bg: 'dark', filename: 'GH_Secondary_Mark_Inverse.svg' },
-  { name: 'Mono — black', src: '/assets/SVG/GH_Black mono logo.svg', bg: 'light', filename: 'GH_Black_mono_logo.svg' },
-  { name: 'Mono — white', src: '/assets/SVG/GH_White mono logo.svg', bg: 'dark', filename: 'GH_White_mono_logo.svg' },
+  { name: 'Primary lockup', src: '/assets/brand/gh-primary.svg', bg: 'light', filename: 'gh-primary.svg' },
+  { name: 'Primary lockup (inverse)', src: '/assets/brand/gh-primary-inverse.svg', bg: 'dark', filename: 'gh-primary-inverse.svg' },
+  { name: 'Secondary mark', src: '/assets/brand/gh-secondary.svg', bg: 'light', filename: 'gh-secondary.svg' },
+  { name: 'Secondary mark (inverse)', src: '/assets/brand/gh-secondary-inverse.svg', bg: 'dark', filename: 'gh-secondary-inverse.svg' },
+  { name: 'Mono — black', src: '/assets/brand/gh-mono-black.svg', bg: 'light', filename: 'gh-mono-black.svg' },
+  { name: 'Mono — white', src: '/assets/brand/gh-mono-white.svg', bg: 'dark', filename: 'gh-mono-white.svg' },
 ];
 
 const ROLES: Role[] = [
@@ -161,7 +161,7 @@ export default function ExperimentPress() {
             <i className="ri-mail-send-line" /> Press contact
           </a>
           <a
-            href="/George_Oti-Adjei_CV (1).docx"
+            href="/assets/documents/george-oti-adjei-cv.docx"
             download
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white ring-1 ring-gray-200 text-[13px] text-gray-700 hover:bg-gray-50 transition"
           >

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import Reveal from '@/components/Reveal';
 import Shell from '../Shell';
-import Timeline from '@/components/experiment/Timeline';
+import Timeline from '@/pages/public/v2/components/Timeline';
 
 export default function ExperimentAbout() {
   const { content } = useContent();
@@ -23,7 +23,7 @@ export default function ExperimentAbout() {
         <div className="mt-4 flex flex-col md:flex-row md:items-end gap-8 md:gap-12">
           <Reveal origin="left">
             <img
-              src={about?.hero?.avatar?.url || '/aboutme.JPG'}
+              src={about?.hero?.avatar?.url || '/assets/me/portrait-close.jpg'}
               alt={about?.hero?.avatar?.alt || about?.hero?.name || 'Portrait'}
               className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover ring-1 ring-black/5 shadow-sm"
             />
