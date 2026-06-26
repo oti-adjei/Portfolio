@@ -11,8 +11,10 @@
 -- D1/SQLite stores JSON as TEXT; we use plain REPLACE() rather than
 -- json_replace() because the change is a string-level path swap that
 -- applies uniformly inside JSON arrays of image objects.
-
-BEGIN TRANSACTION;
+--
+-- Note: no BEGIN/COMMIT — D1 rejects explicit transactions in SQL files
+-- run via `wrangler d1 execute`. Wrangler runs each statement as its own
+-- D1 batch; these UPDATEs are idempotent so partial application is safe.
 
 -- projects: /assets/images/<slug>/... → /assets/projects/<slug>/...
 UPDATE projects
@@ -35,5 +37,3 @@ UPDATE site_content
 UPDATE site_content
    SET value = REPLACE(value, '/aboutme.JPG', '/assets/me/portrait-close.jpg')
  WHERE value LIKE '%/aboutme.JPG%';
-
-COMMIT;
