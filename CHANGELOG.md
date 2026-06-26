@@ -7,6 +7,11 @@ Entries are ordered newest first.
 
 ## 2026-06-26
 
+### frontend — Favicon + mobile hero polish
+
+- **Favicon** — replaced broken `/GH.jpeg` reference with a crisp square SVG of the GH mark (`public/favicon.svg`). Includes `prefers-color-scheme: dark` rule so the smile flips to white in dark-mode browser tabs while the green ring + H stay constant.
+- **Mobile hero (V2 home)** — dropped `min-h-screen` on mobile (now content-sized; still `md:min-h-screen` on desktop). Portrait was `hidden md:block`; now stacks above the copy on mobile as a 320px masked strip, focal point `object-[50%_65%]`. Added `pt-10` breathing room between portrait and the "I'm Georgie" line. Desktop layout untouched.
+
 ### frontend — Design system
 
 Cataloged the V2 visual language as a reusable reference.

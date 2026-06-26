@@ -108,7 +108,7 @@ export default function Experiment() {
 
           {/* ─ HERO / WORK ─ */}
           <section id="work" className="relative -mt-[72px] z-0">
-            <div className="relative bg-[#d8d3c8] min-h-screen flex items-center w-screen left-1/2 -translate-x-1/2 overflow-hidden">
+            <div className="relative bg-[#d8d3c8] md:min-h-screen md:flex md:items-center w-screen left-1/2 -translate-x-1/2 overflow-hidden">
               {/* Architectural search-image background */}
               <img
                 src="https://readdy.ai/api/search-image?query=abstract%20white%20architectural%20pattern%20with%20diagonal%20lines%20and%20curves%2C%20minimalist%20geometric%20background%2C%20clean%20modern%20design%2C%20white%20and%20light%20gray%20tones%2C%20subtle%20depth%20and%20dimension%2C%20professional%20studio%20photography&width=1920&height=1080&seq=hero-bg-1&orientation=landscape"
@@ -136,7 +136,24 @@ export default function Experiment() {
               </div>
 
               <div className="relative mx-auto w-full max-w-[1380px]">
-              <Reveal origin="left" delay={150} className="relative px-8 lg:px-12 py-20 max-w-[640px]">
+              {/* Mobile-only portrait — stacked above copy, masked falloff */}
+              <div
+                className="md:hidden relative w-full h-[320px]"
+                style={{
+                  WebkitMaskImage:
+                    'linear-gradient(to bottom, transparent 0%, black 28%, black 78%, transparent 100%)',
+                  maskImage:
+                    'linear-gradient(to bottom, transparent 0%, black 28%, black 78%, transparent 100%)',
+                }}
+              >
+                <img
+                  src="/assets/me/portrait-close.jpg"
+                  alt="George Oti-Adjei"
+                  className="w-full h-full object-cover object-[50%_65%]"
+                />
+              </div>
+
+              <Reveal origin="left" delay={150} className="relative px-8 lg:px-12 pt-10 pb-12 md:pt-20 md:pb-20 md:px-8 max-w-[640px]">
                 <p className="text-[15px] md:text-[17px] leading-[1.7] text-gray-700">
                   <span className="text-gray-400">I'm Georgie </span>
                   <span className="text-gray-900">
