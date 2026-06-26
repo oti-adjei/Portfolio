@@ -1,4 +1,11 @@
 import type { SiteContent } from '../types/siteContent';
+import stickyHeaderPostRaw from './blog/full-bleed-sticky-header.md?raw';
+import nineTsAutomadPostRaw from './blog/9ts-automad-php.md?raw';
+import wondakhidBetterAuthPostRaw from './blog/wondakhid-better-auth-d1.md?raw';
+
+function stripFrontmatter(md: string): string {
+  return md.replace(/^---[\s\S]*?---\n+/, '');
+}
 
 export const siteContent: SiteContent = {
   navigation: {
@@ -1036,6 +1043,39 @@ export const siteContent: SiteContent = {
   ],
 
   blogPosts: [
+    {
+      id: 'post-sticky-header',
+      title: 'The full-bleed hero that broke my sticky header',
+      slug: 'full-bleed-hero-broke-my-sticky-header',
+      date: '2026-06-26',
+      excerpt:
+        "A short story about how widening one section of my portfolio quietly killed the sticky nav on the entire page — and the one-word CSS change that fixed it.",
+      content: stripFrontmatter(stickyHeaderPostRaw),
+      tags: ['CSS', 'Layout', 'Sticky', 'Overflow', 'Debugging'],
+      published: true,
+    },
+    {
+      id: 'post-9ts-automad',
+      title: 'Starting with Automad — and the road back to PHP for 9Ts',
+      slug: 'starting-with-automad-back-to-php-9ts',
+      date: '2026-06-12',
+      excerpt:
+        "Post #1 in a series about porting the 9Ts marketing site from a hand-rolled HTML pipeline to a flat-file PHP CMS — why Automad, what bit us on day one, and where we are now.",
+      content: stripFrontmatter(nineTsAutomadPostRaw),
+      tags: ['Automad', 'PHP', 'Herd', 'CMS', '9Ts'],
+      published: false,
+    },
+    {
+      id: 'post-wondakhid-better-auth',
+      title: 'The cookie was lying: debugging Better Auth, Cloudflare D1, and audit log foreign keys',
+      slug: 'better-auth-cloudflare-d1-audit-fk-debug',
+      date: '2026-05-09',
+      excerpt:
+        "A 500 error on save led me through a chain of false leads — looked like a database bug, then a login bug, then turned out to be a Better Auth + D1 configuration mismatch. Plus why I kept the FK that exposed it.",
+      content: stripFrontmatter(wondakhidBetterAuthPostRaw),
+      tags: ['Better Auth', 'Cloudflare D1', 'OpenNext', 'Debugging', 'Audit Logs'],
+      published: false,
+    },
     {
       id: 'post-1',
       title: 'Why I switched from Flutter to React Native (and back)',

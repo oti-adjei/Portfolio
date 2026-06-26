@@ -51,7 +51,7 @@ export default function Experiment() {
   const socialIcons = content.homePage?.hero?.socialIcons ?? [];
 
   return (
-    <div className={`min-h-screen ${bgPage} text-gray-900 antialiased`}>
+    <div className={`min-h-screen ${bgPage} text-gray-900 antialiased overflow-x-clip`}>
         <main className={`mx-auto max-w-[1380px] ${bgPage}`}>
           {/* Top bar — static at top, sticks on scroll */}
           <div className="sticky top-0 z-30 px-4 sm:px-6 lg:px-8 pt-4 pb-3 pointer-events-none">
@@ -107,8 +107,8 @@ export default function Experiment() {
           </div>
 
           {/* ─ HERO / WORK ─ */}
-          <section id="work" className="relative overflow-hidden">
-            <div className="relative bg-[#d8d3c8] min-h-[calc(100vh-72px)] flex items-center">
+          <section id="work" className="relative -mt-[72px] z-0">
+            <div className="relative bg-[#d8d3c8] min-h-screen flex items-center w-screen left-1/2 -translate-x-1/2 overflow-hidden">
               {/* Architectural search-image background */}
               <img
                 src="https://readdy.ai/api/search-image?query=abstract%20white%20architectural%20pattern%20with%20diagonal%20lines%20and%20curves%2C%20minimalist%20geometric%20background%2C%20clean%20modern%20design%2C%20white%20and%20light%20gray%20tones%2C%20subtle%20depth%20and%20dimension%2C%20professional%20studio%20photography&width=1920&height=1080&seq=hero-bg-1&orientation=landscape"
@@ -135,6 +135,7 @@ export default function Experiment() {
                 />
               </div>
 
+              <div className="relative mx-auto w-full max-w-[1380px]">
               <Reveal origin="left" delay={150} className="relative px-8 lg:px-12 py-20 max-w-[640px]">
                 <p className="text-[15px] md:text-[17px] leading-[1.7] text-gray-700">
                   <span className="text-gray-400">I'm Georgie </span>
@@ -180,6 +181,7 @@ export default function Experiment() {
                   </div>
                 )}
               </Reveal>
+              </div>
             </div>
 
             {/* Selected work — continuous horizontal marquee */}
