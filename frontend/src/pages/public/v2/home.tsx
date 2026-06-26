@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import Reveal from '@/components/Reveal';
 import type { Project } from '@/types/siteContent';
-import StreamSchedule from '@/pages/public/home/components/StreamSchedule';
-import WritingSection from '@/pages/public/home/components/WritingSection';
-import FadingBrands from '@/components/experiment/FadingBrands';
-import Timeline from '@/components/experiment/Timeline';
+import StreamSchedule from '@/components/shared/StreamSchedule';
+import WritingSection from '@/components/shared/WritingSection';
+import FadingBrands from '@/pages/public/v2/components/FadingBrands';
+import Timeline from '@/pages/public/v2/components/Timeline';
 import GHLogoMark from '@/components/logo/GHLogoMark';
 
 type SectionId = 'work' | 'about' | 'journey' | 'contact';
+
+type NavItem =
+  | { kind: 'scroll'; id: SectionId; label: string }
+  | { kind: 'link'; id: string; label: string; to: string };
 
 export default function Experiment() {
   const { content } = useContent();
@@ -31,11 +35,11 @@ export default function Experiment() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const sections: { id: SectionId; label: string }[] = [
-    { id: 'work', label: 'Work' },
-    { id: 'about', label: 'About' },
-    { id: 'journey', label: 'Journey' },
-    { id: 'contact', label: 'Contact' },
+  const navItems: NavItem[] = [
+    { kind: 'scroll', id: 'work', label: 'Work' },
+    { kind: 'scroll', id: 'about', label: 'About' },
+    { kind: 'link', id: 'library', label: 'Library', to: '/library' },
+    { kind: 'scroll', id: 'contact', label: 'Contact' },
   ];
 
   const scrollTo = (id: SectionId) => {
@@ -48,29 +52,44 @@ export default function Experiment() {
 
   return (
     <div className={`min-h-screen ${bgPage} text-gray-900 antialiased`}>
-        <main className={`mx-auto max-w-[1200px] ${bgPage}`}>
+        <main className={`mx-auto max-w-[1380px] ${bgPage}`}>
           {/* Top bar — static at top, sticks on scroll */}
           <div className="sticky top-0 z-30 px-4 sm:px-6 lg:px-8 pt-4 pb-3 pointer-events-none">
             <div className={`mx-auto flex items-center justify-between gap-6 rounded-full pl-5 pr-2 py-2 pointer-events-auto transition-all duration-300 ${pillClasses}`}>
-              <Link to="/experiment" className="flex items-center text-[13px] text-gray-700" aria-label="Georgie">
+              <Link to="/" className="flex items-center text-[13px] text-gray-700" aria-label="Georgie">
                 <GHLogoMark variant="dark" className="h-7 w-auto" />
               </Link>
               <div className="flex items-center gap-5">
                 <nav className="flex items-center gap-5 text-[13px] text-gray-500">
-                  {sections.map((s) => (
-                    <button
-                      key={s.id}
-                      onClick={() => scrollTo(s.id)}
-                      className={`hover:text-gray-900 transition ${
-                        active === s.id ? 'text-gray-900 underline underline-offset-[6px] decoration-1' : ''
-                      }`}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
+                  {navItems.map((n) => {
+                    if (n.kind === 'link') {
+                      return (
+                        <Link
+                          key={n.id}
+                          to={n.to}
+                          className="hover:text-gray-900 transition"
+                        >
+                          {n.label}
+                        </Link>
+                      );
+                    }
+                    return (
+                      <button
+                        key={n.id}
+                        onClick={() => scrollTo(n.id)}
+                        className={`hover:text-gray-900 transition ${
+                          active === n.id ? 'text-gray-900 underline underline-offset-[6px] decoration-1' : ''
+                        }`}
+                      >
+                        {n.label}
+                      </button>
+                    );
+                  })}
                 </nav>
                 <a
-                  href="#"
+                  href="/assets/documents/george-oti-adjei-cv.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50"
                 >
                   Resume <i className="ri-arrow-right-up-line" />
@@ -110,8 +129,8 @@ export default function Experiment() {
                 }}
               >
                 <img
-                  src="/aboutme.JPG"
-                  alt="Georgie Heavenson Jnr. Oti-Adjei"
+                  src="/assets/me/portrait-close.jpg"
+                  alt="George Oti-Adjei"
                   className="w-full h-full object-cover object-[50%_80%]"
                 />
               </div>
@@ -120,9 +139,9 @@ export default function Experiment() {
                 <p className="text-[15px] md:text-[17px] leading-[1.7] text-gray-700">
                   <span className="text-gray-400">I'm Georgie </span>
                   <span className="text-gray-900">
-                    — a product &amp; brand designer, digital thinker, and creative
-                    problem-solver crafting intuitive experiences and impactful interfaces,
-                    currently based in Lagos, Nigeria.
+                    — a mobile &amp; full-stack engineer, builder, and curious
+                    problem-solver shipping cross-platform apps and full-stack systems,
+                    currently based in Accra, Ghana.
                   </span>
                 </p>
 
@@ -130,18 +149,18 @@ export default function Experiment() {
                   <span>Open to work</span>
                   <span className="inline-flex items-center gap-1.5">
                     currently <i className="ri-flashlight-fill text-amber-500" />
-                    <span className="font-medium text-gray-700">Hivelabs</span>
+                    <span className="font-medium text-gray-700">MashHarder</span>
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <i className="ri-map-pin-2-fill text-rose-500" /> Lagos, Nigeria
+                    <i className="ri-map-pin-2-fill text-rose-500" /> Accra, Ghana
                   </span>
                 </div>
 
                 <a
-                  href="mailto:hello@georgie.com"
+                  href="mailto:george@hearvie.dev"
                   className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50"
                 >
-                  <i className="ri-mail-line" /> hello@georgie.com
+                  <i className="ri-mail-line" /> george@hearvie.dev
                 </a>
 
                 {/* Social icons */}
@@ -170,7 +189,7 @@ export default function Experiment() {
                   SELECTED WORK ▸
                 </p>
                 <Link
-                  to="/experiment/works"
+                  to="/works"
                   className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full ring-1 ring-gray-300 text-[12px] text-gray-700 hover:bg-white transition"
                 >
                   See all work <i className="ri-arrow-right-up-line" />
@@ -186,7 +205,7 @@ export default function Experiment() {
                   {[...projects, ...projects].map((p: Project, idx) => (
                     <Link
                       key={`${String(p.id)}-${idx}`}
-                      to={`/experiment/project/${String(p.id)}`}
+                      to={`/project/${String(p.id)}`}
                       className="group/card shrink-0 w-[260px] sm:w-[320px]"
                     >
                       <div className="aspect-[4/3] rounded-2xl bg-gray-100 overflow-hidden">
@@ -233,8 +252,8 @@ export default function Experiment() {
                 {aboutVariant === 'classic' ? (
                   <div className="flex items-center gap-6 md:gap-10">
                     <img
-                      src="/Gpic.webp"
-                      alt="Georgie Heavenson Jnr. Oti-Adjei"
+                      src="/assets/me/portrait-full.webp"
+                      alt="George Oti-Adjei"
                       className="shrink-0 w-24 h-24 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full object-cover object-top ring-1 ring-black/5 shadow-sm"
                     />
                     <h2 className="text-[14vw] md:text-[9.5rem] leading-[0.95] font-bold tracking-tight text-gray-900 select-none">
@@ -246,7 +265,7 @@ export default function Experiment() {
                     Georgie.
                   </h2>
                 )}
-                <p className="mt-4 text-2xl md:text-3xl text-gray-400">— Designer</p>
+                <p className="mt-4 text-2xl md:text-3xl text-gray-400">— Engineer</p>
               </div>
             </Reveal>
 
@@ -269,17 +288,16 @@ export default function Experiment() {
                 <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
                   <div className="lg:col-span-2 space-y-4 text-[14px] leading-[1.75] text-gray-700">
                     <p>
-                      Product &amp; Brand Designer with 6+ years across healthcare, fintech, and
-                      consumer products. I work at the intersection of user research and product
-                      thinking — turning ambiguous problems into clear, accessible, and scalable
-                      design solutions.
+                      Mobile &amp; Full-stack Engineer with 4+ years across fintech, SaaS, and
+                      e-commerce. I work across the stack — turning ambiguous problems into
+                      shipping, accessible, performant software.
                     </p>
                     <p>
-                      My process spans the full design lifecycle — discovery, information
-                      architecture, wireframing, high-fidelity prototyping, and developer handoff.
-                      Currently at Hivelabs, working on products that serve thousands of users.
+                      My work spans the full product lifecycle — discovery, architecture,
+                      building, testing, and shipping. Currently leading frontend at MashHarder
+                      and running Senvon Atelier on the side.
                     </p>
-                    <p className="text-gray-900">I design to make people's experiences feel effortless.</p>
+                    <p className="text-gray-900">I build to make people's experiences feel effortless.</p>
                   </div>
 
                   <div className="lg:col-span-1 space-y-4">
@@ -287,13 +305,13 @@ export default function Experiment() {
                       <p className="text-[10px] uppercase tracking-[0.14em] text-emerald-900/70">
                         <i className="ri-checkbox-circle-fill mr-1" />Available now
                       </p>
-                      <p className="mt-2 text-[16px] font-semibold text-emerald-950">Product Designer</p>
+                      <p className="mt-2 text-[16px] font-semibold text-emerald-950">Mobile &amp; Full-stack Engineer</p>
                       <ul className="mt-3 space-y-1 text-[13px] text-emerald-950/80">
-                        <li>→ Lagos</li>
-                        <li>→ Remote (EU/US)</li>
-                        <li>→ Available remote</li>
+                        <li>→ Accra (or Remote)</li>
+                        <li>→ EU/US time zones</li>
+                        <li>→ Open to contract</li>
                       </ul>
-                      <p className="mt-4 text-[11px] text-emerald-950/60">Jun 2026 · Hivelabs</p>
+                      <p className="mt-4 text-[11px] text-emerald-950/60">Jun 2026 · MashHarder</p>
                     </div>
                     <div className="flex items-center justify-center">
                       <i className="ri-folder-fill text-5xl text-sky-400" />
@@ -306,8 +324,8 @@ export default function Experiment() {
                   <Reveal origin="left" delay={100} className="lg:col-span-5">
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl ring-1 ring-black/5 shadow-sm bg-gray-100">
                       <img
-                        src="/Gpic.webp"
-                        alt="Georgie Heavenson Jnr. Oti-Adjei"
+                        src="/assets/me/portrait-full.webp"
+                        alt="George Oti-Adjei"
                         className="absolute inset-0 w-full h-full object-cover object-top"
                       />
                     </div>
@@ -316,17 +334,16 @@ export default function Experiment() {
                   <Reveal origin="right" delay={200} className="lg:col-span-7">
                     <div className="space-y-4 text-[14px] leading-[1.75] text-gray-700">
                       <p>
-                        Product &amp; Brand Designer with 6+ years across healthcare, fintech, and
-                        consumer products. I work at the intersection of user research and product
-                        thinking — turning ambiguous problems into clear, accessible, and scalable
-                        design solutions.
+                        Mobile &amp; Full-stack Engineer with 4+ years across fintech, SaaS, and
+                        e-commerce. I work across the stack — turning ambiguous problems into
+                        shipping, accessible, performant software.
                       </p>
                       <p>
-                        My process spans the full design lifecycle — discovery, information
-                        architecture, wireframing, high-fidelity prototyping, and developer handoff.
-                        Currently at Hivelabs, working on products that serve thousands of users.
+                        My work spans the full product lifecycle — discovery, architecture,
+                        building, testing, and shipping. Currently leading frontend at MashHarder
+                        and running Senvon Atelier on the side.
                       </p>
-                      <p className="text-gray-900">I design to make people's experiences feel effortless.</p>
+                      <p className="text-gray-900">I build to make people's experiences feel effortless.</p>
                     </div>
 
                     <div className="mt-8 max-w-xs">
@@ -334,13 +351,13 @@ export default function Experiment() {
                         <p className="text-[10px] uppercase tracking-[0.14em] text-emerald-900/70">
                           <i className="ri-checkbox-circle-fill mr-1" />Available now
                         </p>
-                        <p className="mt-2 text-[16px] font-semibold text-emerald-950">Product Designer</p>
+                        <p className="mt-2 text-[16px] font-semibold text-emerald-950">Mobile &amp; Full-stack Engineer</p>
                         <ul className="mt-3 space-y-1 text-[13px] text-emerald-950/80">
-                          <li>→ Lagos</li>
-                          <li>→ Remote (EU/US)</li>
-                          <li>→ Available remote</li>
+                          <li>→ Accra (or Remote)</li>
+                          <li>→ EU/US time zones</li>
+                          <li>→ Open to contract</li>
                         </ul>
-                        <p className="mt-4 text-[11px] text-emerald-950/60">Jun 2026 · Hivelabs</p>
+                        <p className="mt-4 text-[11px] text-emerald-950/60">Jun 2026 · MashHarder</p>
                       </div>
                     </div>
                   </Reveal>
@@ -349,7 +366,7 @@ export default function Experiment() {
 
               {/* tools strip */}
               <div className="mt-14 flex flex-wrap items-center justify-center gap-x-7 gap-y-4 text-2xl text-gray-400">
-                {['ri-figma-fill', 'ri-pen-nib-fill', 'ri-pencil-ruler-2-fill', 'ri-pantone-line', 'ri-image-fill', 'ri-quill-pen-fill', 'ri-shapes-fill', 'ri-paint-brush-fill'].map((i, idx) => (
+                {['ri-code-s-slash-line', 'ri-smartphone-line', 'ri-terminal-box-line', 'ri-database-2-line', 'ri-git-branch-line', 'ri-cloud-line', 'ri-stack-line', 'ri-figma-fill'].map((i, idx) => (
                   <i key={idx} className={i} />
                 ))}
               </div>
@@ -357,7 +374,7 @@ export default function Experiment() {
               {/* Learn more */}
               <div className="mt-10 text-center">
                 <Link
-                  to="/experiment/about"
+                  to="/about"
                   className="inline-flex items-center gap-1.5 text-[13px] text-gray-900 underline underline-offset-4 hover:text-gray-600"
                 >
                   Learn more about me <i className="ri-arrow-right-line" />
@@ -371,11 +388,19 @@ export default function Experiment() {
             <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400 mb-8">Journey</p>
             <Timeline
               nodes={[
-                { period: '2024 — Now', title: 'Senior Product Designer', org: 'Hivelabs', detail: 'Leading design on the engineering platform.' },
-                { period: '2021 — 2024', title: 'Product Designer', org: 'Nagyique', detail: 'Brand systems and product launches for early-stage teams.' },
-                { period: '2020 — 2024', title: 'B.Tech', org: 'KKR & KSR Institute of Technology' },
+                { period: 'Jan 2026 — Present', title: 'Lead Software Engineer (Frontend Architecture)', org: 'MashHarder', detail: 'Architecting MashHarder UI — a framework-agnostic Web Component library (Lit) for React, Astro, and Next.js consumers.' },
+                { period: 'Oct 2025 — Present', title: 'Founder & Software Engineer', org: 'Senvon Atelier', detail: 'Digital studio delivering SaaS platforms and client web applications — including Home Sweet Home (property management SaaS).' },
+                { period: 'May — Dec 2025', title: 'Software Engineer', org: 'Suronntech', detail: 'Cross-platform mobile (Flutter/React Native) and responsive web (React/Next.js) with Azure DevOps CI/CD pipelines.' },
               ]}
             />
+            <div className="mt-6 text-right">
+              <Link
+                to="/press#roles"
+                className="inline-flex items-center gap-1.5 text-[12px] text-gray-600 underline underline-offset-4 hover:text-gray-900"
+              >
+                Earlier roles <i className="ri-arrow-right-up-line" />
+              </Link>
+            </div>
           </section>
 
           {/* ─ STREAM (scaled down) ─ */}
@@ -386,7 +411,7 @@ export default function Experiment() {
             <Reveal origin="bottom"><StreamSchedule /></Reveal>
             <div className="px-8 lg:px-12 pb-8 text-center">
               <Link
-                to="/experiment/library#stream"
+                to="/library#stream"
                 className="inline-flex items-center gap-1.5 text-[12px] text-gray-700 underline underline-offset-4 hover:text-gray-900"
               >
                 See full stream schedule <i className="ri-arrow-right-up-line" />
@@ -402,13 +427,13 @@ export default function Experiment() {
             <Reveal origin="bottom"><WritingSection /></Reveal>
             <div className="px-8 lg:px-12 pb-10 flex flex-wrap items-center justify-center gap-4">
               <Link
-                to="/experiment/library#writing"
+                to="/library#writing"
                 className="inline-flex items-center gap-1.5 text-[12px] text-gray-700 underline underline-offset-4 hover:text-gray-900"
               >
                 See all posts <i className="ri-arrow-right-up-line" />
               </Link>
               <Link
-                to="/experiment/library#notes"
+                to="/library#notes"
                 className="inline-flex items-center gap-1.5 text-[12px] text-gray-700 underline underline-offset-4 hover:text-gray-900"
               >
                 Lesson notes <i className="ri-arrow-right-up-line" />
@@ -430,12 +455,12 @@ export default function Experiment() {
                   />
                 </div>
                 <div className="rounded-2xl rounded-tl-sm bg-white ring-1 ring-black/5 px-4 py-3 text-[13px] text-gray-800">
-                  I'm Georgie — based in Lagos. I design and ship product UX, end to end.
+                  I'm Georgie — based in Accra. I build and ship cross-platform software, end to end.
                 </div>
               </div>
 
               <div className="mt-3 ml-11 flex flex-wrap gap-2">
-                {['see my work ↗', 'how do you ship?', 'what designer are you?', "what's your availability?", 'wanna chat?', 'resume ↗', 'linkedin ↗'].map((q) => (
+                {['see my work ↗', 'how do you ship?', "what's your stack?", "what's your availability?", 'wanna chat?', 'resume ↗', 'linkedin ↗'].map((q) => (
                   <button
                     key={q}
                     className="px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50 transition"
@@ -460,7 +485,7 @@ export default function Experiment() {
           </section>
 
           <footer className="px-8 lg:px-12 py-10 text-center text-[11px] text-gray-400">
-            Experiment · /experiment
+            V2 · /
           </footer>
         </main>
     </div>

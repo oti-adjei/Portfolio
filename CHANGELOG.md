@@ -5,7 +5,38 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-06-26
+
+### frontend — V2 content accuracy pass against CV
+
+Aligned all hardcoded V2 strings on `home.tsx` and `press/page.tsx` with the real CV (`george-oti-adjei-cv.pdf`).
+
+- **Identity** — name "George Oti-Adjei" (full name "George Heavenson K. Oti-Adjei" in long bio), Accra (Ghana), pronouns he/him
+- **Email** — `george@hearvie.dev` (was placeholder `hello@georgie.com`)
+- **Years / domains** — 4+ years across fintech, SaaS, e-commerce (was 6+/designer-flavoured)
+- **Bios** — all three press kit lengths rewritten as Software Engineer (stack: Node.js, Go, Python, PHP/Laravel, Next.js, React, Flutter, RN, TypeScript, PostgreSQL, Hetzner, Cloudflare)
+- **Timeline** — full 7-role CV timeline in press kit; top 3 in home Journey (MashHarder → Senvon Atelier → Suronntech) with "Earlier roles →" link to `/press#roles`
+- **Resume PDF** — `frontend/public/assets/documents/george-oti-adjei-cv.pdf` wired to the home top-bar Resume button and the press kit Download CV button (was placeholder `#` and a stale `.docx`)
+- **Press contacts** — added Website (hearvie.dev) and GitHub (github.com/oti-adjei); Twitter `@the_heavenson`, LinkedIn `linkedin.com/in/george-jrr`
+- **Tools strip** on home swapped from designer icons to engineer icons
+
 ## 2026-06-23
+
+### frontend + backend — V1/V2 versioning + asset restructure
+
+V2 (formerly `/experiment`) promoted to root URLs and old root design archived at `/v1/*`. Asset tree reorganized. DB migration for renamed paths.
+
+- **URL map**
+  - V2 canonical: `/`, `/about`, `/works`, `/project/:id`, `/library`, `/press`, `/blog/:slug`, `/notes/:slug`
+  - V1 archive: `/v1`, `/v1/about`, `/v1/works`, `/v1/project/:id`, `/v1/contact`, `/v1/streams`, `/v1/blog[/:slug]`, `/v1/notes[/:slug]`
+  - V1 detail pages restored from git `e475719` so V1 keeps original Header + Footer + FloatingShapes look
+  - `/experiment/*` URLs redirect to root V2 equivalents (preserve backlinks)
+  - V1-only URLs (`/contact`, `/streams`, `/blog`, `/notes`) 404 by design — V2 has no separate routes for these (Library is the umbrella for blog/notes/streams; Contact is a `#contact` anchor on home)
+- **File reorg** — `pages/public/v1/*`, `pages/public/v2/*`, shared section components in `components/shared/*`. V2-only components moved into `v2/components/`.
+- **Nav** — V2 top pill: Work → `/#work`, About → `/#about`, **Library → `/library` (renamed from Journey)**, Contact → `/#contact`. Logo links to `/`.
+- **Assets** — `public/assets/{brand,me,projects,documents}/` with kebab-case lowercase names. Loose root files (`GHlog.png`, `Gpic.webp`, `aboutme.JPG`, `GH.jpeg`, CV doc, `car4-min.webp`) moved into purpose-based subdirectories.
+- **DB migration** — `Hono/scripts/migrations/2026-06-23_rename_asset_paths.sql` REPLACE()s old paths in `projects.thumbnail_url`, `projects.gallery_images`, `site_content.value`. Idempotent. Applied to local D1.
+- **Docs** — CLAUDE.md rewritten to document the v1/v2/shared layout, version policy, and current `frontend/` + `Hono/` structure.
 
 ### frontend — Blog post + note detail redesign, scroll-aware nav pill
 

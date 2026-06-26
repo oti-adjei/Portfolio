@@ -40,69 +40,75 @@ const BIOS: Bio[] = [
   {
     label: 'Short',
     wordCount: '1 line',
-    text: 'George Heavenson is a Product & Brand Designer in Lagos, Nigeria.',
+    text: 'George Oti-Adjei is a Software Engineer in Accra, Ghana, building across fintech, SaaS, and e-commerce.',
   },
   {
     label: 'Medium',
     wordCount: '~50 words',
     text:
-      "George Heavenson is a Product & Brand Designer with 6+ years across healthcare, fintech, and consumer products. Based in Lagos, Nigeria, he currently leads design at Hivelabs, turning ambiguous problems into clear, accessible, and scalable design solutions across the full product lifecycle.",
+      "George Oti-Adjei is a Software Engineer with 4+ years building scalable applications across fintech, SaaS, and e-commerce. Based in Accra, Ghana, he leads frontend architecture at MashHarder and runs Senvon Atelier — shipping Web Component libraries, SaaS platforms, and client web applications across the full development lifecycle.",
   },
   {
     label: 'Long',
     wordCount: '~150 words',
     text:
-      "George Heavenson is a Product & Brand Designer working at the intersection of user research and product thinking. With over six years of experience across healthcare, fintech, and consumer technology, he leads design at Hivelabs in Lagos, Nigeria — building products used by thousands of people. His process spans the full design lifecycle, from discovery and information architecture through high-fidelity prototyping and developer handoff. Outside of client work, George streams design and engineering sessions, writes about product craft, and contributes to design systems thinking in the African tech ecosystem. He believes great design should feel effortless — and that the best products come from teams who take both user needs and engineering constraints seriously. He is currently open to selective collaborations and speaking opportunities.",
+      "George Oti-Adjei (full name George Heavenson K. Oti-Adjei) is a Software Engineer working across the full development lifecycle. With 4+ years building scalable applications across fintech, SaaS, and e-commerce, he leads frontend architecture at MashHarder — where he is publishing MashHarder UI, a framework-agnostic Web Component library (Lit) — and runs Senvon Atelier, a digital studio shipping SaaS platforms like Home Sweet Home and client web applications. His stack spans Node.js, Go, Python, PHP/Laravel, Next.js, React, Flutter, React Native, and TypeScript, backed by PostgreSQL and self-hosted infrastructure on Hetzner and Cloudflare. Outside of client work, George streams engineering sessions, writes about software craft, and contributes to design systems thinking in the African tech ecosystem. He believes great software should feel effortless — and the best products come from teams who take both user needs and engineering trade-offs seriously. Currently open to selective collaborations and speaking opportunities.",
   },
 ];
 
 const HEADSHOTS: Headshot[] = [
   {
-    src: '/Gpic.webp',
-    alt: 'George Heavenson — full portrait',
+    src: '/assets/me/portrait-full.webp',
+    alt: 'George Oti-Adjei — full portrait',
     caption: 'Full portrait',
-    filename: 'george-heavenson-portrait.webp',
+    filename: 'george-oti-adjei-portrait.webp',
   },
   {
-    src: '/aboutme.JPG',
-    alt: 'George Heavenson — close-up headshot',
+    src: '/assets/me/portrait-close.jpg',
+    alt: 'George Oti-Adjei — close-up headshot',
     caption: 'Close-up headshot',
-    filename: 'george-heavenson-headshot.jpg',
+    filename: 'george-oti-adjei-headshot.jpg',
   },
   {
-    src: '/GH.jpeg',
-    alt: 'George Heavenson — alternate headshot',
+    src: '/assets/me/portrait-alt.jpg',
+    alt: 'George Oti-Adjei — alternate headshot',
     caption: 'Alternate headshot',
-    filename: 'george-heavenson-alternate.jpeg',
+    filename: 'george-oti-adjei-alternate.jpg',
   },
 ];
 
 const LOGOS: LogoAsset[] = [
-  { name: 'Primary lockup', src: '/assets/SVG/GH_Primary Logo.svg', bg: 'light', filename: 'GH_Primary_Logo.svg' },
-  { name: 'Primary lockup (inverse)', src: '/assets/SVG/GH_Primary Logo_Inverse.svg', bg: 'dark', filename: 'GH_Primary_Logo_Inverse.svg' },
-  { name: 'Secondary mark', src: '/assets/SVG/GH_Secondary Mark Primary.svg', bg: 'light', filename: 'GH_Secondary_Mark_Primary.svg' },
-  { name: 'Secondary mark (inverse)', src: '/assets/SVG/GH_Secondary Mark Inverse.svg', bg: 'dark', filename: 'GH_Secondary_Mark_Inverse.svg' },
-  { name: 'Mono — black', src: '/assets/SVG/GH_Black mono logo.svg', bg: 'light', filename: 'GH_Black_mono_logo.svg' },
-  { name: 'Mono — white', src: '/assets/SVG/GH_White mono logo.svg', bg: 'dark', filename: 'GH_White_mono_logo.svg' },
+  { name: 'Primary lockup', src: '/assets/brand/gh-primary.svg', bg: 'light', filename: 'gh-primary.svg' },
+  { name: 'Primary lockup (inverse)', src: '/assets/brand/gh-primary-inverse.svg', bg: 'dark', filename: 'gh-primary-inverse.svg' },
+  { name: 'Secondary mark', src: '/assets/brand/gh-secondary.svg', bg: 'light', filename: 'gh-secondary.svg' },
+  { name: 'Secondary mark (inverse)', src: '/assets/brand/gh-secondary-inverse.svg', bg: 'dark', filename: 'gh-secondary-inverse.svg' },
+  { name: 'Mono — black', src: '/assets/brand/gh-mono-black.svg', bg: 'light', filename: 'gh-mono-black.svg' },
+  { name: 'Mono — white', src: '/assets/brand/gh-mono-white.svg', bg: 'dark', filename: 'gh-mono-white.svg' },
 ];
 
 const ROLES: Role[] = [
-  { period: '2024 — Now', title: 'Senior Product Designer', org: 'Hivelabs', detail: 'Leading design on the engineering platform.' },
-  { period: '2021 — 2024', title: 'Product Designer', org: 'Nagyique', detail: 'Brand systems and product launches for early-stage teams.' },
-  { period: '2020 — 2024', title: 'B.Tech, Computer Science', org: 'KKR & KSR Institute of Technology' },
+  { period: 'Jan 2026 — Present', title: 'Lead Software Engineer (Frontend Architecture)', org: 'MashHarder', detail: 'Architecting and publishing MashHarder UI — a framework-agnostic Web Component library (Lit) for React, Astro, and Next.js consumers. Established component standards, TypeScript definitions, and NPM publishing workflows.' },
+  { period: 'Oct 2025 — Present', title: 'Founder & Software Engineer', org: 'Senvon Atelier', detail: 'Digital studio delivering end-to-end software products — SaaS platforms (Home Sweet Home property management) and client educational platforms.' },
+  { period: 'May — Dec 2025', title: 'Software Engineer', org: 'Suronntech', detail: 'Cross-platform mobile apps (Flutter, React Native) and responsive web (React, Next.js). Implemented Azure DevOps CI/CD pipelines and led code review standards.' },
+  { period: 'Feb — Aug 2024', title: 'Mobile Developer', org: 'Enyata Ghana', detail: 'Production Flutter & React Native apps with GraphQL/REST integrations, Riverpod state management, and offline-first local storage.' },
+  { period: 'Feb 2022 — Aug 2023', title: 'Mobile Engineer', org: 'teamAlpha', detail: 'Backend services and mobile apps serving 8,000+ active users across iOS and Android. CI/CD pipelines and CLI tooling for system monitoring.' },
+  { period: 'Oct 2021 — Nov 2022', title: 'Junior Application Developer (NSP)', org: 'Agricultural Development Bank Ghana', detail: 'Internal web apps streamlining branch data sharing; optimised database queries by 40%. Supported NIA verification rollout, cutting KYC processing time by 30%.' },
+  { period: 'Jul — Nov 2020', title: 'Data Analyst Intern', org: 'Npontu Technologies', detail: 'Cleaned and processed large-scale datasets with Python; streamlined data workflows and automation scripts, increasing productivity by 25%.' },
 ];
 
 const QUICK_FACTS: { label: string; value: string }[] = [
-  { label: 'Based in', value: 'Lagos, Nigeria' },
-  { label: 'Currently at', value: 'Hivelabs' },
-  { label: 'Years designing', value: '6+' },
+  { label: 'Based in', value: 'Accra, Ghana' },
+  { label: 'Currently at', value: 'MashHarder + Senvon Atelier' },
+  { label: 'Years building', value: '4+' },
   { label: 'Pronouns', value: 'he / him' },
 ];
 
 const CONTACTS: PressContact[] = [
-  { label: 'Press email', value: 'hello@georgie.com', href: 'mailto:hello@georgie.com', icon: 'ri-mail-line' },
-  { label: 'Twitter / X', value: '@georgie_dev', href: 'https://twitter.com/georgie_dev', icon: 'ri-twitter-x-line' },
-  { label: 'LinkedIn', value: 'linkedin.com/in/georgie', href: 'https://linkedin.com/in/georgie', icon: 'ri-linkedin-box-fill' },
+  { label: 'Press email', value: 'george@hearvie.dev', href: 'mailto:george@hearvie.dev', icon: 'ri-mail-line' },
+  { label: 'Website', value: 'hearvie.dev', href: 'https://hearvie.dev', icon: 'ri-global-line' },
+  { label: 'GitHub', value: 'github.com/oti-adjei', href: 'https://github.com/oti-adjei', icon: 'ri-github-fill' },
+  { label: 'Twitter / X', value: '@the_heavenson', href: 'https://twitter.com/the_heavenson', icon: 'ri-twitter-x-line' },
+  { label: 'LinkedIn', value: 'linkedin.com/in/george-jrr', href: 'https://linkedin.com/in/george-jrr', icon: 'ri-linkedin-box-fill' },
 ];
 
 function CopyButton({ text }: { text: string }) {
@@ -147,7 +153,7 @@ export default function ExperimentPress() {
         </Reveal>
         <Reveal origin="bottom" delay={160}>
           <p className="mt-5 max-w-2xl text-[15px] md:text-[17px] leading-[1.7] text-gray-600">
-            Everything you need to write about, interview, or feature George Heavenson — bios at three
+            Everything you need to write about, interview, or feature George Oti-Adjei — bios at three
             lengths, high-res headshots, brand logos, and press contact info. All assets free to use for
             editorial coverage.
           </p>
@@ -155,13 +161,13 @@ export default function ExperimentPress() {
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <a
-            href="mailto:hello@georgie.com?subject=Press%20enquiry"
+            href="mailto:george@hearvie.dev?subject=Press%20enquiry"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-900 text-white text-[13px] hover:bg-gray-800 transition"
           >
             <i className="ri-mail-send-line" /> Press contact
           </a>
           <a
-            href="/George_Oti-Adjei_CV (1).docx"
+            href="/assets/documents/george-oti-adjei-cv.pdf"
             download
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white ring-1 ring-gray-200 text-[13px] text-gray-700 hover:bg-gray-50 transition"
           >
@@ -290,7 +296,7 @@ export default function ExperimentPress() {
       </section>
 
       {/* Roles / Past work */}
-      <section className="px-8 lg:px-12 py-12 border-t border-black/5">
+      <section id="roles" className="px-8 lg:px-12 py-12 border-t border-black/5">
         <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400">Current role &amp; background</p>
         <div className="mt-6 space-y-3">
           {ROLES.map((r) => (
@@ -340,7 +346,7 @@ export default function ExperimentPress() {
       </section>
 
       <footer className="px-8 lg:px-12 py-10 text-center text-[11px] text-gray-400">
-        Press kit · /experiment/press
+        Press kit · /press
       </footer>
     </Shell>
   );

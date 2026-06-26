@@ -55,7 +55,7 @@ export default function ExperimentWorks() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-10">
           {filtered.map((p, idx) => (
             <Reveal key={String(p.id)} origin="bottom" delay={(idx % 4) * 80}>
-              <Link to={`/experiment/project/${String(p.id)}`} className="group/card block">
+              <Link to={`/project/${String(p.id)}`} className="group/card block">
                 <div className="aspect-[4/3] rounded-2xl bg-gray-100 overflow-hidden">
                   {p.thumbnail?.url && (
                     <img
@@ -94,10 +94,10 @@ export default function ExperimentWorks() {
       </section>
 
       <div className="px-8 lg:px-12 pb-16 flex items-center justify-between border-t border-black/5 pt-8">
-        <Link to="/experiment" className="text-[13px] text-gray-500 hover:text-gray-900">
+        <Link to="/" className="text-[13px] text-gray-500 hover:text-gray-900">
           ← Back to home
         </Link>
-        <Link to="/experiment#contact" className="text-[13px] text-gray-900 underline underline-offset-4">
+        <Link to="/#contact" className="text-[13px] text-gray-900 underline underline-offset-4">
           Got a project? Let's talk →
         </Link>
       </div>
