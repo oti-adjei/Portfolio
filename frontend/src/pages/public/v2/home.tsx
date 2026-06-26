@@ -248,7 +248,7 @@ export default function Experiment() {
           <section id="about" className="border-t border-black/5">
             {/* Big name intro */}
             <Reveal origin="bottom" delay={100}>
-              <div className="px-8 lg:px-12 pt-24 pb-12">
+              <div className="relative px-8 lg:px-12 pt-24 pb-12">
                 {aboutVariant === 'classic' ? (
                   <div className="flex items-center gap-6 md:gap-10">
                     <img
@@ -266,6 +266,25 @@ export default function Experiment() {
                   </h2>
                 )}
                 <p className="mt-4 text-2xl md:text-3xl text-gray-400">— Engineer</p>
+
+                {/* Floating press-kit cloud */}
+                <Link
+                  to="/press"
+                  aria-label="View press kit"
+                  className="hidden md:block absolute top-16 right-12 lg:right-20 group animate-float-medium"
+                >
+                  <div className="relative -rotate-[6deg] group-hover:rotate-0 group-hover:scale-[1.04] transition-transform duration-300">
+                    <div className="bg-white rounded-[28px] ring-1 ring-black/5 shadow-[0_10px_30px_rgba(0,0,0,0.08)] px-5 py-4">
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-gray-400">Want my</p>
+                      <p className="mt-0.5 text-[15px] font-semibold text-gray-900 inline-flex items-center gap-1.5">
+                        Press kit? <i className="ri-arrow-right-up-line text-gray-500" />
+                      </p>
+                    </div>
+                    {/* cloud puffs trailing toward the text */}
+                    <span className="absolute -bottom-2 left-7 w-4 h-4 rounded-full bg-white ring-1 ring-black/5 shadow-sm" />
+                    <span className="absolute -bottom-[18px] left-14 w-2.5 h-2.5 rounded-full bg-white ring-1 ring-black/5 shadow-sm" />
+                  </div>
+                </Link>
               </div>
             </Reveal>
 
