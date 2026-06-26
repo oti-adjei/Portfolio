@@ -22,6 +22,7 @@ const LibraryV2 = lazy(() => import("../../pages/public/v2/library/page"));
 const PressV2 = lazy(() => import("../../pages/public/v2/press/page"));
 const BlogPostV2 = lazy(() => import("../../pages/public/v2/blog/post/page"));
 const NoteV2 = lazy(() => import("../../pages/public/v2/notes/note/page"));
+const DesignSystemV2 = lazy(() => import("../../pages/public/v2/design-system/page"));
 
 const NotFound = lazy(() => import("../../pages/public/NotFound"));
 
@@ -40,6 +41,7 @@ const publicRoutes: RouteObject[] = [
   { path: "/press", element: <PressV2 /> },
   { path: "/blog/:slug", element: <BlogPostV2 /> },
   { path: "/notes/:slug", element: <NoteV2 /> },
+  { path: "/design-system", element: <DesignSystemV2 /> },
 
   // V1 (archive) at /v1/*
   { path: "/v1", element: <HomeV1 /> },

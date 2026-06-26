@@ -7,6 +7,14 @@ Entries are ordered newest first.
 
 ## 2026-06-26
 
+### frontend — Design system
+
+Cataloged the V2 visual language as a reusable reference.
+
+- **`/design-system` route** — live, public-facing showcase under the V2 Shell with click-to-copy token chips, swatches, type specimens, motion demos, primitive examples, and pattern compositions. Not linked from main nav; direct URL only.
+- **`docs/design-system.md`** — terse personal reference: full color tokens (brand + neutrals), Jost type scale, spacing/radii, motion classes, primitive snippets, voice & tone rules.
+- Flagged that CLAUDE.md still mentions Playfair Display / Instrument Serif — these are V1 holdovers; V2 is Jost-only. Not changing CLAUDE.md in this pass.
+
 ### frontend — V2 content accuracy pass against CV
 
 Aligned all hardcoded V2 strings on `home.tsx` and `press/page.tsx` with the real CV (`george-oti-adjei-cv.pdf`).
