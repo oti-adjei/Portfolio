@@ -32,13 +32,13 @@ export default function ExperimentWorks() {
       </section>
 
       {/* Filter chips */}
-      <div className="sticky top-[72px] z-20 px-8 lg:px-12 py-3">
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-2 px-2">
+      <div className="sticky top-[72px] z-20 px-4 sm:px-8 lg:px-12 py-3">
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-2 px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`shrink-0 px-3.5 py-1.5 rounded-full text-[12px] uppercase tracking-wider transition ${
+              className={`shrink-0 px-3.5 py-2.5 rounded-full text-[12px] uppercase tracking-wider transition ${
                 filter === cat
                   ? 'bg-gray-900 text-white'
                   : 'bg-white/60 ring-1 ring-gray-200 text-gray-600 hover:bg-white'

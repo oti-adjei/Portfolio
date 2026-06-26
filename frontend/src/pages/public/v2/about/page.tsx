@@ -25,7 +25,7 @@ export default function ExperimentAbout() {
             <img
               src={about?.hero?.avatar?.url || '/assets/me/portrait-close.jpg'}
               alt={about?.hero?.avatar?.alt || about?.hero?.name || 'Portrait'}
-              className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover ring-1 ring-black/5 shadow-sm"
+              className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full object-cover ring-1 ring-black/5 shadow-sm"
             />
           </Reveal>
           <Reveal origin="bottom" delay={120}>

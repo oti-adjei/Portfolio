@@ -58,7 +58,7 @@ export default function ExperimentLibrary() {
 
   return (
     <Shell current="library">
-      <section className="px-8 lg:px-12 pt-16 pb-8">
+      <section className="px-5 sm:px-8 lg:px-12 pt-16 pb-8">
         <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400">Library</p>
         <h1 className="mt-3 text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
           What I write & stream<span className="text-gray-300">.</span>
@@ -69,7 +69,7 @@ export default function ExperimentLibrary() {
       </section>
 
       {/* Tabs */}
-      <div className="sticky top-[72px] z-20 px-4 sm:px-8 lg:px-12 py-3">
+      <div className="sticky top-[72px] z-20 px-4 sm:px-5 sm:px-8 lg:px-12 py-3">
         <div className="inline-flex items-center gap-0.5 sm:gap-1 p-1 rounded-full bg-white/70 ring-1 ring-gray-200 max-w-full">
           {TABS.map((t) => (
             <button
@@ -89,7 +89,7 @@ export default function ExperimentLibrary() {
       </div>
 
       {/* Panel */}
-      <section className="px-8 lg:px-12 pb-16">
+      <section className="px-5 sm:px-8 lg:px-12 pb-16">
         {tab === 'writing' && (
           <Reveal origin="bottom">
             <ul className="divide-y divide-black/5">
@@ -135,7 +135,7 @@ export default function ExperimentLibrary() {
 
         {tab === 'notes' && (
           <Reveal origin="bottom">
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1">
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-4 md:gap-x-6 gap-y-1">
               {notes.length === 0 && (
                 <li className="py-12 text-center text-gray-400 text-sm md:col-span-2">No notes yet.</li>
               )}
@@ -169,7 +169,7 @@ export default function ExperimentLibrary() {
         )}
       </section>
 
-      <div className="px-8 lg:px-12 pb-16 flex items-center justify-between border-t border-black/5 pt-8">
+      <div className="px-5 sm:px-8 lg:px-12 pb-16 flex items-center justify-between border-t border-black/5 pt-8">
         <Link to="/" className="text-[13px] text-gray-500 hover:text-gray-900">
           ← Back to home
         </Link>

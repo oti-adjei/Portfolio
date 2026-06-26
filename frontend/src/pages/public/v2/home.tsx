@@ -200,10 +200,9 @@ export default function Experiment() {
 
               {/* Marquee track */}
               <div
-                className="group relative overflow-hidden"
-                style={{ maskImage: 'linear-gradient(to right, transparent 0, black 4%, black 96%, transparent 100%)' }}
+                className="group relative overflow-hidden [mask-image:linear-gradient(to_right,transparent_0,black_2%,black_98%,transparent_100%)] sm:[mask-image:linear-gradient(to_right,transparent_0,black_4%,black_96%,transparent_100%)]"
               >
-                <div className="flex gap-5 w-max animate-scroll group-hover:[animation-play-state:paused] px-8 lg:px-12">
+                <div className="flex gap-3 sm:gap-5 w-max animate-scroll group-hover:[animation-play-state:paused] px-5 sm:px-8 lg:px-12">
                   {[...projects, ...projects].map((p: Project, idx) => (
                     <Link
                       key={`${String(p.id)}-${idx}`}
