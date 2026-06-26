@@ -87,7 +87,9 @@ export default function Experiment() {
                   })}
                 </nav>
                 <a
-                  href="#"
+                  href="/assets/documents/george-oti-adjei-cv.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50"
                 >
                   Resume <i className="ri-arrow-right-up-line" />
@@ -128,7 +130,7 @@ export default function Experiment() {
               >
                 <img
                   src="/assets/me/portrait-close.jpg"
-                  alt="Georgie Heavenson Jnr. Oti-Adjei"
+                  alt="George Oti-Adjei"
                   className="w-full h-full object-cover object-[50%_80%]"
                 />
               </div>
@@ -137,9 +139,9 @@ export default function Experiment() {
                 <p className="text-[15px] md:text-[17px] leading-[1.7] text-gray-700">
                   <span className="text-gray-400">I'm Georgie </span>
                   <span className="text-gray-900">
-                    — a product &amp; brand designer, digital thinker, and creative
-                    problem-solver crafting intuitive experiences and impactful interfaces,
-                    currently based in Lagos, Nigeria.
+                    — a mobile &amp; full-stack engineer, builder, and curious
+                    problem-solver shipping cross-platform apps and full-stack systems,
+                    currently based in Accra, Ghana.
                   </span>
                 </p>
 
@@ -147,18 +149,18 @@ export default function Experiment() {
                   <span>Open to work</span>
                   <span className="inline-flex items-center gap-1.5">
                     currently <i className="ri-flashlight-fill text-amber-500" />
-                    <span className="font-medium text-gray-700">Hivelabs</span>
+                    <span className="font-medium text-gray-700">MashHarder</span>
                   </span>
                   <span className="inline-flex items-center gap-1">
-                    <i className="ri-map-pin-2-fill text-rose-500" /> Lagos, Nigeria
+                    <i className="ri-map-pin-2-fill text-rose-500" /> Accra, Ghana
                   </span>
                 </div>
 
                 <a
-                  href="mailto:hello@georgie.com"
+                  href="mailto:george@hearvie.dev"
                   className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50"
                 >
-                  <i className="ri-mail-line" /> hello@georgie.com
+                  <i className="ri-mail-line" /> george@hearvie.dev
                 </a>
 
                 {/* Social icons */}
@@ -251,7 +253,7 @@ export default function Experiment() {
                   <div className="flex items-center gap-6 md:gap-10">
                     <img
                       src="/assets/me/portrait-full.webp"
-                      alt="Georgie Heavenson Jnr. Oti-Adjei"
+                      alt="George Oti-Adjei"
                       className="shrink-0 w-24 h-24 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full object-cover object-top ring-1 ring-black/5 shadow-sm"
                     />
                     <h2 className="text-[14vw] md:text-[9.5rem] leading-[0.95] font-bold tracking-tight text-gray-900 select-none">
@@ -263,7 +265,7 @@ export default function Experiment() {
                     Georgie.
                   </h2>
                 )}
-                <p className="mt-4 text-2xl md:text-3xl text-gray-400">— Designer</p>
+                <p className="mt-4 text-2xl md:text-3xl text-gray-400">— Engineer</p>
               </div>
             </Reveal>
 
@@ -286,17 +288,16 @@ export default function Experiment() {
                 <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
                   <div className="lg:col-span-2 space-y-4 text-[14px] leading-[1.75] text-gray-700">
                     <p>
-                      Product &amp; Brand Designer with 6+ years across healthcare, fintech, and
-                      consumer products. I work at the intersection of user research and product
-                      thinking — turning ambiguous problems into clear, accessible, and scalable
-                      design solutions.
+                      Mobile &amp; Full-stack Engineer with 4+ years across fintech, SaaS, and
+                      e-commerce. I work across the stack — turning ambiguous problems into
+                      shipping, accessible, performant software.
                     </p>
                     <p>
-                      My process spans the full design lifecycle — discovery, information
-                      architecture, wireframing, high-fidelity prototyping, and developer handoff.
-                      Currently at Hivelabs, working on products that serve thousands of users.
+                      My work spans the full product lifecycle — discovery, architecture,
+                      building, testing, and shipping. Currently leading frontend at MashHarder
+                      and running Senvon Atelier on the side.
                     </p>
-                    <p className="text-gray-900">I design to make people's experiences feel effortless.</p>
+                    <p className="text-gray-900">I build to make people's experiences feel effortless.</p>
                   </div>
 
                   <div className="lg:col-span-1 space-y-4">
@@ -304,13 +305,13 @@ export default function Experiment() {
                       <p className="text-[10px] uppercase tracking-[0.14em] text-emerald-900/70">
                         <i className="ri-checkbox-circle-fill mr-1" />Available now
                       </p>
-                      <p className="mt-2 text-[16px] font-semibold text-emerald-950">Product Designer</p>
+                      <p className="mt-2 text-[16px] font-semibold text-emerald-950">Mobile &amp; Full-stack Engineer</p>
                       <ul className="mt-3 space-y-1 text-[13px] text-emerald-950/80">
-                        <li>→ Lagos</li>
-                        <li>→ Remote (EU/US)</li>
-                        <li>→ Available remote</li>
+                        <li>→ Accra (or Remote)</li>
+                        <li>→ EU/US time zones</li>
+                        <li>→ Open to contract</li>
                       </ul>
-                      <p className="mt-4 text-[11px] text-emerald-950/60">Jun 2026 · Hivelabs</p>
+                      <p className="mt-4 text-[11px] text-emerald-950/60">Jun 2026 · MashHarder</p>
                     </div>
                     <div className="flex items-center justify-center">
                       <i className="ri-folder-fill text-5xl text-sky-400" />
@@ -324,7 +325,7 @@ export default function Experiment() {
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl ring-1 ring-black/5 shadow-sm bg-gray-100">
                       <img
                         src="/assets/me/portrait-full.webp"
-                        alt="Georgie Heavenson Jnr. Oti-Adjei"
+                        alt="George Oti-Adjei"
                         className="absolute inset-0 w-full h-full object-cover object-top"
                       />
                     </div>
@@ -333,17 +334,16 @@ export default function Experiment() {
                   <Reveal origin="right" delay={200} className="lg:col-span-7">
                     <div className="space-y-4 text-[14px] leading-[1.75] text-gray-700">
                       <p>
-                        Product &amp; Brand Designer with 6+ years across healthcare, fintech, and
-                        consumer products. I work at the intersection of user research and product
-                        thinking — turning ambiguous problems into clear, accessible, and scalable
-                        design solutions.
+                        Mobile &amp; Full-stack Engineer with 4+ years across fintech, SaaS, and
+                        e-commerce. I work across the stack — turning ambiguous problems into
+                        shipping, accessible, performant software.
                       </p>
                       <p>
-                        My process spans the full design lifecycle — discovery, information
-                        architecture, wireframing, high-fidelity prototyping, and developer handoff.
-                        Currently at Hivelabs, working on products that serve thousands of users.
+                        My work spans the full product lifecycle — discovery, architecture,
+                        building, testing, and shipping. Currently leading frontend at MashHarder
+                        and running Senvon Atelier on the side.
                       </p>
-                      <p className="text-gray-900">I design to make people's experiences feel effortless.</p>
+                      <p className="text-gray-900">I build to make people's experiences feel effortless.</p>
                     </div>
 
                     <div className="mt-8 max-w-xs">
@@ -351,13 +351,13 @@ export default function Experiment() {
                         <p className="text-[10px] uppercase tracking-[0.14em] text-emerald-900/70">
                           <i className="ri-checkbox-circle-fill mr-1" />Available now
                         </p>
-                        <p className="mt-2 text-[16px] font-semibold text-emerald-950">Product Designer</p>
+                        <p className="mt-2 text-[16px] font-semibold text-emerald-950">Mobile &amp; Full-stack Engineer</p>
                         <ul className="mt-3 space-y-1 text-[13px] text-emerald-950/80">
-                          <li>→ Lagos</li>
-                          <li>→ Remote (EU/US)</li>
-                          <li>→ Available remote</li>
+                          <li>→ Accra (or Remote)</li>
+                          <li>→ EU/US time zones</li>
+                          <li>→ Open to contract</li>
                         </ul>
-                        <p className="mt-4 text-[11px] text-emerald-950/60">Jun 2026 · Hivelabs</p>
+                        <p className="mt-4 text-[11px] text-emerald-950/60">Jun 2026 · MashHarder</p>
                       </div>
                     </div>
                   </Reveal>
@@ -366,7 +366,7 @@ export default function Experiment() {
 
               {/* tools strip */}
               <div className="mt-14 flex flex-wrap items-center justify-center gap-x-7 gap-y-4 text-2xl text-gray-400">
-                {['ri-figma-fill', 'ri-pen-nib-fill', 'ri-pencil-ruler-2-fill', 'ri-pantone-line', 'ri-image-fill', 'ri-quill-pen-fill', 'ri-shapes-fill', 'ri-paint-brush-fill'].map((i, idx) => (
+                {['ri-code-s-slash-line', 'ri-smartphone-line', 'ri-terminal-box-line', 'ri-database-2-line', 'ri-git-branch-line', 'ri-cloud-line', 'ri-stack-line', 'ri-figma-fill'].map((i, idx) => (
                   <i key={idx} className={i} />
                 ))}
               </div>
@@ -388,11 +388,19 @@ export default function Experiment() {
             <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400 mb-8">Journey</p>
             <Timeline
               nodes={[
-                { period: '2024 — Now', title: 'Senior Product Designer', org: 'Hivelabs', detail: 'Leading design on the engineering platform.' },
-                { period: '2021 — 2024', title: 'Product Designer', org: 'Nagyique', detail: 'Brand systems and product launches for early-stage teams.' },
-                { period: '2020 — 2024', title: 'B.Tech', org: 'KKR & KSR Institute of Technology' },
+                { period: 'Jan 2026 — Present', title: 'Lead Software Engineer (Frontend Architecture)', org: 'MashHarder', detail: 'Architecting MashHarder UI — a framework-agnostic Web Component library (Lit) for React, Astro, and Next.js consumers.' },
+                { period: 'Oct 2025 — Present', title: 'Founder & Software Engineer', org: 'Senvon Atelier', detail: 'Digital studio delivering SaaS platforms and client web applications — including Home Sweet Home (property management SaaS).' },
+                { period: 'May — Dec 2025', title: 'Software Engineer', org: 'Suronntech', detail: 'Cross-platform mobile (Flutter/React Native) and responsive web (React/Next.js) with Azure DevOps CI/CD pipelines.' },
               ]}
             />
+            <div className="mt-6 text-right">
+              <Link
+                to="/press#roles"
+                className="inline-flex items-center gap-1.5 text-[12px] text-gray-600 underline underline-offset-4 hover:text-gray-900"
+              >
+                Earlier roles <i className="ri-arrow-right-up-line" />
+              </Link>
+            </div>
           </section>
 
           {/* ─ STREAM (scaled down) ─ */}
@@ -447,12 +455,12 @@ export default function Experiment() {
                   />
                 </div>
                 <div className="rounded-2xl rounded-tl-sm bg-white ring-1 ring-black/5 px-4 py-3 text-[13px] text-gray-800">
-                  I'm Georgie — based in Lagos. I design and ship product UX, end to end.
+                  I'm Georgie — based in Accra. I build and ship cross-platform software, end to end.
                 </div>
               </div>
 
               <div className="mt-3 ml-11 flex flex-wrap gap-2">
-                {['see my work ↗', 'how do you ship?', 'what designer are you?', "what's your availability?", 'wanna chat?', 'resume ↗', 'linkedin ↗'].map((q) => (
+                {['see my work ↗', 'how do you ship?', "what's your stack?", "what's your availability?", 'wanna chat?', 'resume ↗', 'linkedin ↗'].map((q) => (
                   <button
                     key={q}
                     className="px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50 transition"

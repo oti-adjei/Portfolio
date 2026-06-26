@@ -5,6 +5,21 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-06-26
+
+### frontend — V2 content accuracy pass against CV
+
+Aligned all hardcoded V2 strings on `home.tsx` and `press/page.tsx` with the real CV (`george-oti-adjei-cv.pdf`).
+
+- **Identity** — name "George Oti-Adjei" (full name "George Heavenson K. Oti-Adjei" in long bio), Accra (Ghana), pronouns he/him
+- **Email** — `george@hearvie.dev` (was placeholder `hello@georgie.com`)
+- **Years / domains** — 4+ years across fintech, SaaS, e-commerce (was 6+/designer-flavoured)
+- **Bios** — all three press kit lengths rewritten as Software Engineer (stack: Node.js, Go, Python, PHP/Laravel, Next.js, React, Flutter, RN, TypeScript, PostgreSQL, Hetzner, Cloudflare)
+- **Timeline** — full 7-role CV timeline in press kit; top 3 in home Journey (MashHarder → Senvon Atelier → Suronntech) with "Earlier roles →" link to `/press#roles`
+- **Resume PDF** — `frontend/public/assets/documents/george-oti-adjei-cv.pdf` wired to the home top-bar Resume button and the press kit Download CV button (was placeholder `#` and a stale `.docx`)
+- **Press contacts** — added Website (hearvie.dev) and GitHub (github.com/oti-adjei); Twitter `@the_heavenson`, LinkedIn `linkedin.com/in/george-jrr`
+- **Tools strip** on home swapped from designer icons to engineer icons
+
 ## 2026-06-23
 
 ### frontend + backend — V1/V2 versioning + asset restructure
