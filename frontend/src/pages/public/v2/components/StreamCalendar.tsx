@@ -146,7 +146,7 @@ export default function StreamCalendar() {
                       key={day}
                       type="button"
                       onClick={() => hasStream && setSelectedEvent(dayEvents[0])}
-                      className={`aspect-square rounded-lg p-1 flex flex-col items-center justify-start transition ${
+                      className={`aspect-square min-w-[44px] min-h-[44px] rounded-lg p-1 flex flex-col items-center justify-start transition ${
                         hasStream
                           ? 'bg-[#8067f0]/10 ring-1 ring-[#8067f0]/25 hover:bg-[#8067f0]/20 cursor-pointer'
                           : 'bg-white/40 ring-1 ring-transparent'

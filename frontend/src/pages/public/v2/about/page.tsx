@@ -49,7 +49,7 @@ export default function ExperimentAbout() {
       <section className="px-8 lg:px-12 py-12 border-t border-black/5">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-1">
-            <p className="text-[10px] uppercase tracking-[0.18em] text-gray-400 sticky top-[80px]">
+            <p className="text-[10px] uppercase tracking-[0.18em] text-gray-400 sticky top-[92px]">
               The story
             </p>
           </div>
@@ -96,7 +96,7 @@ export default function ExperimentAbout() {
             {about.philosophy.label}
           </p>
           <blockquote
-            className="mt-4 text-3xl md:text-5xl font-semibold tracking-tight leading-tight max-w-3xl mx-auto"
+            className="mt-4 text-2xl sm:text-3xl md:text-5xl font-semibold tracking-tight leading-tight max-w-3xl mx-auto"
           >
             "{about.philosophy.quote}"
           </blockquote>

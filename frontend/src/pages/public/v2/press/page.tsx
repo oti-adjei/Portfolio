@@ -179,7 +179,7 @@ export default function ExperimentPress() {
       {/* Quick facts */}
       <section className="px-8 lg:px-12 py-10 border-t border-black/5">
         <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400">At a glance</p>
-        <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {QUICK_FACTS.map((f) => (
             <div key={f.label} className="rounded-2xl bg-white ring-1 ring-black/5 p-5">
               <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400">{f.label}</p>

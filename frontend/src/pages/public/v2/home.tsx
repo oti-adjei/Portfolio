@@ -173,7 +173,7 @@ export default function Experiment() {
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white overflow-hidden bg-purple-800 flex items-center justify-center hover:scale-110 hover:bg-[#f75124] transition-transform cursor-pointer"
+                        className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-white overflow-hidden bg-purple-800 flex items-center justify-center hover:scale-110 hover:bg-[#f75124] transition-transform cursor-pointer"
                       >
                         <i className={`${social.icon} text-white text-lg sm:text-xl`}></i>
                       </a>
