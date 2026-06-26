@@ -33,7 +33,7 @@ export default function Shell({ children, current = 'work' }: ShellProps) {
 
   return (
     <div className={`min-h-screen ${bgPage} text-gray-900 antialiased`}>
-      <main className={`mx-auto max-w-[1200px] ${bgPage}`}>
+      <main className={`mx-auto max-w-[1380px] ${bgPage}`}>
         {/* Top nav — flush at top, morphs to pill on scroll */}
         <div className="sticky top-0 z-30 px-4 sm:px-6 lg:px-8 pt-4 pb-3 pointer-events-none">
           <div
