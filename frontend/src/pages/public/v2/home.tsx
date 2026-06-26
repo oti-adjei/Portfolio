@@ -55,12 +55,12 @@ export default function Experiment() {
         <main className={`mx-auto max-w-[1380px] ${bgPage}`}>
           {/* Top bar — static at top, sticks on scroll */}
           <div className="sticky top-0 z-30 px-4 sm:px-6 lg:px-8 pt-4 pb-3 pointer-events-none">
-            <div className={`mx-auto flex items-center justify-between gap-6 rounded-full pl-5 pr-2 py-2 pointer-events-auto transition-all duration-300 ${pillClasses}`}>
+            <div className={`mx-auto flex items-center justify-between gap-3 sm:gap-6 rounded-full pl-4 sm:pl-5 pr-2 py-2 pointer-events-auto transition-all duration-300 ${pillClasses}`}>
               <Link to="/" className="flex items-center text-[13px] text-gray-700" aria-label="Georgie">
                 <GHLogoMark variant="dark" className="h-7 w-auto" />
               </Link>
-              <div className="flex items-center gap-5">
-                <nav className="flex items-center gap-5 text-[13px] text-gray-500">
+              <div className="flex items-center gap-2 sm:gap-5">
+                <nav className="flex items-center gap-3 sm:gap-5 text-[12px] sm:text-[13px] text-gray-500">
                   {navItems.map((n) => {
                     if (n.kind === 'link') {
                       return (
@@ -90,7 +90,7 @@ export default function Experiment() {
                   href="/assets/documents/george-oti-adjei-cv.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50"
+                  className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50"
                 >
                   Resume <i className="ri-arrow-right-up-line" />
                 </a>
@@ -480,11 +480,11 @@ export default function Experiment() {
                 </div>
               </div>
 
-              <div className="mt-3 ml-11 flex flex-wrap gap-2">
+              <div className="mt-3 ml-11 flex flex-wrap gap-1.5 sm:gap-2">
                 {['see my work ↗', 'how do you ship?', "what's your stack?", "what's your availability?", 'wanna chat?', 'resume ↗', 'linkedin ↗'].map((q) => (
                   <button
                     key={q}
-                    className="px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50 transition"
+                    className="px-2.5 sm:px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[11.5px] sm:text-[12px] text-gray-700 hover:bg-gray-50 transition"
                   >
                     {q}
                   </button>

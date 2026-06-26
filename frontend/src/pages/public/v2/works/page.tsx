@@ -22,7 +22,7 @@ export default function ExperimentWorks() {
       {/* Intro */}
       <section className="px-8 lg:px-12 pt-16 pb-10">
         <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400">Selected Work · {projects.length} projects</p>
-        <h1 className="mt-3 text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
+        <h1 className="mt-3 text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
           Things I've shipped<span className="text-gray-300">.</span>
         </h1>
         <p className="mt-5 max-w-xl text-[15px] text-gray-600 leading-relaxed">

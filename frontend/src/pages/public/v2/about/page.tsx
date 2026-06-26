@@ -30,7 +30,7 @@ export default function ExperimentAbout() {
           </Reveal>
           <Reveal origin="bottom" delay={120}>
             <div>
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
                 {about?.hero?.name?.split(' ')[0] || 'George'}
                 <span className="text-gray-300">.</span>
               </h1>

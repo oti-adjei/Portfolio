@@ -60,7 +60,7 @@ export default function ExperimentLibrary() {
     <Shell current="library">
       <section className="px-8 lg:px-12 pt-16 pb-8">
         <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400">Library</p>
-        <h1 className="mt-3 text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
+        <h1 className="mt-3 text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
           What I write & stream<span className="text-gray-300">.</span>
         </h1>
         <p className="mt-5 max-w-xl text-[15px] text-gray-600 leading-relaxed">
@@ -69,13 +69,13 @@ export default function ExperimentLibrary() {
       </section>
 
       {/* Tabs */}
-      <div className="sticky top-[72px] z-20 px-8 lg:px-12 py-3">
-        <div className="inline-flex items-center gap-1 p-1 rounded-full bg-white/70 ring-1 ring-gray-200">
+      <div className="sticky top-[72px] z-20 px-4 sm:px-8 lg:px-12 py-3">
+        <div className="inline-flex items-center gap-0.5 sm:gap-1 p-1 rounded-full bg-white/70 ring-1 ring-gray-200 max-w-full">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => switchTab(t.id)}
-              className={`px-4 py-1.5 rounded-full text-[13px] transition ${
+              className={`px-3 sm:px-4 py-1.5 rounded-full text-[12px] sm:text-[13px] whitespace-nowrap transition ${
                 tab === t.id
                   ? 'bg-gray-900 text-white'
                   : 'text-gray-600 hover:text-gray-900'

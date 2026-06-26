@@ -147,7 +147,7 @@ export default function ExperimentPress() {
       <section className="px-8 lg:px-12 pt-16 pb-12">
         <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400">Press kit</p>
         <Reveal origin="bottom" delay={80}>
-          <h1 className="mt-4 text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
+          <h1 className="mt-4 text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
             Press &amp; media<span className="text-gray-300">.</span>
           </h1>
         </Reveal>

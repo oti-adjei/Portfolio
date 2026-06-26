@@ -54,7 +54,7 @@ export default function ExperimentProject() {
           <span>{project.category}</span>
         </div>
         <Reveal origin="bottom">
-          <h1 className="mt-4 text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
+          <h1 className="mt-4 text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[0.95]">
             {project.title}<span className="text-gray-300">.</span>
           </h1>
         </Reveal>
