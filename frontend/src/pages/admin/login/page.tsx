@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../admin/contexts/AdminAuthContext';
+import { Button, Field, Notice } from '../../../components/admin/ui';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -32,97 +33,59 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-amber-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-500 rounded-2xl mb-4">
-            <i className="ri-lock-line text-3xl text-white"></i>
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
-            Admin Panel
+    <div className="min-h-screen bg-cream flex items-center justify-center px-4">
+      <div className="w-full max-w-sm">
+        <div className="mb-7">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400">Portfolio CMS</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900">
+            Sign in<span className="text-signal">.</span>
           </h1>
-          <p className="text-gray-600 text-sm">Sign in to manage your portfolio content</p>
+          <p className="mt-1.5 text-[13px] text-gray-500">Manage site content and the inbox.</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i className="ri-mail-line text-gray-400"></i>
-                </div>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
-                  placeholder="you@example.com"
-                  required
-                />
-              </div>
-            </div>
+        <div className="rounded-2xl ring-1 ring-black/5 bg-white p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Field
+              label="Email address"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              placeholder="you@example.com"
+              icon="ri-mail-line"
+              required
+            />
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i className="ri-lock-password-line text-gray-400"></i>
-                </div>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-            </div>
+            <Field
+              label="Password"
+              type="password"
+              value={password}
+              onChange={setPassword}
+              placeholder="••••••••"
+              icon="ri-lock-password-line"
+              required
+            />
 
-            {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
-                <i className="ri-error-warning-line text-red-500 mt-0.5"></i>
-                <p className="text-sm text-red-700">{error}</p>
-              </div>
-            )}
+            {error && <Notice tone="error">{error}</Notice>}
 
-            <button
+            <Button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-teal-500 hover:bg-teal-600 text-white font-medium py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              variant="primary"
+              loading={isLoading}
+              icon="ri-login-box-line"
+              fullWidth
             >
-              {isLoading ? (
-                <>
-                  <i className="ri-loader-4-line animate-spin"></i>
-                  Signing in...
-                </>
-              ) : (
-                <>
-                  <i className="ri-login-box-line"></i>
-                  Sign In
-                </>
-              )}
-            </button>
+              {isLoading ? 'Signing in…' : 'Sign in'}
+            </Button>
           </form>
-
         </div>
 
-        <div className="text-center mt-6">
-          <a
-            href="/"
-            className="text-sm text-gray-600 hover:text-teal-500 transition-colors inline-flex items-center gap-1"
-          >
-            <i className="ri-arrow-left-line"></i>
-            Back to Portfolio
-          </a>
-        </div>
+        <a
+          href="/"
+          className="mt-5 inline-flex items-center gap-1.5 text-[13px] text-gray-500 hover:text-signal transition-colors"
+        >
+          <i className="ri-arrow-left-line" aria-hidden="true" />
+          Back to portfolio
+        </a>
       </div>
     </div>
   );

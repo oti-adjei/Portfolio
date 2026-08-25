@@ -1,3 +1,5 @@
+import Field from './ui/Field';
+
 interface FormTextareaProps {
   label: string;
   value: string;
@@ -7,28 +9,7 @@ interface FormTextareaProps {
   required?: boolean;
 }
 
-export default function FormTextarea({
-  label,
-  value,
-  onChange,
-  placeholder = '',
-  rows = 4,
-  required = false,
-}: FormTextareaProps) {
-  return (
-    <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700">
-        {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
-      </label>
-      <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        rows={rows}
-        required={required}
-        className="w-full min-h-11 px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
-      />
-    </div>
-  );
+/** @deprecated Use `ui/Field` with `as="textarea"`. Kept as a wrapper during the admin reskin migration. */
+export default function FormTextarea(props: FormTextareaProps) {
+  return <Field as="textarea" {...props} />;
 }

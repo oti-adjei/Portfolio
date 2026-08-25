@@ -6,21 +6,46 @@ interface AdminLayoutProps {
   children: ReactNode;
 }
 
-const navItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: 'ri-dashboard-line', path: '/admin' },
-  { id: 'home', label: 'Home Page', icon: 'ri-home-line', path: '/admin/home' },
-  { id: 'about', label: 'About Page', icon: 'ri-user-line', path: '/admin/about' },
-  { id: 'contact', label: 'Contact Page', icon: 'ri-mail-line', path: '/admin/contact' },
-  { id: 'works', label: 'Works Page', icon: 'ri-briefcase-line', path: '/admin/works' },
-  { id: 'projects', label: 'Projects', icon: 'ri-folder-line', path: '/admin/projects' },
-  { id: 'blog', label: 'Blog', icon: 'ri-article-line', path: '/admin/blog' },
-  { id: 'notes', label: 'Notes', icon: 'ri-sticky-note-line', path: '/admin/notes' },
-  { id: 'streams', label: 'Streams', icon: 'ri-live-line', path: '/admin/streams' },
-  { id: 'newsletter', label: 'Newsletter', icon: 'ri-mail-send-line', path: '/admin/newsletter' },
-  { id: 'contact-submissions', label: 'Contact Inbox', icon: 'ri-message-3-line', path: '/admin/contact-submissions' },
-  { id: 'navigation', label: 'Navigation', icon: 'ri-navigation-line', path: '/admin/navigation' },
-  { id: 'footer', label: 'Footer', icon: 'ri-layout-bottom-line', path: '/admin/footer' }
+const navGroups = [
+  {
+    label: 'Overview',
+    items: [{ id: 'dashboard', label: 'Dashboard', icon: 'ri-dashboard-line', path: '/admin' }],
+  },
+  {
+    label: 'Pages',
+    items: [
+      { id: 'home', label: 'Home Page', icon: 'ri-home-line', path: '/admin/home' },
+      { id: 'about', label: 'About Page', icon: 'ri-user-line', path: '/admin/about' },
+      { id: 'contact', label: 'Contact Page', icon: 'ri-mail-line', path: '/admin/contact' },
+      { id: 'works', label: 'Works Page', icon: 'ri-briefcase-line', path: '/admin/works' },
+    ],
+  },
+  {
+    label: 'Content',
+    items: [
+      { id: 'projects', label: 'Projects', icon: 'ri-folder-line', path: '/admin/projects' },
+      { id: 'blog', label: 'Blog', icon: 'ri-article-line', path: '/admin/blog' },
+      { id: 'notes', label: 'Notes', icon: 'ri-sticky-note-line', path: '/admin/notes' },
+      { id: 'streams', label: 'Streams', icon: 'ri-live-line', path: '/admin/streams' },
+    ],
+  },
+  {
+    label: 'Inbox',
+    items: [
+      { id: 'newsletter', label: 'Newsletter', icon: 'ri-mail-send-line', path: '/admin/newsletter' },
+      { id: 'contact-submissions', label: 'Contact Inbox', icon: 'ri-message-3-line', path: '/admin/contact-submissions' },
+    ],
+  },
+  {
+    label: 'Site chrome',
+    items: [
+      { id: 'navigation', label: 'Navigation', icon: 'ri-navigation-line', path: '/admin/navigation' },
+      { id: 'footer', label: 'Footer', icon: 'ri-layout-bottom-line', path: '/admin/footer' },
+    ],
+  },
 ];
+
+const navItems = navGroups.flatMap((group) => group.items);
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -83,14 +108,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     setIsSidebarOpen((prev) => !prev);
   };
 
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {isMobileMenuOpen && (
         <button
           type="button"
           aria-label="Close navigation menu"
-          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          className="fixed inset-0 z-40 bg-ink/40 md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -101,133 +125,135 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         id="admin-navigation-drawer"
         aria-label="Admin navigation"
         aria-modal={isMobileMenuOpen ? true : undefined}
-        className={`fixed top-0 left-0 h-full bg-gray-900 text-white transition-all duration-300 z-50 ${
+        className={`fixed top-0 left-0 h-full bg-ink text-white transition-all duration-300 z-50 ${
           isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        } w-72 md:translate-x-0 ${
-          isSidebarOpen ? 'md:w-64' : 'md:w-20'
-        }`}
+        } w-72 md:translate-x-0 ${isSidebarOpen ? 'md:w-64' : 'md:w-20'}`}
       >
         <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="h-16 flex items-center justify-between px-4 border-b border-gray-800">
-            {isSidebarOpen ? (
-              <Link to="/admin" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-                  <i className="ri-admin-line text-lg"></i>
-                </div>
-                <span className="font-semibold text-sm">Admin Panel</span>
-              </Link>
-            ) : (
-              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center mx-auto">
-                <i className="ri-admin-line text-lg"></i>
-              </div>
-            )}
+          {/* Brand */}
+          <div className="h-16 flex items-center px-4 border-b border-white/10">
+            <Link
+              to="/admin"
+              className={`flex items-center gap-2.5 ${isSidebarOpen ? '' : 'mx-auto'}`}
+              aria-label="Admin dashboard"
+            >
+              <span className="w-8 h-8 rounded-full bg-signal inline-flex items-center justify-center shrink-0">
+                <i className="ri-pencil-ruler-2-line text-[15px]" aria-hidden="true" />
+              </span>
+              {isSidebarOpen && (
+                <span className="text-[13px] font-medium tracking-tight">Portfolio CMS</span>
+              )}
+            </Link>
           </div>
 
           {/* Navigation */}
           <nav className="flex-1 overflow-y-auto py-4">
-            <ul className="space-y-1 px-2">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <li key={item.id}>
-                    <Link
-                      to={item.path}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                        isActive
-                          ? 'bg-teal-500 text-white'
-                          : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                      } ${!isSidebarOpen && 'justify-center'}`}
-                      title={!isSidebarOpen ? item.label : undefined}
-                    >
-                      <i className={`${item.icon} text-lg`}></i>
-                      {isSidebarOpen && <span className="text-sm font-medium">{item.label}</span>}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+            {navGroups.map((group) => (
+              <div key={group.label} className="mb-4 last:mb-0">
+                {isSidebarOpen && (
+                  <p className="px-5 mb-1.5 text-[10px] uppercase tracking-[0.18em] text-white/35">
+                    {group.label}
+                  </p>
+                )}
+                <ul className="space-y-0.5 px-2">
+                  {group.items.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    return (
+                      <li key={item.id}>
+                        <Link
+                          to={item.path}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          aria-current={isActive ? 'page' : undefined}
+                          className={`flex items-center gap-3 px-3 py-2 rounded-full text-[13px] transition-colors ${
+                            isActive
+                              ? 'bg-signal/15 text-signal'
+                              : 'text-white/65 hover:bg-white/5 hover:text-white'
+                          } ${!isSidebarOpen ? 'justify-center' : ''}`}
+                          title={!isSidebarOpen ? item.label : undefined}
+                        >
+                          <i className={`${item.icon} text-[16px]`} aria-hidden="true" />
+                          {isSidebarOpen && <span>{item.label}</span>}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
           </nav>
 
-          {/* User Section */}
-          <div className="border-t border-gray-800 p-4">
+          {/* User */}
+          <div className="border-t border-white/10 p-4">
             {isSidebarOpen ? (
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
-                    <i className="ri-user-line text-sm"></i>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium truncate">{user?.email}</p>
-                    <p className="text-xs text-gray-400">Administrator</p>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="w-8 h-8 rounded-full bg-white/10 inline-flex items-center justify-center shrink-0">
+                    <i className="ri-user-line text-[13px]" aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[12px] truncate">{user?.email}</p>
+                    <p className="text-[11px] text-white/40">Administrator</p>
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={handleLogout}
-                  className="text-gray-400 hover:text-white transition-colors"
-                  title="Logout"
+                  className="w-8 h-8 rounded-full inline-flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors shrink-0"
+                  title="Log out"
+                  aria-label="Log out"
                 >
-                  <i className="ri-logout-box-line text-lg"></i>
+                  <i className="ri-logout-box-line" aria-hidden="true" />
                 </button>
               </div>
             ) : (
               <button
+                type="button"
                 onClick={handleLogout}
-                className="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center mx-auto text-gray-400 hover:text-white transition-colors"
-                title="Logout"
+                className="w-8 h-8 rounded-full bg-white/10 inline-flex items-center justify-center mx-auto text-white/50 hover:text-white transition-colors"
+                title="Log out"
+                aria-label="Log out"
               >
-                <i className="ri-logout-box-line text-lg"></i>
+                <i className="ri-logout-box-line" aria-hidden="true" />
               </button>
             )}
           </div>
         </div>
       </aside>
 
-      {/* Main Content */}
-      <div
-        className={`transition-all duration-300 ml-0 ${
-          isSidebarOpen ? 'md:ml-64' : 'md:ml-20'
-        }`}
-      >
-        {/* Header */}
-        <header className="h-16 bg-white border-b border-gray-200 sticky top-0 z-30">
+      {/* Main */}
+      <div className={`transition-all duration-300 ml-0 ${isSidebarOpen ? 'md:ml-64' : 'md:ml-20'}`}>
+        <header className="h-16 bg-white/85 backdrop-blur-md border-b border-black/5 sticky top-0 z-30">
           <div className="h-full px-3 sm:px-4 md:px-6 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <button
+                type="button"
                 ref={mobileMenuButtonRef}
                 onClick={handleToggleMenu}
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="admin-navigation-drawer"
-                className="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100"
+                aria-label="Toggle navigation"
+                className="w-9 h-9 rounded-full inline-flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
               >
-                <i className={`ri-${isSidebarOpen ? 'menu-fold' : 'menu-unfold'}-line text-xl`}></i>
+                <i className={`ri-${isSidebarOpen ? 'menu-fold' : 'menu-unfold'}-line text-lg`} aria-hidden="true" />
               </button>
-              <div className="min-w-0">
-                <h1 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
-                  {navItems.find((item) => item.path === location.pathname)?.label || 'Admin Panel'}
-                </h1>
-              </div>
+              <p className="text-[14px] font-medium tracking-tight text-gray-900 truncate">
+                {navItems.find((item) => item.path === location.pathname)?.label ?? 'Portfolio CMS'}
+              </p>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3">
-              <a
-                href="/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-2 sm:px-4 py-2 text-sm font-medium text-gray-700 hover:text-teal-500 transition-colors inline-flex items-center gap-2 rounded-lg hover:bg-gray-100"
-              >
-                <i className="ri-external-link-line"></i>
-                <span className="hidden sm:inline">View Site</span>
-              </a>
-            </div>
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <i className="ri-external-link-line" aria-hidden="true" />
+              <span className="hidden sm:inline">View site</span>
+            </a>
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="p-3 sm:p-4 md:p-6">
-          {children}
-        </main>
+        <main className="p-4 sm:p-5 md:p-6">{children}</main>
       </div>
     </div>
   );
