@@ -87,7 +87,10 @@ cat >> "$OUT_SQL" <<SQL
 -- Any /assets/ occurrence in site_content.value NOT preceded by a quote or paren:
 -- SELECT key, value FROM site_content WHERE value LIKE '%/assets/%' AND value NOT LIKE '%"/assets/%' AND value NOT LIKE '%(/assets/%';
 
-BEGIN TRANSACTION;
+-- NOTE: no BEGIN TRANSACTION / COMMIT. D1 rejects explicit SQL transactions
+-- ("please use the state.storage.transaction() APIs instead") and operates in
+-- auto-commit. Atomicity comes instead from every statement being WHERE-guarded
+-- and idempotent: a partial run is safe to re-run, not corrupting.
 
 -- thumbnail_url is a bare column holding exactly one path: unanchored REPLACE is safe.
 UPDATE projects
@@ -110,7 +113,6 @@ UPDATE site_content
 SET value = REPLACE(value, '(/assets/', '($PUBLIC_BASE/')
 WHERE value LIKE '%(/assets/%';
 
-COMMIT;
 SQL
 
 echo ""
