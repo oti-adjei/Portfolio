@@ -69,7 +69,7 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
             value={customIcon}
             onChange={handleCustomIconChange}
             placeholder="e.g., ri-home-line"
-            className="w-full min-h-11 px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full min-h-11 px-4 py-2.5 text-[13px] rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
           />
         </div>
         
@@ -98,8 +98,8 @@ export default function IconPicker({ value, onChange, label }: IconPickerProps) 
                 onClick={() => handleIconSelect(icon)}
                 className={`w-10 h-10 flex items-center justify-center rounded-lg border transition-all ${
                   value === icon
-                    ? 'border-teal-500 bg-teal-50 text-teal-600'
-                    : 'border-gray-200 hover:border-teal-300 hover:bg-gray-50'
+                    ? 'border-signal bg-signal/10 text-signal'
+                    : 'border-gray-200 hover:border-signal/40 hover:bg-gray-50'
                 }`}
               >
                 <i className={icon + ' text-lg'}></i>

@@ -8,7 +8,9 @@ const statusTones: Record<string, { tone: Tone; icon: string }> = {
   replied: { tone: 'success', icon: 'ri-reply-line' },
   archived: { tone: 'muted', icon: 'ri-archive-line' },
   active: { tone: 'success', icon: 'ri-check-line' },
+  subscribed: { tone: 'success', icon: 'ri-check-line' },
   unsubscribed: { tone: 'muted', icon: 'ri-close-line' },
+  bounced: { tone: 'danger', icon: 'ri-error-warning-line' },
   published: { tone: 'success', icon: 'ri-check-line' },
   draft: { tone: 'warning', icon: 'ri-draft-line' },
 };
