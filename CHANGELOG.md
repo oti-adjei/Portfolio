@@ -7,6 +7,27 @@ Entries are ordered newest first.
 
 ## 2026-08-25
 
+### frontend — Admin redesign on the V2 design system
+
+Admin was stock template styling with a teal accent (185 references) that exists nowhere in the brand. Reskinned in four phases, one commit each.
+
+- **Brand tokens** — `tailwind.config.ts` gains named colors: `signal` `#f75124`, `signal-purple`, `cream`, `cream-surface`, `ink`. Public V2 keeps its inline hex for now.
+- **`components/admin/ui/` kit** — Button, Card, PageHeader, Field, Table, Badge, StatusBadge, EmptyState, Toolbar, Notice, Modal, Pagination, SaveBar, ImagePicker. `Field` owns label/id pairing, `aria-invalid` and `aria-describedby`.
+- **AdminLayout** — white page, hairline rings, nav grouped under tracked eyebrows (Overview / Pages / Content / Inbox / Site chrome), orange active pill. Existing focus-trap and Escape logic untouched.
+- **All 15 pages migrated.** Blog, notes and streams each had their own overlay with no Escape handling — all three now use the shared `Modal`. Status colors were re-implemented inline in three places; `StatusBadge` is now the single source.
+- **Cleanups** — `ImageUpload` + `ImageUploader` merged into `ImagePicker` (behavior change: the old `ImageUploader` only committed a URL on "Apply", `ImagePicker` commits as you type). `FormInput`/`FormTextarea` deleted. Project list filtering moved from `useEffect`+`setState` to `useMemo`.
+- **Fixed a mislabeled control** — home/about/contact's save button read "Changes Saved" while changes were unsaved. `SaveBar` says "Unsaved changes", then flashes "Saved".
+- Admin is now zero `teal-*`. Remaining teal in the tree is all under `pages/public/v1`, which is archival.
+
+### frontend — V2 home contact composer wired up
+
+The contact section on the live home page was a mockup: the input had no handler, the seven chips had no `onClick`. Typing a message and pressing send did nothing, silently — while the API, the `contact_submissions` table and the admin inbox were all already working.
+
+- **`v2/components/ContactComposer.tsx`** — two-step flow (`composing → details → sending → sent | error`). Message first, then name + email with the message echoed as a sent bubble. Posts via the existing `submitContact` with the honeypot field `contact.ts` asserts on.
+- **429 handling** — the rate limiter throws `HTTPException`, whose body is plain text, so `fetchJson` cannot extract a message; without special-casing, users saw "Request failed (429)".
+- **Chips split by kind** — `see my work`/`resume`/`linkedin` navigate (LinkedIn renders only when present in site content); the four question chips prefill the composer.
+- **Avatar** — replaced an Unsplash stock photo of an unrelated person. Note `assets/me/portrait-alt.jpg` is misnamed: it is the GH logo mark, not a portrait.
+
 ### repo — Documentation
 
 - **`README.md`** — replaced the stock Vite template readme with a real repo overview: layout, stack, two-terminal quick start, mock-mode escape hatch, V1/V2 URL policy, command reference, doc index.
