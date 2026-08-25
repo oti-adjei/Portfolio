@@ -209,6 +209,20 @@ export default function EditProject() {
   // ------------------------------------------------------------
   if (!project) return null;
 
+  const addLink = () => {
+    setProject({ ...project, links: [...(project.links ?? []), { label: '', url: '' }] });
+  };
+
+  const updateLink = (index: number, field: 'label' | 'url', value: string) => {
+    const links = [...(project.links ?? [])];
+    links[index] = { ...links[index], [field]: value };
+    setProject({ ...project, links });
+  };
+
+  const removeLink = (index: number) => {
+    setProject({ ...project, links: (project.links ?? []).filter((_, i) => i !== index) });
+  };
+
   const tabs = [
     { id: 'basic', label: 'Basic Info', icon: 'ri-information-line' },
     { id: 'overview', label: 'Overview', icon: 'ri-file-text-line' },
@@ -390,6 +404,54 @@ export default function EditProject() {
                     }
                     placeholder="Lead Designer"
                   />
+                </div>
+                <div>
+                  <label className="block text-[12px] font-medium text-gray-700 mb-1.5">
+                    Links
+                  </label>
+                  <p className="text-[12px] text-gray-400 mb-2">
+                    Live site, GitHub, an APK or store listing. The icon and prominence are
+                    chosen from the URL — a .apk or /releases/download/ link renders as a
+                    filled download button.
+                  </p>
+                  <div className="space-y-3">
+                    {(project.links ?? []).map((link, index) => (
+                      <div key={index} className="flex gap-3">
+                        <input
+                          type="text"
+                          value={link.label}
+                          onChange={(e) => updateLink(index, 'label', e.target.value)}
+                          placeholder="Live site"
+                          aria-label={`Link ${index + 1} label`}
+                          className="w-40 px-4 py-2.5 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
+                        />
+                        <input
+                          type="url"
+                          value={link.url}
+                          onChange={(e) => updateLink(index, 'url', e.target.value)}
+                          placeholder="https://…"
+                          aria-label={`Link ${index + 1} URL`}
+                          className="flex-1 px-4 py-2.5 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeLink(index)}
+                          aria-label={`Remove link ${index + 1}`}
+                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-lg border border-red-300 text-red-600 hover:bg-red-50 transition-colors"
+                        >
+                          <i className="ri-delete-bin-line"></i>
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={addLink}
+                      className="w-full px-4 py-2.5 border border-dashed border-gray-300 rounded-xl text-[13px] text-gray-500 hover:border-signal hover:text-signal transition-colors"
+                    >
+                      <i className="ri-add-line mr-2"></i>
+                      Add Link
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
