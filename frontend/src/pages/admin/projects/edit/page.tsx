@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import AdminLayout from '../../../../components/admin/AdminLayout';
-import { Button, ImagePicker, PageHeader } from '../../../../components/admin/ui';
-import FormInput from '../../../../components/admin/FormInput';
-import FormTextarea from '../../../../components/admin/FormTextarea';
+import { Button, Field, ImagePicker, PageHeader } from '../../../../components/admin/ui';
 import { useContent } from '../../../../admin/contexts/AdminContentContext';
 import type { Project } from '../../../../types/siteContent';
 
@@ -265,7 +263,7 @@ export default function EditProject() {
             {/* ---------- Basic Info ---------- */}
             {activeTab === 'basic' && (
               <div className="space-y-6">
-                <FormInput
+                <Field
                   label="Project Title"
                   value={project.title}
                   onChange={(value) => setProject({ ...project, title: value })}
@@ -291,7 +289,7 @@ export default function EditProject() {
                     </select>
                   </div>
 
-                  <FormInput
+                  <Field
                     label="Year"
                     value={project.year}
                     onChange={(value) => setProject({ ...project, year: value })}
@@ -343,7 +341,7 @@ export default function EditProject() {
             {/* ---------- Overview ---------- */}
             {activeTab === 'overview' && (
               <div className="space-y-6">
-                <FormTextarea
+                <Field as="textarea"
                   label="Description"
                   value={project.overview.description}
                   onChange={(value) =>
@@ -357,7 +355,7 @@ export default function EditProject() {
                 />
 
                 <div className="grid grid-cols-3 gap-6">
-                  <FormInput
+                  <Field
                     label="Client"
                     value={project.overview.client}
                     onChange={(value) =>
@@ -369,7 +367,7 @@ export default function EditProject() {
                     placeholder="Client name"
                   />
 
-                  <FormInput
+                  <Field
                     label="Duration"
                     value={project.overview.duration}
                     onChange={(value) =>
@@ -381,7 +379,7 @@ export default function EditProject() {
                     placeholder="3 months"
                   />
 
-                  <FormInput
+                  <Field
                     label="Role"
                     value={project.overview.role}
                     onChange={(value) =>
@@ -399,7 +397,7 @@ export default function EditProject() {
             {/* ---------- Details ---------- */}
             {activeTab === 'details' && (
               <div className="space-y-6">
-                <FormTextarea
+                <Field as="textarea"
                   label="Challenge"
                   value={project.details.challenge}
                   onChange={(value) =>
@@ -412,7 +410,7 @@ export default function EditProject() {
                   rows={4}
                 />
 
-                <FormTextarea
+                <Field as="textarea"
                   label="Solution"
                   value={project.details.solution}
                   onChange={(value) =>
@@ -504,7 +502,7 @@ export default function EditProject() {
                             aspectRatio="16/9"
                           />
 
-                          <FormInput
+                          <Field
                             label="Caption (Optional)"
                             value={image.caption}
                             onChange={(value) => updateGalleryImage(index, 'caption', value)}

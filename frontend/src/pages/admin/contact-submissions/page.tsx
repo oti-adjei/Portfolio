@@ -1,6 +1,20 @@
 import { useMemo, useState, useEffect } from "react";
 import AdminLayout from "../../../components/admin/AdminLayout";
 import { useContent } from "../../../admin/contexts/AdminContentContext";
+import {
+  Button,
+  EmptyState,
+  Field,
+  Modal,
+  PageHeader,
+  Pagination,
+  StatusBadge,
+  Table,
+  Td,
+  Th,
+  Toolbar,
+  Tr,
+} from "../../../components/admin/ui";
 import type { ContactSubmission } from "../../../types/siteContent";
 
 export default function AdminContactSubmissions() {
@@ -52,254 +66,179 @@ export default function AdminContactSubmissions() {
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'new': return 'bg-yellow-100 text-yellow-700';
-      case 'read': return 'bg-blue-100 text-blue-700';
-      case 'replied': return 'bg-green-100 text-green-700';
-      case 'archived': return 'bg-gray-100 text-gray-600';
-      default: return 'bg-gray-100 text-gray-600';
-    }
-  };
+
+  const statusOptions = [
+    { value: "", label: "All statuses" },
+    { value: "new", label: "New" },
+    { value: "read", label: "Read" },
+    { value: "replied", label: "Replied" },
+    { value: "archived", label: "Archived" },
+  ];
 
   return (
     <AdminLayout>
-      <div className="max-w-6xl mx-auto space-y-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Contact Inbox</h1>
-            <p className="text-gray-600 mt-1">Manage contact enquiries and responses</p>
+      <div className="max-w-[1100px] mx-auto">
+        <PageHeader
+          eyebrow="Inbox"
+          title="Contact inbox"
+          description={`${submissions.length} enquiries`}
+        />
+
+        <Toolbar
+          search={searchQuery}
+          onSearchChange={(value) => {
+            setSearchQuery(value);
+            setPage(1);
+          }}
+          searchPlaceholder="Search name, email, or message\u2026"
+        >
+          <div className="w-full sm:w-52">
+            <Field
+              label=""
+              as="select"
+              options={statusOptions}
+              value={statusFilter}
+              onChange={(value) => {
+                setStatusFilter(value);
+                setPage(1);
+              }}
+            />
           </div>
-        </div>
+        </Toolbar>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <select
-            value={statusFilter}
-            onChange={(e) => {
-              setStatusFilter(e.target.value);
-              setPage(1);
-            }}
-            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm min-h-11 w-full sm:w-auto"
-          >
-            <option value="">All Status</option>
-            <option value="new">New</option>
-            <option value="read">Read</option>
-            <option value="replied">Replied</option>
-            <option value="archived">Archived</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Search name, email, or message..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setPage(1);
-            }}
-            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm min-h-11 flex-1"
-          />
-        </div>
-
-        <div className="md:hidden space-y-3">
-          {paginatedSubmissions.length === 0 ? (
-            <div className="bg-white border border-gray-200 rounded-xl px-4 py-8 text-center text-gray-500">
-              No submissions found
-            </div>
-          ) : (
-            paginatedSubmissions.map((submission) => (
-              <div key={submission.id} className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-semibold text-gray-900">{submission.name}</p>
-                    <p className="text-sm text-gray-600 break-all">{submission.email}</p>
+        {paginatedSubmissions.length === 0 ? (
+          <div className="rounded-2xl ring-1 ring-black/5 bg-white">
+            <EmptyState
+              icon="ri-message-3-line"
+              title="No enquiries found"
+              description={statusFilter || searchQuery ? "Try clearing the filters." : "Messages from the contact form land here."}
+            />
+          </div>
+        ) : (
+          <>
+            {/* Mobile */}
+            <div className="md:hidden space-y-3">
+              {paginatedSubmissions.map((submission) => (
+                <button
+                  key={submission.id}
+                  type="button"
+                  onClick={() => setSelectedSubmission(submission)}
+                  className="w-full text-left rounded-2xl ring-1 ring-black/5 bg-white p-4 space-y-2 hover:ring-signal/30 transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-medium text-gray-900 truncate">{submission.name}</p>
+                      <p className="text-[12px] text-gray-500 break-all">{submission.email}</p>
+                    </div>
+                    <StatusBadge status={submission.status} />
                   </div>
-                  <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(submission.status)}`}>
-                    {submission.status}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-700">{submission.subject || "-"}</p>
-                <p className="text-xs text-gray-500">{new Date(submission.created_at).toLocaleDateString()}</p>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setSelectedSubmission(submission)}
-                    className="flex-1 min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-signal hover:bg-signal/10"
-                  >
-                    View
-                  </button>
-                  <button
-                    onClick={() => { window.location.href = `mailto:${submission.email}`; }}
-                    className="min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-signal hover:bg-signal/10"
-                    title="Reply via email"
-                  >
-                    <i className="ri-mail-send-line"></i>
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+                  <p className="text-[13px] text-gray-700">{submission.subject || "\u2014"}</p>
+                  <p className="text-[11px] text-gray-400 tabular-nums">
+                    {new Date(submission.created_at).toLocaleDateString()}
+                  </p>
+                </button>
+              ))}
+            </div>
 
-        <div className="hidden md:block bg-white border border-gray-200 rounded-xl overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-600">
-              <tr>
-                <th className="px-4 py-3 text-left">Name</th>
-                <th className="px-4 py-3 text-left">Email</th>
-                <th className="px-4 py-3 text-left">Subject</th>
-                <th className="px-4 py-3 text-left">Status</th>
-                <th className="px-4 py-3 text-left">Received</th>
-                <th className="px-4 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedSubmissions.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
-                    No submissions found
-                  </td>
-                </tr>
-              ) : (
-                paginatedSubmissions.map((submission) => (
-                  <tr key={submission.id} className="border-t border-gray-100">
-                    <td className="px-4 py-3">
+            {/* Desktop */}
+            <div className="hidden md:block rounded-2xl ring-1 ring-black/5 bg-white overflow-hidden">
+              <Table
+                head={
+                  <>
+                    <Th>From</Th>
+                    <Th>Subject</Th>
+                    <Th>Status</Th>
+                    <Th>Received</Th>
+                    <Th className="text-right">Actions</Th>
+                  </>
+                }
+              >
+                {paginatedSubmissions.map((submission) => (
+                  <Tr key={submission.id} onClick={() => setSelectedSubmission(submission)}>
+                    <Td>
                       <p className="font-medium text-gray-900">{submission.name}</p>
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {submission.email}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {submission.subject || "-"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <select
-                        value={submission.status}
-                        onChange={(e) => handleStatusChange(submission.id, e.target.value as typeof submission.status)}
-                        className={`px-2 py-1 rounded-full text-xs border-0 ${getStatusColor(submission.status)}`}
-                      >
-                        <option value="new">New</option>
-                        <option value="read">Read</option>
-                        <option value="replied">Replied</option>
-                        <option value="archived">Archived</option>
-                      </select>
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
+                      <p className="text-[12px] text-gray-500">{submission.email}</p>
+                    </Td>
+                    <Td className="text-gray-500">{submission.subject || "\u2014"}</Td>
+                    <Td>
+                      <StatusBadge status={submission.status} />
+                    </Td>
+                    <Td className="text-gray-500 tabular-nums">
                       {new Date(submission.created_at).toLocaleDateString()}
-                    </td>
-                    <td className="px-4 py-3 text-right space-x-2">
-                      <button
-                        onClick={() => setSelectedSubmission(submission)}
-                        className="text-signal hover:text-signal"
-                        title="View details"
-                      >
-                        <i className="ri-eye-line"></i>
-                      </button>
-                      <button
-                        onClick={() => window.location.href = `mailto:${submission.email}`}
-                        className="text-signal hover:text-signal"
-                        title="Reply via email"
-                      >
-                        <i className="ri-mail-send-line"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                    </Td>
+                    <Td className="text-right">
+                      <Button size="sm" icon="ri-eye-line" onClick={() => setSelectedSubmission(submission)}>
+                        Open
+                      </Button>
+                    </Td>
+                  </Tr>
+                ))}
+              </Table>
+            </div>
 
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 flex-wrap">
-            <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
-              className="min-h-10 px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Previous
-            </button>
-            <span className="text-sm text-gray-600">
-              Page {page} of {totalPages}
-            </span>
-            <button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page === totalPages}
-              className="min-h-10 px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next
-            </button>
-          </div>
+            <div className="mt-5">
+              <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+            </div>
+          </>
         )}
 
         {selectedSubmission && (
-          <div className="fixed inset-0 bg-black/50 z-50 p-4 flex items-center justify-center">
-            <div className="bg-white w-full max-w-3xl rounded-xl p-4 sm:p-6 space-y-4 h-[calc(100vh-2rem)] sm:h-auto max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Enquiry Details</h2>
-                <button onClick={() => setSelectedSubmission(null)} className="text-gray-500">
-                  <i className="ri-close-line text-2xl"></i>
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">From</p>
-                  <p className="text-gray-900 font-medium">{selectedSubmission.name}</p>
-                  <p className="text-gray-600">{selectedSubmission.email}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Date</p>
-                  <p className="text-gray-600">{new Date(selectedSubmission.created_at).toLocaleString()}</p>
-                  <p className="text-sm font-medium text-gray-600 mt-2">Status</p>
-                  <select
-                    value={selectedSubmission.status}
-                    onChange={(e) => {
-                      handleStatusChange(selectedSubmission.id, e.target.value as typeof selectedSubmission.status);
-                      setSelectedSubmission(null);
-                    }}
-                    className={`px-3 py-2 rounded-lg text-sm border border-gray-200 ${getStatusColor(selectedSubmission.status)}`}
-                  >
-                    <option value="new">New</option>
-                    <option value="read">Read</option>
-                    <option value="replied">Replied</option>
-                    <option value="archived">Archived</option>
-                  </select>
-                </div>
-              </div>
-
-              {selectedSubmission.subject && (
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Subject</p>
-                  <p className="text-gray-900 font-medium">{selectedSubmission.subject}</p>
-                </div>
-              )}
-
+          <Modal
+            title="Enquiry"
+            onClose={() => setSelectedSubmission(null)}
+            footer={
+              <>
+                <Button onClick={() => setSelectedSubmission(null)}>Close</Button>
+                <a href={`mailto:${selectedSubmission.email}`}>
+                  <Button variant="primary" icon="ri-reply-line">
+                    Reply by email
+                  </Button>
+                </a>
+              </>
+            }
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-gray-600">Source</p>
-                <p className="text-gray-600">{selectedSubmission.source}</p>
+                <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400">From</p>
+                <p className="text-[14px] font-medium text-gray-900 mt-1">{selectedSubmission.name}</p>
+                <a href={`mailto:${selectedSubmission.email}`} className="text-[13px] text-gray-500 hover:text-signal break-all">
+                  {selectedSubmission.email}
+                </a>
               </div>
-
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-2">Message</p>
-                <div className="bg-gray-50 rounded-lg p-4 text-gray-900 whitespace-pre-wrap">
-                  {selectedSubmission.message}
-                </div>
-              </div>
-
-              <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
-                <button
-                  onClick={() => window.location.href = `mailto:${selectedSubmission.email}`}
-                  className="min-h-11 px-4 py-2 bg-signal text-white rounded-lg hover:opacity-90"
-                >
-                  Reply via Email
-                </button>
-                <button
-                  onClick={() => setSelectedSubmission(null)}
-                  className="min-h-11 px-4 py-2 border border-gray-200 rounded-lg"
-                >
-                  Close
-                </button>
+                <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400">Received</p>
+                <p className="text-[13px] text-gray-700 mt-1 tabular-nums">
+                  {new Date(selectedSubmission.created_at).toLocaleString()}
+                </p>
+                <p className="text-[12px] text-gray-400 mt-1">via {selectedSubmission.source}</p>
               </div>
             </div>
-          </div>
+
+            {selectedSubmission.subject && (
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400">Subject</p>
+                <p className="text-[14px] font-medium text-gray-900 mt-1">{selectedSubmission.subject}</p>
+              </div>
+            )}
+
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400 mb-1.5">Message</p>
+              <div className="rounded-xl bg-cream p-4 text-[13px] leading-[1.7] text-gray-800 whitespace-pre-wrap">
+                {selectedSubmission.message}
+              </div>
+            </div>
+
+            <Field
+              label="Status"
+              as="select"
+              value={selectedSubmission.status}
+              options={statusOptions.slice(1)}
+              onChange={(value) => {
+                void handleStatusChange(selectedSubmission.id, value as typeof selectedSubmission.status);
+                setSelectedSubmission(null);
+              }}
+            />
+          </Modal>
         )}
       </div>
     </AdminLayout>
