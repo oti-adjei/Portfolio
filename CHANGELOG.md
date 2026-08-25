@@ -5,6 +5,16 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-08-25
+
+### repo — Documentation
+
+- **`README.md`** — replaced the stock Vite template readme with a real repo overview: layout, stack, two-terminal quick start, mock-mode escape hatch, V1/V2 URL policy, command reference, doc index.
+- **`Hono/README.md`** — replaced the stock Cloudflare `vite-react-template` readme with backend-specific docs: worker layout, route map, `.dev.vars` table, hand-applied D1 migration workflow, deploy steps.
+- **`CLAUDE.md`** — documented the admin SPA (`App.tsx` URL branch, `ProtectedRoute`, JWT), the `shared/api/mappers.ts` DTO boundary, lint/deploy/`cf-typegen` commands, the two separate SQL migration directories, and the absence of a test suite.
+
+---
+
 ## 2026-06-26
 
 ### frontend — Favicon + mobile hero polish
