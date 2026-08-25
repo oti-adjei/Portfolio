@@ -58,19 +58,19 @@ const BIOS: Bio[] = [
 
 const HEADSHOTS: Headshot[] = [
   {
-    src: '/assets/me/portrait-full.webp',
+    src: 'https://img.hearvie.dev/me/portrait-full.webp',
     alt: 'George Oti-Adjei — full portrait',
     caption: 'Full portrait',
     filename: 'george-oti-adjei-portrait.webp',
   },
   {
-    src: '/assets/me/portrait-close.jpg',
+    src: 'https://img.hearvie.dev/me/portrait-close.jpg',
     alt: 'George Oti-Adjei — close-up headshot',
     caption: 'Close-up headshot',
     filename: 'george-oti-adjei-headshot.jpg',
   },
   {
-    src: '/assets/me/portrait-alt.jpg',
+    src: 'https://img.hearvie.dev/me/portrait-alt.jpg',
     alt: 'George Oti-Adjei — alternate headshot',
     caption: 'Alternate headshot',
     filename: 'george-oti-adjei-alternate.jpg',
@@ -167,7 +167,7 @@ export default function ExperimentPress() {
             <i className="ri-mail-send-line" /> Press contact
           </a>
           <a
-            href="/assets/documents/george-oti-adjei-cv.pdf"
+            href="https://img.hearvie.dev/documents/george-oti-adjei-cv.pdf"
             download
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white ring-1 ring-gray-200 text-[13px] text-gray-700 hover:bg-gray-50 transition"
           >
