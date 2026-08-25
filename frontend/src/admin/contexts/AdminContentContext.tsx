@@ -51,6 +51,8 @@ interface AdminContentContextType {
   fetchNewsletterSubscribers: (params?: { status?: string; q?: string; page?: number; limit?: number }) => Promise<void>;
   updateNewsletterStatus: (id: string, status: 'subscribed' | 'unsubscribed' | 'bounced') => Promise<void>;
   fetchContactSubmissions: (params?: { status?: string; q?: string; page?: number; limit?: number }) => Promise<void>;
+  /** Real row counts from the API's pagination metadata. The lists are paged, so their length is not the total. */
+  inboxTotals: { contact: number; newsletter: number };
   updateContactStatus: (id: string, status: 'new' | 'read' | 'replied' | 'archived') => Promise<void>;
 }
 
@@ -79,6 +81,7 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<SiteContent>(() => cloneContent(fallbackContent));
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [inboxTotals, setInboxTotals] = useState({ contact: 0, newsletter: 0 });
 
   const updateContent = (updates: Partial<SiteContent>) => {
     setContent((prev) => ({ ...prev, ...updates }));
@@ -381,6 +384,7 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
       ...prev,
       newsletterSubscribers: response.items,
     }));
+    setInboxTotals((prev) => ({ ...prev, newsletter: response.pagination.total }));
   };
 
   const updateNewsletterStatusHandler = async (id: string, status: 'subscribed' | 'unsubscribed' | 'bounced') => {
@@ -432,6 +436,7 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
       ...prev,
       contactSubmissions: response.items,
     }));
+    setInboxTotals((prev) => ({ ...prev, contact: response.pagination.total }));
   };
 
   const updateContactStatusHandler = async (id: string, status: 'new' | 'read' | 'replied' | 'archived') => {
@@ -476,6 +481,7 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
       fetchNewsletterSubscribers: fetchNewsletterSubscribersHandler,
       updateNewsletterStatus: updateNewsletterStatusHandler,
       fetchContactSubmissions: fetchContactSubmissionsHandler,
+      inboxTotals,
       updateContactStatus: updateContactStatusHandler,
     }),
     [content, isLoading, error, token]

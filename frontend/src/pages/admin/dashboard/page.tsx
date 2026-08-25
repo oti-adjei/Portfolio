@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
+import { useAuth } from '../../../admin/contexts/AdminAuthContext';
 import { Button, Card, EmptyState, Notice, PageHeader, StatusBadge } from '../../../components/admin/ui';
 
 function categoryCount(category: string, values: Array<{ category: string }>): number {
@@ -8,15 +10,26 @@ function categoryCount(category: string, values: Array<{ category: string }>): n
 }
 
 export default function AdminDashboard() {
-  const { content, isLoading, refresh } = useContent();
+  const { content, isLoading, refresh, fetchContactSubmissions, fetchNewsletterSubscribers, inboxTotals } = useContent();
+  const { token } = useAuth();
+
+  // refresh() loads sections and content types, but not the inbox lists — those
+  // have their own loaders. Without this the Messages and Subscribers tiles read
+  // zero and "Recent messages" is empty even when rows exist.
+  useEffect(() => {
+    if (!token) return;
+    void fetchContactSubmissions({ limit: 5 });
+    void fetchNewsletterSubscribers({ limit: 1 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const stats = [
     { label: 'Projects', value: content.projects.length, icon: 'ri-folder-line', link: '/admin/projects' },
     { label: 'Blog posts', value: content.blogPosts.length, icon: 'ri-article-line', link: '/admin/blog' },
     { label: 'Notes', value: content.notes.length, icon: 'ri-sticky-note-line', link: '/admin/notes' },
     { label: 'Streams', value: content.streamEvents.length, icon: 'ri-live-line', link: '/admin/streams' },
-    { label: 'Subscribers', value: content.newsletterSubscribers.length, icon: 'ri-mail-send-line', link: '/admin/newsletter' },
-    { label: 'Messages', value: content.contactSubmissions.length, icon: 'ri-message-3-line', link: '/admin/contact-submissions' },
+    { label: 'Subscribers', value: inboxTotals.newsletter, icon: 'ri-mail-send-line', link: '/admin/newsletter' },
+    { label: 'Messages', value: inboxTotals.contact, icon: 'ri-message-3-line', link: '/admin/contact-submissions' },
   ];
 
   const quickLinks = [
@@ -33,6 +46,8 @@ export default function AdminDashboard() {
     { path: '/admin/footer', icon: 'ri-layout-bottom-line', label: 'Footer', description: 'Edit footer content' },
   ];
 
+  // Counted over the five most recent only — the dashboard does not load the
+  // full inbox. Good enough for a glance; the inbox page has the real list.
   const newThisWeek = content.contactSubmissions.filter((submission) => {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
