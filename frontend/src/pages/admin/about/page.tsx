@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
-import ImageUploader from '../../../components/admin/ImageUploader';
+import { PageHeader, SaveBar } from '../../../components/admin/ui';
+import { ImagePicker } from '../../../components/admin/ui';
 
 type Section = 'hero' | 'bio' | 'expertise' | 'journey' | 'philosophy' | 'cta';
 
@@ -9,12 +10,21 @@ export default function AdminAbout() {
   const { content, updateContent, saveSection } = useContent();
   const [activeSection, setActiveSection] = useState<Section>('hero');
   const [hasChanges, setHasChanges] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
 
   const aboutPage = content.aboutPage;
 
   const handleSave = async () => {
-    await saveSection('aboutPage');
-    setHasChanges(false);
+    setIsSaving(true);
+    try {
+      await saveSection('aboutPage');
+      setHasChanges(false);
+      setJustSaved(true);
+      setTimeout(() => setJustSaved(false), 3000);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const sections = [
@@ -135,26 +145,12 @@ export default function AdminAbout() {
     <AdminLayout>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">About Page Editor</h1>
-            <p className="text-sm text-gray-600 mt-1">Edit all sections of your about page</p>
-          </div>
-          {hasChanges && (
-            <button
-              onClick={handleSave}
-              className="px-6 py-2 bg-teal-500 text-white rounded-lg font-medium hover:bg-teal-600 transition-colors inline-flex items-center gap-2"
-            >
-              <i className="ri-save-line"></i>
-              Changes Saved
-            </button>
-          )}
-        </div>
+        <PageHeader eyebrow="Pages" title="About page" description="Bio, expertise and journey." />
 
         <div className="grid grid-cols-12 gap-6">
           {/* Section Navigation */}
           <div className="col-span-3">
-            <div className="bg-white rounded-xl border border-gray-200 p-4 sticky top-24">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 sticky top-24">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Sections</h3>
               <nav className="space-y-1">
                 {sections.map((section) => (
@@ -163,7 +159,7 @@ export default function AdminAbout() {
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       activeSection === section.id
-                        ? 'bg-teal-50 text-teal-600'
+                        ? 'bg-signal/10 text-signal'
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
@@ -177,13 +173,13 @@ export default function AdminAbout() {
 
           {/* Content Editor */}
           <div className="col-span-9">
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
               {/* Hero Section */}
               {activeSection === 'hero' && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">Hero Section</h2>
                   
-                  <ImageUploader
+                  <ImagePicker
                     value={aboutPage.hero.avatar.url}
                     onChange={(url) => updateHero('avatar', { ...aboutPage.hero.avatar, url })}
                     label="Avatar Image"
@@ -191,32 +187,32 @@ export default function AdminAbout() {
                   />
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Name</label>
                     <input
                       type="text"
                       value={aboutPage.hero.name}
                       onChange={(e) => updateHero('name', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Role</label>
                     <input
                       type="text"
                       value={aboutPage.hero.role}
                       onChange={(e) => updateHero('role', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Tagline</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Tagline</label>
                     <textarea
                       value={aboutPage.hero.tagline}
                       onChange={(e) => updateHero('tagline', e.target.value)}
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
                 </div>
@@ -241,7 +237,7 @@ export default function AdminAbout() {
                               updateBio('paragraphs', updated);
                             }}
                             rows={4}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                         </div>
                       ))}
@@ -256,12 +252,12 @@ export default function AdminAbout() {
                   <h2 className="text-xl font-semibold text-gray-900">Expertise Cards</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Section Title</label>
                     <input
                       type="text"
                       value={aboutPage.expertise.sectionTitle}
                       onChange={(e) => updateExpertise('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -271,8 +267,8 @@ export default function AdminAbout() {
                       {aboutPage.expertise.items.map((item, index) => (
                         <div key={item.id} className="border border-gray-200 rounded-lg p-4">
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <i className={`${item.icon} text-xl text-teal-500`}></i>
+                            <div className="w-10 h-10 bg-signal/10 rounded-full flex items-center justify-center flex-shrink-0">
+                              <i className={`${item.icon} text-xl text-signal`}></i>
                             </div>
                             <input
                               type="text"
@@ -283,7 +279,7 @@ export default function AdminAbout() {
                                 updateExpertise('items', updated);
                               }}
                               placeholder="Expertise Title"
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                             />
                           </div>
                           <textarea
@@ -295,7 +291,7 @@ export default function AdminAbout() {
                             }}
                             rows={3}
                             placeholder="Expertise Description"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                         </div>
                       ))}
@@ -311,7 +307,7 @@ export default function AdminAbout() {
                     <h2 className="text-xl font-semibold text-gray-900">Journey Timeline</h2>
                     <button
                       onClick={addTimelineItem}
-                      className="px-4 py-2 bg-teal-500 text-white rounded-lg text-sm font-medium hover:bg-teal-600 transition-colors inline-flex items-center gap-2"
+                      className="px-4 py-2 bg-signal text-white rounded-full text-[13px] font-medium hover:opacity-90 transition-opacity inline-flex items-center gap-2"
                     >
                       <i className="ri-add-line"></i>
                       Add Milestone
@@ -319,12 +315,12 @@ export default function AdminAbout() {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Section Title</label>
                     <input
                       type="text"
                       value={aboutPage.journey.sectionTitle}
                       onChange={(e) => updateJourney('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -344,7 +340,7 @@ export default function AdminAbout() {
                                   updateJourney('timeline', updated);
                                 }}
                                 placeholder="Year"
-                                className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-bold focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-bold focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                               />
                               <input
                                 type="text"
@@ -355,7 +351,7 @@ export default function AdminAbout() {
                                   updateJourney('timeline', updated);
                                 }}
                                 placeholder="Title"
-                                className="col-span-3 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                className="col-span-3 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                               />
                             </div>
                             <button
@@ -374,7 +370,7 @@ export default function AdminAbout() {
                             }}
                             rows={2}
                             placeholder="Description"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                         </div>
                       ))}
@@ -389,22 +385,22 @@ export default function AdminAbout() {
                   <h2 className="text-xl font-semibold text-gray-900">Philosophy Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Label</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Label</label>
                     <input
                       type="text"
                       value={aboutPage.philosophy.label}
                       onChange={(e) => updatePhilosophy('label', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Quote</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Quote</label>
                     <textarea
                       value={aboutPage.philosophy.quote}
                       onChange={(e) => updatePhilosophy('quote', e.target.value)}
                       rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
                 </div>
@@ -416,28 +412,28 @@ export default function AdminAbout() {
                   <h2 className="text-xl font-semibold text-gray-900">Connect CTA Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Heading</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Heading</label>
                     <input
                       type="text"
                       value={aboutPage.connectCTA.heading}
                       onChange={(e) => updateConnectCTA('heading', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Description</label>
                     <textarea
                       value={aboutPage.connectCTA.description}
                       onChange={(e) => updateConnectCTA('description', e.target.value)}
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Button Text</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Button Text</label>
                       <input
                         type="text"
                         value={aboutPage.connectCTA.ctaButton.label}
@@ -445,11 +441,11 @@ export default function AdminAbout() {
                           ...aboutPage.connectCTA.ctaButton,
                           label: e.target.value
                         })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Button URL</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Button URL</label>
                       <input
                         type="text"
                         value={aboutPage.connectCTA.ctaButton.url}
@@ -457,7 +453,7 @@ export default function AdminAbout() {
                           ...aboutPage.connectCTA.ctaButton,
                           url: e.target.value
                         })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                       />
                     </div>
                   </div>
@@ -467,6 +463,8 @@ export default function AdminAbout() {
           </div>
         </div>
       </div>
+
+        <SaveBar onSave={() => void handleSave()} saving={isSaving} saved={justSaved} dirty={hasChanges} />
     </AdminLayout>
   );
 }

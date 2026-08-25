@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
+import { PageHeader, SaveBar } from '../../../components/admin/ui';
 
 type Section = 'hero' | 'form' | 'info' | 'map';
 
@@ -8,12 +9,21 @@ export default function AdminContact() {
   const { content, updateContent, saveSection } = useContent();
   const [activeSection, setActiveSection] = useState<Section>('hero');
   const [hasChanges, setHasChanges] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
 
   const contactPage = content.contactPage;
 
   const handleSave = async () => {
-    await saveSection('contactPage');
-    setHasChanges(false);
+    setIsSaving(true);
+    try {
+      await saveSection('contactPage');
+      setHasChanges(false);
+      setJustSaved(true);
+      setTimeout(() => setJustSaved(false), 3000);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const sections = [
@@ -87,26 +97,12 @@ export default function AdminContact() {
     <AdminLayout>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Contact Page Editor</h1>
-            <p className="text-sm text-gray-600 mt-1">Edit all sections of your contact page</p>
-          </div>
-          {hasChanges && (
-            <button
-              onClick={handleSave}
-              className="px-6 py-2 bg-teal-500 text-white rounded-lg font-medium hover:bg-teal-600 transition-colors inline-flex items-center gap-2"
-            >
-              <i className="ri-save-line"></i>
-              Changes Saved
-            </button>
-          )}
-        </div>
+        <PageHeader eyebrow="Pages" title="Contact page" description="Contact details, form copy and socials." />
 
         <div className="grid grid-cols-12 gap-6">
           {/* Section Navigation */}
           <div className="col-span-3">
-            <div className="bg-white rounded-xl border border-gray-200 p-4 sticky top-24">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 sticky top-24">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Sections</h3>
               <nav className="space-y-1">
                 {sections.map((section) => (
@@ -115,7 +111,7 @@ export default function AdminContact() {
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       activeSection === section.id
-                        ? 'bg-teal-50 text-teal-600'
+                        ? 'bg-signal/10 text-signal'
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
@@ -129,19 +125,19 @@ export default function AdminContact() {
 
           {/* Content Editor */}
           <div className="col-span-9">
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
               {/* Hero Section */}
               {activeSection === 'hero' && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">Hero Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Label</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Label</label>
                     <input
                       type="text"
                       value={contactPage.hero.label}
                       onChange={(e) => updateHero('label', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -159,19 +155,19 @@ export default function AdminContact() {
                             updateHero('headingLines', updated);
                           }}
                           placeholder={`Line ${index + 1}`}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                          className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                         />
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Description</label>
                     <textarea
                       value={contactPage.hero.description}
                       onChange={(e) => updateHero('description', e.target.value)}
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
                 </div>
@@ -183,12 +179,12 @@ export default function AdminContact() {
                   <h2 className="text-xl font-semibold text-gray-900">Contact Form Settings</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Form Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Form Title</label>
                     <input
                       type="text"
                       value={contactPage.form.title}
                       onChange={(e) => updateForm('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -208,7 +204,7 @@ export default function AdminContact() {
                                   updated[index] = { ...updated[index], label: e.target.value };
                                   updateForm('fields', updated);
                                 }}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                               />
                             </div>
                             <div>
@@ -221,7 +217,7 @@ export default function AdminContact() {
                                   updated[index] = { ...updated[index], placeholder: e.target.value };
                                   updateForm('fields', updated);
                                 }}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                               />
                             </div>
                           </div>
@@ -235,7 +231,7 @@ export default function AdminContact() {
                                   updated[index] = { ...updated[index], required: e.target.checked };
                                   updateForm('fields', updated);
                                 }}
-                                className="w-4 h-4 text-teal-500 border-gray-300 rounded focus:ring-teal-500"
+                                className="w-4 h-4 rounded accent-signal"
                               />
                               <span className="text-xs text-gray-600">Required</span>
                             </label>
@@ -246,32 +242,32 @@ export default function AdminContact() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Submit Button Text</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Submit Button Text</label>
                     <input
                       type="text"
                       value={contactPage.form.submitButton.label}
                       onChange={(e) => updateForm('submitButton', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Success Message</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Success Message</label>
                     <textarea
                       value={contactPage.form.messages.success}
                       onChange={(e) => updateForm('messages', { ...contactPage.form.messages, success: e.target.value })}
                       rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Error Message</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Error Message</label>
                     <textarea
                       value={contactPage.form.messages.error}
                       onChange={(e) => updateForm('messages', { ...contactPage.form.messages, error: e.target.value })}
                       rows={2}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
                 </div>
@@ -288,8 +284,8 @@ export default function AdminContact() {
                       {contactPage.contactInfo.cards.map((card, index) => (
                         <div key={card.id} className="border border-gray-200 rounded-lg p-4">
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <i className={`${card.icon} text-xl text-teal-500`}></i>
+                            <div className="w-10 h-10 bg-signal/10 rounded-full flex items-center justify-center flex-shrink-0">
+                              <i className={`${card.icon} text-xl text-signal`}></i>
                             </div>
                             <input
                               type="text"
@@ -300,7 +296,7 @@ export default function AdminContact() {
                                 updateContactInfo('cards', updated);
                               }}
                               placeholder="Card Title"
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                             />
                           </div>
                           <input
@@ -312,7 +308,7 @@ export default function AdminContact() {
                               updateContactInfo('cards', updated);
                             }}
                             placeholder="Value"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent mb-2"
+                            className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50 mb-2"
                           />
                           <input
                             type="text"
@@ -323,7 +319,7 @@ export default function AdminContact() {
                               updateContactInfo('cards', updated);
                             }}
                             placeholder="Link URL"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                         </div>
                       ))}
@@ -345,7 +341,7 @@ export default function AdminContact() {
                               updateContactInfo('socialLinks', updated);
                             }}
                             placeholder="Platform"
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="flex-1 px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                           <input
                             type="url"
@@ -356,7 +352,7 @@ export default function AdminContact() {
                               updateContactInfo('socialLinks', updated);
                             }}
                             placeholder="URL"
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="flex-1 px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                         </div>
                       ))}
@@ -364,12 +360,12 @@ export default function AdminContact() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Availability Status</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Availability Status</label>
                     <input
                       type="text"
                       value={contactPage.contactInfo.availability.status}
                       onChange={(e) => updateContactInfo('availability', { ...contactPage.contactInfo.availability, status: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
                 </div>
@@ -381,23 +377,23 @@ export default function AdminContact() {
                   <h2 className="text-xl font-semibold text-gray-900">Map Settings</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Map Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Map Title</label>
                     <input
                       type="text"
                       value={contactPage.map.title}
                       onChange={(e) => updateMap('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Google Maps Embed URL</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Google Maps Embed URL</label>
                     <textarea
                       value={contactPage.map.embedUrl}
                       onChange={(e) => updateMap('embedUrl', e.target.value)}
                       rows={4}
                       placeholder="Paste your Google Maps embed URL here"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent font-mono text-xs"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50 font-mono text-xs"
                     />
                     <p className="text-xs text-gray-500 mt-2">
                       Get embed URL from Google Maps → Share → Embed a map
@@ -406,7 +402,7 @@ export default function AdminContact() {
 
                   {contactPage.map.embedUrl && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Preview</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Preview</label>
                       <div className="border border-gray-200 rounded-lg overflow-hidden">
                         <iframe
                           src={contactPage.map.embedUrl}
@@ -426,6 +422,8 @@ export default function AdminContact() {
           </div>
         </div>
       </div>
+
+        <SaveBar onSave={() => void handleSave()} saving={isSaving} saved={justSaved} dirty={hasChanges} />
     </AdminLayout>
   );
 }

@@ -52,7 +52,7 @@ export default function AdminNavigation() {
           </div>
           <button
             onClick={() => void handleSave()}
-            className="px-6 py-2.5 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors whitespace-nowrap flex items-center gap-2"
+            className="px-6 py-2.5 bg-signal text-white text-[13px] font-medium rounded-full hover:opacity-90 transition-opacity whitespace-nowrap flex items-center gap-2"
           >
             <i className="ri-save-line"></i>
             {saved ? 'Saved!' : 'Save Changes'}
@@ -60,15 +60,15 @@ export default function AdminNavigation() {
         </div>
 
         <div className="space-y-8">
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-6">Logo</h2>
             <FormInput label="Logo Text" value={content.logo.text} onChange={handleLogoChange} placeholder="Enter logo text" />
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-gray-900">Menu Items</h2>
-              <button onClick={handleAddMenuItem} className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors whitespace-nowrap flex items-center gap-2">
+              <button onClick={handleAddMenuItem} className="px-4 py-2 bg-signal text-white text-[13px] font-medium rounded-full hover:opacity-90 transition-opacity whitespace-nowrap flex items-center gap-2">
                 <i className="ri-add-line"></i>
                 Add Item
               </button>
@@ -91,7 +91,7 @@ export default function AdminNavigation() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-6">CTA Button</h2>
             <div className="grid grid-cols-2 gap-4">
               <FormInput label="Button Text" value={content.ctaButton.label} onChange={(value) => handleCtaChange('label', value)} placeholder="Button text" />
