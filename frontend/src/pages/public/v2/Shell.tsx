@@ -57,7 +57,7 @@ export default function Shell({ children, current = 'work' }: ShellProps) {
                 ))}
               </nav>
               <a
-                href="/assets/documents/george-oti-adjei-cv.pdf"
+                href="https://img.hearvie.dev/documents/george-oti-adjei-cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50"

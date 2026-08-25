@@ -88,7 +88,7 @@ export default function Experiment() {
                   })}
                 </nav>
                 <a
-                  href="/assets/documents/george-oti-adjei-cv.pdf"
+                  href="https://img.hearvie.dev/documents/george-oti-adjei-cv.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[12px] text-gray-700 hover:bg-gray-50"
@@ -130,7 +130,7 @@ export default function Experiment() {
                 }}
               >
                 <img
-                  src="/assets/me/portrait-close.jpg"
+                  src="https://img.hearvie.dev/me/portrait-close.jpg"
                   alt="George Oti-Adjei"
                   className="w-full h-full object-cover object-[50%_80%]"
                 />
@@ -148,7 +148,7 @@ export default function Experiment() {
                 }}
               >
                 <img
-                  src="/assets/me/portrait-close.jpg"
+                  src="https://img.hearvie.dev/me/portrait-close.jpg"
                   alt="George Oti-Adjei"
                   className="w-full h-full object-cover object-[50%_65%]"
                 />
@@ -271,7 +271,7 @@ export default function Experiment() {
                 {aboutVariant === 'classic' ? (
                   <div className="flex items-center gap-6 md:gap-10">
                     <img
-                      src="/assets/me/portrait-full.webp"
+                      src="https://img.hearvie.dev/me/portrait-full.webp"
                       alt="George Oti-Adjei"
                       className="shrink-0 w-24 h-24 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full object-cover object-top ring-1 ring-black/5 shadow-sm"
                     />
@@ -362,7 +362,7 @@ export default function Experiment() {
                   <Reveal origin="left" delay={100} className="lg:col-span-5">
                     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl ring-1 ring-black/5 shadow-sm bg-gray-100">
                       <img
-                        src="/assets/me/portrait-full.webp"
+                        src="https://img.hearvie.dev/me/portrait-full.webp"
                         alt="George Oti-Adjei"
                         className="absolute inset-0 w-full h-full object-cover object-top"
                       />

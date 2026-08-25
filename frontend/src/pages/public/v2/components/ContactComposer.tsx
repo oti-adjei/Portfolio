@@ -9,7 +9,7 @@ type Stage = 'composing' | 'details' | 'sending' | 'sent' | 'error';
 
 const prompts = ['how do you ship?', "what's your stack?", "what's your availability?", 'wanna chat?'];
 
-const RESUME_URL = '/assets/documents/george-oti-adjei-cv.pdf';
+const RESUME_URL = 'https://img.hearvie.dev/documents/george-oti-adjei-cv.pdf';
 
 function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -92,7 +92,7 @@ export default function ContactComposer() {
       <div className="flex items-start gap-3">
         <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 shrink-0">
           <img
-            src="/assets/me/portrait-close.jpg"
+            src="https://img.hearvie.dev/me/portrait-close.jpg"
             alt=""
             className="w-full h-full object-cover object-[50%_62%]"
           />
