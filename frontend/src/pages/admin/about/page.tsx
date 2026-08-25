@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
 import { PageHeader, SaveBar } from '../../../components/admin/ui';
-import { ImagePicker } from '../../../components/admin/ui';
+import { ImageField } from '../../../components/admin/ui';
 
 type Section = 'hero' | 'bio' | 'expertise' | 'journey' | 'philosophy' | 'cta';
 
@@ -179,10 +179,11 @@ export default function AdminAbout() {
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">Hero Section</h2>
                   
-                  <ImagePicker
+                  <ImageField
                     value={aboutPage.hero.avatar.url}
                     onChange={(url) => updateHero('avatar', { ...aboutPage.hero.avatar, url })}
                     label="Avatar Image"
+                    folder="me"
                     aspectRatio="1/1"
                   />
 

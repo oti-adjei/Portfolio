@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
 import { PageHeader, SaveBar } from '../../../components/admin/ui';
-import { ImagePicker } from '../../../components/admin/ui';
+import { ImageField } from '../../../components/admin/ui';
 
 type Section = 'hero' | 'about' | 'skills' | 'featured' | 'services' | 'stats' | 'cta';
 
@@ -252,10 +252,11 @@ export default function AdminHome() {
                     </div>
                   </div>
 
-                  <ImagePicker
+                  <ImageField
                     value={homePage.hero.image.url}
                     onChange={(url) => updateHero('image', { ...homePage.hero.image, url })}
                     label="Hero Image"
+                    folder="me"
                     aspectRatio="4/5"
                   />
 
