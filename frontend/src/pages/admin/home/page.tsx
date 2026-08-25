@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
-import ImageUploader from '../../../components/admin/ImageUploader';
+import { PageHeader, SaveBar } from '../../../components/admin/ui';
+import { ImagePicker } from '../../../components/admin/ui';
 
 type Section = 'hero' | 'about' | 'skills' | 'featured' | 'services' | 'stats' | 'cta';
 
@@ -9,12 +10,21 @@ export default function AdminHome() {
   const { content, updateContent, saveSection } = useContent();
   const [activeSection, setActiveSection] = useState<Section>('hero');
   const [hasChanges, setHasChanges] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
 
   const homePage = content.homePage;
 
   const handleSave = async () => {
-    await saveSection('homePage');
-    setHasChanges(false);
+    setIsSaving(true);
+    try {
+      await saveSection('homePage');
+      setHasChanges(false);
+      setJustSaved(true);
+      setTimeout(() => setJustSaved(false), 3000);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const sections = [
@@ -136,26 +146,12 @@ export default function AdminHome() {
     <AdminLayout>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Home Page Editor</h1>
-            <p className="text-sm text-gray-600 mt-1">Edit all sections of your home page</p>
-          </div>
-          {hasChanges && (
-            <button
-              onClick={handleSave}
-              className="px-6 py-2 bg-teal-500 text-white rounded-lg font-medium hover:bg-teal-600 transition-colors inline-flex items-center gap-2"
-            >
-              <i className="ri-save-line"></i>
-              Changes Saved
-            </button>
-          )}
-        </div>
+        <PageHeader eyebrow="Pages" title="Home page" description="Hero, about, skills, featured work, services, stats and CTA." />
 
         <div className="grid grid-cols-12 gap-6">
           {/* Section Navigation */}
           <div className="col-span-3">
-            <div className="bg-white rounded-xl border border-gray-200 p-4 sticky top-24">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 sticky top-24">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Sections</h3>
               <nav className="space-y-1">
                 {sections.map((section) => (
@@ -164,7 +160,7 @@ export default function AdminHome() {
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       activeSection === section.id
-                        ? 'bg-teal-50 text-teal-600'
+                        ? 'bg-signal/10 text-signal'
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
@@ -178,85 +174,85 @@ export default function AdminHome() {
 
           {/* Content Editor */}
           <div className="col-span-9">
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
               {/* Hero Section */}
               {activeSection === 'hero' && (
                 <div className="space-y-6">
                   <h2 className="text-xl font-semibold text-gray-900">Hero Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Badge Text</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Badge Text</label>
                     <input
                       type="text"
                       value={homePage.hero.badge}
                       onChange={(e) => updateHero('badge', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Main Heading</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Main Heading</label>
                     <input
                       type="text"
                       value={homePage.hero.heading}
                       onChange={(e) => updateHero('heading', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Subtitle</label>
                     <textarea
                       value={homePage.hero.subtitle}
                       onChange={(e) => updateHero('subtitle', e.target.value)}
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Primary Button Text</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Primary Button Text</label>
                       <input
                         type="text"
                         value={homePage.hero.ctaButton.label}
                         onChange={(e) => updateHero('ctaButton', { ...homePage.hero.ctaButton, label: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Primary Button URL</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Primary Button URL</label>
                       <input
                         type="text"
                         value={homePage.hero.ctaButton.url}
                         onChange={(e) => updateHero('ctaButton', { ...homePage.hero.ctaButton, url: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Secondary Button Text</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Secondary Button Text</label>
                       <input
                         type="text"
                         value={homePage.hero.secondaryButton.label}
                         onChange={(e) => updateHero('secondaryButton', { ...homePage.hero.secondaryButton, label: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Secondary Button URL</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Secondary Button URL</label>
                       <input
                         type="text"
                         value={homePage.hero.secondaryButton.url}
                         onChange={(e) => updateHero('secondaryButton', { ...homePage.hero.secondaryButton, url: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                       />
                     </div>
                   </div>
 
-                  <ImageUploader
+                  <ImagePicker
                     value={homePage.hero.image.url}
                     onChange={(url) => updateHero('image', { ...homePage.hero.image, url })}
                     label="Hero Image"
@@ -278,7 +274,7 @@ export default function AdminHome() {
                               updateHero('socialIcons', updated);
                             }}
                             placeholder="Platform"
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="flex-1 px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                           <input
                             type="url"
@@ -289,7 +285,7 @@ export default function AdminHome() {
                               updateHero('socialIcons', updated);
                             }}
                             placeholder="URL"
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="flex-1 px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                         </div>
                       ))}
@@ -304,32 +300,32 @@ export default function AdminHome() {
                   <h2 className="text-xl font-semibold text-gray-900">About Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Section Title</label>
                     <input
                       type="text"
                       value={homePage.about.sectionTitle}
                       onChange={(e) => updateAbout('sectionTitle', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Name</label>
                     <input
                       type="text"
                       value={homePage.about.name}
                       onChange={(e) => updateAbout('name', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Role</label>
                     <input
                       type="text"
                       value={homePage.about.role}
                       onChange={(e) => updateAbout('role', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -347,7 +343,7 @@ export default function AdminHome() {
                           }}
                           rows={3}
                           placeholder={`Paragraph ${index + 1}`}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                          className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                         />
                       ))}
                     </div>
@@ -366,7 +362,7 @@ export default function AdminHome() {
                             updated[index] = { ...updated[index], name: e.target.value };
                             updateAbout('tools', updated);
                           }}
-                          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                          className="px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                         />
                       ))}
                     </div>
@@ -380,22 +376,22 @@ export default function AdminHome() {
                   <h2 className="text-xl font-semibold text-gray-900">Skills Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Title</label>
                     <input
                       type="text"
                       value={homePage.skills.title}
                       onChange={(e) => updateSkills('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Subtitle</label>
                     <input
                       type="text"
                       value={homePage.skills.subtitle}
                       onChange={(e) => updateSkills('subtitle', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -417,7 +413,7 @@ export default function AdminHome() {
                                 updated[clusterIndex] = { ...updated[clusterIndex], name: e.target.value };
                                 updateSkills('clusters', updated);
                               }}
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                             />
                           </div>
                           <div className="space-y-2">
@@ -434,7 +430,7 @@ export default function AdminHome() {
                                     };
                                     updateSkills('clusters', updated);
                                   }}
-                                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                  className="flex-1 px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                                 />
                                 <input
                                   type="number"
@@ -449,7 +445,7 @@ export default function AdminHome() {
                                     };
                                     updateSkills('clusters', updated);
                                   }}
-                                  className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                  className="w-20 px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                                 />
                                 <span className="text-sm text-gray-600">%</span>
                               </div>
@@ -468,27 +464,27 @@ export default function AdminHome() {
                   <h2 className="text-xl font-semibold text-gray-900">Featured Works</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Title</label>
                     <input
                       type="text"
                       value={homePage.featuredWorks.title}
                       onChange={(e) => updateFeaturedWorks('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Subtitle</label>
                     <input
                       type="text"
                       value={homePage.featuredWorks.subtitle}
                       onChange={(e) => updateFeaturedWorks('subtitle', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Maximum Rows</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Maximum Rows</label>
                     <input
                       type="number"
                       min="1"
@@ -498,7 +494,7 @@ export default function AdminHome() {
                         ...homePage.featuredWorks.displaySettings,
                         maxRows: parseInt(e.target.value)
                       })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -511,7 +507,7 @@ export default function AdminHome() {
                         ...homePage.featuredWorks.displaySettings,
                         randomize: e.target.checked
                       })}
-                      className="w-4 h-4 text-teal-500 border-gray-300 rounded focus:ring-teal-500"
+                      className="w-4 h-4 rounded accent-signal"
                     />
                     <label htmlFor="randomize" className="text-sm font-medium text-gray-700">
                       Randomize project order on each page load
@@ -526,22 +522,22 @@ export default function AdminHome() {
                   <h2 className="text-xl font-semibold text-gray-900">Services Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Title</label>
                     <input
                       type="text"
                       value={homePage.services.title}
                       onChange={(e) => updateServices('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Subtitle</label>
                     <input
                       type="text"
                       value={homePage.services.subtitle}
                       onChange={(e) => updateServices('subtitle', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -551,8 +547,8 @@ export default function AdminHome() {
                       {homePage.services.items.map((service, index) => (
                         <div key={service.id} className="border border-gray-200 rounded-lg p-4">
                           <div className="flex items-start gap-3 mb-3">
-                            <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <i className={`${service.icon} text-xl text-teal-500`}></i>
+                            <div className="w-10 h-10 bg-signal/10 rounded-full flex items-center justify-center flex-shrink-0">
+                              <i className={`${service.icon} text-xl text-signal`}></i>
                             </div>
                             <input
                               type="text"
@@ -563,7 +559,7 @@ export default function AdminHome() {
                                 updateServices('items', updated);
                               }}
                               placeholder="Service Title"
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                             />
                           </div>
                           <textarea
@@ -575,7 +571,7 @@ export default function AdminHome() {
                             }}
                             rows={2}
                             placeholder="Service Description"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                         </div>
                       ))}
@@ -590,22 +586,22 @@ export default function AdminHome() {
                   <h2 className="text-xl font-semibold text-gray-900">Stats Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Title</label>
                     <input
                       type="text"
                       value={homePage.stats.title}
                       onChange={(e) => updateStats('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Subtitle</label>
                     <input
                       type="text"
                       value={homePage.stats.subtitle}
                       onChange={(e) => updateStats('subtitle', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
@@ -624,7 +620,7 @@ export default function AdminHome() {
                                 updateStats('items', updated);
                               }}
                               placeholder="Value (e.g., 50+)"
-                              className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-bold focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                              className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-bold focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                             />
                             <input
                               type="text"
@@ -635,7 +631,7 @@ export default function AdminHome() {
                                 updateStats('items', updated);
                               }}
                               placeholder="Label"
-                              className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                              className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                             />
                           </div>
                           <textarea
@@ -647,7 +643,7 @@ export default function AdminHome() {
                             }}
                             rows={2}
                             placeholder="Description"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                           />
                         </div>
                       ))}
@@ -662,28 +658,28 @@ export default function AdminHome() {
                   <h2 className="text-xl font-semibold text-gray-900">Contact CTA Section</h2>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Heading</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Heading</label>
                     <input
                       type="text"
                       value={homePage.contactCTA.heading}
                       onChange={(e) => updateContactCTA('heading', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Description</label>
                     <textarea
                       value={homePage.contactCTA.description}
                       onChange={(e) => updateContactCTA('description', e.target.value)}
                       rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Button Text</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Button Text</label>
                       <input
                         type="text"
                         value={homePage.contactCTA.ctaButton.label}
@@ -691,11 +687,11 @@ export default function AdminHome() {
                           ...homePage.contactCTA.ctaButton,
                           label: e.target.value
                         })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Button URL</label>
+                      <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Button URL</label>
                       <input
                         type="text"
                         value={homePage.contactCTA.ctaButton.url}
@@ -703,7 +699,7 @@ export default function AdminHome() {
                           ...homePage.contactCTA.ctaButton,
                           url: e.target.value
                         })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-3 py-2 rounded-xl bg-white ring-1 ring-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                       />
                     </div>
                   </div>
@@ -713,6 +709,8 @@ export default function AdminHome() {
           </div>
         </div>
       </div>
+
+        <SaveBar onSave={() => void handleSave()} saving={isSaving} saved={justSaved} dirty={hasChanges} />
     </AdminLayout>
   );
 }

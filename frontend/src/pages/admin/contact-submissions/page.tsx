@@ -121,13 +121,13 @@ export default function AdminContactSubmissions() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setSelectedSubmission(submission)}
-                    className="flex-1 min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50"
+                    className="flex-1 min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-signal hover:bg-signal/10"
                   >
                     View
                   </button>
                   <button
                     onClick={() => { window.location.href = `mailto:${submission.email}`; }}
-                    className="min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50"
+                    className="min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-signal hover:bg-signal/10"
                     title="Reply via email"
                   >
                     <i className="ri-mail-send-line"></i>
@@ -187,14 +187,14 @@ export default function AdminContactSubmissions() {
                     <td className="px-4 py-3 text-right space-x-2">
                       <button
                         onClick={() => setSelectedSubmission(submission)}
-                        className="text-teal-600 hover:text-teal-700"
+                        className="text-signal hover:text-signal"
                         title="View details"
                       >
                         <i className="ri-eye-line"></i>
                       </button>
                       <button
                         onClick={() => window.location.href = `mailto:${submission.email}`}
-                        className="text-teal-600 hover:text-teal-700"
+                        className="text-signal hover:text-signal"
                         title="Reply via email"
                       >
                         <i className="ri-mail-send-line"></i>
@@ -287,7 +287,7 @@ export default function AdminContactSubmissions() {
               <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
                 <button
                   onClick={() => window.location.href = `mailto:${selectedSubmission.email}`}
-                  className="min-h-11 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+                  className="min-h-11 px-4 py-2 bg-signal text-white rounded-lg hover:opacity-90"
                 >
                   Reply via Email
                 </button>

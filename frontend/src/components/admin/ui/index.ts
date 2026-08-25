@@ -8,6 +8,7 @@ export { default as Modal } from './Modal';
 export { default as Notice } from './Notice';
 export { default as Pagination } from './Pagination';
 export { default as PageHeader } from './PageHeader';
+export { default as SaveBar } from './SaveBar';
 export { default as StatusBadge } from './StatusBadge';
 export { default as Toolbar } from './Toolbar';
 export { Table, Td, Th, Tr } from './Table';

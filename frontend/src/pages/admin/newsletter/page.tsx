@@ -122,7 +122,7 @@ export default function AdminNewsletter() {
                   </select>
                   <button
                     onClick={() => { window.location.href = `mailto:${subscriber.email}`; }}
-                    className="min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50"
+                    className="min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-signal hover:bg-signal/10"
                   >
                     <i className="ri-mail-send-line"></i>
                   </button>
@@ -186,7 +186,7 @@ export default function AdminNewsletter() {
                     <td className="px-4 py-3 text-right">
                       <button
                         onClick={() => window.location.href = `mailto:${subscriber.email}`}
-                        className="text-teal-600 hover:text-teal-700"
+                        className="text-signal hover:text-signal"
                         title="Send email"
                       >
                         <i className="ri-mail-send-line"></i>

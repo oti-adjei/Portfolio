@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import AdminLayout from '../../../../components/admin/AdminLayout';
+import { Button, ImagePicker, PageHeader } from '../../../../components/admin/ui';
 import FormInput from '../../../../components/admin/FormInput';
 import FormTextarea from '../../../../components/admin/FormTextarea';
-import ImageUpload from '../../../../components/admin/ImageUpload';
 import { useContent } from '../../../../admin/contexts/AdminContentContext';
 import type { Project } from '../../../../types/siteContent';
 
@@ -221,63 +221,37 @@ export default function EditProject() {
   return (
     <AdminLayout>
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link
-              to="/admin/projects"
-              className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
-            >
-              <i className="ri-arrow-left-line text-gray-600"></i>
-            </Link>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                {isNewProject ? 'New Project' : 'Edit Project'}
-              </h1>
-              <p className="text-gray-600 mt-1">{project.title || 'Untitled Project'}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {!isNewProject && (
-              <button
-                onClick={() => setShowDeleteConfirm(true)}
-                className="px-4 py-2.5 border border-red-300 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors whitespace-nowrap"
-              >
-                <i className="ri-delete-bin-line mr-2"></i>
-                Delete
-              </button>
-            )}
-            <button
-              onClick={handleSave}
-              disabled={isSaving}
-              className="px-6 py-2.5 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors whitespace-nowrap disabled:opacity-50"
-            >
-              {isSaving ? (
-                <>
-                  <i className="ri-loader-4-line animate-spin mr-2"></i>
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <i className="ri-save-line mr-2"></i>
-                  Save Project
-                </>
+        <PageHeader
+          eyebrow={isNewProject ? 'New' : 'Editing'}
+          title={isNewProject ? 'New project' : 'Edit project'}
+          description={project.title || 'Untitled project'}
+          actions={
+            <>
+              <Link to="/admin/projects">
+                <Button icon="ri-arrow-left-line">Back</Button>
+              </Link>
+              {!isNewProject && (
+                <Button variant="danger" icon="ri-delete-bin-line" onClick={() => setShowDeleteConfirm(true)}>
+                  Delete
+                </Button>
               )}
-            </button>
-          </div>
-        </div>
+              <Button variant="primary" icon="ri-save-line" loading={isSaving} onClick={() => void handleSave()}>
+                {isSaving ? 'Saving\u2026' : 'Save project'}
+              </Button>
+            </>
+          }
+        />
 
         {/* Tabs */}
-        <div className="bg-white rounded-xl border border-gray-200 mb-6">
+        <div className="bg-white rounded-2xl ring-1 ring-black/5 mb-6">
           <div className="flex border-b border-gray-200">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex-1 px-6 py-4 text-sm font-medium transition-colors ${
+                className={`flex-1 whitespace-nowrap px-5 py-3.5 text-[13px] font-medium transition-colors ${
                   activeTab === tab.id
-                    ? 'text-teal-600 border-b-2 border-teal-600'
+                    ? 'text-signal border-b-2 border-signal'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -301,7 +275,7 @@ export default function EditProject() {
 
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-[12px] font-medium text-gray-700 mb-1.5">
                       Category
                     </label>
                     <select
@@ -309,7 +283,7 @@ export default function EditProject() {
                       onChange={(e) =>
                         setProject({ ...project, category: e.target.value as any })
                       }
-                      className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                     >
                       <option value="web">Web</option>
                       <option value="mobile">Mobile</option>
@@ -325,7 +299,7 @@ export default function EditProject() {
                   />
                 </div>
 
-                <ImageUpload
+                <ImagePicker
                   label="Thumbnail Image"
                   value={project.thumbnail.url}
                   onChange={(value) => setProject({ ...project, thumbnail: { ...project.thumbnail, url: value } })}
@@ -333,7 +307,7 @@ export default function EditProject() {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[12px] font-medium text-gray-700 mb-1.5">
                     Tags
                   </label>
                   <div className="space-y-3">
@@ -344,7 +318,7 @@ export default function EditProject() {
                           value={tag}
                           onChange={(e) => updateTag(index, e.target.value)}
                           placeholder="Enter tag"
-                          className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                          className="flex-1 px-4 py-2.5 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                         />
                         <button
                           onClick={() => removeTag(index)}
@@ -356,7 +330,7 @@ export default function EditProject() {
                     ))}
                     <button
                       onClick={addTag}
-                      className="w-full px-4 py-2.5 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-600 hover:border-teal-500 hover:text-teal-600 transition-colors"
+                      className="w-full px-4 py-2.5 border border-dashed border-gray-300 rounded-xl text-[13px] text-gray-500 hover:border-signal hover:text-signal transition-colors"
                     >
                       <i className="ri-add-line mr-2"></i>
                       Add Tag
@@ -452,7 +426,7 @@ export default function EditProject() {
                 />
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[12px] font-medium text-gray-700 mb-1.5">
                     Results
                   </label>
                   <div className="space-y-3">
@@ -463,7 +437,7 @@ export default function EditProject() {
                           value={result}
                           onChange={(e) => updateResult(index, e.target.value)}
                           placeholder="Enter result or achievement"
-                          className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                          className="flex-1 px-4 py-2.5 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
                         />
                         <button
                           onClick={() => removeResult(index)}
@@ -475,7 +449,7 @@ export default function EditProject() {
                     ))}
                     <button
                       onClick={addResult}
-                      className="w-full px-4 py-2.5 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-600 hover:border-teal-500 hover:text-teal-600 transition-colors"
+                      className="w-full px-4 py-2.5 border border-dashed border-gray-300 rounded-xl text-[13px] text-gray-500 hover:border-signal hover:text-signal transition-colors"
                     >
                       <i className="ri-add-line mr-2"></i>
                       Add Result
@@ -523,7 +497,7 @@ export default function EditProject() {
                         </div>
 
                         <div className="flex-1 space-y-4">
-                          <ImageUpload
+                          <ImagePicker
                             label={`Image ${index + 1}`}
                             value={image.url}
                             onChange={(value) => updateGalleryImage(index, 'url', value)}
@@ -550,7 +524,7 @@ export default function EditProject() {
 
                   <button
                     onClick={addGalleryImage}
-                    className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-sm text-gray-600 hover:border-teal-500 hover:text-teal-600 transition-colors"
+                    className="w-full px-4 py-3 border border-dashed border-gray-300 rounded-xl text-[13px] text-gray-500 hover:border-signal hover:text-signal transition-colors"
                   >
                     <i className="ri-add-line mr-2"></i>
                     Add Gallery Image
