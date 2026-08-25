@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import AdminLayout from "../../../components/admin/AdminLayout";
 import { useContent } from "../../../admin/contexts/AdminContentContext";
+import { useAuth } from "../../../admin/contexts/AdminAuthContext";
 import {
   Button,
   EmptyState,
@@ -17,14 +18,20 @@ import {
 
 export default function AdminNewsletter() {
   const { content, fetchNewsletterSubscribers, updateNewsletterStatus } = useContent();
+  const { token } = useAuth();
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState(1);
   const limit = 20;
 
+  // token is null on first render — AdminAuthContext restores it from storage in
+  // an effect. Firing before then threw "Not authenticated" into a floating
+  // promise and never retried, so a hard load of this page showed an empty list.
   useEffect(() => {
+    if (!token) return;
     void fetchNewsletterSubscribers();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const subscribers = useMemo(
     () => [...content.newsletterSubscribers].sort((a, b) => b.created_at.localeCompare(a.created_at)),

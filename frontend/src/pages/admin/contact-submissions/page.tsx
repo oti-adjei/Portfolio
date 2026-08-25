@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import AdminLayout from "../../../components/admin/AdminLayout";
 import { useContent } from "../../../admin/contexts/AdminContentContext";
+import { useAuth } from "../../../admin/contexts/AdminAuthContext";
 import {
   Button,
   EmptyState,
@@ -19,15 +20,21 @@ import type { ContactSubmission } from "../../../types/siteContent";
 
 export default function AdminContactSubmissions() {
   const { content, fetchContactSubmissions, updateContactStatus } = useContent();
+  const { token } = useAuth();
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState(1);
   const [selectedSubmission, setSelectedSubmission] = useState<ContactSubmission | null>(null);
   const limit = 20;
 
+  // token is null on first render — AdminAuthContext restores it from storage in
+  // an effect. Firing before then threw "Not authenticated" into a floating
+  // promise and never retried, so a hard load of this page showed an empty list.
   useEffect(() => {
+    if (!token) return;
     void fetchContactSubmissions();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const submissions = useMemo(
     () => [...content.contactSubmissions].sort((a, b) => b.created_at.localeCompare(a.created_at)),

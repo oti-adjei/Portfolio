@@ -120,15 +120,18 @@ export function AdminContentProvider({ children }: { children: ReactNode }) {
         fetchAdminStreams(token),
       ]);
 
-      setContent({
+      // Functional update, and inbox data is carried over rather than reset.
+      // refresh() does not fetch submissions or subscribers — those have their
+      // own loaders — so a plain replace here raced them: refresh makes a dozen
+      // requests and lands last, wiping whatever the inbox had just fetched.
+      setContent((prev) => ({
+        ...prev,
         ...sections,
         projects,
         blogPosts,
         notes,
         streamEvents,
-        newsletterSubscribers: [],
-        contactSubmissions: [],
-      });
+      }));
     } catch (err) {
       setError(toErrorMessage(err));
     } finally {

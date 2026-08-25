@@ -7,6 +7,17 @@ Entries are ordered newest first.
 
 ## 2026-08-25
 
+### admin — Contact inbox and newsletter list were always empty
+
+Two bugs, either of which alone hid every submission.
+
+- **`refresh()` clobbered the inbox.** It ended with a full `setContent({…, contactSubmissions: [], newsletterSubscribers: [] })`. Those two lists have their own loaders and refresh never fetched them, so the hardcoded `[]` raced the page's own fetch — and since refresh makes a dozen requests to the inbox's one, it reliably landed last and wiped the result. Now a functional update that carries both lists through.
+- **The page fetched before the token existed.** `token` starts `null` and `AdminAuthContext` restores it from storage in an effect, but the inbox effect ran once on mount with `[]` deps. `fetchContactSubmissions()` threw "Not authenticated" into a floating promise and never retried. Both the inbox and newsletter pages now gate on `token` and re-run when it arrives.
+
+Together these meant a real submission could land in D1 and never appear in the dashboard, and the "Recent messages" card on the dashboard was permanently empty.
+
+---
+
 ### frontend — Gallery video, screenshot crops, project links
 
 - **Gallery video** — `GalleryMedia` picks `<video>` or `<img>` by extension (case-insensitive; R2 preserves the uploaded filename's case). Plays once on first scroll into view, no loop, muted, skipped under `prefers-reduced-motion`. `object-contain` on ink rather than `object-cover`, since gallery videos are usually portrait screen recordings.
