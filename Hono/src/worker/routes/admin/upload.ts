@@ -43,7 +43,7 @@ adminUpload.post("/", async (c) => {
 
   const key = buildObjectKey(folder, file.name);
 
-  await c.env.IMAGES.put(key, bytes, {
+  await c.env.IMAGE_BUCKET.put(key, bytes, {
     httpMetadata: {
       contentType: mime,
       cacheControl: "public, max-age=31536000, immutable",
