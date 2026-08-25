@@ -1,3 +1,5 @@
+import Field from './ui/Field';
+
 interface FormInputProps {
   label: string;
   value: string;
@@ -7,28 +9,7 @@ interface FormInputProps {
   required?: boolean;
 }
 
-export default function FormInput({
-  label,
-  value,
-  onChange,
-  placeholder = '',
-  type = 'text',
-  required = false,
-}: FormInputProps) {
-  return (
-    <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700">
-        {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        required={required}
-        className="w-full min-h-11 px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-      />
-    </div>
-  );
+/** @deprecated Use `ui/Field` directly. Kept as a wrapper during the admin reskin migration. */
+export default function FormInput({ type = 'text', ...rest }: FormInputProps) {
+  return <Field as="input" type={type} {...rest} />;
 }

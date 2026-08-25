@@ -45,7 +45,7 @@ npm run dev                      # http://localhost:5173
 
 ## Site structure
 
-The public site is versioned by design generation, not by branch:
+The public site is versioned by design generation, not by branch. V1 was the original site — a conventional multi-page layout. V2 is the redesign that replaced it in June 2026: a single-page home with anchored sections, a sticky pill nav, a cream/white theme toggle, and dedicated sub-pages for the longer-form material. It was built at `/experiment/*` and promoted to the root once it was done; the old design was kept rather than deleted.
 
 - **V2** is canonical and lives at the root URLs — `/`, `/about`, `/works`, `/project/:id`, `/library`, `/press`, `/blog/:slug`, `/notes/:slug`, plus `/design-system`.
 - **V1** is archived at `/v1/*` and is not touched by redesign work.
@@ -76,6 +76,15 @@ npx wrangler tail  # live logs
 ```
 
 There is no test suite. Verification is `npm run build` (type-check) plus `npm run lint`.
+
+## Deployment
+
+The two halves ship separately:
+
+- **Site (`frontend/`)** — built by Cloudflare Pages. The repo is wired to a Pages project in the Cloudflare dashboard, so a push deploys it; there is no build config or CI workflow in this repo. Build settings and env vars (`VITE_API_BASE_URL`, `VITE_CONTENT_SOURCE`) live in the dashboard.
+- **API (`Hono/`)** — deployed by hand with `npm run deploy` (Wrangler) from the `Hono/` folder. Secrets are set with `npx wrangler secret put`, not from `.dev.vars`.
+
+After deploying the API to a new origin, update `CORS_ALLOWED_ORIGINS` on the Worker and `VITE_API_BASE_URL` in the Pages project.
 
 ## Docs
 

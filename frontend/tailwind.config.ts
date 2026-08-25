@@ -7,6 +7,13 @@ export default {
       fontFamily: {
         sans: ['Jost', 'sans-serif'],
       },
+      colors: {
+        signal: '#f75124',
+        'signal-purple': '#8067f0',
+        cream: '#faf8ef',
+        'cream-surface': '#f3efe2',
+        ink: '#02231c',
+      },
       animation: {
         'float-slow': 'float 20s ease-in-out infinite',
         'float-medium': 'float 15s ease-in-out infinite',
