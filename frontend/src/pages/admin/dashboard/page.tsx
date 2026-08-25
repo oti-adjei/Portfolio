@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
+import { Button, Card, EmptyState, Notice, PageHeader, StatusBadge } from '../../../components/admin/ui';
 
 function categoryCount(category: string, values: Array<{ category: string }>): number {
   return values.filter((item) => item.category.toLowerCase() === category.toLowerCase()).length;
@@ -10,48 +11,12 @@ export default function AdminDashboard() {
   const { content, isLoading, refresh } = useContent();
 
   const stats = [
-    {
-      label: 'Total Projects',
-      value: content.projects.length,
-      icon: 'ri-folder-line',
-      color: 'bg-blue-500',
-      link: '/admin/projects',
-    },
-    {
-      label: 'Blog Posts',
-      value: content.blogPosts.length,
-      icon: 'ri-article-line',
-      color: 'bg-teal-500',
-      link: '/admin/blog',
-    },
-    {
-      label: 'Notes',
-      value: content.notes.length,
-      icon: 'ri-sticky-note-line',
-      color: 'bg-amber-500',
-      link: '/admin/notes',
-    },
-    {
-      label: 'Streams',
-      value: content.streamEvents.length,
-      icon: 'ri-live-line',
-      color: 'bg-purple-500',
-      link: '/admin/streams',
-    },
-    {
-      label: 'Newsletter',
-      value: content.newsletterSubscribers.length,
-      icon: 'ri-mail-send-line',
-      color: 'bg-pink-500',
-      link: '/admin/newsletter',
-    },
-    {
-      label: 'Messages',
-      value: content.contactSubmissions.length,
-      icon: 'ri-message-3-line',
-      color: 'bg-indigo-500',
-      link: '/admin/contact-submissions',
-    },
+    { label: 'Projects', value: content.projects.length, icon: 'ri-folder-line', link: '/admin/projects' },
+    { label: 'Blog posts', value: content.blogPosts.length, icon: 'ri-article-line', link: '/admin/blog' },
+    { label: 'Notes', value: content.notes.length, icon: 'ri-sticky-note-line', link: '/admin/notes' },
+    { label: 'Streams', value: content.streamEvents.length, icon: 'ri-live-line', link: '/admin/streams' },
+    { label: 'Subscribers', value: content.newsletterSubscribers.length, icon: 'ri-mail-send-line', link: '/admin/newsletter' },
+    { label: 'Messages', value: content.contactSubmissions.length, icon: 'ri-message-3-line', link: '/admin/contact-submissions' },
   ];
 
   const quickLinks = [
@@ -68,125 +33,137 @@ export default function AdminDashboard() {
     { path: '/admin/footer', icon: 'ri-layout-bottom-line', label: 'Footer', description: 'Edit footer content' },
   ];
 
+  const newThisWeek = content.contactSubmissions.filter((submission) => {
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    return new Date(submission.created_at) > oneWeekAgo;
+  }).length;
+
+  const recent = content.contactSubmissions.slice(0, 5);
+
   return (
     <AdminLayout>
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600 mt-2">Manage your portfolio content</p>
-          </div>
-          <button
-            onClick={() => void refresh()}
-            className="px-4 py-2.5 border border-gray-300 text-sm font-medium rounded-lg hover:bg-gray-50"
-          >
-            Refresh Data
-          </button>
-        </div>
+      <div className="max-w-[1380px] mx-auto">
+        <PageHeader
+          eyebrow="Overview"
+          title="Dashboard"
+          description="Everything on the site, at a glance."
+          actions={
+            <Button icon="ri-refresh-line" onClick={() => void refresh()} loading={isLoading}>
+              Refresh
+            </Button>
+          }
+        />
 
         {isLoading && (
-          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6 text-gray-600">
-            Loading admin data...
+          <div className="mb-5">
+            <Notice>Loading admin data…</Notice>
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {stats.map((stat, index) => (
-            <Link key={index} to={stat.link} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center`}>
-                  <i className={`${stat.icon} text-2xl text-white`}></i>
-                </div>
-              </div>
-              <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-              <div className="text-sm text-gray-600">{stat.label}</div>
+        {/* Counts */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+          {stats.map((stat) => (
+            <Link
+              key={stat.label}
+              to={stat.link}
+              className="rounded-2xl ring-1 ring-black/5 bg-white p-4 hover:ring-signal/30 transition-colors group"
+            >
+              <i className={`${stat.icon} text-gray-300 group-hover:text-signal transition-colors`} aria-hidden="true" />
+              <div className="mt-1.5 text-2xl font-bold tracking-tight text-gray-900 tabular-nums">{stat.value}</div>
+              <div className="text-[12px] text-gray-500">{stat.label}</div>
             </Link>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white border border-gray-200 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
-            <div className="space-y-3">
-              {content.contactSubmissions.slice(0, 5).map((submission) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+          <div className="lg:col-span-2">
+            <Card
+              title="Recent messages"
+              actions={
                 <Link
-                  key={submission.id}
                   to="/admin/contact-submissions"
-                  className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0 hover:bg-gray-50"
+                  className="text-[12px] text-gray-500 hover:text-signal transition-colors"
                 >
-                  <div>
-                    <p className="font-medium text-gray-900">{submission.name}</p>
-                    <p className="text-sm text-gray-600">{submission.email}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xs text-gray-500">{new Date(submission.created_at).toLocaleDateString()}</p>
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      submission.status === 'new'
-                        ? 'bg-yellow-100 text-yellow-700'
-                        : submission.status === 'read'
-                        ? 'bg-blue-100 text-blue-700'
-                        : submission.status === 'replied'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-gray-100 text-gray-600'
-                    }`}>
-                      {submission.status}
-                    </span>
-                  </div>
+                  View inbox
                 </Link>
-              ))}
-              {content.contactSubmissions.length === 0 && (
-                <p className="text-sm text-gray-500 text-center py-4">No recent messages</p>
+              }
+              padded={false}
+            >
+              {recent.length === 0 ? (
+                <EmptyState
+                  icon="ri-message-3-line"
+                  title="No messages yet"
+                  description="Contact form submissions land here."
+                />
+              ) : (
+                <ul>
+                  {recent.map((submission) => (
+                    <li key={submission.id} className="border-b border-black/5 last:border-0">
+                      <Link
+                        to="/admin/contact-submissions"
+                        className="flex items-center justify-between gap-4 px-5 py-3 hover:bg-gray-50 transition-colors"
+                      >
+                        <div className="min-w-0">
+                          <p className="text-[13px] font-medium text-gray-900 truncate">{submission.name}</p>
+                          <p className="text-[12px] text-gray-500 truncate">{submission.email}</p>
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
+                          <span className="text-[11px] text-gray-400 tabular-nums">
+                            {new Date(submission.created_at).toLocaleDateString()}
+                          </span>
+                          <StatusBadge status={submission.status} />
+                        </div>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               )}
-            </div>
+            </Card>
           </div>
 
-          <div className="space-y-4">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-white border border-gray-200 rounded-xl p-4">
-                <div className="text-sm text-gray-500">WEB</div>
-                <div className="text-2xl font-bold text-gray-900">{categoryCount('web', content.projects)}</div>
-              </div>
-              <div className="bg-white border border-gray-200 rounded-xl p-4">
-                <div className="text-sm text-gray-500">MOBILE</div>
-                <div className="text-2xl font-bold text-gray-900">{categoryCount('mobile', content.projects)}</div>
-              </div>
-              <div className="bg-white border border-gray-200 rounded-xl p-4">
-                <div className="text-sm text-gray-500">DESKTOP</div>
-                <div className="text-2xl font-bold text-gray-900">{categoryCount('desktop', content.projects)}</div>
-              </div>
-            </div>
+          <div className="space-y-3">
+            <Card title="Projects by category">
+              <dl className="space-y-2.5">
+                {['web', 'mobile', 'desktop'].map((category) => (
+                  <div key={category} className="flex items-baseline justify-between">
+                    <dt className="text-[11px] uppercase tracking-[0.14em] text-gray-400">{category}</dt>
+                    <dd className="text-[15px] font-semibold text-gray-900 tabular-nums">
+                      {categoryCount(category, content.projects)}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Card>
 
-            <div className="bg-white border border-gray-200 rounded-xl p-4">
-              <div className="text-sm text-gray-500">New This Week</div>
-              <div className="text-2xl font-bold text-gray-900">
-                {content.contactSubmissions.filter(s => {
-                  const oneWeekAgo = new Date();
-                  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-                  return new Date(s.created_at) > oneWeekAgo;
-                }).length}
-              </div>
-            </div>
+            <Card title="New this week">
+              <p className="text-3xl font-bold tracking-tight text-gray-900 tabular-nums">{newThisWeek}</p>
+              <p className="text-[12px] text-gray-500 mt-0.5">contact submissions</p>
+            </Card>
           </div>
         </div>
 
-        <div>
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Edit Content</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {quickLinks.map((link, index) => (
-              <Link key={index} to={link.path} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow group">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-teal-100 transition-colors">
-                    <i className={`${link.icon} text-2xl text-gray-600 group-hover:text-teal-600 transition-colors`}></i>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-teal-600 transition-colors">{link.label}</h3>
-                    <p className="text-sm text-gray-600">{link.description}</p>
-                  </div>
-                  <i className="ri-arrow-right-line text-gray-400 group-hover:text-teal-600 group-hover:translate-x-1 transition-all"></i>
-                </div>
-              </Link>
-            ))}
-          </div>
+        <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400 mb-3">Edit content</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {quickLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className="flex items-center gap-3 rounded-2xl ring-1 ring-black/5 bg-white px-4 py-3.5 hover:ring-signal/30 transition-colors group"
+            >
+              <span className="w-9 h-9 rounded-full bg-cream-surface inline-flex items-center justify-center text-gray-500 group-hover:text-signal transition-colors shrink-0">
+                <i className={link.icon} aria-hidden="true" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[13px] font-medium text-gray-900 truncate">{link.label}</span>
+                <span className="block text-[12px] text-gray-500 truncate">{link.description}</span>
+              </span>
+              <i
+                className="ri-arrow-right-line text-gray-300 group-hover:text-signal group-hover:translate-x-0.5 transition-all shrink-0"
+                aria-hidden="true"
+              />
+            </Link>
+          ))}
         </div>
       </div>
     </AdminLayout>

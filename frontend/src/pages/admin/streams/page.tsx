@@ -1,6 +1,18 @@
 import { useMemo, useState } from "react";
 import AdminLayout from "../../../components/admin/AdminLayout";
 import { useContent } from "../../../admin/contexts/AdminContentContext";
+import {
+  Badge,
+  Button,
+  EmptyState,
+  Field,
+  Modal,
+  PageHeader,
+  Table,
+  Td,
+  Th,
+  Tr,
+} from "../../../components/admin/ui";
 import type { StreamEvent } from "../../../types/siteContent";
 
 function createEmptyStream(): StreamEvent {
@@ -16,6 +28,22 @@ function createEmptyStream(): StreamEvent {
     recurringDay: 1,
   };
 }
+
+const platformOptions = [
+  { value: "youtube", label: "YouTube" },
+  { value: "twitch", label: "Twitch" },
+  { value: "tiktok", label: "TikTok" },
+];
+
+const dayOptions = [
+  { value: "0", label: "Sunday" },
+  { value: "1", label: "Monday" },
+  { value: "2", label: "Tuesday" },
+  { value: "3", label: "Wednesday" },
+  { value: "4", label: "Thursday" },
+  { value: "5", label: "Friday" },
+  { value: "6", label: "Saturday" },
+];
 
 export default function AdminStreams() {
   const { content, createStream, updateStream, deleteStream } = useContent();
@@ -66,120 +94,178 @@ export default function AdminStreams() {
 
   return (
     <AdminLayout>
-      <div className="max-w-6xl mx-auto space-y-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Streams Manager</h1>
-            <p className="text-gray-600 mt-1">Manage live stream schedule and recurring events</p>
+      <div className="max-w-[1100px] mx-auto">
+        <PageHeader
+          eyebrow="Content"
+          title="Streams"
+          description={`${streams.length} scheduled events`}
+          actions={
+            <Button variant="primary" icon="ri-add-line" onClick={openNew}>
+              New stream
+            </Button>
+          }
+        />
+
+        {streams.length === 0 ? (
+          <div className="rounded-2xl ring-1 ring-black/5 bg-white">
+            <EmptyState
+              icon="ri-live-line"
+              title="No streams scheduled"
+              description="Add one-off or recurring weekly events."
+              action={
+                <Button variant="primary" icon="ri-add-line" onClick={openNew}>
+                  New stream
+                </Button>
+              }
+            />
           </div>
-          <button onClick={openNew} className="w-full sm:w-auto min-h-11 px-5 py-2.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
-            New Stream
-          </button>
-        </div>
-
-        <div className="md:hidden space-y-3">
-          {streams.map((stream) => (
-            <div key={stream.id} className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
-              <div className="flex items-start justify-between gap-3">
-                <p className="font-medium text-gray-900">{stream.title}</p>
-                <span className="px-2 py-1 rounded-full text-xs bg-gray-100 text-gray-700">{stream.platform}</span>
-              </div>
-              <p className="text-sm text-gray-600">{stream.date} • {stream.time}</p>
-              <p className="text-sm text-gray-600">{stream.isRecurring ? "Recurring" : "One-time"}</p>
-              <div className="flex items-center gap-2">
-                <button onClick={() => openEdit(stream)} className="flex-1 min-h-10 px-3 py-2 border border-gray-200 rounded-lg text-sm text-teal-700 hover:bg-teal-50">Edit</button>
-                <button onClick={() => handleDelete(stream.id)} className="flex-1 min-h-10 px-3 py-2 border border-red-200 rounded-lg text-sm text-red-700 hover:bg-red-50">Delete</button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="hidden md:block bg-white border border-gray-200 rounded-xl overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-600">
-              <tr>
-                <th className="px-4 py-3 text-left">Title</th>
-                <th className="px-4 py-3 text-left">Platform</th>
-                <th className="px-4 py-3 text-left">Date</th>
-                <th className="px-4 py-3 text-left">Time</th>
-                <th className="px-4 py-3 text-left">Recurring</th>
-                <th className="px-4 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+        ) : (
+          <>
+            {/* Mobile */}
+            <div className="md:hidden space-y-3">
               {streams.map((stream) => (
-                <tr key={stream.id} className="border-t border-gray-100">
-                  <td className="px-4 py-3 font-medium text-gray-900">{stream.title}</td>
-                  <td className="px-4 py-3 text-gray-600">{stream.platform}</td>
-                  <td className="px-4 py-3 text-gray-600">{stream.date}</td>
-                  <td className="px-4 py-3 text-gray-600">{stream.time}</td>
-                  <td className="px-4 py-3 text-gray-600">{stream.isRecurring ? "Yes" : "No"}</td>
-                  <td className="px-4 py-3 text-right space-x-2">
-                    <button onClick={() => openEdit(stream)} className="text-teal-600 hover:text-teal-700">Edit</button>
-                    <button onClick={() => handleDelete(stream.id)} className="text-red-600 hover:text-red-700">Delete</button>
-                  </td>
-                </tr>
+                <div key={stream.id} className="rounded-2xl ring-1 ring-black/5 bg-white p-4 space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-[14px] font-medium text-gray-900 min-w-0 truncate">{stream.title}</p>
+                    <Badge tone={stream.platform === "twitch" ? "info" : "outline"}>{stream.platform}</Badge>
+                  </div>
+                  <p className="text-[12px] text-gray-500 tabular-nums">
+                    {stream.date} · {stream.time}
+                  </p>
+                  {stream.isRecurring && <Badge tone="cream" icon="ri-repeat-line">Weekly</Badge>}
+                  <div className="flex items-center gap-2">
+                    <Button size="sm" icon="ri-edit-line" onClick={() => openEdit(stream)}>
+                      Edit
+                    </Button>
+                    <Button size="sm" variant="danger" icon="ri-delete-bin-line" onClick={() => handleDelete(stream.id)}>
+                      Delete
+                    </Button>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </div>
+
+            {/* Desktop */}
+            <div className="hidden md:block rounded-2xl ring-1 ring-black/5 bg-white overflow-hidden">
+              <Table
+                head={
+                  <>
+                    <Th>Title</Th>
+                    <Th>Platform</Th>
+                    <Th>Date</Th>
+                    <Th>Time</Th>
+                    <Th>Repeat</Th>
+                    <Th className="text-right">Actions</Th>
+                  </>
+                }
+              >
+                {streams.map((stream) => (
+                  <Tr key={stream.id}>
+                    <Td className="font-medium text-gray-900">{stream.title}</Td>
+                    <Td>
+                      <Badge tone={stream.platform === "twitch" ? "info" : "outline"}>{stream.platform}</Badge>
+                    </Td>
+                    <Td className="text-gray-500 tabular-nums">{stream.date}</Td>
+                    <Td className="text-gray-500 tabular-nums">{stream.time}</Td>
+                    <Td className="text-gray-500">{stream.isRecurring ? "Weekly" : "One-time"}</Td>
+                    <Td className="text-right">
+                      <div className="inline-flex items-center gap-2">
+                        <Button size="sm" icon="ri-edit-line" onClick={() => openEdit(stream)}>
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="danger"
+                          icon="ri-delete-bin-line"
+                          onClick={() => handleDelete(stream.id)}
+                          aria-label={`Delete ${stream.title}`}
+                        />
+                      </div>
+                    </Td>
+                  </Tr>
+                ))}
+              </Table>
+            </div>
+          </>
+        )}
 
         {editing && (
-          <div className="fixed inset-0 bg-black/50 z-50 p-4 flex items-center justify-center">
-            <div className="bg-white w-full max-w-2xl rounded-xl p-4 sm:p-6 space-y-4 h-[calc(100vh-2rem)] sm:h-auto max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">{content.streamEvents.some((s) => s.id === editing.id) ? "Edit Stream" : "New Stream"}</h2>
-                <button onClick={() => setEditing(null)} className="text-gray-500">Close</button>
-              </div>
+          <Modal
+            title={content.streamEvents.some((s) => s.id === editing.id) ? "Edit stream" : "New stream"}
+            onClose={() => setEditing(null)}
+            footer={
+              <>
+                <Button onClick={() => setEditing(null)}>Cancel</Button>
+                <Button variant="primary" loading={isSaving} onClick={() => void handleSave()}>
+                  {isSaving ? "Saving\u2026" : "Save stream"}
+                </Button>
+              </>
+            }
+          >
+            <Field
+              label="Title"
+              value={editing.title}
+              onChange={(value) => setEditing({ ...editing, title: value })}
+              required
+            />
 
-              <input className="w-full min-h-11 border rounded-lg px-3 py-2" placeholder="Title" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input className="w-full min-h-11 border rounded-lg px-3 py-2" type="date" value={editing.date} onChange={(e) => setEditing({ ...editing, date: e.target.value })} />
-                <input className="w-full min-h-11 border rounded-lg px-3 py-2" type="time" value={editing.time} onChange={(e) => setEditing({ ...editing, time: e.target.value })} />
-              </div>
-
-              <select
-                className="w-full min-h-11 border rounded-lg px-3 py-2"
-                value={editing.platform}
-                onChange={(e) => setEditing({ ...editing, platform: e.target.value as StreamEvent["platform"] })}
-              >
-                <option value="youtube">YouTube</option>
-                <option value="twitch">Twitch</option>
-                <option value="tiktok">TikTok</option>
-              </select>
-
-              <input className="w-full min-h-11 border rounded-lg px-3 py-2" placeholder="Stream URL / username" value={editing.streamUrl ?? ""} onChange={(e) => setEditing({ ...editing, streamUrl: e.target.value })} />
-              <textarea className="w-full border rounded-lg px-3 py-2" rows={4} placeholder="Description" value={editing.description ?? ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} />
-
-              <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" checked={editing.isRecurring} onChange={(e) => setEditing({ ...editing, isRecurring: e.target.checked })} />
-                Recurring weekly
-              </label>
-
-              {editing.isRecurring && (
-                <select
-                  className="w-full min-h-11 border rounded-lg px-3 py-2"
-                  value={editing.recurringDay ?? 1}
-                  onChange={(e) => setEditing({ ...editing, recurringDay: Number(e.target.value) })}
-                >
-                  <option value={0}>Sunday</option>
-                  <option value={1}>Monday</option>
-                  <option value={2}>Tuesday</option>
-                  <option value={3}>Wednesday</option>
-                  <option value={4}>Thursday</option>
-                  <option value={5}>Friday</option>
-                  <option value={6}>Saturday</option>
-                </select>
-              )}
-
-              <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
-                <button onClick={() => setEditing(null)} className="min-h-11 px-4 py-2 border rounded-lg">Cancel</button>
-                <button onClick={handleSave} disabled={isSaving} className="min-h-11 px-4 py-2 bg-teal-600 text-white rounded-lg">
-                  {isSaving ? "Saving..." : "Save"}
-                </button>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Field
+                label="Date"
+                type="date"
+                value={editing.date}
+                onChange={(value) => setEditing({ ...editing, date: value })}
+              />
+              <Field
+                label="Time"
+                type="time"
+                value={editing.time}
+                onChange={(value) => setEditing({ ...editing, time: value })}
+              />
             </div>
-          </div>
+
+            <Field
+              label="Platform"
+              as="select"
+              options={platformOptions}
+              value={editing.platform}
+              onChange={(value) => setEditing({ ...editing, platform: value as StreamEvent["platform"] })}
+            />
+
+            <Field
+              label="Stream URL or username"
+              value={editing.streamUrl ?? ""}
+              onChange={(value) => setEditing({ ...editing, streamUrl: value })}
+            />
+
+            <Field
+              label="Description"
+              as="textarea"
+              rows={4}
+              value={editing.description ?? ""}
+              onChange={(value) => setEditing({ ...editing, description: value })}
+            />
+
+            <label className="flex items-center gap-2.5 text-[13px] text-gray-700">
+              <input
+                type="checkbox"
+                checked={editing.isRecurring}
+                onChange={(e) => setEditing({ ...editing, isRecurring: e.target.checked })}
+                className="w-4 h-4 rounded accent-signal"
+              />
+              Recurring weekly
+            </label>
+
+            {editing.isRecurring && (
+              <Field
+                label="Day of week"
+                as="select"
+                options={dayOptions}
+                value={String(editing.recurringDay ?? 1)}
+                onChange={(value) => setEditing({ ...editing, recurringDay: Number(value) })}
+              />
+            )}
+          </Modal>
         )}
       </div>
     </AdminLayout>
