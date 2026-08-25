@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import AdminLayout from '../../../../components/admin/AdminLayout';
-import { Button, Field, ImagePicker, PageHeader } from '../../../../components/admin/ui';
+import { Button, Field, ImageField, PageHeader } from '../../../../components/admin/ui';
 import { useContent } from '../../../../admin/contexts/AdminContentContext';
 import type { Project } from '../../../../types/siteContent';
 
@@ -297,7 +297,7 @@ export default function EditProject() {
                   />
                 </div>
 
-                <ImagePicker
+                <ImageField
                   label="Thumbnail Image"
                   value={project.thumbnail.url}
                   onChange={(value) => setProject({ ...project, thumbnail: { ...project.thumbnail, url: value } })}
@@ -495,7 +495,7 @@ export default function EditProject() {
                         </div>
 
                         <div className="flex-1 space-y-4">
-                          <ImagePicker
+                          <ImageField
                             label={`Image ${index + 1}`}
                             value={image.url}
                             onChange={(value) => updateGalleryImage(index, 'url', value)}

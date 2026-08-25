@@ -3,7 +3,7 @@ export { default as Button } from './Button';
 export { default as Card } from './Card';
 export { default as EmptyState } from './EmptyState';
 export { default as Field } from './Field';
-export { default as ImagePicker } from './ImagePicker';
+export { default as ImageField } from './ImageField';
 export { default as Modal } from './Modal';
 export { default as Notice } from './Notice';
 export { default as Pagination } from './Pagination';
