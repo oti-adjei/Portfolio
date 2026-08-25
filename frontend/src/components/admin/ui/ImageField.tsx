@@ -3,6 +3,7 @@ import { useAuth } from '../../../admin/contexts/AdminAuthContext';
 import { uploadImage } from '../../../admin/services/adminApi';
 import { resizeToWebp } from '../../../shared/images/resize';
 import { isMockMode } from '../../../shared/config/runtime';
+import { isVideoUrl } from '../../../shared/media/isVideo';
 
 interface ImageFieldProps {
   label: string;
@@ -140,17 +141,29 @@ export default function ImageField({
               style={{ aspectRatio }}
               className="w-full flex items-center justify-center text-[12px] text-gray-400 gap-2"
             >
-              <i className="ri-image-off-line" aria-hidden="true" />
-              Image failed to load
+              <i className={isVideoUrl(value) ? 'ri-video-off-line' : 'ri-image-off-line'} aria-hidden="true" />
+              {isVideoUrl(value) ? 'Video failed to load' : 'Image failed to load'}
             </div>
           ) : (
             <div style={{ aspectRatio }} className="w-full">
-              <img
-                src={value}
-                alt=""
-                className="w-full h-full object-cover"
-                onError={() => setBroken(true)}
-              />
+              {isVideoUrl(value) ? (
+                <video
+                  src={value}
+                  className="w-full h-full object-cover"
+                  controls
+                  playsInline
+                  muted
+                  preload="metadata"
+                  onError={() => setBroken(true)}
+                />
+              ) : (
+                <img
+                  src={value}
+                  alt=""
+                  className="w-full h-full object-cover"
+                  onError={() => setBroken(true)}
+                />
+              )}
             </div>
           )}
           <button

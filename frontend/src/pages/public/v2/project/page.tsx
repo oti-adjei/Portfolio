@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import Reveal from '@/components/Reveal';
+import GalleryMedia from '@/pages/public/v2/components/GalleryMedia';
 import Shell from '../Shell';
 
 export default function ExperimentProject() {
@@ -164,9 +165,9 @@ export default function ExperimentProject() {
             {project.gallery.images.map((img, i) => (
               <Reveal key={i} origin="bottom" delay={(i % 2) * 80}>
                 <figure className="rounded-2xl overflow-hidden bg-gray-100">
-                  <img
-                    src={img.url}
-                    alt={img.caption}
+                  <GalleryMedia
+                    url={img.url}
+                    caption={img.caption}
                     className="w-full h-full object-cover"
                   />
                   {img.caption && (
