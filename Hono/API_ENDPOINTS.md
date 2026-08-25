@@ -157,6 +157,19 @@ Required vars/bindings in `/Volumes/Georgie/Development/Personal/Brand/Portfolio
   - `replied`
   - `archived`
 
+### Upload
+
+- `POST /api/admin/upload`
+- Multipart form upload. Requires `Authorization: Bearer <token>`.
+
+| Field | Type | Notes |
+|---|---|---|
+| `file` | File | PNG, JPEG or WebP. Max 10MB. Type is detected from magic bytes, not the Content-Type header. SVG is rejected. |
+| `folder` | string | One of `projects`, `me`, `brand`. |
+
+- Response `200`: `{ "url": "https://img.hearvie.dev/<key>", "key": "...", "size": 12345 }`
+- Errors: `400` bad folder / no file / empty file, `413` over 10MB, `415` not an accepted image type, `401` missing or invalid token.
+
 ## Error Behavior (Current)
 
 - Validation errors: `400`
