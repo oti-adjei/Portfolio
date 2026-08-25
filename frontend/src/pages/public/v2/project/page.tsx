@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useContent } from '@/public/contexts/PublicContentContext';
 import Reveal from '@/components/Reveal';
 import GalleryMedia from '@/pages/public/v2/components/GalleryMedia';
+import { linkMeta } from '@/shared/links/linkMeta';
 import Shell from '../Shell';
 
 export default function ExperimentProject() {
@@ -89,17 +90,25 @@ export default function ExperimentProject() {
                 {t}
               </span>
             ))}
-            {project.links?.map((l) => (
-              <a
-                key={l.label}
-                href={l.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-2 inline-flex items-center gap-1 text-[12px] text-gray-900 underline underline-offset-4 hover:text-gray-600"
-              >
-                {l.label} <i className="ri-arrow-right-up-line" />
-              </a>
-            ))}
+            {project.links?.map((l) => {
+              const meta = linkMeta(l.url);
+              return (
+                <a
+                  key={`${l.label}-${l.url}`}
+                  href={l.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={
+                    meta.primary
+                      ? 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gray-900 text-white text-[12px] hover:bg-gray-800 transition-colors'
+                      : 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-gray-700 text-[12px] hover:bg-gray-50 transition-colors'
+                  }
+                >
+                  <i className={meta.icon} aria-hidden="true" />
+                  {l.label}
+                </a>
+              );
+            })}
           </div>
         ) : null}
       </section>
