@@ -79,12 +79,14 @@ There is no test suite. Verification is `npm run build` (type-check) plus `npm r
 
 ## Deployment
 
-The two halves ship separately:
+Both halves deploy from git — a push builds them. There is no CI workflow in this repo; both projects are wired to the repo in the Cloudflare dashboard, and their build settings live there.
 
-- **Site (`frontend/`)** — built by Cloudflare Pages. The repo is wired to a Pages project in the Cloudflare dashboard, so a push deploys it; there is no build config or CI workflow in this repo. Build settings and env vars (`VITE_API_BASE_URL`, `VITE_CONTENT_SOURCE`) live in the dashboard.
-- **API (`Hono/`)** — deployed by hand with `npm run deploy` (Wrangler) from the `Hono/` folder. Secrets are set with `npx wrangler secret put`, not from `.dev.vars`.
+- **Site (`frontend/`)** — Cloudflare Pages. Env vars (`VITE_API_BASE_URL`, `VITE_CONTENT_SOURCE`) are set in the Pages project.
+- **API (`Hono/`)** — Workers Builds, root directory `Hono/`. Bindings come from `wrangler.json`, so adding one there is enough — do not also add it in the dashboard, it gets overwritten. Secrets are the exception: set them with `npx wrangler secret put`, never from `.dev.vars`.
 
-After deploying the API to a new origin, update `CORS_ALLOWED_ORIGINS` on the Worker and `VITE_API_BASE_URL` in the Pages project.
+`npm run deploy` in `Hono/` still works for an out-of-band deploy, but it needs a local Wrangler login with the right account and scopes.
+
+After moving the API to a new origin, update `CORS_ALLOWED_ORIGINS` on the Worker and `VITE_API_BASE_URL` in the Pages project.
 
 ## Docs
 
