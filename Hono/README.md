@@ -1,90 +1,88 @@
-# React + Vite + Hono + Cloudflare Workers
+# Portfolio API — Hono on Cloudflare Workers
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/vite-react-template)
+Content API for [the portfolio site](../frontend). Hono 4 on Cloudflare Workers, D1 (SQLite) for storage, JWT for admin auth, Resend for outbound email.
 
-This template provides a minimal setup for building a React application with TypeScript and Vite, designed to run on Cloudflare Workers. It features hot module replacement, ESLint integration, and the flexibility of Workers deployments.
+The Worker also serves a small static landing page (`index.html`, built to `dist/client`) so the API domain isn't blank. The actual site is a separate build in `frontend/`.
 
-![React + TypeScript + Vite + Cloudflare Workers](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/fc7b4b62-442b-4769-641b-ad4422d74300/public)
+## Layout
 
-<!-- dash-content-start -->
-
-🚀 Supercharge your web development with this powerful stack:
-
-- [**React**](https://react.dev/) - A modern UI library for building interactive interfaces
-- [**Vite**](https://vite.dev/) - Lightning-fast build tooling and development server
-- [**Hono**](https://hono.dev/) - Ultralight, modern backend framework
-- [**Cloudflare Workers**](https://developers.cloudflare.com/workers/) - Edge computing platform for global deployment
-
-### ✨ Key Features
-
-- 🔥 Hot Module Replacement (HMR) for rapid development
-- 📦 TypeScript support out of the box
-- 🛠️ ESLint configuration included
-- ⚡ Zero-config deployment to Cloudflare's global network
-- 🎯 API routes with Hono's elegant routing
-- 🔄 Full-stack development setup
-- 🔎 Built-in Observability to monitor your Worker
-
-Get started in minutes with local development or deploy directly via the Cloudflare dashboard. Perfect for building modern, performant web applications at the edge.
-
-<!-- dash-content-end -->
-
-## Getting Started
-
-To start a new project with this template, run:
-
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/vite-react-template
+```
+src/worker/
+  index.ts              route mounting — the map of the whole API
+  middleware/
+    auth.ts             JWT guard for /api/admin/*
+    cors.ts             origin allowlist from CORS_ALLOWED_ORIGINS
+  routes/               public read endpoints
+    admin/              protected CRUD endpoints
+  services/
+    email/              Resend — contact notification + auto-reply
+    security.ts
+  db/
+    schema.sql, seed.sql
+    migrations/         schema changes
+scripts/
+  migrations/           ad-hoc data migrations
+  sync-projects-from-mock.sh
 ```
 
-A live deployment of this template is available at:
-[https://react-vite-template.templates.workers.dev](https://react-vite-template.templates.workers.dev)
+## Routes
+
+Mounted in `src/worker/index.ts`:
+
+- `GET /api/health`
+- Public reads — `/api/projects`, `/api/blog`, `/api/notes`, `/api/streams`, `/api/content`
+- Public writes — `/api/contact`, `/api/newsletter` (throttled via the `request_throttle` table)
+- `/api/admin/auth` — login, mounted **before** the guard
+- Everything else under `/api/admin/*` sits behind `requireAuth`: `projects`, `blog`, `notes`, `streams`, `content`, `newsletter`, `contact-submissions`
+
+Full request/response shapes: [`API_ENDPOINTS.md`](API_ENDPOINTS.md). A Postman collection lives in `postman/`.
 
 ## Development
 
-Install dependencies:
-
 ```bash
 npm install
-```
-
-Start the development server with:
-
-```bash
+cp .dev.vars.example .dev.vars
 npm run dev
 ```
 
-Your application will be available at [http://localhost:5173](http://localhost:5173).
+`.dev.vars` (Worker secrets — never committed):
 
-## Production
+| Var | Purpose |
+|---|---|
+| `ADMIN_EMAIL`, `ADMIN_PASSWORD` | the single CMS login |
+| `JWT_SECRET` | signs admin tokens — long and random |
+| `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_OWNER_TO` | contact form delivery |
+| `CONTACT_AUTO_REPLY_HOURS` | auto-reply throttle window |
+| `CORS_ALLOWED_ORIGINS` | comma-separated frontend origins |
 
-Build your project for production:
+For production, set the same keys with `npx wrangler secret put <NAME>`.
+
+Bindings live in `wrangler.json` — D1 database `portfolio-db` bound as `DB`. After changing bindings, run `npm run cf-typegen` to regenerate `worker-configuration.d.ts`.
+
+## Database
+
+D1 has no migration runner here — SQL files are applied by hand, local first, then remote:
 
 ```bash
-npm run build
+npx wrangler d1 execute portfolio-db --local  --file=./src/worker/db/schema.sql
+npx wrangler d1 execute portfolio-db --local  --file=./src/worker/db/seed.sql
+npx wrangler d1 execute portfolio-db --remote --file=<same file>
 ```
 
-Preview your build locally:
+Schema changes go in `src/worker/db/migrations/`; one-off data fixes go in `scripts/migrations/`. Name files by date, e.g. `2026-04-22_add_project_links.sql`.
+
+`npm run sync:projects-from-mock` regenerates project rows from the frontend mock (`--local-only` to skip remote).
+
+Copying a full local database over production is destructive and has its own guide: [`D1_SYNC_LOCAL_TO_REMOTE.md`](D1_SYNC_LOCAL_TO_REMOTE.md).
+
+## Deploy
 
 ```bash
-npm run preview
-```
-
-Deploy your project to Cloudflare Workers:
-
-```bash
-npm run build && npm run deploy
-```
-
-Monitor your workers:
-
-```bash
+npm run check    # tsc && vite build && wrangler deploy --dry-run
+npm run deploy
 npx wrangler tail
 ```
 
-## Additional Resources
+Observability and log persistence are on in `wrangler.json`.
 
-- [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
-- [Vite Documentation](https://vitejs.dev/guide/)
-- [React Documentation](https://reactjs.org/)
-- [Hono Documentation](https://hono.dev/)
+First-time setup — creating the D1 database, seeding it, wiring the custom domain — is walked through in [`SETUP.md`](SETUP.md).
