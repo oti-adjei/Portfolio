@@ -176,7 +176,7 @@ export default function AdminBlog() {
                       <p className="font-medium text-gray-900">{post.title}</p>
                       <p className="text-[12px] text-gray-400 font-mono">/{post.slug}</p>
                     </Td>
-                    <Td className="text-gray-500 tabular-nums">{post.date}</Td>
+                    <Td className="text-gray-500 tabular-nums whitespace-nowrap">{post.date}</Td>
                     <Td>
                       <StatusBadge status={post.published ? "published" : "draft"} />
                     </Td>

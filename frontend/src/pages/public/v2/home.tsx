@@ -7,6 +7,7 @@ import StreamSchedule from '@/components/shared/StreamSchedule';
 import WritingSection from '@/components/shared/WritingSection';
 import FadingBrands from '@/pages/public/v2/components/FadingBrands';
 import Timeline from '@/pages/public/v2/components/Timeline';
+import ContactComposer from '@/pages/public/v2/components/ContactComposer';
 import GHLogoMark from '@/components/logo/GHLogoMark';
 
 type SectionId = 'work' | 'about' | 'journey' | 'contact';
@@ -482,43 +483,8 @@ export default function Experiment() {
           <section id="contact" className="px-8 lg:px-12 py-14 border-t border-black/5">
             <p className="text-[11px] uppercase tracking-[0.14em] text-gray-400">Contact</p>
 
-            <div className="mt-6 max-w-2xl mx-auto">
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 shrink-0">
-                  <img
-                    src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=80&h=80&fit=crop&crop=faces"
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="rounded-2xl rounded-tl-sm bg-white ring-1 ring-black/5 px-4 py-3 text-[13px] text-gray-800">
-                  I'm Georgie — based in Accra. I build and ship cross-platform software, end to end.
-                </div>
-              </div>
+            <ContactComposer />
 
-              <div className="mt-3 ml-11 flex flex-wrap gap-1.5 sm:gap-2">
-                {['see my work ↗', 'how do you ship?', "what's your stack?", "what's your availability?", 'wanna chat?', 'resume ↗', 'linkedin ↗'].map((q) => (
-                  <button
-                    key={q}
-                    className="px-2.5 sm:px-3 py-1.5 rounded-full bg-white ring-1 ring-gray-200 text-[11.5px] sm:text-[12px] text-gray-700 hover:bg-gray-50 transition"
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-5 ml-11 flex items-center gap-2 rounded-full bg-white ring-1 ring-gray-200 pl-4 pr-1 py-1">
-                <span className="font-mono text-gray-500 select-none text-[13px]">{'>_'}</span>
-                <input
-                  type="text"
-                  placeholder="What problem are we solving?"
-                  className="flex-1 bg-transparent font-mono text-[13px] py-2 outline-none placeholder:text-gray-400"
-                />
-                <button className="w-8 h-8 rounded-full bg-gray-900 text-white inline-flex items-center justify-center">
-                  <i className="ri-arrow-up-line" />
-                </button>
-              </div>
-            </div>
           </section>
 
           <footer className="px-8 lg:px-12 py-10 text-center text-[11px] text-gray-400">
