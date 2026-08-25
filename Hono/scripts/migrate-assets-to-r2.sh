@@ -38,16 +38,33 @@ while IFS= read -r -d '' file; do
   rel="${file#"$ASSETS_DIR"/}"
   case "$rel" in
     *.DS_Store) continue ;;
+    *.svg)
+      echo "skipping (SVG — upload endpoint rejects SVG, can carry script and objects are served from a real domain; stays in repo): $rel"
+      continue
+      ;;
+  esac
+
+  # portrait-alt.jpg is misnamed — it's the GH logo mark, not a portrait.
+  # Remap it to its correct home under brand/ instead of uploading it twice.
+  key="$rel"
+  if [[ "$rel" == "me/portrait-alt.jpg" ]]; then
+    key="brand/gh-mark.jpg"
+    echo "remapping: $rel -> $key (misnamed; this is the GH logo mark, not a portrait)"
+  fi
+
+  case "$rel" in
+    *.png|*.jpg|*.jpeg|*.webp) ;;
+    *) echo "note: uploading non-image asset: $rel" ;;
   esac
 
   if [[ $DRY_RUN -eq 1 ]]; then
-    echo "would upload: $rel"
+    echo "would upload: $rel -> $key"
   else
-    echo "uploading: $rel"
+    echo "uploading: $rel -> $key"
     if [[ $REMOTE -eq 1 ]]; then
-      npx wrangler r2 object put "$BUCKET/$rel" --file="$file" --remote >/dev/null
+      npx wrangler r2 object put "$BUCKET/$key" --file="$file" --remote >/dev/null
     else
-      npx wrangler r2 object put "$BUCKET/$rel" --file="$file" --local >/dev/null
+      npx wrangler r2 object put "$BUCKET/$key" --file="$file" --local >/dev/null
     fi
   fi
 
@@ -55,11 +72,6 @@ while IFS= read -r -d '' file; do
 done < <(find "$ASSETS_DIR" -type f -print0)
 
 cat >> "$OUT_SQL" <<SQL
--- thumbnail_url is a bare column holding exactly one path: unanchored REPLACE is safe.
-UPDATE projects
-SET thumbnail_url = REPLACE(thumbnail_url, '/assets/', '$PUBLIC_BASE/')
-WHERE thumbnail_url LIKE '/assets/%';
-
 -- gallery_images and site_content.value are JSON blobs that may contain prose,
 -- markdown, or unrelated text alongside asset paths. An unanchored REPLACE could
 -- silently rewrite a literal "/assets/" substring that isn't part of a path
@@ -67,8 +79,20 @@ WHERE thumbnail_url LIKE '/assets/%';
 -- precedes a path inside a JSON string value: a quote (JSON string) or a paren
 -- (markdown link).
 --
--- Audit before applying: any /assets/ occurrence in gallery_images NOT preceded by a quote or paren
+-- Audit queries (run manually before applying; not part of the transaction below):
+--
+-- Any /assets/ occurrence in gallery_images NOT preceded by a quote or paren:
 -- SELECT id, gallery_images FROM projects WHERE gallery_images LIKE '%/assets/%' AND gallery_images NOT LIKE '%"/assets/%' AND gallery_images NOT LIKE '%(/assets/%';
+--
+-- Any /assets/ occurrence in site_content.value NOT preceded by a quote or paren:
+-- SELECT key, value FROM site_content WHERE value LIKE '%/assets/%' AND value NOT LIKE '%"/assets/%' AND value NOT LIKE '%(/assets/%';
+
+BEGIN TRANSACTION;
+
+-- thumbnail_url is a bare column holding exactly one path: unanchored REPLACE is safe.
+UPDATE projects
+SET thumbnail_url = REPLACE(thumbnail_url, '/assets/', '$PUBLIC_BASE/')
+WHERE thumbnail_url LIKE '/assets/%';
 
 UPDATE projects
 SET gallery_images = REPLACE(gallery_images, '"/assets/', '"$PUBLIC_BASE/')
@@ -78,9 +102,6 @@ UPDATE projects
 SET gallery_images = REPLACE(gallery_images, '(/assets/', '($PUBLIC_BASE/')
 WHERE gallery_images LIKE '%(/assets/%';
 
--- Audit before applying: any /assets/ occurrence NOT preceded by a quote or paren
--- SELECT key, value FROM site_content WHERE value LIKE '%/assets/%' AND value NOT LIKE '%"/assets/%' AND value NOT LIKE '%(/assets/%';
-
 UPDATE site_content
 SET value = REPLACE(value, '"/assets/', '"$PUBLIC_BASE/')
 WHERE value LIKE '%"/assets/%';
@@ -88,10 +109,14 @@ WHERE value LIKE '%"/assets/%';
 UPDATE site_content
 SET value = REPLACE(value, '(/assets/', '($PUBLIC_BASE/')
 WHERE value LIKE '%(/assets/%';
+
+COMMIT;
 SQL
 
 echo ""
 echo "Files handled: $COUNT"
 echo "SQL written to: $OUT_SQL"
 echo ""
-echo "Next: inspect the SQL, apply --local, verify, then --remote."
+echo "Next:"
+echo "  1. Back up first: npx wrangler d1 export portfolio-db --remote --output=backup-before-r2.sql"
+echo "  2. Inspect the SQL, apply --local, verify, then --remote."

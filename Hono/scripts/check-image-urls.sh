@@ -12,10 +12,25 @@ MODE="--local"
 
 RAW=$(npx wrangler d1 execute "$DB" $MODE --json --command \
   "SELECT thumbnail_url AS u FROM projects WHERE thumbnail_url != ''
+   UNION SELECT gallery_images FROM projects WHERE gallery_images != ''
    UNION SELECT value FROM site_content") || {
   echo "wrangler d1 execute failed — cannot verify. Not an all-clear."
   exit 2
 }
+
+# A /assets/ path anywhere means the migration missed it — that path will 404
+# once the repo's asset files are removed. This must be checked regardless of
+# whether any absolute image URLs are found below: a database that is 100%
+# unmigrated /assets/ paths matches zero of the https?:// URLs and must never
+# report success.
+ASSET_PATHS=$(echo "$RAW" | grep -oE '/assets/[^"'"'"'\\ )]+' | sort -u)
+if [[ -n "$ASSET_PATHS" ]]; then
+  echo "FAIL: unmigrated /assets/ path(s) still present in the database:"
+  echo "$ASSET_PATHS"
+  echo ""
+  echo "These will 404 once the repo's asset files are removed. Migration incomplete."
+  exit 1
+fi
 
 URLS=$(echo "$RAW" | grep -oE 'https?://[^"]+\.(png|jpg|jpeg|webp|svg)' | sort -u)
 
