@@ -33,17 +33,19 @@ newsletter.post("/subscribe", async (c) => {
 
   const now = new Date().toISOString();
   const id = crypto.randomUUID();
+  const unsubscribeToken = crypto.randomUUID();
 
   await c.env.DB.prepare(
-    `INSERT INTO newsletter_subscribers (id, email, name, source, status, created_at, updated_at)
-     VALUES (?, ?, ?, ?, 'subscribed', ?, ?)
+    `INSERT INTO newsletter_subscribers (id, email, name, source, status, unsubscribe_token, created_at, updated_at)
+     VALUES (?, ?, ?, ?, 'subscribed', ?, ?, ?)
      ON CONFLICT(email) DO UPDATE SET
        name = COALESCE(excluded.name, newsletter_subscribers.name),
        source = excluded.source,
        status = 'subscribed',
+       unsubscribe_token = COALESCE(newsletter_subscribers.unsubscribe_token, excluded.unsubscribe_token),
        updated_at = excluded.updated_at`
   )
-    .bind(id, email, name ?? null, source, now, now)
+    .bind(id, email, name ?? null, source, unsubscribeToken, now, now)
     .run();
 
   const provider = getEmailProvider(c.env);
