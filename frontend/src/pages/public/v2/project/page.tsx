@@ -112,7 +112,7 @@ export default function ExperimentProject() {
               <img
                 src={project.thumbnail.url}
                 alt={project.thumbnail.alt || project.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
               />
             )}
           </div>

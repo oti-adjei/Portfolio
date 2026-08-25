@@ -232,7 +232,7 @@ export default function Experiment() {
                           <img
                             src={p.thumbnail.url}
                             alt={p.thumbnail.alt || p.title}
-                            className="w-full h-full object-cover group-hover/card:scale-[1.02] transition-transform duration-500"
+                            className="w-full h-full object-cover object-top group-hover/card:scale-[1.02] transition-transform duration-500"
                           />
                         )}
                       </div>
