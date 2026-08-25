@@ -88,6 +88,41 @@ Both halves deploy from git — a push builds them. There is no CI workflow in t
 
 After moving the API to a new origin, update `CORS_ALLOWED_ORIGINS` on the Worker and `VITE_API_BASE_URL` in the Pages project.
 
+## Repository size
+
+`git clone` pulls roughly **83MB packed** (~109MB unpacked `.git`), while the working tree holds well under 1MB of images. That gap is history, not the checkout.
+
+Git keeps every version of every file forever. Deleting a file removes it from the working tree and from future builds — it does **not** remove it from the repository. Two waves of image deletions are still in there:
+
+| What | Roughly | When |
+|---|---|---|
+| `assets/`, `assets/images/*` — the pre-V1 legacy site | 35MB | deleted 2026-02-19 (`6585aac`) |
+| `frontend/public/assets/{projects,me,documents}` — moved to R2 | 58MB | deleted 2026-08-25 |
+
+Both are unreachable from any current commit's tree, and both are still downloaded on every fresh clone.
+
+### Reducing it, if it ever matters
+
+Only a history rewrite removes them. From a clean clone with no uncommitted work:
+
+```bash
+# install once: brew install git-filter-repo
+git filter-repo --path assets --path frontend/public/assets --invert-paths
+git push --force --all
+git push --force --tags
+```
+
+Expect ~83MB → under 10MB.
+
+What it costs, and why it is tolerable here:
+
+- **Every commit SHA changes.** Links to specific commits break, and any existing clone must be re-cloned rather than pulled.
+- This repo has a single author across four identities, so there are no collaborators to disrupt — which is what makes the rewrite cheap here and expensive in a team repo.
+- Keep `frontend/public/assets/brand/` — those SVGs are still live in the working tree. The command above would strip them; add `--path frontend/public/assets/brand --path-glob` exclusions or restore them afterwards.
+- GitHub keeps unreachable objects until its own GC runs, so the remote may not shrink immediately.
+
+None of this affects the running site. It is purely clone and CI-checkout weight, which is why it has been left alone.
+
 ## Docs
 
 - [`Hono/README.md`](Hono/README.md) — backend overview

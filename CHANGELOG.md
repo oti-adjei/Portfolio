@@ -7,6 +7,23 @@ Entries are ordered newest first.
 
 ## 2026-08-25
 
+### images — R2 uploads, and 58MB out of the working tree
+
+Adding an image used to mean committing the file, pushing, waiting for a Pages build, then pasting the path into admin. Now it uploads from the CMS and is live immediately.
+
+- **`POST /api/admin/upload`** behind the existing JWT guard. Type detected from magic bytes, not the `Content-Type` header; SVG rejected (it can carry script and objects are served from a real domain); folder allowlisted; keys carry 8 random chars so no upload can overwrite another.
+- **`IMAGE_BUCKET`** R2 binding, served from `img.hearvie.dev` — reads go browser → CDN → R2 and never invoke the Worker. Named `IMAGE_BUCKET` rather than `IMAGES` to avoid colliding with the Cloudflare Images binding.
+- **`ImageField`** replaces `ImagePicker`: drag-and-drop, downscales to 1600px WebP in the browser (a 4MB screenshot uploads at ~300KB), keeps the URL text field as a fallback.
+- **Migrated the existing library** — 59 files to R2, 144 hardcoded `/assets/` references rewritten, database paths rewritten via anchored `REPLACE`. Verified 41 API image URLs all return 200 before deleting anything. `frontend/public/assets` 58MB → 76K.
+- **Fixed a silently broken OG image** — `hearvie.dev/assets/images/portfolio-home.png` has not existed since February; the SPA fallback answered it with `index.html` and a 200, so every link preview served HTML while looking healthy.
+- **Documented repo size** in `README.md`: the clone is still ~83MB because git history holds the deleted blobs, including 35MB of legacy images deleted in February. Reducing it needs a history rewrite; deliberately not done.
+
+Known gap: `projects/dear-akua/*` (3 images) has never existed in this repo, so those now 404 honestly instead of returning `index.html`.
+
+---
+
+## 2026-08-25 (earlier)
+
 ### frontend — Admin redesign on the V2 design system
 
 Admin was stock template styling with a teal accent (185 references) that exists nowhere in the brand. Reskinned in four phases, one commit each.
