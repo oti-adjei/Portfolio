@@ -14,7 +14,7 @@ import type {
   StreamsPage,
   WorksPage,
 } from "../../types/siteContent";
-import { authHeaders, fetchJson } from "../../shared/api/client";
+import { ApiError, authHeaders, fetchJson, getApiBaseUrl } from "../../shared/api/client";
 import {
   fromBlogPost,
   fromNote,
@@ -254,4 +254,36 @@ export async function updateContactSubmissionStatus(
     headers: { "Content-Type": "application/json", ...authHeaders(token) },
     body: JSON.stringify({ status }),
   });
+}
+
+export interface UploadResult {
+  url: string;
+  key: string;
+  size: number;
+}
+
+export async function uploadImage(
+  token: string,
+  file: Blob,
+  filename: string,
+  folder: string
+): Promise<UploadResult> {
+  const form = new FormData();
+  form.append("file", file, filename);
+  form.append("folder", folder);
+
+  // Not fetchJson: it sets Content-Type, and the browser must set the
+  // multipart boundary itself.
+  const response = await fetch(`${getApiBaseUrl()}/api/admin/upload`, {
+    method: "POST",
+    headers: authHeaders(token),
+    body: form,
+  });
+
+  if (!response.ok) {
+    const body = (await response.json().catch(() => null)) as { error?: string } | null;
+    throw new ApiError(body?.error ?? `Upload failed (${response.status})`, response.status);
+  }
+
+  return (await response.json()) as UploadResult;
 }
