@@ -170,7 +170,7 @@ export default function AdminNewsletter() {
                         <option value="bounced">Bounced</option>
                       </select>
                     </Td>
-                    <Td className="text-gray-500 tabular-nums">
+                    <Td className="text-gray-500 tabular-nums whitespace-nowrap">
                       {new Date(subscriber.created_at).toLocaleDateString()}
                     </Td>
                     <Td className="text-right">

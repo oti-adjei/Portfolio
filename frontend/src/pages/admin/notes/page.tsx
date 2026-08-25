@@ -156,7 +156,7 @@ export default function AdminNotes() {
                       <p className="text-[12px] text-gray-400 font-mono">/{note.slug}</p>
                     </Td>
                     <Td className="text-gray-500">{note.category || "General"}</Td>
-                    <Td className="text-gray-500 tabular-nums">{note.date}</Td>
+                    <Td className="text-gray-500 tabular-nums whitespace-nowrap">{note.date}</Td>
                     <Td>
                       <StatusBadge status={note.published ? "published" : "draft"} />
                     </Td>

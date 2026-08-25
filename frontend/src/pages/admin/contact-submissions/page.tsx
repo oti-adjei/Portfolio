@@ -163,7 +163,7 @@ export default function AdminContactSubmissions() {
                     <Td>
                       <StatusBadge status={submission.status} />
                     </Td>
-                    <Td className="text-gray-500 tabular-nums">
+                    <Td className="text-gray-500 tabular-nums whitespace-nowrap">
                       {new Date(submission.created_at).toLocaleDateString()}
                     </Td>
                     <Td className="text-right">
