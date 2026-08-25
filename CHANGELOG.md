@@ -7,6 +7,15 @@ Entries are ordered newest first.
 
 ## 2026-08-25
 
+### frontend — Gallery video, screenshot crops, project links
+
+- **Gallery video** — `GalleryMedia` picks `<video>` or `<img>` by extension (case-insensitive; R2 preserves the uploaded filename's case). Plays once on first scroll into view, no loop, muted, skipped under `prefers-reduced-motion`. `object-contain` on ink rather than `object-cover`, since gallery videos are usually portrait screen recordings.
+- **Screenshot crops** — project screenshots are taller than the 16/9 detail hero (0.68–0.73 against 0.5625), so centred cover-cropping was removing 17–23% of their height off the top and bottom. `object-top` keeps the site header, which is what identifies a screenshot.
+- **Project links** — the admin had no links UI at all; `links: []` was initialised and never editable. Added a label/URL repeatable field to the Overview tab. Links render as pills with icon and prominence derived from the URL (`shared/links/linkMeta.ts`) — `.apk` and `/releases/download/` get a filled download button. No schema change.
+- **Docs** — `CLAUDE.md` documents the admin UI kit, the upload endpoint and the `IMAGE_BUCKET` binding, and no longer claims the site uses Playfair Display and Instrument Serif; V2 has been Jost-only since June and `docs/design-system.md` had been contradicting it.
+
+---
+
 ### images — R2 uploads, and 58MB out of the working tree
 
 Adding an image used to mean committing the file, pushing, waiting for a Pages build, then pasting the path into admin. Now it uploads from the CMS and is live immediately.

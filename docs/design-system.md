@@ -66,7 +66,7 @@ Last updated: 2026-06-26.
 
 **One family: Jost** (Google Fonts, all weights 100–900). Loaded in `src/index.css`.
 
-CLAUDE.md mentions Playfair Display and Instrument Serif — V1 holdovers, not used in V2.
+Playfair Display and Instrument Serif are V1 holdovers, not used in V2.
 
 ### Scale
 
@@ -202,6 +202,12 @@ Two-column grid: eyebrow + title on the left (sticky), content on the right. See
 ### Theme toggle
 
 Sun/moon button in `Shell.tsx`. Component-local state (no persistence). Toggles page bg and pill tint.
+
+---
+
+## Admin
+
+`/admin` uses the same tokens through its own kit at `src/components/admin/ui/`, tuned for density rather than marketing: white page instead of cream, tighter padding, real table rows, no ambient motion. `signal` is the accent there too. See "Admin UI kit" in `CLAUDE.md`.
 
 ---
 
