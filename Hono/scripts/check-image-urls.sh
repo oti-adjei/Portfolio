@@ -10,13 +10,17 @@ DB="portfolio-db"
 MODE="--local"
 [[ "${1:-}" == "--remote" ]] && MODE="--remote"
 
-URLS=$(npx wrangler d1 execute "$DB" $MODE --json --command \
+RAW=$(npx wrangler d1 execute "$DB" $MODE --json --command \
   "SELECT thumbnail_url AS u FROM projects WHERE thumbnail_url != ''
-   UNION SELECT value FROM site_content" \
-  | grep -oE 'https?://[^"]+\.(png|jpg|jpeg|webp|svg)' | sort -u)
+   UNION SELECT value FROM site_content") || {
+  echo "wrangler d1 execute failed — cannot verify. Not an all-clear."
+  exit 2
+}
+
+URLS=$(echo "$RAW" | grep -oE 'https?://[^"]+\.(png|jpg|jpeg|webp|svg)' | sort -u)
 
 if [[ -z "$URLS" ]]; then
-  echo "No absolute image URLs found in the database."
+  echo "No absolute image URLs found in the database (query succeeded)."
   exit 0
 fi
 
