@@ -31,7 +31,9 @@
 		"dev": "vite",
 		"lint": "eslint .",
 		"preview": "npm run build && vite preview",
-		"sync:projects-from-mock": "./scripts/sync-projects-from-mock.sh"
+		"sync:projects-from-mock": "./scripts/sync-projects-from-mock.sh",
+		"migrate:assets-to-r2": "./scripts/migrate-assets-to-r2.sh",
+		"check:image-urls": "./scripts/check-image-urls.sh"
 	},
 	"type": "module"
 }
