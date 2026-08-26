@@ -74,6 +74,14 @@ export default function NewsletterCompose() {
     if (user?.email) setTestEmail(user.email);
   }, [user]);
 
+  // The test-send gate is only meaningful for what it actually tested. Any edit
+  // to the rendered content — subject, intro, style, or the item selection —
+  // invalidates a prior test, so this is a single choke point that resets the
+  // gate rather than four separate setters each remembering to do it.
+  useEffect(() => {
+    setHasSentTest(false);
+  }, [subject, intro, style, items]);
+
   useEffect(() => {
     if (!token) return;
     let cancelled = false;
@@ -204,27 +212,35 @@ export default function NewsletterCompose() {
     }
   }
 
-  async function runSendLoop() {
+  async function runSendLoop(initial: { sent: number; failed: number }) {
     if (!token || !campaign) return;
-    let totalSent = sendProgress.sent;
-    let totalFailed = sendProgress.failed;
+    let totalSent = initial.sent;
+    let totalFailed = initial.failed;
     try {
-      let remaining = Infinity;
-      while (remaining > 0) {
+      // `remaining === 0` means every delivery row is settled, but the server
+      // only flips the campaign's own status to sent/failed on a call that
+      // finds zero pending rows *at the start* — the batch that drove
+      // remaining to 0 doesn't also finalize itself. That branch is the one
+      // that echoes `status` back, so that's the real termination signal;
+      // looping on `remaining > 0` alone stops one call early and leaves the
+      // campaign stuck reporting "sending" with nothing left to send.
+      for (;;) {
         const res = await sendCampaignChunk(token, campaign.id);
         totalSent += res.sent;
         totalFailed += res.failed;
-        remaining = res.remaining;
-        setSendProgress({ sent: totalSent, failed: totalFailed, remaining });
+        setSendProgress({ sent: totalSent, failed: totalFailed, remaining: res.remaining });
 
         if (res.stuck > 0) {
           setSendPhase("stuck");
           return;
         }
+        if (res.status) {
+          setSendPhase("done");
+          const refreshed = await fetchCampaign(token, campaign.id);
+          setCampaign(refreshed);
+          return;
+        }
       }
-      setSendPhase("done");
-      const refreshed = await fetchCampaign(token, campaign.id);
-      setCampaign(refreshed);
     } catch (err) {
       console.error("Send chunk failed:", err);
       setSendError(errorMessage(err, "Sending failed partway through."));
@@ -241,7 +257,7 @@ export default function NewsletterCompose() {
       const prep = await prepareCampaign(token, campaign.id);
       setSendProgress({ sent: 0, failed: 0, remaining: prep.pending });
       setSendPhase("sending");
-      await runSendLoop();
+      await runSendLoop({ sent: 0, failed: 0 });
     } catch (err) {
       console.error("Prepare failed:", err);
       setSendError(errorMessage(err, "Failed to prepare the send."));
@@ -256,13 +272,28 @@ export default function NewsletterCompose() {
     try {
       await retryCampaignFailed(token, campaign.id);
       setSendPhase("sending");
-      await runSendLoop();
+      await runSendLoop({ sent: sendProgress.sent, failed: sendProgress.failed });
     } catch (err) {
       console.error("Retry failed:", err);
       setSendError(errorMessage(err, "Retry failed."));
     } finally {
       setRetrying(false);
     }
+  }
+
+  // A send that was interrupted mid-flight (tab closed, page refreshed) leaves
+  // the campaign in "sending" server-side with no local sendPhase driving it.
+  // send-chunk only requires status "sending", so re-entering the same loop
+  // from the campaign's last known counts is all that's needed to continue it.
+  async function handleResume() {
+    if (!token || !campaign) return;
+    setSendError(null);
+    const remaining =
+      campaign.deliveries?.pending ??
+      Math.max(campaign.total_recipients - campaign.sent_count - campaign.failed_count, 0);
+    setSendProgress({ sent: campaign.sent_count, failed: campaign.failed_count, remaining });
+    setSendPhase("sending");
+    await runSendLoop({ sent: campaign.sent_count, failed: campaign.failed_count });
   }
 
   if (loading) {
@@ -543,6 +574,18 @@ export default function NewsletterCompose() {
                 <Notice tone="success">
                   Done. {sendProgress.sent} sent, {sendProgress.failed} failed.
                 </Notice>
+              )}
+
+              {sendPhase === "idle" && campaign.status === "sending" && (
+                <div className="space-y-3">
+                  <Notice tone="info">
+                    Sending was interrupted — {campaign.sent_count} of {campaign.total_recipients} sent so
+                    far{campaign.failed_count > 0 ? `, ${campaign.failed_count} failed` : ""}.
+                  </Notice>
+                  <Button variant="primary" icon="ri-play-circle-line" onClick={() => void handleResume()}>
+                    Resume send
+                  </Button>
+                </div>
               )}
 
               {sendPhase === "idle" && !isDraftStatus && campaign.failed_count > 0 && (
