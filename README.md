@@ -18,7 +18,7 @@ The two folders are independent npm projects. There is no workspace root — ins
 ## Stack
 
 **Frontend** — React 19, TypeScript, Vite 7, Tailwind CSS v3, React Router v7 (lazy routes), GSAP 3, Remixicon.
-**Backend** — Hono 4 on Cloudflare Workers, D1 (SQLite) for storage, JWT for admin auth, Resend for contact email.
+**Backend** — Hono 4 on Cloudflare Workers, D1 (SQLite) for storage, JWT for admin auth, Resend for contact email and newsletter sending.
 
 ## Quick start
 

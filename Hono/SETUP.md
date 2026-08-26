@@ -154,6 +154,18 @@ openssl rand -hex 32 | npx wrangler secret put JWT_SECRET
 
 Secrets set via the dashboard or CLI override the empty placeholder values in `vars`.
 
+### Newsletter sending secrets
+
+Two more secrets are needed before the newsletter admin can send real campaigns:
+
+```bash
+echo "https://hearvie.dev" | npx wrangler secret put SITE_URL
+echo "your postal address" | npx wrangler secret put NEWSLETTER_POSTAL_ADDRESS
+```
+
+- `SITE_URL` — used to build absolute links (including the unsubscribe URL) in sent emails. Defaults to `https://hearvie.dev` if unset.
+- `NEWSLETTER_POSTAL_ADDRESS` — ships unset. CAN-SPAM requires a postal address on commercial email, so **this must be set before the first real campaign send.** Until it is, the rendered email simply omits the address block — nothing blocks sending, so it's easy to miss.
+
 ---
 
 ## Step 7 — Verify TypeScript Compiles

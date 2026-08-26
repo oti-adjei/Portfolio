@@ -5,6 +5,23 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-08-26
+
+### backend/admin — Newsletter sending
+
+Subscribers could sign up and get a confirmation email, but there was no way to actually send them anything. Now there is: compose an issue, pick posts/notes to include, and send.
+
+- **Two new tables** — `newsletter_campaigns` (draft/sending/sent/failed) and `newsletter_deliveries` (one row per campaign×subscriber, so partial sends and retries are tracked per recipient, not just as a campaign-level count). `newsletter_subscribers` gains an `unsubscribe_token` column.
+- **Send lifecycle** — `prepare` snapshots the subscribed list into delivery rows; `send-chunk` claims up to 100 pending rows at a time (a per-call `claim_id` so two concurrent calls can't grab the same rows) and sends one Resend batch per call; `retry-failed` requeues failed rows and any claim stranded for more than 15 minutes. A campaign whose rows are all accounted for finalizes to `sent` or `failed`; rows stuck mid-send are reported rather than silently counted as delivered.
+- **Unsubscribe** — `GET`/`POST /api/newsletter/unsubscribe`, token-authenticated, no login, same response for a bad token as a good one. The `List-Unsubscribe` header carries a generic mailto rather than a per-recipient link, since Resend's batch API doesn't support per-entry headers and a shared header holding a real link would let anyone unsubscribe anyone.
+- **CAN-SPAM** — sent email needs a postal address. `NEWSLETTER_POSTAL_ADDRESS` ships unset and the footer just omits the block until it's set; nothing currently stops a send without it.
+- **Admin UI** — `/admin/newsletter` (Subscribers, Issues) and `/admin/newsletter/compose[/:id]`. Campaign state is page-level `useState`, not `AdminContentContext` — the contact-inbox bug below is exactly the failure mode that was avoided by keeping it out.
+- **New env vars** — `SITE_URL`, `NEWSLETTER_POSTAL_ADDRESS`. See `Hono/SETUP.md`.
+
+Before the first real send in production: apply both new migrations, backfill `unsubscribe_token` for existing subscribers, and set `NEWSLETTER_POSTAL_ADDRESS`.
+
+---
+
 ## 2026-08-25
 
 ### admin — Contact inbox and newsletter list were always empty
