@@ -79,7 +79,7 @@ export function toProject(dto: ProjectDto): Project {
     details: {
       challenge: dto.details?.challenge ?? "",
       solution: dto.details?.solution ?? "",
-      results: dto.details?.results ?? [],
+      results: Array.isArray(dto.details?.results) ? dto.details.results : [],
     },
     gallery: {
       // Guard the shape rather than trusting it. gallery_images is stored as JSON and a row
