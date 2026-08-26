@@ -396,35 +396,61 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
     .bind(id)
     .all<{ delivery_id: string; email: string; unsubscribe_token: string | null }>();
 
+  // A row stuck in 'sending' (crash between claim and settle, on this or a
+  // prior call) is neither confirmed sent nor safely retryable — it must
+  // never be silently counted as a success. Check for it before deciding
+  // whether an empty pending queue means the campaign is actually done.
+  const stuckRow = await c.env.DB.prepare(
+    "SELECT COUNT(*) as count FROM newsletter_deliveries WHERE campaign_id = ? AND status = 'sending'"
+  )
+    .bind(id)
+    .first<{ count: number }>();
+  const stuckCount = stuckRow?.count ?? 0;
+
   if (pending.length === 0) {
     const counters = await recomputeCounters(c.env.DB, id);
+
+    if (stuckCount > 0) {
+      // Do NOT finalize while any row is unaccounted for — that would report
+      // "sent" for people who were never confirmed mailed and for whom no
+      // endpoint could ever requeue them once the campaign left 'sending'.
+      await c.env.DB.prepare("UPDATE newsletter_campaigns SET sent_count = ?, failed_count = ?, updated_at = ? WHERE id = ?")
+        .bind(counters.sent, counters.failed, now, id)
+        .run();
+      return c.json({ sent: 0, failed: 0, remaining: 0, stuck: stuckCount, status: "sending" });
+    }
+
     const finalStatus = counters.failed === 0 ? "sent" : "failed";
     await c.env.DB.prepare(
       "UPDATE newsletter_campaigns SET sent_count = ?, failed_count = ?, status = ?, sent_at = ?, updated_at = ? WHERE id = ?"
     )
       .bind(counters.sent, counters.failed, finalStatus, now, now, id)
       .run();
-    return c.json({ sent: 0, failed: 0, remaining: 0, status: finalStatus });
+    return c.json({ sent: 0, failed: 0, remaining: 0, stuck: 0, status: finalStatus });
   }
 
-  // CRITICAL 1: claim before sending. Flipping pending -> sending here means
-  // an interruption between the provider call returning and the settle
-  // write below leaves an orphaned 'sending' row — a visible reconcile case
-  // — instead of a silently re-sent 'pending' row on the next chunk call.
+  // CRITICAL 1: claim before sending, with a per-call identity. Status alone
+  // ('pending' -> 'sending') isn't enough — two concurrent calls selecting
+  // the same pending ids would both see the other's claimed rows sitting in
+  // 'sending' and both would build and send the same batch. claim_id scopes
+  // the re-select to rows *this* call's UPDATE actually flipped, so a second
+  // caller's claim matches zero rows and it sends nothing.
+  const claimId = crypto.randomUUID();
+  const claimedAt = new Date().toISOString();
   const ids = pending.map((row) => row.delivery_id);
   const placeholders = ids.map(() => "?").join(",");
 
   await c.env.DB.prepare(
-    `UPDATE newsletter_deliveries SET status = 'sending'
+    `UPDATE newsletter_deliveries SET status = 'sending', claim_id = ?, claimed_at = ?
      WHERE campaign_id = ? AND status = 'pending' AND id IN (${placeholders})`
   )
-    .bind(id, ...ids)
+    .bind(claimId, claimedAt, id, ...ids)
     .run();
 
   const { results: claimedRows } = await c.env.DB.prepare(
-    `SELECT id FROM newsletter_deliveries WHERE campaign_id = ? AND status = 'sending' AND id IN (${placeholders})`
+    `SELECT id FROM newsletter_deliveries WHERE campaign_id = ? AND claim_id = ?`
   )
-    .bind(id, ...ids)
+    .bind(id, claimId)
     .all<{ id: string }>();
   const claimedIds = new Set(claimedRows.map((row) => row.id));
   const claimed = pending.filter((row) => claimedIds.has(row.delivery_id));
@@ -467,14 +493,14 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
       if (outcome?.ok) {
         sentCount += 1;
         return c.env.DB.prepare(
-          "UPDATE newsletter_deliveries SET status = 'sent', sent_at = ? WHERE id = ? AND status = 'sending'"
-        ).bind(settledAt, row.delivery_id);
+          "UPDATE newsletter_deliveries SET status = 'sent', sent_at = ? WHERE id = ? AND claim_id = ?"
+        ).bind(settledAt, row.delivery_id, claimId);
       }
       failedCount += 1;
       const error = outcome && !outcome.ok ? outcome.error : "Unknown send error";
       return c.env.DB.prepare(
-        "UPDATE newsletter_deliveries SET status = 'failed', error = ? WHERE id = ? AND status = 'sending'"
-      ).bind(error, row.delivery_id);
+        "UPDATE newsletter_deliveries SET status = 'failed', error = ? WHERE id = ? AND claim_id = ?"
+      ).bind(error, row.delivery_id, claimId);
     });
     await c.env.DB.batch(updates);
   }
@@ -489,8 +515,18 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
   )
     .bind(id)
     .first<{ remaining: number }>();
+  const stuckAfterRow = await c.env.DB.prepare(
+    "SELECT COUNT(*) as count FROM newsletter_deliveries WHERE campaign_id = ? AND status = 'sending'"
+  )
+    .bind(id)
+    .first<{ count: number }>();
 
-  return c.json({ sent: sentCount, failed: failedCount, remaining: remainingRow?.remaining ?? 0 });
+  return c.json({
+    sent: sentCount,
+    failed: failedCount,
+    remaining: remainingRow?.remaining ?? 0,
+    stuck: stuckAfterRow?.count ?? 0,
+  });
 });
 
 // POST /api/admin/campaigns/:id/retry-failed
@@ -502,17 +538,29 @@ adminCampaigns.post("/:id/retry-failed", async (c) => {
     .first<{ id: string }>();
   if (!campaign) return c.json({ error: "Not found" }, 404);
 
-  const failedRow = await c.env.DB.prepare(
-    "SELECT COUNT(*) as count FROM newsletter_deliveries WHERE campaign_id = ? AND status = 'failed'"
+  // Rows stranded in 'sending' (claim happened, settle never did — a crash
+  // mid-send) also need a way back to 'pending'. A 15-minute cutoff on
+  // claimed_at keeps this from yanking rows out from under a chunk that is
+  // still legitimately in flight — only claims old enough to be certainly
+  // dead get reclaimed.
+  const staleCutoff = new Date(Date.now() - 15 * 60 * 1000).toISOString();
+
+  const requeueRow = await c.env.DB.prepare(
+    `SELECT COUNT(*) as count FROM newsletter_deliveries
+     WHERE campaign_id = ?
+       AND (status = 'failed' OR (status = 'sending' AND claimed_at IS NOT NULL AND claimed_at <= ?))`
   )
-    .bind(id)
+    .bind(id, staleCutoff)
     .first<{ count: number }>();
-  const requeued = failedRow?.count ?? 0;
+  const requeued = requeueRow?.count ?? 0;
 
   await c.env.DB.prepare(
-    "UPDATE newsletter_deliveries SET status = 'pending', error = NULL WHERE campaign_id = ? AND status = 'failed'"
+    `UPDATE newsletter_deliveries
+     SET status = 'pending', error = NULL, claim_id = NULL, claimed_at = NULL
+     WHERE campaign_id = ?
+       AND (status = 'failed' OR (status = 'sending' AND claimed_at IS NOT NULL AND claimed_at <= ?))`
   )
-    .bind(id)
+    .bind(id, staleCutoff)
     .run();
 
   // send-chunk requires status = 'sending' (IMPORTANT 7). Without this, a
@@ -521,13 +569,17 @@ adminCampaigns.post("/:id/retry-failed", async (c) => {
   // make the chunk loop resumable, so it has to put the campaign back into
   // the state that loop runs in. A requeue of zero leaves status untouched,
   // so a fully-sent campaign can't be nudged back into 'sending' by mistake.
+  const counters = await recomputeCounters(c.env.DB, id);
+
   if (requeued > 0) {
-    await c.env.DB.prepare("UPDATE newsletter_campaigns SET status = 'sending', failed_count = 0, updated_at = ? WHERE id = ?")
-      .bind(new Date().toISOString(), id)
+    await c.env.DB.prepare(
+      "UPDATE newsletter_campaigns SET status = 'sending', sent_count = ?, failed_count = ?, updated_at = ? WHERE id = ?"
+    )
+      .bind(counters.sent, counters.failed, new Date().toISOString(), id)
       .run();
   } else {
-    await c.env.DB.prepare("UPDATE newsletter_campaigns SET failed_count = 0, updated_at = ? WHERE id = ?")
-      .bind(new Date().toISOString(), id)
+    await c.env.DB.prepare("UPDATE newsletter_campaigns SET sent_count = ?, failed_count = ?, updated_at = ? WHERE id = ?")
+      .bind(counters.sent, counters.failed, new Date().toISOString(), id)
       .run();
   }
 

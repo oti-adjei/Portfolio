@@ -104,12 +104,17 @@ CREATE TABLE IF NOT EXISTS newsletter_deliveries (
   status TEXT NOT NULL DEFAULT 'pending',
   error TEXT,
   sent_at TEXT,
+  claim_id TEXT,
+  claimed_at TEXT,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP,
   UNIQUE(campaign_id, subscriber_id)
 );
 
 CREATE INDEX IF NOT EXISTS idx_deliveries_campaign_status
   ON newsletter_deliveries(campaign_id, status);
+
+CREATE INDEX IF NOT EXISTS idx_deliveries_claim
+  ON newsletter_deliveries(claim_id);
 
 CREATE TABLE IF NOT EXISTS contact_submissions (
   id TEXT PRIMARY KEY,
