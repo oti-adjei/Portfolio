@@ -84,6 +84,24 @@ async function sendBatch(apiKey: string, fromAddr: string, ownerTo: string, emai
       return { results: emails.map(() => ({ ok: false, error })) };
     }
 
+    // A 200 still isn't proof every entry sent — parse the body and confirm
+    // it names exactly as many entries as we submitted before trusting any
+    // of them. A shape we don't recognise is treated as a total failure
+    // rather than guessing which recipients actually got mail.
+    let payload: unknown;
+    try {
+      payload = await response.json();
+    } catch {
+      const error = "Resend batch response was not valid JSON";
+      return { results: emails.map(() => ({ ok: false, error })) };
+    }
+
+    const data = (payload as { data?: unknown } | null)?.data;
+    if (!Array.isArray(data) || data.length !== emails.length) {
+      const error = `Resend batch response did not confirm all ${emails.length} sends`;
+      return { results: emails.map(() => ({ ok: false, error })) };
+    }
+
     return { results: emails.map(() => ({ ok: true })) };
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown resend error";

@@ -140,6 +140,26 @@ async function hydrateItems(db: D1Database, items: unknown[]): Promise<CampaignI
   return hydrated;
 }
 
+/**
+ * Delivery rows are the source of truth; the campaign's sent_count/failed_count
+ * are a cache of them. Recomputing from a GROUP BY instead of applying deltas
+ * means a partial failure can never leave the counters drifted from the rows.
+ */
+async function recomputeCounters(db: D1Database, campaignId: string): Promise<{ sent: number; failed: number }> {
+  const { results } = await db
+    .prepare("SELECT status, COUNT(*) as count FROM newsletter_deliveries WHERE campaign_id = ? GROUP BY status")
+    .bind(campaignId)
+    .all<{ status: string; count: number }>();
+
+  let sent = 0;
+  let failed = 0;
+  for (const row of results) {
+    if (row.status === "sent") sent = row.count;
+    if (row.status === "failed") failed = row.count;
+  }
+  return { sent, failed };
+}
+
 function resolveSiteUrl(env: Env): string {
   return env.SITE_URL || "https://hearvie.dev";
 }
@@ -282,8 +302,12 @@ adminCampaigns.post("/:id/prepare", async (c) => {
     .bind(id)
     .first<{ status: string }>();
   if (!campaign) return c.json({ error: "Not found" }, 404);
-  if (campaign.status !== "draft" && campaign.status !== "sending") {
-    return c.json({ error: "Campaign must be a draft or already sending to prepare." }, 409);
+  if (campaign.status !== "draft") {
+    // Re-running prepare against an in-flight campaign would silently fold
+    // newly-subscribed people into an issue that has already started
+    // sending to the original list — restricted to draft so the recipient
+    // set is fixed the moment sending begins.
+    return c.json({ error: "Campaign must be a draft to prepare." }, 409);
   }
 
   const { results: subscribers } = await c.env.DB.prepare(
@@ -332,78 +356,132 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
     .bind(id)
     .first<CampaignRow>();
   if (!campaign) return c.json({ error: "Not found" }, 404);
+  if (campaign.status !== "sending") {
+    return c.json({ error: "Campaign must be in 'sending' status to send a chunk." }, 409);
+  }
+
+  const now = new Date().toISOString();
+
+  // CRITICAL 2 & 3: sweep pending rows that must never be mailed out of the
+  // queue before they ever reach the join below — a subscriber who
+  // unsubscribed after `prepare` snapshotted them, or one whose token is
+  // missing (nullable column, backfill is a manual step). Not limited to
+  // this chunk's 100: this is bulk row-state cleanup, not a network call,
+  // so it can't strand rows outside the window forever.
+  await c.env.DB.prepare(
+    `UPDATE newsletter_deliveries
+     SET status = 'failed', error = 'unsubscribed before send'
+     WHERE campaign_id = ? AND status = 'pending'
+       AND subscriber_id IN (SELECT id FROM newsletter_subscribers WHERE status != 'subscribed')`
+  )
+    .bind(id)
+    .run();
+
+  await c.env.DB.prepare(
+    `UPDATE newsletter_deliveries
+     SET status = 'failed', error = 'missing unsubscribe token'
+     WHERE campaign_id = ? AND status = 'pending'
+       AND subscriber_id IN (SELECT id FROM newsletter_subscribers WHERE unsubscribe_token IS NULL)`
+  )
+    .bind(id)
+    .run();
 
   const { results: pending } = await c.env.DB.prepare(
     `SELECT d.id as delivery_id, d.email, s.unsubscribe_token
      FROM newsletter_deliveries d
      JOIN newsletter_subscribers s ON s.id = d.subscriber_id
-     WHERE d.campaign_id = ? AND d.status = 'pending'
+     WHERE d.campaign_id = ? AND d.status = 'pending' AND s.status = 'subscribed'
      LIMIT 100`
   )
     .bind(id)
     .all<{ delivery_id: string; email: string; unsubscribe_token: string | null }>();
 
-  const now = new Date().toISOString();
-
   if (pending.length === 0) {
-    const finalStatus = campaign.failed_count === 0 ? "sent" : "failed";
-    await c.env.DB.prepare("UPDATE newsletter_campaigns SET status = ?, sent_at = ? WHERE id = ?")
-      .bind(finalStatus, now, id)
+    const counters = await recomputeCounters(c.env.DB, id);
+    const finalStatus = counters.failed === 0 ? "sent" : "failed";
+    await c.env.DB.prepare(
+      "UPDATE newsletter_campaigns SET sent_count = ?, failed_count = ?, status = ?, sent_at = ?, updated_at = ? WHERE id = ?"
+    )
+      .bind(counters.sent, counters.failed, finalStatus, now, now, id)
       .run();
     return c.json({ sent: 0, failed: 0, remaining: 0, status: finalStatus });
   }
 
-  const items = await hydrateItems(c.env.DB, parseJson<unknown[]>(campaign.items, []));
-  const siteUrl = resolveSiteUrl(c.env);
-  const postalAddress = resolvePostalAddress(c.env);
-  const style = campaign.style === "full" ? "full" : "teaser";
+  // CRITICAL 1: claim before sending. Flipping pending -> sending here means
+  // an interruption between the provider call returning and the settle
+  // write below leaves an orphaned 'sending' row — a visible reconcile case
+  // — instead of a silently re-sent 'pending' row on the next chunk call.
+  const ids = pending.map((row) => row.delivery_id);
+  const placeholders = ids.map(() => "?").join(",");
 
-  const emails = pending.map((row) => {
-    const token = row.unsubscribe_token || "preview-token";
-    const renderInput = {
-      subject: campaign.subject,
-      intro: campaign.intro,
-      style,
-      items,
-      siteUrl,
-      unsubscribeUrl: `${siteUrl}/api/newsletter/unsubscribe?token=${token}`,
-      postalAddress,
-    };
-    return {
-      to: row.email,
-      subject: campaign.subject,
-      html: renderCampaignHtml(renderInput),
-      text: renderCampaignText(renderInput),
-    };
-  });
+  await c.env.DB.prepare(
+    `UPDATE newsletter_deliveries SET status = 'sending'
+     WHERE campaign_id = ? AND status = 'pending' AND id IN (${placeholders})`
+  )
+    .bind(id, ...ids)
+    .run();
 
-  const emailProvider = getEmailProvider(c.env);
-  const batchResult = await emailProvider.sendNewsletterBatch(emails);
+  const { results: claimedRows } = await c.env.DB.prepare(
+    `SELECT id FROM newsletter_deliveries WHERE campaign_id = ? AND status = 'sending' AND id IN (${placeholders})`
+  )
+    .bind(id, ...ids)
+    .all<{ id: string }>();
+  const claimedIds = new Set(claimedRows.map((row) => row.id));
+  const claimed = pending.filter((row) => claimedIds.has(row.delivery_id));
 
   let sentCount = 0;
   let failedCount = 0;
-  const updates = pending.map((row, index) => {
-    const outcome = batchResult.results[index];
-    if (outcome?.ok) {
-      sentCount += 1;
-      return c.env.DB.prepare("UPDATE newsletter_deliveries SET status = 'sent', sent_at = ? WHERE id = ?").bind(
-        now,
-        row.delivery_id
-      );
-    }
-    failedCount += 1;
-    const error = outcome && !outcome.ok ? outcome.error : "Unknown send error";
-    return c.env.DB.prepare("UPDATE newsletter_deliveries SET status = 'failed', error = ? WHERE id = ?").bind(
-      error,
-      row.delivery_id
-    );
-  });
-  await c.env.DB.batch(updates);
 
-  await c.env.DB.prepare(
-    "UPDATE newsletter_campaigns SET sent_count = sent_count + ?, failed_count = failed_count + ?, updated_at = ? WHERE id = ?"
-  )
-    .bind(sentCount, failedCount, now, id)
+  if (claimed.length > 0) {
+    const items = await hydrateItems(c.env.DB, parseJson<unknown[]>(campaign.items, []));
+    const siteUrl = resolveSiteUrl(c.env);
+    const postalAddress = resolvePostalAddress(c.env);
+    const style = campaign.style === "full" ? "full" : "teaser";
+
+    const emails = claimed.map((row) => {
+      const renderInput = {
+        subject: campaign.subject,
+        intro: campaign.intro,
+        style,
+        items,
+        siteUrl,
+        // Guaranteed non-null: the sweep above already failed out every
+        // pending row whose subscriber lacked a token.
+        unsubscribeUrl: `${siteUrl}/api/newsletter/unsubscribe?token=${row.unsubscribe_token as string}`,
+        postalAddress,
+      };
+      return {
+        to: row.email,
+        subject: campaign.subject,
+        html: renderCampaignHtml(renderInput),
+        text: renderCampaignText(renderInput),
+      };
+    });
+
+    const emailProvider = getEmailProvider(c.env);
+    const batchResult = await emailProvider.sendNewsletterBatch(emails);
+
+    const settledAt = new Date().toISOString();
+    const updates = claimed.map((row, index) => {
+      const outcome = batchResult.results[index];
+      if (outcome?.ok) {
+        sentCount += 1;
+        return c.env.DB.prepare(
+          "UPDATE newsletter_deliveries SET status = 'sent', sent_at = ? WHERE id = ? AND status = 'sending'"
+        ).bind(settledAt, row.delivery_id);
+      }
+      failedCount += 1;
+      const error = outcome && !outcome.ok ? outcome.error : "Unknown send error";
+      return c.env.DB.prepare(
+        "UPDATE newsletter_deliveries SET status = 'failed', error = ? WHERE id = ? AND status = 'sending'"
+      ).bind(error, row.delivery_id);
+    });
+    await c.env.DB.batch(updates);
+  }
+
+  const counters = await recomputeCounters(c.env.DB, id);
+  await c.env.DB.prepare("UPDATE newsletter_campaigns SET sent_count = ?, failed_count = ?, updated_at = ? WHERE id = ?")
+    .bind(counters.sent, counters.failed, now, id)
     .run();
 
   const remainingRow = await c.env.DB.prepare(
@@ -437,9 +515,21 @@ adminCampaigns.post("/:id/retry-failed", async (c) => {
     .bind(id)
     .run();
 
-  await c.env.DB.prepare("UPDATE newsletter_campaigns SET failed_count = 0, updated_at = ? WHERE id = ?")
-    .bind(new Date().toISOString(), id)
-    .run();
+  // send-chunk requires status = 'sending' (IMPORTANT 7). Without this, a
+  // campaign that finalized to 'failed' would requeue its rows to 'pending'
+  // but stay permanently un-sendable — retry-failed's whole point is to
+  // make the chunk loop resumable, so it has to put the campaign back into
+  // the state that loop runs in. A requeue of zero leaves status untouched,
+  // so a fully-sent campaign can't be nudged back into 'sending' by mistake.
+  if (requeued > 0) {
+    await c.env.DB.prepare("UPDATE newsletter_campaigns SET status = 'sending', failed_count = 0, updated_at = ? WHERE id = ?")
+      .bind(new Date().toISOString(), id)
+      .run();
+  } else {
+    await c.env.DB.prepare("UPDATE newsletter_campaigns SET failed_count = 0, updated_at = ? WHERE id = ?")
+      .bind(new Date().toISOString(), id)
+      .run();
+  }
 
   return c.json({ requeued });
 });
