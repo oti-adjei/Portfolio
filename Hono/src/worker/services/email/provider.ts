@@ -11,9 +11,22 @@ export interface NewsletterEmailPayload {
   name?: string;
 }
 
+export interface BatchEmail {
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+}
+
+export interface BatchResult {
+  /** Index-aligned with the input array. */
+  results: Array<{ ok: true } | { ok: false; error: string }>;
+}
+
 export interface EmailProvider {
   sendOwnerContactNotification: (payload: ContactEmailPayload) => Promise<void>;
   sendUserContactAutoReply: (payload: ContactEmailPayload) => Promise<void>;
   sendOwnerNewsletterNotification: (payload: NewsletterEmailPayload) => Promise<void>;
   sendUserNewsletterConfirmation: (payload: NewsletterEmailPayload) => Promise<void>;
+  sendNewsletterBatch: (emails: BatchEmail[]) => Promise<BatchResult>;
 }
