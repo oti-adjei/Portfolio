@@ -147,10 +147,10 @@ export default function AdminAbout() {
         {/* Header */}
         <PageHeader eyebrow="Pages" title="About page" description="Bio, expertise and journey." />
 
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Section Navigation */}
-          <div className="col-span-3">
-            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 sticky top-24">
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 lg:sticky lg:top-24">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Sections</h3>
               <nav className="space-y-1">
                 {sections.map((section) => (
@@ -172,7 +172,7 @@ export default function AdminAbout() {
           </div>
 
           {/* Content Editor */}
-          <div className="col-span-9">
+          <div className="lg:col-span-9">
             <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
               {/* Hero Section */}
               {activeSection === 'hero' && (
@@ -331,7 +331,7 @@ export default function AdminAbout() {
                       {aboutPage.journey.timeline.map((item, index) => (
                         <div key={item.id} className="border border-gray-200 rounded-lg p-4">
                           <div className="flex items-start justify-between mb-3">
-                            <div className="flex-1 grid grid-cols-4 gap-3">
+                            <div className="flex-1 grid grid-cols-1 sm:grid-cols-4 gap-3">
                               <input
                                 type="text"
                                 value={item.year}
@@ -352,7 +352,7 @@ export default function AdminAbout() {
                                   updateJourney('timeline', updated);
                                 }}
                                 placeholder="Title"
-                                className="col-span-3 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-signal/50 focus:border-transparent"
+                                className="sm:col-span-3 px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-signal/50 focus:border-transparent"
                               />
                             </div>
                             <button
@@ -432,7 +432,7 @@ export default function AdminAbout() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Button Text</label>
                       <input

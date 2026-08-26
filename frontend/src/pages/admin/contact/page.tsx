@@ -99,10 +99,10 @@ export default function AdminContact() {
         {/* Header */}
         <PageHeader eyebrow="Pages" title="Contact page" description="Contact details, form copy and socials." />
 
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Section Navigation */}
-          <div className="col-span-3">
-            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 sticky top-24">
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 lg:sticky lg:top-24">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Sections</h3>
               <nav className="space-y-1">
                 {sections.map((section) => (
@@ -124,7 +124,7 @@ export default function AdminContact() {
           </div>
 
           {/* Content Editor */}
-          <div className="col-span-9">
+          <div className="lg:col-span-9">
             <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
               {/* Hero Section */}
               {activeSection === 'hero' && (
@@ -193,7 +193,7 @@ export default function AdminContact() {
                     <div className="space-y-4">
                       {contactPage.form.fields.map((field, index) => (
                         <div key={field.id} className="border border-gray-200 rounded-lg p-4">
-                          <div className="grid grid-cols-2 gap-3 mb-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                             <div>
                               <label className="block text-xs text-gray-500 mb-1">Label</label>
                               <input

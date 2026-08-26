@@ -256,7 +256,7 @@ export default function EditProject() {
 
         {/* Tabs */}
         <div className="bg-white rounded-2xl ring-1 ring-black/5 mb-6">
-          <div className="flex border-b border-gray-200">
+          <div className="flex border-b border-gray-200 overflow-x-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -285,7 +285,7 @@ export default function EditProject() {
                   required
                 />
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-[12px] font-medium text-gray-700 mb-1.5">
                       Category
@@ -368,7 +368,7 @@ export default function EditProject() {
                   rows={4}
                 />
 
-                <div className="grid grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   <Field
                     label="Client"
                     value={project.overview.client}

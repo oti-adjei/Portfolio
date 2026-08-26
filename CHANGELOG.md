@@ -7,6 +7,18 @@ Entries are ordered newest first.
 
 ## 2026-08-26
 
+### admin — Page editors were unusable on a phone
+
+The install landed and the admin immediately turned out to be unusable on the device it was installed to. The page editors are built on a 12-column grid with no responsive prefix, so `grid-cols-12` stayed twelve columns at 390px — the section-nav sidebar rendered about 95px wide next to a squashed editor.
+
+- `home`, `about`, `contact` — the shell becomes `grid-cols-1 lg:grid-cols-12`, with `lg:col-span-3` / `lg:col-span-9` and the section nav only sticky from `lg` up. Below `lg` the nav is a full-width card above the editor.
+- Paired form fields (`grid-cols-2`, and `about`'s timeline `grid-cols-4`) become `grid-cols-1 sm:grid-cols-*`. The `col-span-3` field inside that timeline grid had to move in step, or it spans wrong once the parent stacks.
+- `projects/edit` had the same unprefixed grids, plus a tab strip of `whitespace-nowrap` buttons that couldn't shrink and pushed the whole document wide. The strip is now `overflow-x-auto`, so it scrolls within itself instead of overflowing the page.
+
+Verified at 390px by rendering each page in a 390px iframe (media queries resolve against the iframe viewport): single-column shells, all inner grids stacked, and `documentElement.scrollWidth` under the viewport on every page.
+
+---
+
 ### admin — Installable to an iOS home screen
 
 `/admin` can now be added to a phone home screen and opens standalone, without Safari's chrome. No App Store account or subscription involved — it is the web app, launched from an icon.
