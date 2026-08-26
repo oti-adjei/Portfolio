@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { notify } from "../../services/push/send.js";
 import { getEmailProvider } from "../../services/email/index.js";
 import { renderCampaignHtml, renderCampaignText } from "../../services/newsletter/render.js";
 import type { CampaignItem } from "../../services/newsletter/render.js";
@@ -458,6 +459,21 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
     )
       .bind(counters.sent, counters.failed, finalStatus, now, now, id)
       .run();
+
+    // A send finishing is the one campaign event worth interrupting someone for — a partial
+    // failure would otherwise sit silently until the Issues list is next opened.
+    c.executionCtx.waitUntil(
+      notify(c.env, {
+        title: finalStatus === "sent" ? "Newsletter sent" : "Newsletter send finished with failures",
+        body:
+          finalStatus === "sent"
+            ? `Delivered to ${counters.sent} subscriber${counters.sent === 1 ? "" : "s"}.`
+            : `${counters.sent} delivered, ${counters.failed} failed.`,
+        url: "/admin/newsletter",
+        tag: `campaign-${id}`,
+      })
+    );
+
     return c.json({ sent: 0, failed: 0, remaining: 0, stuck: 0, status: finalStatus });
   }
 

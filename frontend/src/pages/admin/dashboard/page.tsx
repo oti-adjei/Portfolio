@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../../components/admin/AdminLayout';
+import NotificationsCard from '../../../components/admin/NotificationsCard';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
 import { useAuth } from '../../../admin/contexts/AdminAuthContext';
 import { Button, Card, EmptyState, Notice, PageHeader, StatusBadge } from '../../../components/admin/ui';
@@ -156,6 +157,10 @@ export default function AdminDashboard() {
               <p className="text-[12px] text-gray-500 mt-0.5">contact submissions</p>
             </Card>
           </div>
+        </div>
+
+        <div className="mb-8">
+          <NotificationsCard />
         </div>
 
         <p className="text-[11px] uppercase tracking-[0.18em] text-gray-400 mb-3">Edit content</p>

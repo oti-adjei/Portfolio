@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { getEmailProvider } from "../services/email/index.js";
+import { notify } from "../services/push/send.js";
 import {
   assertHoneypotEmpty,
   enforceRateLimit,
@@ -76,6 +77,17 @@ contact.post("/submit", async (c) => {
       error: error instanceof Error ? error.message : String(error),
     });
   }
+
+  // Fire-and-forget: the submission is already stored and the emails already sent. A push
+  // failure must not turn a successful contact submission into an error for the sender.
+  c.executionCtx.waitUntil(
+    notify(c.env, {
+      title: "New contact submission",
+      body: subject ? `${name}: ${subject}` : `${name} sent you a message`,
+      url: "/admin/contact-submissions",
+      tag: "contact",
+    })
+  );
 
   return c.json({ success: true, referenceId: id });
 });

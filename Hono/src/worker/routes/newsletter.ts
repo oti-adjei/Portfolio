@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { getEmailProvider } from "../services/email/index.js";
+import { notify } from "../services/push/send.js";
 import {
   assertHoneypotEmpty,
   enforceRateLimit,
@@ -60,6 +61,16 @@ newsletter.post("/subscribe", async (c) => {
       error: error instanceof Error ? error.message : String(error),
     });
   }
+
+  // Fire-and-forget — the subscription is already recorded; push is a courtesy on top.
+  c.executionCtx.waitUntil(
+    notify(c.env, {
+      title: "New newsletter subscriber",
+      body: name ? `${name} <${email}>` : email,
+      url: "/admin/newsletter",
+      tag: "subscriber",
+    })
+  );
 
   return c.json({ success: true });
 });

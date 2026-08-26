@@ -166,6 +166,33 @@ echo "your postal address" | npx wrangler secret put NEWSLETTER_POSTAL_ADDRESS
 - `SITE_URL` — used to build absolute links (including the unsubscribe URL) in sent emails. Defaults to `https://hearvie.dev` if unset.
 - `NEWSLETTER_POSTAL_ADDRESS` — ships unset. CAN-SPAM requires a postal address on commercial email, so **this must be set before the first real campaign send.** Until it is, the rendered email simply omits the address block, and the composer shows an error notice warning that no postal address is configured — sending is not blocked, so the notice is a signal to act on, not a hard stop.
 
+### Web Push (VAPID)
+
+Push notifications for the admin PWA need a VAPID keypair. Generate one:
+
+```bash
+npm run generate:vapid
+```
+
+It prints the keypair and writes nothing to disk, so the private key can't land in git by accident. Add all three to `.dev.vars` for local work, and set them as secrets for production:
+
+```bash
+npx wrangler secret put VAPID_PUBLIC_KEY
+npx wrangler secret put VAPID_PRIVATE_KEY
+npx wrangler secret put VAPID_SUBJECT     # mailto:you@example.com
+```
+
+- All three ship unset. With any of them missing, push is simply inert: `GET /api/admin/push/key` reports `configured: false`, the dashboard card explains what to set, and the event triggers no-op. Nothing errors.
+- `VAPID_SUBJECT` must be a `mailto:` or `https:` URL — push services use it to contact you about a misbehaving sender.
+- **Rotating `VAPID_PRIVATE_KEY` invalidates every existing subscription.** Every device has to re-enable notifications afterwards, and on iOS a device that was never re-enabled just silently stops receiving them.
+
+Apply the push migration alongside the others:
+
+```bash
+npx wrangler d1 execute portfolio-db --local  --file=src/worker/db/migrations/2026-08-27_push_subscriptions.sql
+npx wrangler d1 execute portfolio-db --remote --file=src/worker/db/migrations/2026-08-27_push_subscriptions.sql
+```
+
 ---
 
 ## Step 7 — Verify TypeScript Compiles

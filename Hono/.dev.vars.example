@@ -16,3 +16,10 @@ SITE_URL=https://hearvie.dev
 # wrangler.json; override here only for local dev.
 # API_PUBLIC_BASE=http://localhost:5173
 NEWSLETTER_POSTAL_ADDRESS=
+
+# Web Push (VAPID). Generate a keypair with:  npm run generate:vapid
+# The public key is served to the browser; the private key must stay a secret.
+# VAPID_SUBJECT must be a mailto: or https: URL identifying you to the push service.
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
+VAPID_SUBJECT=mailto:you@example.com
