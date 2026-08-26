@@ -16,6 +16,7 @@ const AdminBlog = lazy(() => import("../../pages/admin/blog/page"));
 const AdminNotes = lazy(() => import("../../pages/admin/notes/page"));
 const AdminStreams = lazy(() => import("../../pages/admin/streams/page"));
 const AdminNewsletter = lazy(() => import("../../pages/admin/newsletter/page"));
+const NewsletterCompose = lazy(() => import("../../pages/admin/newsletter/compose/page"));
 const AdminContactSubmissions = lazy(() => import("../../pages/admin/contact-submissions/page"));
 const NotFound = lazy(() => import("../../pages/public/NotFound"));
 
@@ -36,6 +37,8 @@ const adminRoutes: RouteObject[] = [
   { path: "/admin/notes", element: <ProtectedRoute><AdminNotes /></ProtectedRoute> },
   { path: "/admin/streams", element: <ProtectedRoute><AdminStreams /></ProtectedRoute> },
   { path: "/admin/newsletter", element: <ProtectedRoute><AdminNewsletter /></ProtectedRoute> },
+  { path: "/admin/newsletter/compose", element: <ProtectedRoute><NewsletterCompose /></ProtectedRoute> },
+  { path: "/admin/newsletter/compose/:id", element: <ProtectedRoute><NewsletterCompose /></ProtectedRoute> },
   { path: "/admin/contact-submissions", element: <ProtectedRoute><AdminContactSubmissions /></ProtectedRoute> },
   { path: "*", element: <NotFound /> },
 ];
