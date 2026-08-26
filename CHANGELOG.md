@@ -21,7 +21,9 @@ The admin now pushes to the owner's devices for three events: a contact submissi
 
 Verified in workerd: encrypting with the shipped code and decrypting with an independent RFC 8291 implementation returns the exact plaintext; the VAPID signature verifies and carries an origin-only `aud`. Routes were exercised end to end — subscribe, re-subscribe (upserts rather than duplicating), test send, 410 pruning, and both public triggers firing well-formed requests.
 
-Not verified: actual delivery to a real push service, and the campaign-finalization trigger end to end (exercising it would have sent live email through Resend). Both need checking after deploy.
+Confirmed in production on 2026-08-27: with the secrets set and the migration applied, enabling notifications on a real iPhone and using **Send test** delivered through Apple's push service. The full chain works — VAPID accepted, payload decrypted on-device, service worker woken, notification shown.
+
+Still not verified: the campaign-finalization trigger end to end, since exercising it would have sent live email through Resend to test addresses. The contact and newsletter triggers passed against a local fake push service but haven't run in production.
 
 ---
 
@@ -50,7 +52,7 @@ Verified at 390px by rendering each page in a 390px iframe (media queries resolv
 
 No service worker: the CMS needs the API for anything useful, and a stale precached shell is a worse problem than an offline page.
 
-Not verified here: iOS reads the manifest at Share → Add to Home Screen, well after React mounts, so runtime injection should be read in time — but that needs confirming on a real device after deploy. If it isn't, the fallback is a static `<link>` in `index.html`, at the cost of the public site's separate identity.
+Confirmed on a real iPhone after deploy: runtime injection is read in time. Safari reads the manifest at Share → Add to Home Screen, long after React has mounted, so the injected tags are present when it looks. The icon is the monogram rather than a page screenshot, and the app launches standalone. The `index.html` fallback wasn't needed.
 
 ---
 

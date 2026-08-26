@@ -281,7 +281,9 @@ Worth recording, because "it ran without error" would have been worthless here.
 
 **Routes were exercised end to end** against a local Worker with a fake push service: subscribe, re-subscribe (must upsert, not duplicate — otherwise every launch adds a row and you get N copies of every notification), test send, 410 pruning, both public triggers, and a contact submission with the push endpoint killed mid-flight (still returned 200, row retained).
 
-**Not verified:** delivery through a real push service, and the campaign-finalisation trigger end to end. The first needs a real device; the second would have sent live email through Resend to test addresses.
+**Confirmed in production** (2026-08-27): after deploying, generating the VAPID keypair and setting the three secrets, enabling notifications on a real iPhone and using the card's **Send test** button delivered the notification through Apple's push service. So the full chain works — VAPID accepted, payload decrypted on-device, service worker woken, notification shown.
+
+**Still not verified:** the campaign-finalisation trigger end to end. Exercising it would have sent live email through Resend to test addresses, so the code path is committed but has never run for real. The contact and newsletter triggers were verified locally against a fake push service, but not yet in production — submitting the live contact form is the cheap way to close that.
 
 ---
 
