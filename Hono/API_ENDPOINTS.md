@@ -26,6 +26,8 @@ Required vars/bindings in `/Volumes/Georgie/Development/Personal/Brand/Portfolio
 - `EMAIL_FROM`
 - `EMAIL_OWNER_TO`
 - `CONTACT_AUTO_REPLY_HOURS` (defaults to `"24"`)
+- `SITE_URL` (defaults to `https://hearvie.dev`) — used to build newsletter unsubscribe links
+- `NEWSLETTER_POSTAL_ADDRESS` (optional) — physical mailing address footer; omitted from emails when unset
 
 ## Health
 
@@ -164,6 +166,10 @@ Required vars/bindings in `/Volumes/Georgie/Development/Personal/Brand/Portfolio
 - `GET /api/admin/campaigns/:id` — includes `deliveries: { pending, sent, failed }`
 - `PUT /api/admin/campaigns/:id` — draft only, 409 otherwise
 - `DELETE /api/admin/campaigns/:id` — draft only, 409 otherwise
+- `POST /api/admin/campaigns/:id/prepare` — 409 unless status is `draft` or `sending`. Snapshots every `subscribed` subscriber into a `pending` delivery row (`INSERT OR IGNORE`, so repeat calls add nothing), sets `total_recipients` and status `sending`. Returns `{ total, pending }`.
+- `POST /api/admin/campaigns/:id/send-chunk` — sends up to 100 pending deliveries per call via the batch email provider, marking each row `sent` or `failed` (with the error text) and updating the campaign's counters. Call it repeatedly until `remaining` is 0; once no pending rows remain it finalises the campaign to `sent` or `failed` and returns `{ sent: 0, failed: 0, remaining: 0, status }`. Otherwise returns `{ sent, failed, remaining }`.
+- `POST /api/admin/campaigns/:id/retry-failed` — requeues that campaign's `failed` deliveries back to `pending` (clearing `error`) and zeroes `failed_count`. Returns `{ requeued }`. Does not auto-retry — a hard bounce would loop forever otherwise.
+- `POST /api/admin/campaigns/:id/test` — body `{ email }`. Renders exactly as a real send would (using the first subscriber's unsubscribe token, or the literal `preview-token` if none exist) and sends a single email with the subject prefixed `[TEST] `. Does not touch delivery rows.
 
 ### Upload
 

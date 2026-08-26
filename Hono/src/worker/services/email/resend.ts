@@ -1,4 +1,6 @@
 import type {
+  BatchEmail,
+  BatchResult,
   ContactEmailPayload,
   EmailProvider,
   NewsletterEmailPayload,
@@ -43,6 +45,49 @@ async function sendWithRetry(apiKey: string, body: ResendMailBody): Promise<void
 
     if (!shouldRetry) throw error;
     await send();
+  }
+}
+
+/**
+ * Batch send against Resend's /emails/batch endpoint. That endpoint is
+ * all-or-nothing — it does not report per-entry failures within a 200 — so
+ * a rejected request marks every input row failed rather than losing track
+ * of which ones went out.
+ */
+async function sendBatch(apiKey: string, fromAddr: string, ownerTo: string, emails: BatchEmail[]): Promise<BatchResult> {
+  if (emails.length === 0) return { results: [] };
+
+  const listUnsubscribe = `<mailto:${ownerTo}?subject=unsubscribe>`;
+
+  try {
+    const response = await fetch("https://api.resend.com/emails/batch", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(
+        emails.map((email) => ({
+          from: fromAddr,
+          to: [email.to],
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
+          headers: { "List-Unsubscribe": listUnsubscribe },
+        }))
+      ),
+    });
+
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      const error = `Resend batch request failed (${response.status}): ${detail}`;
+      return { results: emails.map(() => ({ ok: false, error })) };
+    }
+
+    return { results: emails.map(() => ({ ok: true })) };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown resend error";
+    return { results: emails.map(() => ({ ok: false, error: message })) };
   }
 }
 
@@ -118,6 +163,10 @@ export function createResendProvider(env: ResendEnv): EmailProvider {
           "You are now on the list and will receive future updates.",
         ].join("\n"),
       });
+    },
+
+    async sendNewsletterBatch(emails: BatchEmail[]): Promise<BatchResult> {
+      return sendBatch(env.RESEND_API_KEY, env.EMAIL_FROM, env.EMAIL_OWNER_TO, emails);
     },
   };
 }
