@@ -5,6 +5,25 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-08-27
+
+### admin — Projects can be drafts, and saving one no longer publishes it
+
+Projects had a `published` column and the public API already filtered on it, but nothing above the database knew: the `Project` type had no such field, the mappers dropped it, and the admin UI never sent it. Two consequences.
+
+- **Saving a draft silently published it.** The PUT handler read `body.published !== false ? 1 : 0`, and the client never sent `published` — so `undefined !== false` resolved to "publish" on every save. The handler now preserves the stored value when the field is absent, and only changes it when a boolean is actually sent.
+- **There was no way to make a draft.** `published` now flows through `Project`, `toProject`/`fromProject`, the projects list (draft badge, and a placeholder for projects with no image yet) and the editor (Publish/Unpublish, with the current state shown). New projects start as drafts, since publishing an empty project would put a blank card on the live site the moment it is created.
+
+`toProject` defaults a missing `published` to `true`: the public API only ever returns published rows, so treating an absent flag as draft would make every project vanish from the public site.
+
+Also removed a leftover from the original scaffold — new projects were seeded with a `readdy.ai` generated-image URL, hotlinking a third party on every project created. New projects now start with an empty thumbnail so `ImageField` prompts for a real upload.
+
+### admin — Project categories normalised to upper case
+
+The public works page builds its filter chips from the distinct category values and matches case-sensitively, so `mobile` and `MOBILE` rendered as two chips for the same category, each showing a subset. Live data had 16 rows upper-case and 2 lower-case. A data migration upper-cases existing rows, and the admin API now upper-cases on write so the split cannot reappear.
+
+---
+
 ## 2026-08-26
 
 ### admin — Push notifications for contact, subscribers and sends

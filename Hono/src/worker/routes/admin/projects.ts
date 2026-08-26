@@ -1,6 +1,15 @@
 import { Hono } from "hono";
 import { type ProjectRow, rowToProject } from "../../types.js";
 
+/**
+ * The public works page derives its filter chips from distinct category values and matches
+ * them case-sensitively, so 'web' and 'WEB' would render as two chips for one category.
+ * Upper case is the established convention in the data.
+ */
+function normalizeCategory(value: unknown): string {
+  return typeof value === "string" ? value.trim().toUpperCase() : "";
+}
+
 const adminProjects = new Hono<{ Bindings: Env }>();
 
 // GET /api/admin/projects  — all projects including unpublished
@@ -27,7 +36,7 @@ adminProjects.post("/", async (c) => {
     .bind(
       id,
       body.title,
-      body.category,
+      normalizeCategory(body.category),
       body.year ?? null,
       (body.thumbnail as { url?: string } | undefined)?.url ?? null,
       (body.thumbnail as { alt?: string } | undefined)?.alt ?? null,
@@ -60,10 +69,16 @@ adminProjects.put("/:id", async (c) => {
   const body = await c.req.json<Record<string, unknown>>();
   const now = new Date().toISOString();
 
-  const existing = await c.env.DB.prepare("SELECT id FROM projects WHERE id = ?")
+  const existing = await c.env.DB.prepare("SELECT id, published FROM projects WHERE id = ?")
     .bind(id)
-    .first<{ id: string }>();
+    .first<{ id: string; published: number }>();
   if (!existing) return c.json({ error: "Not found" }, 404);
+
+  // Preserve the current state when the client doesn't send `published`. This was
+  // `body.published !== false ? 1 : 0`, which treated an absent field as "publish" — so a
+  // save from any client unaware of the flag silently published a draft.
+  const published =
+    typeof body.published === "boolean" ? (body.published ? 1 : 0) : existing.published;
 
   await c.env.DB.prepare(
     `UPDATE projects SET
@@ -75,7 +90,7 @@ adminProjects.put("/:id", async (c) => {
   )
     .bind(
       body.title,
-      body.category,
+      normalizeCategory(body.category),
       body.year ?? null,
       (body.thumbnail as { url?: string } | undefined)?.url ?? null,
       (body.thumbnail as { alt?: string } | undefined)?.alt ?? null,
@@ -90,7 +105,7 @@ adminProjects.put("/:id", async (c) => {
       JSON.stringify((body.gallery as { images?: unknown[] } | undefined)?.images ?? []),
       JSON.stringify(body.links ?? []),
       body.sort_order ?? 0,
-      body.published !== false ? 1 : 0,
+      published,
       now,
       id
     )

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useContent } from '../../../admin/contexts/AdminContentContext';
-import { Badge, Button, EmptyState, PageHeader, Toolbar } from '../../../components/admin/ui';
+import { Badge, Button, EmptyState, PageHeader, StatusBadge, Toolbar } from '../../../components/admin/ui';
 
 const categories = [
   { id: 'all', label: 'All projects' },
@@ -119,12 +119,24 @@ export default function AdminProjects() {
                 onClick={() => navigate(`/admin/projects/edit/${String(project.id)}`)}
                 className="text-left rounded-2xl ring-1 ring-black/5 bg-white overflow-hidden hover:ring-signal/30 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/40"
               >
-                <div className="aspect-[4/3] overflow-hidden bg-cream-surface">
-                  <img
-                    src={project.thumbnail.url}
-                    alt={project.thumbnail.alt}
-                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
-                  />
+                <div className="aspect-[4/3] overflow-hidden bg-cream-surface relative">
+                  {project.thumbnail.url ? (
+                    <img
+                      src={project.thumbnail.url}
+                      alt={project.thumbnail.alt}
+                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-1 text-gray-400">
+                      <i className="ri-image-add-line text-2xl" aria-hidden="true" />
+                      <span className="text-[11px]">No image yet</span>
+                    </div>
+                  )}
+                  {!project.published && (
+                    <span className="absolute top-2 left-2">
+                      <StatusBadge status="draft" />
+                    </span>
+                  )}
                 </div>
 
                 <div className="p-4">

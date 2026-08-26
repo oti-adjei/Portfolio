@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import AdminLayout from '../../../../components/admin/AdminLayout';
-import { Button, Field, ImageField, PageHeader } from '../../../../components/admin/ui';
+import { Button, Field, ImageField, PageHeader, StatusBadge } from '../../../../components/admin/ui';
 import { useContent } from '../../../../admin/contexts/AdminContentContext';
 import type { Project } from '../../../../types/siteContent';
 
@@ -29,9 +29,12 @@ export default function EditProject() {
         title: '',
         category: 'web',
         year: new Date().getFullYear().toString(),
+        // Empty rather than a placeholder URL, so ImageField prompts for a real upload.
+        // This previously pointed at a readdy.ai generated-image URL left over from the
+        // original scaffold, which shipped a third-party hotlink on every new project.
         thumbnail: {
-          url: 'https://readdy.ai/api/search-image?query=modern%20minimalist%20web%20design%20interface%20clean%20white%20background%20professional%20technology&width=800&height=600&seq=new-project-thumb&orientation=landscape',
-          alt: 'New Project',
+          url: '',
+          alt: '',
         },
         tags: [],
         links: [],
@@ -47,6 +50,9 @@ export default function EditProject() {
           results: [],
         },
         gallery: { images: [] },
+        // New projects start as drafts: publishing an empty project would put a blank
+        // card on the live site the moment it is created.
+        published: false,
       });
     } else {
       const existingProject = content.projects.find((p) => String(p.id) === String(id));
@@ -239,6 +245,7 @@ export default function EditProject() {
           description={project.title || 'Untitled project'}
           actions={
             <>
+              <StatusBadge status={project.published ? 'published' : 'draft'} />
               <Link to="/admin/projects">
                 <Button icon="ri-arrow-left-line">Back</Button>
               </Link>
@@ -247,6 +254,12 @@ export default function EditProject() {
                   Delete
                 </Button>
               )}
+              <Button
+                icon={project.published ? 'ri-eye-off-line' : 'ri-eye-line'}
+                onClick={() => setProject({ ...project, published: !project.published })}
+              >
+                {project.published ? 'Unpublish' : 'Publish'}
+              </Button>
               <Button variant="primary" icon="ri-save-line" loading={isSaving} onClick={() => void handleSave()}>
                 {isSaving ? 'Saving\u2026' : 'Save project'}
               </Button>

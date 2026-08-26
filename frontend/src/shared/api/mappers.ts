@@ -87,6 +87,9 @@ export function toProject(dto: ProjectDto): Project {
         caption: image.caption ?? "",
       })),
     },
+    // Default true: the public API only ever returns published rows, and treating a
+    // missing flag as draft would make every project disappear from the public site.
+    published: dto.published ?? true,
   };
 }
 
@@ -116,6 +119,7 @@ export function fromProject(project: Project): ProjectDto {
         caption: image.caption,
       })),
     },
+    published: project.published,
   };
 }
 
