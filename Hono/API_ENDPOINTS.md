@@ -66,6 +66,14 @@ Required vars/bindings in `/Volumes/Georgie/Development/Personal/Brand/Portfolio
 }
 ```
 
+- `GET /api/newsletter/unsubscribe?token=<unsubscribe_token>` — marks the matching subscriber `unsubscribed` and returns an HTML confirmation page. Idempotent, and returns the identical page for an unknown or missing token — the endpoint never reveals whether a token is real.
+- `POST /api/newsletter/unsubscribe` — same behavior, for `List-Unsubscribe-Post` one-click unsubscribe. Token via `?token=` query param or JSON body `{ "token": "..." }`. Response:
+```json
+{
+  "success": true
+}
+```
+
 ### Contact
 
 - `POST /api/contact/submit`

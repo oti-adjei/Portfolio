@@ -64,4 +64,37 @@ newsletter.post("/subscribe", async (c) => {
   return c.json({ success: true });
 });
 
+const UNSUB_CONFIRMATION = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unsubscribed</title></head>
+<body style="margin:0;background:#faf8ef;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+<div style="max-width:480px;margin:64px auto;background:#fff;border-radius:16px;padding:32px;text-align:center">
+<h1 style="font-size:20px;margin:0 0 8px;color:#111">You're unsubscribed</h1>
+<p style="margin:0;color:#666;font-size:14px">You won't receive any more emails from this list.</p>
+</div></body></html>`;
+
+async function unsubscribeByToken(db: D1Database, token: string): Promise<void> {
+  if (!token) return;
+  await db
+    .prepare("UPDATE newsletter_subscribers SET status = 'unsubscribed', updated_at = ? WHERE unsubscribe_token = ?")
+    .bind(new Date().toISOString(), token)
+    .run();
+}
+
+// Same response whether or not the token matched. A different reply would let
+// someone probe which tokens are real.
+newsletter.get("/unsubscribe", async (c) => {
+  await unsubscribeByToken(c.env.DB, c.req.query("token") ?? "");
+  return c.html(UNSUB_CONFIRMATION);
+});
+
+// One-click, for List-Unsubscribe-Post.
+newsletter.post("/unsubscribe", async (c) => {
+  let token = c.req.query("token") ?? "";
+  if (!token) {
+    const body = (await c.req.json().catch(() => null)) as { token?: string } | null;
+    token = body?.token ?? "";
+  }
+  await unsubscribeByToken(c.env.DB, token);
+  return c.json({ success: true });
+});
+
 export default newsletter;
