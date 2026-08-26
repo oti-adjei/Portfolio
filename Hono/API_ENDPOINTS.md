@@ -157,6 +157,14 @@ Required vars/bindings in `/Volumes/Georgie/Development/Personal/Brand/Portfolio
   - `replied`
   - `archived`
 
+### Newsletter Campaigns Admin
+
+- `GET /api/admin/campaigns?page=1&limit=20`
+- `POST /api/admin/campaigns`
+- `GET /api/admin/campaigns/:id` — includes `deliveries: { pending, sent, failed }`
+- `PUT /api/admin/campaigns/:id` — draft only, 409 otherwise
+- `DELETE /api/admin/campaigns/:id` — draft only, 409 otherwise
+
 ### Upload
 
 - `POST /api/admin/upload`
