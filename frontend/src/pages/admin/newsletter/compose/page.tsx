@@ -510,6 +510,15 @@ export default function NewsletterCompose() {
         {!isNew && campaign && (
           <Card title="Send" description="This is the one irreversible action in this admin.">
             <div className="space-y-4">
+              {campaign.postalAddressConfigured === false && (
+                <Notice tone="error">
+                  No postal address is configured. CAN-SPAM requires a physical postal address in every
+                  commercial email. Set one with{" "}
+                  <code className="text-[12px]">npx wrangler secret put NEWSLETTER_POSTAL_ADDRESS</code>{" "}
+                  before sending this issue.
+                </Notice>
+              )}
+
               {sendPhase === "idle" && isDraftStatus && (
                 <>
                   {!confirmSend ? (

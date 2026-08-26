@@ -164,7 +164,7 @@ echo "your postal address" | npx wrangler secret put NEWSLETTER_POSTAL_ADDRESS
 ```
 
 - `SITE_URL` — used to build absolute links (including the unsubscribe URL) in sent emails. Defaults to `https://hearvie.dev` if unset.
-- `NEWSLETTER_POSTAL_ADDRESS` — ships unset. CAN-SPAM requires a postal address on commercial email, so **this must be set before the first real campaign send.** Until it is, the rendered email simply omits the address block — nothing blocks sending, so it's easy to miss.
+- `NEWSLETTER_POSTAL_ADDRESS` — ships unset. CAN-SPAM requires a postal address on commercial email, so **this must be set before the first real campaign send.** Until it is, the rendered email simply omits the address block, and the composer shows an error notice warning that no postal address is configured — sending is not blocked, so the notice is a signal to act on, not a hard stop.
 
 ---
 

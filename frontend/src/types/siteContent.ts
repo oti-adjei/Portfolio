@@ -475,4 +475,5 @@ export interface NewsletterCampaign {
   updated_at: string;
   sent_at?: string | null;
   deliveries?: CampaignDeliveryCounts;
+  postalAddressConfigured?: boolean;
 }
