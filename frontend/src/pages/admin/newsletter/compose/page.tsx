@@ -69,6 +69,7 @@ export default function NewsletterCompose() {
   const [sendProgress, setSendProgress] = useState({ sent: 0, failed: 0, remaining: 0 });
   const [sendError, setSendError] = useState<string | null>(null);
   const [retrying, setRetrying] = useState(false);
+  const [retryNotice, setRetryNotice] = useState<string | null>(null);
 
   useEffect(() => {
     if (user?.email) setTestEmail(user.email);
@@ -269,8 +270,19 @@ export default function NewsletterCompose() {
     if (!token || !campaign) return;
     setRetrying(true);
     setSendError(null);
+    setRetryNotice(null);
     try {
-      await retryCampaignFailed(token, campaign.id);
+      const { requeued } = await retryCampaignFailed(token, campaign.id);
+      // A stuck 'sending' row is only reclaimed once its claim is past the
+      // 15-minute staleness window (see retry-failed). If everything stuck
+      // is still inside that window, requeued is 0 and there is nothing to
+      // send — looping into runSendLoop here would just re-hit the same
+      // stuck state with no explanation of why. Say so instead of bouncing
+      // silently back to the stuck banner.
+      if (requeued === 0) {
+        setRetryNotice("Nothing to retry yet — the stalled deliveries are still inside their claim window. Try again in a few minutes.");
+        return;
+      }
       setSendPhase("sending");
       await runSendLoop({ sent: sendProgress.sent, failed: sendProgress.failed });
     } catch (err) {
@@ -564,6 +576,7 @@ export default function NewsletterCompose() {
                     — some deliveries were claimed but never settled and the send has stalled. Retry to
                     recover them.
                   </Notice>
+                  {retryNotice && <Notice tone="info">{retryNotice}</Notice>}
                   <Button variant="danger" icon="ri-refresh-line" loading={retrying} onClick={() => void handleRetry()}>
                     Retry failed
                   </Button>

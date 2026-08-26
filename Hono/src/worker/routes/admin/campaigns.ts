@@ -241,7 +241,7 @@ adminCampaigns.get("/:id", async (c) => {
     .bind(id)
     .all<{ status: string; count: number }>();
 
-  const deliveries = { pending: 0, sent: 0, failed: 0 } as Record<string, number>;
+  const deliveries = { pending: 0, sending: 0, sent: 0, failed: 0 } as Record<string, number>;
   for (const r of results) {
     deliveries[r.status] = r.count;
   }
@@ -394,6 +394,20 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
     .bind(id)
     .run();
 
+  // IMPORTANT 5: a row whose subscriber_id no longer matches any subscriber
+  // (deleted underneath it) never matches the IN-subquery sweeps above and
+  // is excluded by the JOIN below, so it would sit 'pending' forever while
+  // still counting toward "pending.length === 0" everywhere else — letting
+  // the campaign finalize as 'sent' having silently abandoned that row.
+  await c.env.DB.prepare(
+    `UPDATE newsletter_deliveries
+     SET status = 'failed', error = 'subscriber no longer exists'
+     WHERE campaign_id = ? AND status = 'pending'
+       AND subscriber_id NOT IN (SELECT id FROM newsletter_subscribers)`
+  )
+    .bind(id)
+    .run();
+
   const { results: pending } = await c.env.DB.prepare(
     `SELECT d.id as delivery_id, d.email, s.unsubscribe_token
      FROM newsletter_deliveries d
@@ -470,7 +484,7 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
     const items = await hydrateItems(c.env.DB, parseJson<unknown[]>(campaign.items, []));
     const siteUrl = resolveSiteUrl(c.env);
     const postalAddress = resolvePostalAddress(c.env);
-    const style = campaign.style === "full" ? "full" : "teaser";
+    const style: CampaignStyle = campaign.style === "full" ? "full" : "teaser";
 
     const emails = claimed.map((row) => {
       const renderInput = {
@@ -493,7 +507,14 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
     });
 
     const emailProvider = getEmailProvider(c.env);
-    const batchResult = await emailProvider.sendNewsletterBatch(emails);
+    // IMPORTANT 4: key on this claim, not on the campaign or on nothing.
+    // claim_id is unique per chunk-claim attempt, so re-hitting send-chunk
+    // for a claim that Resend already accepted (e.g. our own read of the
+    // response failed after the POST succeeded) dedupes against the same
+    // Resend batch instead of re-mailing the chunk. A fresh claim — the next
+    // chunk, or a retry-failed requeue — gets a new claim_id and is never
+    // suppressed by this.
+    const batchResult = await emailProvider.sendNewsletterBatch(emails, `newsletter-campaign:${id}:${claimId}`);
 
     const settledAt = new Date().toISOString();
     const updates = claimed.map((row, index) => {
@@ -556,7 +577,7 @@ adminCampaigns.post("/:id/retry-failed", async (c) => {
   const requeueRow = await c.env.DB.prepare(
     `SELECT COUNT(*) as count FROM newsletter_deliveries
      WHERE campaign_id = ?
-       AND (status = 'failed' OR (status = 'sending' AND claimed_at IS NOT NULL AND claimed_at <= ?))`
+       AND (status = 'failed' OR (status = 'sending' AND (claimed_at IS NULL OR claimed_at <= ?)))`
   )
     .bind(id, staleCutoff)
     .first<{ count: number }>();
@@ -566,7 +587,7 @@ adminCampaigns.post("/:id/retry-failed", async (c) => {
     `UPDATE newsletter_deliveries
      SET status = 'pending', error = NULL, claim_id = NULL, claimed_at = NULL
      WHERE campaign_id = ?
-       AND (status = 'failed' OR (status = 'sending' AND claimed_at IS NOT NULL AND claimed_at <= ?))`
+       AND (status = 'failed' OR (status = 'sending' AND (claimed_at IS NULL OR claimed_at <= ?)))`
   )
     .bind(id, staleCutoff)
     .run();
@@ -615,14 +636,15 @@ adminCampaigns.post("/:id/test", async (c) => {
     return c.json({ error: "A valid email is required." }, 400);
   }
 
-  const subscriber = await c.env.DB.prepare(
-    "SELECT unsubscribe_token FROM newsletter_subscribers ORDER BY created_at ASC LIMIT 1"
-  ).first<{ unsubscribe_token: string | null }>();
-  const token = subscriber?.unsubscribe_token || "preview-token";
+  // Never reuse a real subscriber's unsubscribe token here: whoever receives
+  // this test email would be handed a live bearer credential that can
+  // permanently unsubscribe that subscriber. Always mint a throwaway token
+  // so the test email's unsubscribe link is inert.
+  const token = crypto.randomUUID();
 
   const items = await hydrateItems(c.env.DB, parseJson<unknown[]>(campaign.items, []));
   const siteUrl = resolveSiteUrl(c.env);
-  const style = campaign.style === "full" ? "full" : "teaser";
+  const style: CampaignStyle = campaign.style === "full" ? "full" : "teaser";
   const subject = `[TEST] ${campaign.subject}`;
 
   const renderInput = {
