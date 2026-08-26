@@ -7,6 +7,24 @@ Entries are ordered newest first.
 
 ## 2026-08-26
 
+### admin — Push notifications for contact, subscribers and sends
+
+The admin now pushes to the owner's devices for three events: a contact submission, a newsletter subscribe, and a newsletter send finishing (`sent` or `failed`). That last one is the one that prevents a silent failure — a partial send previously sat unnoticed until the Issues list was next opened.
+
+- **No dependency.** `services/push/crypto.ts` implements VAPID (RFC 8292) and payload encryption (RFC 8291) on WebCrypto directly. Node `web-push` libraries assume Node crypto and don't run on Workers. Two workerd quirks are commented where they bite: the ECDH peer key is `public` at runtime but typed `$public`, and `exportKey` returns `ArrayBuffer | JsonWebKey` so `"raw"` needs a cast.
+- **Failures are contained.** `notify()` never throws and every trigger runs it through `waitUntil`. A contact submission returning 500 because a push service was down would be strictly worse than no notification. Verified by killing the push endpoint mid-test: submission still returned 200.
+- **Dead endpoints are pruned, transient ones aren't.** 404/410 deletes the row; anything else leaves it. Otherwise one bad night at Apple would silently unsubscribe every device.
+- **Service worker handles `push` and `notificationclick` only** — no `fetch` handler, no caching. Push needs a service worker; it doesn't need an offline strategy, and a stale precached admin shell is a genuinely bad failure with no address bar to recover from. Scoped to `/admin`, so the public site gets none.
+- **Permission is requested on an explicit tap**, never automatically, and the card says so before you tap. iOS asks exactly once and a denial is only recoverable by deleting and re-adding the home-screen app.
+- **Everything degrades to inert when unconfigured.** With no VAPID secrets the key endpoint reports `configured: false`, the card explains which secrets to set, and triggers no-op. Nothing errors.
+- New: `push_subscriptions` table, `routes/admin/push.ts`, `NotificationsCard` on the dashboard, `npm run generate:vapid`, and the `VAPID_*` secrets. See `Hono/SETUP.md`.
+
+Verified in workerd: encrypting with the shipped code and decrypting with an independent RFC 8291 implementation returns the exact plaintext; the VAPID signature verifies and carries an origin-only `aud`. Routes were exercised end to end — subscribe, re-subscribe (upserts rather than duplicating), test send, 410 pruning, and both public triggers firing well-formed requests.
+
+Not verified: actual delivery to a real push service, and the campaign-finalization trigger end to end (exercising it would have sent live email through Resend). Both need checking after deploy.
+
+---
+
 ### admin — Page editors were unusable on a phone
 
 The install landed and the admin immediately turned out to be unusable on the device it was installed to. The page editors are built on a 12-column grid with no responsive prefix, so `grid-cols-12` stayed twelve columns at 390px — the section-nav sidebar rendered about 95px wide next to a squashed editor.
