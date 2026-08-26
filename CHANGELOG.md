@@ -7,6 +7,23 @@ Entries are ordered newest first.
 
 ## 2026-08-26
 
+### admin — Installable to an iOS home screen
+
+`/admin` can now be added to a phone home screen and opens standalone, without Safari's chrome. No App Store account or subscription involved — it is the web app, launched from an icon.
+
+- **Admin-only app identity** — `useAdminInstallMeta` injects the manifest link, `apple-touch-icon`, and the Apple/Android web-app meta tags on mount, and removes them on unmount. They are deliberately *not* in `index.html`, which is shared with the public site: linking the manifest globally would make the public site installable under the admin's name, icon and `start_url`. Verified in-browser — the public pages carry none of the tags and keep their own title.
+- **Manifest is a static file**, `public/admin-manifest.webmanifest`, not a Worker route. With `assets.not_found_handling: "single-page-application"` it is not obvious whether an unmatched `/admin/*` path reaches the Worker or the SPA fallback, and the manifest has no reason to be dynamic. It sits outside its own `scope` (`/admin`), which the spec permits.
+- **Icons** — white GH monogram on `signal`, at 180 (Apple touch), 192, 512, and a 512 maskable padded into Android's safe circle. Generated from `gh-mono-white.svg`, whose wide lockup viewBox is cropped to its leading square to drop the wordmark.
+- **Safe-area insets** — standalone mode has no browser chrome to absorb the notch and home indicator, so the sidebar, header and main content now pad by `env(safe-area-inset-*)`, and the viewport meta gains `viewport-fit=cover`. Status bar style is `default` rather than `black-translucent`, because the admin topbar is white and a translucent bar paints white status text over it.
+- **Session raised to 30 days** (was 24h). A home-screen app that demands the password nearly every launch is not usable. There is no revocation list; rotate `JWT_SECRET` to invalidate every issued token.
+- **Remixicon self-hosted** — was loaded from cdnjs, which meant a flaky connection blanked every icon in an icon-only sidebar. Also affects the public site. A small Vite plugin trims the `@font-face` src list to woff2, since Vite otherwise emits all five formats: `dist` went from 5.7MB to 1.4MB.
+
+No service worker: the CMS needs the API for anything useful, and a stale precached shell is a worse problem than an offline page.
+
+Not verified here: iOS reads the manifest at Share → Add to Home Screen, well after React mounts, so runtime injection should be read in time — but that needs confirming on a real device after deploy. If it isn't, the fallback is a static `<link>` in `index.html`, at the cost of the public site's separate identity.
+
+---
+
 ### backend/admin — Newsletter sending
 
 Subscribers could sign up and get a confirmation email, but there was no way to actually send them anything. Now there is: compose an issue, pick posts/notes to include, and send.
