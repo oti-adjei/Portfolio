@@ -11,7 +11,7 @@ function categoryCount(category: string, values: Array<{ category: string }>): n
 }
 
 export default function AdminDashboard() {
-  const { content, isLoading, refresh, fetchContactSubmissions, fetchNewsletterSubscribers, inboxTotals } = useContent();
+  const { content, isLoading, error, refresh, fetchContactSubmissions, fetchNewsletterSubscribers, inboxTotals } = useContent();
   const { token } = useAuth();
 
   // refresh() loads sections and content types, but not the inbox lists — those
@@ -74,6 +74,17 @@ export default function AdminDashboard() {
         {isLoading && (
           <div className="mb-5">
             <Notice>Loading admin data…</Notice>
+          </div>
+        )}
+
+        {/* Without this, a failed refresh() was completely silent: the context caught the
+            error and the admin quietly rendered its bundled mock data, which looks like
+            real content until you notice the numbers never change. */}
+        {error && !isLoading && (
+          <div className="mb-5">
+            <Notice tone="error">
+              Could not load live data — showing fallback content. {error}
+            </Notice>
           </div>
         )}
 

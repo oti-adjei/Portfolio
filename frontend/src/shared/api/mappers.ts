@@ -65,8 +65,8 @@ export function toProject(dto: ProjectDto): Project {
     category: dto.category,
     year: dto.year ?? "",
     thumbnail: dto.thumbnail,
-    tags: dto.tags ?? [],
-    links: (dto.links ?? []).map((link) => ({
+    tags: Array.isArray(dto.tags) ? dto.tags : [],
+    links: (Array.isArray(dto.links) ? dto.links : []).map((link) => ({
       label: link.label,
       url: link.url,
     })),
@@ -82,7 +82,11 @@ export function toProject(dto: ProjectDto): Project {
       results: dto.details?.results ?? [],
     },
     gallery: {
-      images: (dto.gallery?.images ?? []).map((image) => ({
+      // Guard the shape rather than trusting it. gallery_images is stored as JSON and a row
+      // written with the wrong shape used to throw here on `.map` — which rejected the
+      // whole refresh() and silently left the admin rendering bundled mock data instead of
+      // the database. One malformed row must not be able to blank every list.
+      images: (Array.isArray(dto.gallery?.images) ? dto.gallery.images : []).map((image) => ({
         url: image.url,
         caption: image.caption ?? "",
       })),

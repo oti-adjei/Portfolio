@@ -7,6 +7,22 @@ Entries are ordered newest first.
 
 ## 2026-08-27
 
+### admin — Two malformed rows made the whole admin show mock data
+
+The projects seed migration wrote `gallery_images` as `{"images": []}`. Every other row stores that column as a JSON **array**. `rowToProject` parses the column straight into `gallery.images`, so those two rows produced an object where an array was expected, and `toProject`'s `.map` threw.
+
+That throw happened inside `refresh()`'s `Promise.all`, so `setContent` never ran and the admin silently kept its initial state — the mock content bundled into the app. Every list and count in the admin showed mock data while looking completely normal: 16 projects, 8 posts, 4 notes. The inbox still showed real data, because it has its own loader, which made it look like the admin was working.
+
+Three fixes, because the data was only the trigger:
+
+- **The rows and the migration.** Both rows corrected to `[]`, and the migration now writes an array, with a comment explaining why the shape matters.
+- **The mappers no longer trust the shape.** `gallery.images`, `tags` and `links` are `Array.isArray`-guarded. One malformed row must not be able to blank every list in the admin.
+- **Refresh failures are visible.** The context has always exposed `error`, but nothing rendered it, so a failed refresh was completely silent — the admin just showed fallback content that looks like real content until you notice the numbers never change. The dashboard now shows an error notice when a refresh fails.
+
+---
+
+## 2026-08-27
+
 ### admin — Projects can be drafts, and saving one no longer publishes it
 
 Projects had a `published` column and the public API already filtered on it, but nothing above the database knew: the `Project` type had no such field, the mappers dropped it, and the admin UI never sent it. Two consequences.
