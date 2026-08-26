@@ -6,6 +6,7 @@ import type {
   Footer,
   HomePage,
   Navigation,
+  NewsletterCampaign,
   NewsletterSubscriber,
   Note,
   PaginationResponse,
@@ -254,6 +255,108 @@ export async function updateContactSubmissionStatus(
     headers: { "Content-Type": "application/json", ...authHeaders(token) },
     body: JSON.stringify({ status }),
   });
+}
+
+export async function fetchCampaigns(
+  token: string,
+  params?: { page?: number; limit?: number }
+): Promise<PaginationResponse<NewsletterCampaign>> {
+  const query = new URLSearchParams();
+  if (params?.page) query.set("page", String(params.page));
+  if (params?.limit) query.set("limit", String(params.limit));
+  const queryString = query.toString();
+  return fetchJson<PaginationResponse<NewsletterCampaign>>(
+    `/api/admin/campaigns${queryString ? `?${queryString}` : ""}`,
+    { headers: authHeaders(token) }
+  );
+}
+
+export async function fetchCampaign(token: string, id: string): Promise<NewsletterCampaign> {
+  return fetchJson<NewsletterCampaign>(`/api/admin/campaigns/${id}`, {
+    headers: authHeaders(token),
+  });
+}
+
+export async function createCampaign(
+  token: string,
+  campaign: {
+    subject: string;
+    intro?: string;
+    style?: "teaser" | "full";
+    items?: NewsletterCampaign["items"];
+  }
+): Promise<NewsletterCampaign> {
+  return fetchJson<NewsletterCampaign>(
+    "/api/admin/campaigns",
+    jsonRequest(token, "POST", campaign)
+  );
+}
+
+export async function updateCampaign(
+  token: string,
+  id: string,
+  campaign: {
+    subject: string;
+    intro?: string;
+    style?: "teaser" | "full";
+    items?: NewsletterCampaign["items"];
+  }
+): Promise<NewsletterCampaign> {
+  return fetchJson<NewsletterCampaign>(
+    `/api/admin/campaigns/${id}`,
+    jsonRequest(token, "PUT", campaign)
+  );
+}
+
+export async function deleteCampaign(token: string, id: string): Promise<void> {
+  await fetchJson<{ success: boolean }>(`/api/admin/campaigns/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(token),
+  });
+}
+
+export async function prepareCampaign(
+  token: string,
+  id: string
+): Promise<{ total: number; pending: number }> {
+  return fetchJson<{ total: number; pending: number }>(
+    `/api/admin/campaigns/${id}/prepare`,
+    jsonRequest(token, "POST")
+  );
+}
+
+export async function sendCampaignChunk(
+  token: string,
+  id: string
+): Promise<{ sent: number; failed: number; remaining: number; stuck: number; status?: string }> {
+  return fetchJson<{
+    sent: number;
+    failed: number;
+    remaining: number;
+    stuck: number;
+    status?: string;
+  }>(`/api/admin/campaigns/${id}/send-chunk`, jsonRequest(token, "POST"));
+}
+
+export async function retryCampaignFailed(
+  token: string,
+  id: string
+): Promise<{ requeued: number }> {
+  return fetchJson<{ requeued: number }>(
+    `/api/admin/campaigns/${id}/retry-failed`,
+    jsonRequest(token, "POST")
+  );
+}
+
+export async function sendCampaignTest(
+  token: string,
+  id: string,
+  email: string
+): Promise<{ success: boolean }> {
+  return fetchJson<{ success: boolean }>(
+    `/api/admin/campaigns/${id}/test`,
+    jsonRequest(token, "POST", { email })
+  );
 }
 
 export interface UploadResult {

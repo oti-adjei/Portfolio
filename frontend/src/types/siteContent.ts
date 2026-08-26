@@ -447,3 +447,32 @@ export interface PaginationResponse<T> {
     total: number;
   };
 }
+
+export interface CampaignItem {
+  kind: 'blog' | 'note';
+  id: string;
+  slug: string;
+  title: string;
+}
+
+export interface CampaignDeliveryCounts {
+  pending: number;
+  sent: number;
+  failed: number;
+}
+
+export interface NewsletterCampaign {
+  id: string;
+  subject: string;
+  intro: string;
+  style: 'teaser' | 'full';
+  items: CampaignItem[];
+  status: 'draft' | 'sending' | 'sent' | 'failed';
+  total_recipients: number;
+  sent_count: number;
+  failed_count: number;
+  created_at: string;
+  updated_at: string;
+  sent_at?: string | null;
+  deliveries?: CampaignDeliveryCounts;
+}
