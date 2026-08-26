@@ -13,6 +13,9 @@ const statusTones: Record<string, { tone: Tone; icon: string }> = {
   bounced: { tone: 'danger', icon: 'ri-error-warning-line' },
   published: { tone: 'success', icon: 'ri-check-line' },
   draft: { tone: 'warning', icon: 'ri-draft-line' },
+  sending: { tone: 'info', icon: 'ri-send-plane-line' },
+  sent: { tone: 'success', icon: 'ri-check-double-line' },
+  failed: { tone: 'danger', icon: 'ri-error-warning-line' },
 };
 
 export default function StatusBadge({ status }: { status: string }) {
