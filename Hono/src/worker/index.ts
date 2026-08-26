@@ -21,6 +21,7 @@ import adminContent from "./routes/admin/content.js";
 import adminNewsletter from "./routes/admin/newsletter.js";
 import adminContactSubmissions from "./routes/admin/contact-submissions.js";
 import adminUpload from "./routes/admin/upload.js";
+import adminCampaigns from "./routes/admin/campaigns.js";
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -54,5 +55,6 @@ app.route("/api/admin/content", adminContent);
 app.route("/api/admin/newsletter", adminNewsletter);
 app.route("/api/admin/contact-submissions", adminContactSubmissions);
 app.route("/api/admin/upload", adminUpload);
+app.route("/api/admin/campaigns", adminCampaigns);
 
 export default app;
