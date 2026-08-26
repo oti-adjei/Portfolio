@@ -26,6 +26,11 @@ function escapeHtml(value: string): string {
     .replace(/"/g, '&quot;');
 }
 
+/** For values interpolated into href="…". escapeHtml covers text nodes; attributes need the quote closed off too. */
+function escapeAttr(value: string): string {
+  return escapeHtml(value).replace(/'/g, '&#39;');
+}
+
 /**
  * Renders the same markdown subset the site's post page handles, so email and
  * site agree: ##, ###, > quote, ``` fences, - lists, paragraphs. Anything else
@@ -76,7 +81,7 @@ export function markdownToEmailHtml(md: string): string {
 function itemHtml(item: CampaignItem, style: 'teaser' | 'full', siteUrl: string): string {
   const path = item.kind === 'blog' ? 'blog' : 'notes';
   const url = `${siteUrl}/${path}/${item.slug}`;
-  const heading = `<h2 style="font-size:20px;font-weight:700;margin:0 0 8px;color:#111"><a href="${url}" style="color:#111;text-decoration:none">${escapeHtml(item.title)}</a></h2>`;
+  const heading = `<h2 style="font-size:20px;font-weight:700;margin:0 0 8px;color:#111"><a href="${escapeAttr(url)}" style="color:#111;text-decoration:none">${escapeHtml(item.title)}</a></h2>`;
 
   // A note has no excerpt field, so a teaser of one uses its opening paragraph.
   const teaserText =
@@ -91,7 +96,7 @@ function itemHtml(item: CampaignItem, style: 'teaser' | 'full', siteUrl: string)
     <tr><td style="padding:0 0 32px">
       ${heading}
       ${body}
-      <a href="${url}" style="display:inline-block;font-size:14px;color:#f75124;text-decoration:none">Read on the site &rarr;</a>
+      <a href="${escapeAttr(url)}" style="display:inline-block;font-size:14px;color:#f75124;text-decoration:none">Read on the site &rarr;</a>
     </td></tr>`;
 }
 
@@ -115,7 +120,7 @@ export function renderCampaignHtml(input: RenderInput): string {
         <tr><td style="padding:24px 0 0;border-top:1px solid #eee">
           <p style="margin:0;font-size:12px;color:#999">
             You are receiving this because you subscribed at ${escapeHtml(input.siteUrl)}.<br>
-            <a href="${input.unsubscribeUrl}" style="color:#999">Unsubscribe</a>
+            <a href="${escapeAttr(input.unsubscribeUrl)}" style="color:#999">Unsubscribe</a>
           </p>
           ${postal}
         </td></tr>
