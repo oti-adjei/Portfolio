@@ -54,7 +54,13 @@ async function sendWithRetry(apiKey: string, body: ResendMailBody): Promise<void
  * a rejected request marks every input row failed rather than losing track
  * of which ones went out.
  */
-async function sendBatch(apiKey: string, fromAddr: string, ownerTo: string, emails: BatchEmail[]): Promise<BatchResult> {
+async function sendBatch(
+  apiKey: string,
+  fromAddr: string,
+  ownerTo: string,
+  emails: BatchEmail[],
+  idempotencyKey?: string
+): Promise<BatchResult> {
   if (emails.length === 0) return { results: [] };
 
   const listUnsubscribe = `<mailto:${ownerTo}?subject=unsubscribe>`;
@@ -65,6 +71,15 @@ async function sendBatch(apiKey: string, fromAddr: string, ownerTo: string, emai
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
+        // Keyed on the caller's claim_id (unique per chunk-claim attempt),
+        // not per delivery row: the whole point is that re-POSTing the SAME
+        // claimed chunk — e.g. because our response handling crashed or
+        // timed out after Resend already accepted it — hits Resend's
+        // idempotency cache instead of re-mailing everyone in the batch. A
+        // *different* claim (new chunk, or a genuine retry-failed requeue)
+        // gets a new claim_id and therefore a new key, so it is never
+        // suppressed by an unrelated earlier send.
+        ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
       },
       body: JSON.stringify(
         emails.map((email) => ({
@@ -183,8 +198,8 @@ export function createResendProvider(env: ResendEnv): EmailProvider {
       });
     },
 
-    async sendNewsletterBatch(emails: BatchEmail[]): Promise<BatchResult> {
-      return sendBatch(env.RESEND_API_KEY, env.EMAIL_FROM, env.EMAIL_OWNER_TO, emails);
+    async sendNewsletterBatch(emails: BatchEmail[], idempotencyKey?: string): Promise<BatchResult> {
+      return sendBatch(env.RESEND_API_KEY, env.EMAIL_FROM, env.EMAIL_OWNER_TO, emails, idempotencyKey);
     },
   };
 }

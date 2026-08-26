@@ -33,3 +33,14 @@ CREATE TABLE IF NOT EXISTS newsletter_deliveries (
 
 CREATE INDEX IF NOT EXISTS idx_deliveries_campaign_status
   ON newsletter_deliveries(campaign_id, status);
+
+-- Backfill: unsubscribe_token is nullable above so the ALTER TABLE can run
+-- against existing rows, but a NULL token is not survivable at send time —
+-- the send-chunk sweep fails any pending delivery whose subscriber lacks
+-- one. Without this, the very first send after this migration sweeps every
+-- pre-existing subscriber straight to 'failed' and nobody notices until the
+-- campaign is already "done". Idempotent: only touches rows still NULL, so
+-- running this file again is a no-op for tokens that already exist.
+UPDATE newsletter_subscribers
+SET unsubscribe_token = lower(hex(randomblob(16)))
+WHERE unsubscribe_token IS NULL;

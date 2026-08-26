@@ -28,5 +28,5 @@ export interface EmailProvider {
   sendUserContactAutoReply: (payload: ContactEmailPayload) => Promise<void>;
   sendOwnerNewsletterNotification: (payload: NewsletterEmailPayload) => Promise<void>;
   sendUserNewsletterConfirmation: (payload: NewsletterEmailPayload) => Promise<void>;
-  sendNewsletterBatch: (emails: BatchEmail[]) => Promise<BatchResult>;
+  sendNewsletterBatch: (emails: BatchEmail[], idempotencyKey?: string) => Promise<BatchResult>;
 }
