@@ -168,6 +168,10 @@ function resolvePostalAddress(env: Env): string | undefined {
   return env.NEWSLETTER_POSTAL_ADDRESS || undefined;
 }
 
+function isPostalAddressConfigured(env: Env): boolean {
+  return typeof env.NEWSLETTER_POSTAL_ADDRESS === "string" && env.NEWSLETTER_POSTAL_ADDRESS.trim().length > 0;
+}
+
 const adminCampaigns = new Hono<{ Bindings: Env }>();
 
 // GET /api/admin/campaigns
@@ -242,7 +246,11 @@ adminCampaigns.get("/:id", async (c) => {
     deliveries[r.status] = r.count;
   }
 
-  return c.json({ ...rowToCampaign(row), deliveries });
+  return c.json({
+    ...rowToCampaign(row),
+    deliveries,
+    postalAddressConfigured: isPostalAddressConfigured(c.env),
+  });
 });
 
 // PUT /api/admin/campaigns/:id
