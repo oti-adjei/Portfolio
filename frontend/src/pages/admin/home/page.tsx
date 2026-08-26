@@ -148,10 +148,10 @@ export default function AdminHome() {
         {/* Header */}
         <PageHeader eyebrow="Pages" title="Home page" description="Hero, about, skills, featured work, services, stats and CTA." />
 
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Section Navigation */}
-          <div className="col-span-3">
-            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 sticky top-24">
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-2xl ring-1 ring-black/5 p-4 lg:sticky lg:top-24">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">Sections</h3>
               <nav className="space-y-1">
                 {sections.map((section) => (
@@ -173,7 +173,7 @@ export default function AdminHome() {
           </div>
 
           {/* Content Editor */}
-          <div className="col-span-9">
+          <div className="lg:col-span-9">
             <div className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
               {/* Hero Section */}
               {activeSection === 'hero' && (
@@ -210,7 +210,7 @@ export default function AdminHome() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Primary Button Text</label>
                       <input
@@ -231,7 +231,7 @@ export default function AdminHome() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Secondary Button Text</label>
                       <input
@@ -352,7 +352,7 @@ export default function AdminHome() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-3">Tools & Technologies</label>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {homePage.about.tools.map((tool, index) => (
                         <input
                           key={tool.id}
@@ -611,7 +611,7 @@ export default function AdminHome() {
                     <div className="space-y-4">
                       {homePage.stats.items.map((stat, index) => (
                         <div key={stat.id} className="border border-gray-200 rounded-lg p-4">
-                          <div className="grid grid-cols-2 gap-3 mb-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                             <input
                               type="text"
                               value={stat.value}
@@ -678,7 +678,7 @@ export default function AdminHome() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[12px] font-medium text-gray-700 mb-1.5">Button Text</label>
                       <input
