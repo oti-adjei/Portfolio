@@ -287,6 +287,78 @@ Worth recording, because "it ran without error" would have been worthless here.
 
 ---
 
+## 8. What can go wrong
+
+Push fails **quietly** more often than it fails loudly. This table is the debugging order — symptom first, because that's all you'll have.
+
+| Symptom | Likely cause | What to do |
+|---|---|---|
+| Card says "server has no VAPID keys set" | Secrets missing, or the Worker hasn't redeployed since you set them | Check all three secrets exist on the **`portfolio` Worker** (not the Pages project), then redeploy |
+| Card says "only work once added to your home screen" | You're in a Safari tab | Open the installed app instead. iOS exposes the Push API only to home-screen apps |
+| Service worker won't register, console mentions MIME/content-type | `/sw.js` returned `index.html` — the SPA fallback swallowed a missing file | `curl -sI https://hearvie.dev/sw.js \| grep content-type`. Want `application/javascript`, not `text/html` |
+| Send test returns 401/403 from the push service | VAPID rejected | `aud` must be origin-only; `exp` under 24h; the key must match the one used at subscribe time. If you rotated `VAPID_PRIVATE_KEY`, every existing subscription is now invalid |
+| Send test returns 201 but nothing appears on the phone | Payload decrypt failed on-device, or the SW didn't `showNotification` | The 201 only means the push service accepted the bytes. Suspect the encryption (see §7) or a thrown error inside the `push` handler |
+| Notifications worked, then silently stopped | Subscription expired, or secrets rotated | Open the card — if the device is no longer listed it was pruned. Re-enable |
+| Every notification arrives 2–3 times | Duplicate subscription rows for one device | The subscribe route upserts on `endpoint` to prevent this. If it recurs, check whether the endpoint actually changed |
+| Permission prompt never appears | Already answered once | iOS asks exactly once. Delete the app from the home screen and re-add it |
+| Works on desktop, not iPhone | Not installed, or iOS below 16.4 | Web Push needs iOS 16.4+ **and** home-screen installation |
+
+**The dangerous one is row 5.** A `201` means "the push service accepted your bytes", not "the user saw it". Encryption errors surface *only* on the device, silently. That's the entire reason the crypto is tested by decryption rather than by status code.
+
+### Debugging tools
+
+```bash
+npx wrangler tail                 # live Worker logs — push failures are logged here
+```
+
+On desktop Chrome, `chrome://serviceworker-internals` shows registered workers and lets you push a fake event. Safari's Web Inspector can attach to an iPhone's installed web app over USB (Settings → Safari → Advanced → Web Inspector on the phone).
+
+---
+
+## 9. Where to read more
+
+Ordered by what's actually worth your time, with what each is good for.
+
+### Start here
+
+- **MDN — [Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)** and **[Using Web Push](https://developer.mozilla.org/en-US/docs/Web/API/Push_API/Best_Practices)**. The clearest plain-English explanation of the browser side. Read this before any RFC.
+- **web.dev — [Notifications and Push](https://web.dev/explore/notifications)**. Google's guide. Strong on UX: when to ask permission, why one-shot prompts matter, what makes notifications annoying. Weaker on iOS.
+- **MDN — [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)**. Worth reading the lifecycle section (`install` → `activate` → `waiting`) even though this repo's worker is trivial. It explains `skipWaiting` and `clients.claim`.
+
+### The specs (read when something is broken)
+
+RFCs are dense but *precise* — when a push service rejects you, the answer is in one of these. Don't read them cover to cover; use them as reference.
+
+- **[RFC 8292 — VAPID](https://datatracker.ietf.org/doc/html/rfc8292)**. Short. §2 (application server self-identification) and §3 (the JWT claims) are the parts that matter. Read this if you get 401/403.
+- **[RFC 8291 — Message Encryption for Web Push](https://datatracker.ietf.org/doc/html/rfc8291)**. The one §4 of these notes describes. §3.4 has the exact `info` strings. Read it if the phone receives nothing despite a 201.
+- **[RFC 8188 — Encrypted Content-Encoding for HTTP](https://datatracker.ietf.org/doc/html/rfc8188)**. Defines the `aes128gcm` record layout that 8291 builds on. Read for the header format if you're debugging byte offsets.
+- **[RFC 8030 — Generic Event Delivery Using HTTP Push](https://datatracker.ietf.org/doc/html/rfc8030)**. The overall protocol — endpoints, `TTL`, `Urgency`, status codes. Read for what a status code means.
+
+### Apple specifically
+
+iOS is the most restrictive implementation and the least documented, so this is worth its own attention.
+
+- **[Apple — Web Push for Web Apps on iOS and iPadOS](https://webkit.org/blog/13878/web-push-for-web-apps-on-ios-and-ipados/)**. The announcement post for iOS 16.4. Still the best single source on Apple's constraints — home-screen requirement, permission handling, what isn't supported.
+- **[WebKit blog](https://webkit.org/blog/)** generally. Safari behaviour changes between point releases and this is where it's announced first.
+
+### Crypto background (only if you want to actually understand it)
+
+None of this is required to maintain the code, but it's what turns §4 from magic into mechanism.
+
+- **[Cloudflare — A (relatively easy to understand) primer on elliptic curve cryptography](https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/)**. Best explanation of *why* ECC works without requiring maths background. Start here for ECDH.
+- **[MDN — SubtleCrypto](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)**. The API reference. Note the algorithm-specific parameter shapes — that's where the `public` / `$public` confusion lives.
+- **[RFC 5869 — HKDF](https://datatracker.ietf.org/doc/html/rfc5869)**. §3 explains *why* extract-then-expand exists, which is the bit that makes the two-pass structure in §4 make sense rather than look arbitrary.
+- **[Cloudflare Workers — Web Crypto docs](https://developers.cloudflare.com/workers/runtime-apis/web-crypto/)**. Which algorithms `workerd` actually supports. Check here before assuming a primitive exists.
+
+### If you'd rather not hand-roll it next time
+
+- **[`web-push` (npm)](https://github.com/web-push-libs/web-push)** — the standard Node library. Does everything in §3–5 for you. **Does not run on Workers** (needs Node `crypto`), which is why this repo doesn't use it. Fine on a Node server.
+- **[`web-push-libs`](https://github.com/web-push-libs)** — the same for Python, PHP, Java, Go.
+
+Worth knowing these exist. If you ever move this to a Node backend, delete `crypto.ts` and use the library — hand-rolled crypto is a liability you maintain, and it's only justified here because the platform left no choice.
+
+---
+
 ## Glossary
 
 **AES-128-GCM** — A symmetric cipher (one key both encrypts and decrypts), with built-in tamper detection. The "128" is the key size in bits. Used for the notification payload.
