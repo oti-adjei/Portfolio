@@ -125,11 +125,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         id="admin-navigation-drawer"
         aria-label="Admin navigation"
         aria-modal={isMobileMenuOpen ? true : undefined}
-        className={`fixed top-0 left-0 h-full bg-ink text-white transition-all duration-300 z-50 ${
+        className={`fixed top-0 left-0 h-full bg-ink text-white transition-all duration-300 z-50 pl-[env(safe-area-inset-left)] ${
           isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         } w-72 md:translate-x-0 ${isSidebarOpen ? 'md:w-64' : 'md:w-20'}`}
       >
-        <div className="flex flex-col h-full">
+        {/* Insets keep the drawer clear of the notch and home indicator when installed to
+            an iOS home screen, where there is no browser chrome to absorb them. */}
+        <div className="flex flex-col h-full pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
           {/* Brand */}
           <div className="h-16 flex items-center px-4 border-b border-white/10">
             <Link
@@ -222,7 +224,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
       {/* Main */}
       <div className={`transition-all duration-300 ml-0 ${isSidebarOpen ? 'md:ml-64' : 'md:ml-20'}`}>
-        <header className="h-16 bg-white/85 backdrop-blur-md border-b border-black/5 sticky top-0 z-30">
+        <header className="h-[calc(4rem+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] bg-white/85 backdrop-blur-md border-b border-black/5 sticky top-0 z-30">
           <div className="h-full px-3 sm:px-4 md:px-6 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <button
@@ -253,7 +255,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           </div>
         </header>
 
-        <main className="p-4 sm:p-5 md:p-6">{children}</main>
+        {/* Bottom inset clears the iOS home indicator; the sidebar and header carry the
+            left/right insets for landscape. */}
+        <main className="p-4 sm:p-5 md:p-6 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:pb-[calc(1.25rem+env(safe-area-inset-bottom))] md:pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+          {children}
+        </main>
       </div>
     </div>
   );
