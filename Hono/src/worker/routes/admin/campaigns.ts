@@ -164,6 +164,16 @@ function resolveSiteUrl(env: Env): string {
   return env.SITE_URL || "https://hearvie.dev";
 }
 
+/**
+ * Where the unsubscribe link points. Deliberately NOT SITE_URL: the site is a
+ * SPA on the apex and the Worker answers on a different host, so an
+ * unsubscribe URL built from SITE_URL resolves to index.html with a 200 and
+ * silently does nothing — a dead opt-out that still looks healthy.
+ */
+function resolveApiBaseUrl(env: Env): string {
+  return env.API_PUBLIC_BASE || env.SITE_URL || "https://hearvie.dev";
+}
+
 function resolvePostalAddress(env: Env): string | undefined {
   return env.NEWSLETTER_POSTAL_ADDRESS || undefined;
 }
@@ -483,6 +493,7 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
   if (claimed.length > 0) {
     const items = await hydrateItems(c.env.DB, parseJson<unknown[]>(campaign.items, []));
     const siteUrl = resolveSiteUrl(c.env);
+    const apiBaseUrl = resolveApiBaseUrl(c.env);
     const postalAddress = resolvePostalAddress(c.env);
     const style: CampaignStyle = campaign.style === "full" ? "full" : "teaser";
 
@@ -495,7 +506,7 @@ adminCampaigns.post("/:id/send-chunk", async (c) => {
         siteUrl,
         // Guaranteed non-null: the sweep above already failed out every
         // pending row whose subscriber lacked a token.
-        unsubscribeUrl: `${siteUrl}/api/newsletter/unsubscribe?token=${row.unsubscribe_token as string}`,
+        unsubscribeUrl: `${apiBaseUrl}/api/newsletter/unsubscribe?token=${row.unsubscribe_token as string}`,
         postalAddress,
       };
       return {
@@ -644,6 +655,7 @@ adminCampaigns.post("/:id/test", async (c) => {
 
   const items = await hydrateItems(c.env.DB, parseJson<unknown[]>(campaign.items, []));
   const siteUrl = resolveSiteUrl(c.env);
+  const apiBaseUrl = resolveApiBaseUrl(c.env);
   const style: CampaignStyle = campaign.style === "full" ? "full" : "teaser";
   const subject = `[TEST] ${campaign.subject}`;
 
@@ -653,7 +665,7 @@ adminCampaigns.post("/:id/test", async (c) => {
     style,
     items,
     siteUrl,
-    unsubscribeUrl: `${siteUrl}/api/newsletter/unsubscribe?token=${token}`,
+    unsubscribeUrl: `${apiBaseUrl}/api/newsletter/unsubscribe?token=${token}`,
     postalAddress: resolvePostalAddress(c.env),
   };
 

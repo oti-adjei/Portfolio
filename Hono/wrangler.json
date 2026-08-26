@@ -20,7 +20,7 @@
 			"enabled": false,
 			"persist": true,
 			"head_sampling_rate": 1
-		},
+		}
 	},
 	"upload_source_maps": true,
 	"assets": {
@@ -41,7 +41,8 @@
 		}
 	],
 	"vars": {
-		"R2_PUBLIC_BASE": "https://img.hearvie.dev"
+		"R2_PUBLIC_BASE": "https://img.hearvie.dev",
+		"API_PUBLIC_BASE": "https://api.portfolio.hearvie.dev"
 	},
 	"keep_vars": true
 }
