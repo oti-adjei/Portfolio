@@ -8,5 +8,11 @@ CONTACT_AUTO_REPLY_HOURS=24
 
 CORS_ALLOWED_ORIGINS=https://portfolio.hearvie.dev,https://www.portfolio.hearvie.dev
 
+# Where post links point — the public site.
 SITE_URL=https://hearvie.dev
+# Where the unsubscribe link points — the Worker's own host. NOT the same as
+# SITE_URL: the apex serves the SPA, so an unsubscribe URL built from SITE_URL
+# returns index.html with a 200 and silently does nothing. Normally set in
+# wrangler.json; override here only for local dev.
+# API_PUBLIC_BASE=http://localhost:5173
 NEWSLETTER_POSTAL_ADDRESS=
