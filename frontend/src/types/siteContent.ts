@@ -345,6 +345,7 @@ export interface Project {
   gallery: {
     images: GalleryImage[];
   };
+  published: boolean;
 }
 
 export interface ProjectLink {

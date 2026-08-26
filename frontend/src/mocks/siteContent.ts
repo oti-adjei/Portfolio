@@ -504,6 +504,7 @@ export const siteContent: SiteContent = {
       { url: 'https://img.hearvie.dev/projects/senvon/senvon-contact.png', caption: 'Contact and enquiry section for new client leads' },
     ],
   },
+  published: true,
 },
     {
   id: 2,
@@ -536,6 +537,7 @@ export const siteContent: SiteContent = {
       { url: 'https://img.hearvie.dev/projects/royalpark/rp-dining.png', caption: 'Restaurant & Booking Form' },
     ],
   },
+  published: true,
 },
     {
   id: 3,
@@ -568,6 +570,7 @@ export const siteContent: SiteContent = {
       { url: 'https://img.hearvie.dev/projects/lobab/lobab-events.png', caption: 'Contact & Enrolment Form' },
     ],
   },
+  published: true,
 },
   {
     id: 4,
@@ -600,6 +603,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/projects/home-sweet-home.png', caption: 'Financials Overview' },
       ],
     },
+    published: true,
   },
   {
     id: 9,
@@ -632,6 +636,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/projects/nagyique.jpg', caption: 'Checkout Flow' },
       ],
     },
+    published: true,
   },
   {
     id: 10,
@@ -664,6 +669,7 @@ export const siteContent: SiteContent = {
         { url: '/assets/projects/dear-akua/confessions-feed.png', caption: 'Confessions Feed' },
       ],
     },
+    published: true,
   },
   {
     id: 7,
@@ -696,6 +702,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/mummysdarl/md-admissions.png', caption: 'Contact & Enrolment' },
       ],
     },
+    published: true,
   },
   {
     id: 8,
@@ -728,6 +735,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/flexdown/flexdown_listing.png', caption: 'Listing Detail' },
       ],
     },
+    published: true,
   },
   {
     id: 5,
@@ -760,6 +768,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/projects/pripri.png', caption: 'Settings & App Management' },
       ],
     },
+    published: true,
   },
   {
     id: 6,
@@ -792,6 +801,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/projects/scribble-notes.png', caption: 'Search Results' },
       ],
     },
+    published: true,
   },
   {
     id: 11,
@@ -824,6 +834,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/envoyer/envoyer_login.png', caption: 'Login & Registration' },
       ],
     },
+    published: true,
   },
   {
     id: 12,
@@ -856,6 +867,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/projects/purple-pay.jpg', caption: 'Transaction History' },
       ],
     },
+    published: true,
   },
   
   {
@@ -889,6 +901,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/projects/pokebook.jpg', caption: 'Detail & Stats View' },
       ],
     },
+    published: true,
   },
   {
     id: 14,
@@ -921,6 +934,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/gullivers/gullivers_lounge.png', caption: 'Lounge' },
       ],
     },
+    published: true,
   },
   {
     id: 15,
@@ -953,6 +967,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/gesa/gesa_events.png', caption: 'Events Calendar' },
       ],
     },
+    published: true,
   },
   {
     id: 16,
@@ -985,6 +1000,7 @@ export const siteContent: SiteContent = {
         { url: 'https://img.hearvie.dev/projects/projects/provid.png', caption: 'Self-Assessment Quiz' },
       ],
     },
+    published: true,
   },
   
 ],
