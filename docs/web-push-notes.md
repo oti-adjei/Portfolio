@@ -283,7 +283,9 @@ Worth recording, because "it ran without error" would have been worthless here.
 
 **Confirmed in production** (2026-08-27): after deploying, generating the VAPID keypair and setting the three secrets, enabling notifications on a real iPhone and using the card's **Send test** button delivered the notification through Apple's push service. So the full chain works — VAPID accepted, payload decrypted on-device, service worker woken, notification shown.
 
-**Still not verified:** the campaign-finalisation trigger end to end. Exercising it would have sent live email through Resend to test addresses, so the code path is committed but has never run for real. The contact and newsletter triggers were verified locally against a fake push service, but not yet in production — submitting the live contact form is the cheap way to close that.
+The **contact-submission trigger is confirmed in production** as well (2026-08-27): a real submission to the live form delivered a notification to the installed app, exercising the whole path — public endpoint, `waitUntil`, VAPID, Apple's push service, service worker wake, notification shown.
+
+**Still not verified:** the campaign-finalisation trigger, since exercising it would send live email through Resend to test addresses; and the newsletter-subscribe trigger, which has only run against a local fake push service. Both share the same `notify()` path as the contact trigger, so the risk is in the call site rather than the delivery machinery.
 
 ---
 

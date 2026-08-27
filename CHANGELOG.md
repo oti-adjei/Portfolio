@@ -58,7 +58,9 @@ Verified in workerd: encrypting with the shipped code and decrypting with an ind
 
 Confirmed in production on 2026-08-27: with the secrets set and the migration applied, enabling notifications on a real iPhone and using **Send test** delivered through Apple's push service. The full chain works — VAPID accepted, payload decrypted on-device, service worker woken, notification shown.
 
-Still not verified: the campaign-finalization trigger end to end, since exercising it would have sent live email through Resend to test addresses. The contact and newsletter triggers passed against a local fake push service but haven't run in production.
+The contact-submission trigger is confirmed in production too (2026-08-27): a real submission to the live contact form delivered a notification to the installed app. That is the full production path — public endpoint, `waitUntil`, VAPID, Apple's push service, service worker.
+
+Still not verified: the campaign-finalization trigger, since exercising it would send live email through Resend to test addresses, and the newsletter-subscribe trigger, which has only run against a local fake push service.
 
 ---
 
