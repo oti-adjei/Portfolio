@@ -4,6 +4,19 @@ import Button from './ui/Button';
 import Card from './ui/Card';
 import Notice from './ui/Notice';
 
+/** "Last seen" beats an added-date for spotting a ghost: a device deleted from a home screen
+ *  simply stops checking in, while its created_at stays as fresh-looking as any other. */
+function lastSeenLabel(lastSeenAt: string): string {
+  const seen = new Date(lastSeenAt);
+  if (Number.isNaN(seen.getTime())) return "unknown";
+
+  const days = Math.floor((Date.now() - seen.getTime()) / 86_400_000);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return `${days}d ago`;
+  return seen.toLocaleDateString();
+}
+
 function deviceLabel(userAgent: string | null): string {
   if (!userAgent) return 'Unknown device';
   if (/iphone/i.test(userAgent)) return 'iPhone';
@@ -15,7 +28,8 @@ function deviceLabel(userAgent: string | null): string {
 }
 
 export default function NotificationsCard() {
-  const { state, devices, busy, error, message, enable, disable, test } = usePushNotifications();
+  const { state, devices, busy, error, message, enable, disable, test, removeDevice } =
+    usePushNotifications();
 
   const body = () => {
     switch (state) {
@@ -69,8 +83,20 @@ export default function NotificationsCard() {
                       <i className="ri-smartphone-line text-gray-400" aria-hidden="true" />
                       <span className="truncate">{deviceLabel(device.user_agent)}</span>
                     </span>
-                    <span className="text-[12px] text-gray-400 shrink-0">
-                      {new Date(device.created_at).toLocaleDateString()}
+                    <span className="flex items-center gap-2 shrink-0">
+                      {/* Last seen, not added: a device that stopped checking in is the one
+                          you are probably here to remove. */}
+                      <span className="text-[12px] text-gray-400" title={`Added ${new Date(device.created_at).toLocaleString()}`}>
+                        {lastSeenLabel(device.last_seen_at)}
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="danger"
+                        icon="ri-close-line"
+                        aria-label={`Remove ${deviceLabel(device.user_agent)}`}
+                        disabled={busy}
+                        onClick={() => void removeDevice(device.id)}
+                      />
                     </span>
                   </li>
                 ))}
