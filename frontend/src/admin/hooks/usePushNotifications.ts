@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAdminAuth } from "../contexts/AdminAuthContext";
 import {
+  deletePushDevice,
   fetchPushDevices,
   fetchVapidKey,
   registerPushSubscription,
@@ -194,5 +195,29 @@ export function usePushNotifications() {
     }
   }, [token]);
 
-  return { state, devices, busy, error, message, enable, disable, test, isStandalone: isStandalone() };
+  /**
+   * Removes a device from the server. Note this does not revoke the browser's own
+   * subscription, so removing the device you are currently using will re-register it on the
+   * next load — the list is the server's view, not the phone's.
+   */
+  const removeDevice = useCallback(
+    async (id: string) => {
+      setBusy(true);
+      setError(null);
+      setMessage(null);
+      try {
+        await deletePushDevice(token, id);
+        const { devices: list } = await fetchPushDevices(token);
+        setDevices(list);
+        setMessage("Device removed.");
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Could not remove that device");
+      } finally {
+        setBusy(false);
+      }
+    },
+    [token]
+  );
+
+  return { state, devices, busy, error, message, enable, disable, test, removeDevice, isStandalone: isStandalone() };
 }

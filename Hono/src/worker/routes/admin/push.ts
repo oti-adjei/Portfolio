@@ -99,6 +99,30 @@ pushRoutes.delete("/subscribe", async (c) => {
 });
 
 /**
+ * Removes one device by id.
+ *
+ * DELETE /subscribe exists too, but it keys on the endpoint, which only the device itself
+ * holds — so a phone can retire itself and nothing else can. That leaves no way to clear a
+ * stale row from another device, and stale rows are the normal case: deleting the PWA from
+ * a home screen drops the subscription locally and never tells the server, so re-installing
+ * leaves a ghost behind. This is the admin-side counterpart.
+ */
+pushRoutes.delete("/devices/:id", async (c) => {
+  const id = c.req.param("id");
+
+  const result = await c.env.DB.prepare(`DELETE FROM push_subscriptions WHERE id = ?`)
+    .bind(id)
+    .run();
+
+  // Report whether anything matched rather than always claiming success: a no-op delete
+  // usually means the list the caller is looking at is stale.
+  const removed = (result.meta?.changes ?? 0) > 0;
+  if (!removed) return c.json({ error: "No such device." }, 404);
+
+  return c.json({ success: true });
+});
+
+/**
  * Sends a test notification to every registered device.
  *
  * Unlike the event triggers this awaits the result and reports it, because the entire point

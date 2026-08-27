@@ -47,6 +47,15 @@ export async function removePushSubscription(token: string | null, endpoint: str
   );
 }
 
+/** Removes a device by id — the admin-side counterpart to removePushSubscription, which
+ *  keys on the endpoint and so only works for the device you are holding. */
+export async function deletePushDevice(token: string | null, id: string) {
+  return fetchJson<{ success: boolean }>(
+    `/api/admin/push/devices/${encodeURIComponent(id)}`,
+    jsonRequest(token, "DELETE")
+  );
+}
+
 export async function sendTestPush(token: string | null) {
   return fetchJson<PushTestResult>("/api/admin/push/test", jsonRequest(token, "POST"));
 }
