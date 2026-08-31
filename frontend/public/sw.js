@@ -31,6 +31,15 @@ self.addEventListener("push", (event) => {
     icon: "/icons/admin-192.png",
     badge: "/icons/admin-192.png",
     tag: payload.tag || "default",
+    // Without this, a notification that replaces an earlier one with the same tag arrives
+    // completely silently — no sound, no vibration. Since each event type reuses one tag,
+    // only the first of a run would ever be noticed. renotify re-alerts on replace, while
+    // the tag still keeps the lock screen to one entry per event type.
+    renotify: true,
+    // Explicit rather than implied: a silent notification is exactly the failure being fixed.
+    silent: false,
+    // Android only; iOS ignores it and uses the system haptic.
+    vibrate: [200, 100, 200],
     data: { url: payload.url || "/admin" },
   };
 

@@ -54,7 +54,10 @@ async function sendOne(env: Env, sub: PushSubscriptionRow, message: PushMessage)
         "Content-Encoding": "aes128gcm",
         "Content-Type": "application/octet-stream",
         TTL: "86400",
-        Urgency: "normal",
+        // `normal` lets the push service batch and defer delivery to save the device's
+        // battery, which shows up as notifications arriving late and without an alert.
+        // These are single-user admin alerts, so they are worth waking the device for.
+        Urgency: "high",
       },
       body: body as BodyInit,
     });
