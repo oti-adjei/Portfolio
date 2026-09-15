@@ -5,6 +5,14 @@ Entries are ordered newest first.
 
 ---
 
+## 2026-09-15
+
+### admin — Project category is now free text, not a three-option select
+
+The project edit form hardcoded category as a `<select>` with `web` / `mobile` / `desktop`. The `projects.category` column is plain `TEXT` and the public works page derives its filters from whatever categories exist on projects, so the select was the only place new categories were blocked. It is now a text input with a `<datalist>` of the categories already in use — typing a new value just works, picking an existing one keeps filters tidy. Also removes the `as any` on the tab switcher (last lint error in the file) by typing the tabs array against `activeTab`'s union.
+
+---
+
 ## 2026-08-27
 
 ### admin — Two malformed rows made the whole admin show mock data

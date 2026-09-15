@@ -229,7 +229,7 @@ export default function EditProject() {
     setProject({ ...project, links: (project.links ?? []).filter((_, i) => i !== index) });
   };
 
-  const tabs = [
+  const tabs: { id: typeof activeTab; label: string; icon: string }[] = [
     { id: 'basic', label: 'Basic Info', icon: 'ri-information-line' },
     { id: 'overview', label: 'Overview', icon: 'ri-file-text-line' },
     { id: 'details', label: 'Details', icon: 'ri-list-check' },
@@ -273,7 +273,7 @@ export default function EditProject() {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 whitespace-nowrap px-5 py-3.5 text-[13px] font-medium transition-colors ${
                   activeTab === tab.id
                     ? 'text-signal border-b-2 border-signal'
@@ -303,17 +303,25 @@ export default function EditProject() {
                     <label className="block text-[12px] font-medium text-gray-700 mb-1.5">
                       Category
                     </label>
-                    <select
+                    {/* Free text with suggestions — categories are plain TEXT in the DB and
+                        the public works filters derive from whatever projects use, so any
+                        new value typed here just works. */}
+                    <input
                       value={project.category}
                       onChange={(e) =>
-                        setProject({ ...project, category: e.target.value as any })
+                        setProject({ ...project, category: e.target.value })
                       }
+                      list="existing-categories"
+                      placeholder="e.g. Web, Mobile, Open Source"
                       className="w-full px-4 py-2.5 rounded-xl bg-white ring-1 ring-gray-200 text-[13px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-signal/50"
-                    >
-                      <option value="web">Web</option>
-                      <option value="mobile">Mobile</option>
-                      <option value="desktop">Desktop</option>
-                    </select>
+                    />
+                    <datalist id="existing-categories">
+                      {Array.from(
+                        new Set(content?.projects.map((p) => p.category).filter(Boolean)),
+                      ).map((c) => (
+                        <option key={c} value={c} />
+                      ))}
+                    </datalist>
                   </div>
 
                   <Field
